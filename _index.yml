@@ -7,6 +7,8 @@ indexpage:
            url:
          - title: Lorem ipsum dolor
            url:
+         - title: Lorem ipsum dolor
+           url:
 
      - title: Tile 2
        links:
@@ -14,9 +16,13 @@ indexpage:
            url:
          - title: Lorem ipsum dolor
            url:
+         - title: Lorem ipsum dolor
+           url:
 
      - title: Tile 3
        links:
+         - title: Lorem ipsum dolor
+           url:
          - title: Lorem ipsum dolor
            url:
          - title: Lorem ipsum dolor
