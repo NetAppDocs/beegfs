@@ -4,24 +4,36 @@ indexpage:
      - title: Get started
        links:
          - title: Intro
-
-     - title: something here
-       links:
-         - title: Lorem ipsum
            url:
-     - title: something here
-       links:
-         - title: Lorem ipsum
+         - title: Lorem ipsum dolor
            url:
 
-     - title: something here
+     - title: Tile 2
        links:
-         - title: Lorem ipsum
+         - title: Lorem ipsum dolor
+           url:
+         - title: Lorem ipsum dolor
            url:
 
-     - title: sonmething here
+     - title: Tile 3
        links:
-         - title: Lorem ipsum
+         - title: Lorem ipsum dolor
+           url:
+         - title: Lorem ipsum dolor
+           url:
+
+     - title: Tile 4
+       links:
+         - title: Lorem ipsum dolor
+           url:
+         - title: Lorem ipsum dolor
+           url:
+
+     - title: Tile 5
+       links:
+         - title: Lorem ipsum dolor
+           url:
+         - title: Lorem ipsum dolor
            url:
 
      - title: Tools & support
