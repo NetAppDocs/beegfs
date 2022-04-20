@@ -11,40 +11,38 @@ sidebar:
   - title: Get started
     entries:
       - title: Intro
-        url:
+        url: /design/overview.html
       - title: Solution overview
-        url:
+        url: /design/overview.html
       - title: Requirements
-        url:
+        url: /design/overview.html
   - title: Design
     entries:
         - title: Overview
-          url:
+          url: /design/overview.html
         - title: Architecture
-          url:
-        - title: Design
-          url:
+          url: /design/overview.html
         - title: Validation
-          url:
+          url: /design/overview.html
         - title: Performance tuning
-          url:
+          url: /design/overview.html
   - title: Deploy
     entries:
         - title: Best practice
-          url:
+          url: /deploy/overview.html
         - title: Hardware
-          url:
+          url: /deploy/overview.html
         - title: Software
-          url:
+          url: /deploy/overview.html
         - title: Validation
-          url:
+          url: /deploy/overview.html
         - title: Performance tuning
-          url:
+          url: /deploy/overview.html
   - title: Upgrade
     entries:
         - title: Overview
-          url:
+          url: /deploy/overview.html
   - title: Troubleshoot
     entries:
         - title: Overview
-          url:
+          url: /deploy/overview.html

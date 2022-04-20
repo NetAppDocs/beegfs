@@ -1,0 +1,12 @@
+---
+permalink: design/overview.html
+sidebar: sidebar
+keywords: design, overview
+summary: "Design overview"
+---
+= Design overview
+:icons: font
+:imagesdir: ../media/
+
+[.lead]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
