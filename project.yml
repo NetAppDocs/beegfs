@@ -11,11 +11,11 @@ sidebar:
   - title: Get started
     entries:
       - title: Intro
-        url: /design/overview.html
+        url: /get-started/overview.html
       - title: Solution overview
-        url: /design/overview.html
+        url: /get-started/overview.html
       - title: Requirements
-        url: /design/overview.html
+        url: /get-started/overview.html
   - title: Design
     entries:
         - title: Overview
@@ -41,8 +41,8 @@ sidebar:
   - title: Upgrade
     entries:
         - title: Overview
-          url: /deploy/overview.html
+          url: /upgrade/overview.html
   - title: Troubleshoot
     entries:
         - title: Overview
-          url: /deploy/overview.html
+          url: /troubleshoot/overview.html
