@@ -1,0 +1,34 @@
+indexpage:
+  lead: NetApp E-Series storage with BeeGFS is a cost-effective, easy-to-manage, and highly available HPC solution, with support from NetApp.
+  tiles:
+     - title: Get started
+       links:
+         - title:
+
+     - title: something here
+       links:
+         - title:
+           url:
+     - title: something here
+       links:
+         - title:
+           url:
+
+     - title: something here
+       links:
+         - title:
+           url:
+
+     - title: sonmething here
+       links:
+         - title:
+           url:
+
+     - title: Tools & support
+       links:
+         - title: NetApp Interoperability Matrix
+           url: http://mysupport.netapp.com/matrix/
+         - title: NetApp Knowledge Base
+           url: https://kb.netapp.com/
+         - title: Active IQ (login required)
+           url: https://activeiq.netapp.com/?source=aiqnsspage

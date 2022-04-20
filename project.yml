@@ -1,7 +1,22 @@
 settings:
-  name: "Product Name"
+  name: "beegfs"
   internal:
     pdf_enabled: true
   prod:
     pdf_enabled: true
 sidebar:
+  entries:
+  - title: BeeGFS docs
+    url: "/index.html"
+  - title: Release notes
+    entries:
+      - title: What's new
+        url: /whats-new.html
+      - title: Release notes
+        url: /known-issues.html
+  - title: Get started
+    entries:
+        - title: Overview
+          url: "/san-getstarted/santricity-overview.html"
+        - title: Supported browsers and OSs
+          url: "/san-getstarted/supported-browsers-os.html"
