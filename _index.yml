@@ -3,25 +3,25 @@ indexpage:
   tiles:
      - title: Get started
        links:
-         - title:
+         - title: Intro
 
      - title: something here
        links:
-         - title:
+         - title: Lorem ipsum
            url:
      - title: something here
        links:
-         - title:
+         - title: Lorem ipsum
            url:
 
      - title: something here
        links:
-         - title:
+         - title: Lorem ipsum
            url:
 
      - title: sonmething here
        links:
-         - title:
+         - title: Lorem ipsum
            url:
 
      - title: Tools & support

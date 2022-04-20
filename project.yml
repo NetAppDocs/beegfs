@@ -6,17 +6,43 @@ settings:
     pdf_enabled: true
 sidebar:
   entries:
-  - title: BeeGFS docs
+  - title: BeeGFS solution docs
     url: "/index.html"
-  - title: Release notes
-    entries:
-      - title: What's new
-        url: /whats-new.html
-      - title: Release notes
-        url: /known-issues.html
   - title: Get started
     entries:
+      - title: Intro
+        url:
+      - title: Solution overview
+        url:
+      - title: Requirements
+        url:
+  - title: Design
+    entries:
         - title: Overview
-          url: "/san-getstarted/santricity-overview.html"
-        - title: Supported browsers and OSs
-          url: "/san-getstarted/supported-browsers-os.html"
+          url:
+        - title: Architecture
+          url:
+        - title: Design
+          url:
+        - title: Validation
+          url:
+        - title: Performance tuning
+          url:
+  - title: Deploy
+    entries:
+        - title: Best practice
+          url:
+        - title: Hardware
+          url:
+        - title: Software
+          url:
+        - title: Validation
+          url:
+        - title: Performance tuning
+          url:
+  - title: Upgrade
+    entries:
+        - title: Overview
+  - title: Troubleshoot
+    entries:
+        - title: Overview
