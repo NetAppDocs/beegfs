@@ -1,0 +1,48 @@
+---
+sidebar: sidebar
+permalink: beegfs-design-conclusion.html
+keywords:
+summary:
+---
+
+= Conclusion
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+//
+// This file was created with NDAC Version 2.0 (August 17, 2020)
+//
+// 2022-04-29 10:21:46.139377
+//
+
+[.lead]
+This NetApp Verified Architecture provides a flexible and robust storage architecture for demanding HPC and HPC-style ML/DL workloads. The inclusion of a shared-disk HA cluster provides enterprises the storage reliability they need while avoiding the added cost of a shared-nothing HA architecture. The modular building block approach allows organizations to start small and scale over time to whatever performance and/or capacity requirements their future might hold.  Combined with the superior cloud integration and software-defined capabilities of the NetApp product portfolio,  NetApp storage solutions enable a full range of data pipelines that span the edge, the core, and the cloud helping ensure success in AI and HPC endeavors.
+
+=== Where to find additional information
+
+To learn more about the information that is described in this document, review the following documents and/or websites:
+
+* NetApp E-Series Collections on Ansible Galaxy
++
+https://galaxy.ansible.com/netapp_eseries[https://galaxy.ansible.com/netapp_eseries^] 
+
+* NetApp Product Documentation
++
+https://www.netapp.com/support-and-training/documentation/[https://www.netapp.com/support-and-training/documentation/^] 
+
+* BeeGFS Documentation
++
+https://doc.beegfs.io/[https://doc.beegfs.io/^] 
+
+=== Version history
+
+|===
+|Version |Date |Document version history
+
+|Version 1.0
+|May 2022
+|Initial release.
+|===

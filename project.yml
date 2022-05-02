@@ -11,21 +11,23 @@ sidebar:
   - title: Get started
     entries:
       - title: Intro
-        url: /get-started/overview.html
-      - title: Solution overview
-        url: /get-started/overview.html
+        url: /design/beegfs-design-abstract.html
+      - title: Executive summary
+        url: beegfs-design-executive-summary.html
       - title: Requirements
-        url: /get-started/overview.html
+        url: /design/beegfs-design-technology-requirements.html
   - title: Design
     entries:
         - title: Overview
-          url: /design/overview.html
+          url: /design/beegfs-design-solution-overview.html
         - title: Architecture
-          url: /design/overview.html
+          url: /design/beegfs-design-solution-architecture.html
         - title: Validation
-          url: /design/overview.html
-        - title: Performance tuning
-          url: /design/overview.html
+          url: /design/beegfs-design-solution-verification.html
+        - title: Sizing guidelines
+          url: /design/beegfs-design-solution-sizing-guidelines.html
+        - title: Conclusion
+          url: /design/beegfs-design-conclusion.html
   - title: Deploy
     entries:
         - title: Best practice

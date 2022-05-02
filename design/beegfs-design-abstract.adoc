@@ -1,0 +1,28 @@
+---
+sidebar: sidebar
+permalink: beegfs-design-abstract.html
+keywords:
+summary:
+---
+
+= Introduction
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+//
+// This file was created with NDAC Version 2.0 (August 17, 2020)
+//
+// 2022-04-29 10:21:46.024002
+//
+
+[.lead]
+This NetApp Verified Architecture describes the design of the NetApp second-generation BeeGFS hardware building blocks and the BeeGFS on NetApp shared-disk high-availability (HA) solution.
+
+This architecture is optimized to meet the performance requirements of demanding workloads including high-performance computing (HPC) and HPC-style machine learning (ML), deep learning (DL) and similar artificial intelligence (AI) techniques.
+
+By incorporating a shared-disk HA architecture, the solution also meets the data durability and availability requirements of enterprises and other organizations that cannot afford downtime or data loss as they look for storage that can scale to keep up with their next generation workloads and use cases.
+
+This solution has not only been verified by NetApp, but it also passed external qualification as a storage option for the NVIDIA DGX SuperPOD, giving customers confidence this solution has been vetted well.

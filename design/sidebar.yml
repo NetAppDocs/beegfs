@@ -1,0 +1,21 @@
+entries:
+  - title: NDAC contents
+    url: /index.html
+  - title: Dorian must update
+    entries:
+      - title: Abstract
+        url: /beegfs-design-abstract.html
+      - title: Executive summary
+        url: /beegfs-design-executive-summary.html
+      - title: Solution overview
+        url: /beegfs-design-solution-overview.html
+      - title: Technology requirements
+        url: /beegfs-design-technology-requirements.html
+      - title: Solution architecture
+        url: /beegfs-design-solution-architecture.html
+      - title: Solution verification
+        url: /beegfs-design-solution-verification.html
+      - title: Solution sizing guidelines
+        url: /beegfs-design-solution-sizing-guidelines.html
+      - title: Conclusion
+        url: /beegfs-design-conclusion.html
