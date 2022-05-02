@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-design-technology-requirements.html
+permalink: beegfs-technology-requirements.html
 keywords:
 summary:
 ---
@@ -43,16 +43,16 @@ Miscellaneous:
 * Two 1TB 7.2K SATA drives (or comparable) configured in RAID 1 for the OS.
 * 10GbE OCP 3.0 adapter (or comparable) for in-band OS management.
 * 1GbE BMC with Redfish API for out-of-band server management.
-* Dual hot swap power supplies and performance fans. 
+* Dual hot swap power supplies and performance fans.
 * Must support Mellanox optical InfiniBand cables if required to reach storage InfiniBand switches.
 Lenovo SR665:
 * A custom NetApp model includes the required version of the XClarity Controller firmware needed to support dual-port Mellanox ConnectX-6 adapters. Please contact NetApp for ordering details.
 |8
 |Mellanox ConnectX-6 HCAs (for file nodes)
-|MCX653106A-HDAT Host Channel Adapters (HDR IB 200Gb, Dual-port QSFP56, PCIe4.0 x16) 
+|MCX653106A-HDAT Host Channel Adapters (HDR IB 200Gb, Dual-port QSFP56, PCIe4.0 x16)
 |8
 |1m HDR InfiniBand cables (for file/block node direct connects)
-|MCP1650-H001E30 (1m Mellanox Passive Copper cable, IB HDR, up to 200Gbps, QSFP56, 30AWG). 
+|MCP1650-H001E30 (1m Mellanox Passive Copper cable, IB HDR, up to 200Gbps, QSFP56, 30AWG).
 The length can be adjusted to account for longer distances between the file and block nodes if required.
 |8
 |HDR InfiniBand cables (for file node/storage switch connections)
@@ -62,14 +62,14 @@ The length can be adjusted to account for longer distances between the file and 
 |2
 |Block nodes
 |Each NetApp EF600 should be configured as follows:
-* Memory: 256GB (128GB per controller). 
+* Memory: 256GB (128GB per controller).
 * Adapter: 2-port 200Gb/HDR (NVMe/IB).
 Drives: Configured to match desired capacity.
 |===
 
 === Software requirements
 
-The solution is deployed and managed from an https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html[Ansible control node^] with the following software installed. This table lists the Ansible control node requirements. 
+The solution is deployed and managed from an https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html[Ansible control node^] with the following software installed. This table lists the Ansible control node requirements.
 
 |===
 |Software |Version
@@ -84,14 +84,14 @@ The solution is deployed and managed from an https://docs.ansible.com/ansible/la
 |3.0.0
 |===
 
-For predictable performance and reliability, releases of the BeeGFS on NetApp solution are tested with specific versions of the software components required to implement the solution. The software requirements listed in the following tables are specific to the version of the NetApp BeeGFS Ansible collection listed in the table above.  
+For predictable performance and reliability, releases of the BeeGFS on NetApp solution are tested with specific versions of the software components required to implement the solution. The software requirements listed in the following tables are specific to the version of the NetApp BeeGFS Ansible collection listed in the table above.
 
 The following table lists the software requirements deployed automatically as part of the Ansible- based BeeGFS deployment.
 
 |===
 |Software |Version
 
-|BeeGFS 
+|BeeGFS
 |7.2.6
 |Corosync
 |3.1.5-1
@@ -136,17 +136,17 @@ The following table lists additional software requirements (NetApp EF600 block n
 The equipment listed in the following table was used for the validation, but appropriate alternatives can be used as needed. In general, NetApp recommends running the latest software versions to avoid unanticipated issues.
 
 |===
-|Hardware component |Installed software 
+|Hardware component |Installed software
 
 a|* 2x Mellanox MQM8700 200Gb InfiniBand switches
 a|* Firmware 3.9.2110
-|1x Ansible control node (virtualized): 
+|1x Ansible control node (virtualized):
 * Processors: Intel(R) Xeon(R) Gold 6146 CPU @ 3.20GHz
 * Memory: 8GB
 * Local storage: 24GB
 a|* CentOS Linux 8.4.2105
 * Kernel 4.18.0-305.3.1.el8.x86_64
-Installed Ansible and Python versions match those in the table above. 
+Installed Ansible and Python versions match those in the table above.
 |10x BeeGFS Clients (CPU nodes)
 * Processor: 1x AMD EPYC 7302 16-Core CPU at 3.0GHz
 * Memory: 128GB
