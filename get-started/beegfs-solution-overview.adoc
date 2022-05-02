@@ -33,9 +33,8 @@ To address these challenges,  NetApp has designed a standard building block arch
 
 This approach provides administrators the flexibility needed to quickly adapt to diverse and shifting workload requirements while using a scalable building block architecture and the latest available hardware.  The solution also features a https://www.netapp.com/blog/high-availability-beegfs/[shared-disk HA design^] that helps reduce cost without sacrificing performance or reliability, requiring enterprise- grade block nodes for data durability.
 
-This design guide walks the reader through the various technical components of this solution and provides an in-depth overview of the various decisions that went into designing this NetApp Verified Architecture. For a detailed overview of how to deploy this solution, see NVA-1164-DEPLOY-BeeGFS on NetApp deployment guide.
 
-=== Use case summary
+== Use case summary
 
 This solution applies to the following use cases:
 
@@ -47,13 +46,11 @@ This solution applies to the following use cases:
 * Multiterabyte or multipetabyte datasets
 * Environments that need a single storage namespace optimizable for a mix of large and small files
 
-=== Verified block nodes
-
-==== NetApp EF600 storage system
+== Verified block nodes: NetApp EF600 storage system
 
 In the highly competitive world of business, speed is everything. However, even the fastest supercomputer cannot meet expectations if it does not have equally fast storage to support it. The NetApp EF600 all-flash array gives customers consistent, near-real-time access to data while supporting any number of workloads simultaneously. To enable fast, continuous feeding of data to AI and HPC applications, EF600 storage systems deliver up to two million cached read IOPS, response times of under 100 microseconds, and 42GBps sequential read bandwidth in one enclosure. With 99.9999% reliability from EF600 storage systems, data for AI and HPC operations is available whenever and wherever it is needed.
 
-===== Key benefits
+==== Key benefits
 
 The key benefits of EF600 storage systems include:
 
@@ -62,15 +59,13 @@ The key benefits of EF600 storage systems include:
 * *Maximize cost efficiency.* Reduce operating costs with high-density drives and price/performance optimized storage building blocks to ensure you can spend more on compute than storage.
 * *Reduce risk and enable success.* Rely on a fully integrated, validated AI and HPC infrastructure from industry leaders to help gain a competitive edge.  Maximize productivity with 99.9999% availability.
 
-=== Verified file nodes
-
-==== Lenovo ThinkSystem SR665 Server
+== Verified file nodes: Lenovo ThinkSystem SR665 Server
 
 The SR665 is a two-socket 2U server featuring PCIe 4.0.  When configured to meet the requirements of this NetApp Verified Architecture,  it provides ample performance to run BeeGFS file services in a configuration well balanced with the available of throughput and IOPs provided by the direct attached E-Series nodes.
 
 For more information about the Lenovo SR665, see https://lenovopress.com/lp1269-thinksystem-sr665-server[Lenovo’s website^].
 
-=== BeeGFS parallel file system
+== BeeGFS parallel file system
 
 BeeGFS is a parallel file system with an architecture based on the following four main services:
 
@@ -79,7 +74,7 @@ BeeGFS is a parallel file system with an architecture based on the following fou
 * *Metadata service.  *Keeps track of the file system layout, directory, and file attributes, and so on.
 * *Client service.  *Mounts the file system to access the stored data. This design provides flexibility that is key to meeting diverse and evolving AI and HPC workloads. Use of NetApp EF-Series storage systems as the underlying block nodes supercharges BeeGFS storage and metadata services by offloading RAID and other storage tasks including drive monitoring and wear detection.
 
-==== Key benefits
+=== Key benefits
 
 The key benefits of the BeeGFS parallel file system include:
 
@@ -99,7 +94,7 @@ For servers that don’t support RDMA, BeeGFS can serve files over TCP/IP and re
 +
 Avoid fundamental architectural limitations imposed by the design of some storage solutions.
 
-=== BeeGFS on NetApp
+== BeeGFS on NetApp
 
 While the community edition of BeeGFS can be used free of charge, the enterprise edition requires purchasing a professional support subscription contract from a partner like NetApp.  The enterprise edition allows use of several additional features including resiliency, quota enforcement, and storage pools.
 
@@ -111,7 +106,7 @@ image:beegfs-design-image1.png[Error: Missing Graphic Image]
 
 BeeGFS on NetApp is delivered and deployed using Ansible automation hosted on https://github.com/netappeseries/beegfs/[GitHub^] and https://galaxy.ansible.com/netapp_eseries/beegfs[Ansible Galaxy^] (see the  <<xref>> section for more details).  Although it is primarily tested with the hardware used to assemble the BeeGFS building blocks described in this NetApp Verified Architecture, it can be configured to run on virtually any x86 based server using a supported Linux distribution.
 
-==== Key benefits
+=== Key benefits
 
 In addition to being backed and supported by a leading on- premises and cloud storage provider, the key benefits of using BeeGFS on NetApp include the following:
 
@@ -121,7 +116,7 @@ In addition to being backed and supported by a leading on- premises and cloud st
 * High availability featuring a shared-disk architecture that provides data durability and availability.
 * Support for https://www.netapp.com/blog/kubernetes-meet-beegfs/[modern workload management and orchestration^] using containers and Kubernetes.
 
-==== Verified hardware designs: Second-generation building block
+== Verified hardware designs: Second-generation building block
 
 The second-generation NetApp BeeGFS building block (shown in the following figure) uses two dual socket PCIe 4.0- capable servers for the BeeGFS file layer and two NetApp EF600 storage systems as the block layer. These 8U building blocks more than double the performance of the https://www.netapp.com/pdf.html?item=/media/25445-nva-1156-design.pdf[NetApp first-generation BeeGFS building block^] design while adding support for high availability.  Multiple building blocks are combined to create a BeeGFS parallel file system, which can span multiple datacenter racks if necessary.  These building blocks are the hardware aspect of this NetApp Verified Architecture.
 

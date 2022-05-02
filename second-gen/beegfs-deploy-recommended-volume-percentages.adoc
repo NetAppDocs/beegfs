@@ -1,25 +1,19 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-appendix-b--recommended-storage-pool-overprovisioning-percentages.html
+permalink: beegfs-deploy-recommended-volume-percentages.html
 keywords:
 summary:
 ---
 
-= Appendix B: Recommended storage pool overprovisioning percentages
+= Recommended storage pool overprovisioning percentages
 :hardbreaks:
 :nofooter:
 :icons: font
 :linkattrs:
 :imagesdir: ./media/
 
-//
-// This file was created with NDAC Version 2.0 (August 17, 2020)
-//
-// 2022-05-02 10:33:57.514111
-//
-
 [.lead]
-When following the standard four volumes per storage pool configuration for second generation building blocks, refer to the following table for the recommended percentages to use as the volume size in the `eseries_storage_pool_configuration` for each BeeGFS metadata or storage target: 
+When following the standard four volumes per storage pool configuration for second generation building blocks, refer to the following table for the recommended percentages to use as the volume size in the `eseries_storage_pool_configuration` for each BeeGFS metadata or storage target:
 
 |===
 |Drive size |Size
@@ -35,6 +29,6 @@ When following the standard four volumes per storage pool configuration for seco
 |===
 
 [NOTE]
-Thguidance does not apply to the storage pool containing the management service, which should reduce the sizes above by .25% to allocate 1% of the storage pool for management data. 
+Thguidance does not apply to the storage pool containing the management service, which should reduce the sizes above by .25% to allocate 1% of the storage pool for management data.
 
 To understand how these values were determined, see https://www.netapp.com/media/17009-tr4800.pdf[TR-4800: Appendix A: Understanding SSD endurance and overprovisioning^].

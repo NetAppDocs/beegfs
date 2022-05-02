@@ -14,14 +14,22 @@ entries:
   - title: Deploy
     entries:
         - title: Overview
-          url: /beegfs-deploy-deployment-procedures.html
+          url: /beegfs-deploy-overview.html
+        - title: Best practice
+          url: /beegfs-deploy-bestpractice.html
         - title: Deploy hardware
           url: /beegfs-deploy-hardware-deployment.html
         - title: Deploy software
-          url: /beegfs-deploy-software-deployment.html
+          entries:
+            - title: Prerequisite tasks
+              url: /beegfs-deploy-software-prereqs.html
+            - title: Set up Ansible control node
+              url: /beegfs-deploy-setting-up-an-ansible-control-node.html
+            - title: Deploy BeeGFS on NetApp using Ansible
+              url: /beegfs-deploy-beegfs-on-netapp-using-ansible.html
         - title: Performance tuning
           url: /beegfs-deploy-performance-tuning.html
         - title: Recommended volume size percentages
           url: /beegfs-deploy-recommended-volume-percentages.html
   - title: More information
-    url: /beegfs-conclusion.html
+    url: /beegfs-moreinfo.html
