@@ -11,11 +11,11 @@ sidebar:
   - title: Get started
     entries:
       - title: Intro
-        url: /design/beegfs-design-abstract.html
+        url: /beegfs-design-abstract.html
       - title: Executive summary
-        url: beegfs-design-executive-summary.html
+        url: /beegfs-design-executive-summary.html
       - title: Requirements
-        url: /design/beegfs-design-technology-requirements.html
+        url: /beegfs-design-technology-requirements.html
   - title: Design
     entries:
         - title: Overview
