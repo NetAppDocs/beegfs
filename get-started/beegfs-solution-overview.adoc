@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-design-solution-overview.html
+permalink: beegfs-solution-overview.html
 keywords:
 summary:
 ---

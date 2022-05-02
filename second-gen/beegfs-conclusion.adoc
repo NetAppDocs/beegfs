@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-design-conclusion.html
+permalink: beegfs-conclusion.html
 keywords:
 summary:
 ---
@@ -27,15 +27,15 @@ To learn more about the information that is described in this document, review t
 
 * NetApp E-Series Collections on Ansible Galaxy
 +
-https://galaxy.ansible.com/netapp_eseries[https://galaxy.ansible.com/netapp_eseries^] 
+https://galaxy.ansible.com/netapp_eseries[https://galaxy.ansible.com/netapp_eseries^]
 
 * NetApp Product Documentation
 +
-https://www.netapp.com/support-and-training/documentation/[https://www.netapp.com/support-and-training/documentation/^] 
+https://www.netapp.com/support-and-training/documentation/[https://www.netapp.com/support-and-training/documentation/^]
 
 * BeeGFS Documentation
 +
-https://doc.beegfs.io/[https://doc.beegfs.io/^] 
+https://doc.beegfs.io/[https://doc.beegfs.io/^]
 
 === Version history
 

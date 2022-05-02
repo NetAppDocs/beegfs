@@ -10,43 +10,5 @@ sidebar:
     url: "/index.html"
   - title: NetApp Validated Architectures
     entries:
-    - title: Get started
-      entries:
-        - title: Solution overview
-          url: //beegfs-design-solution-overview.html
-        - title: Executive summary
-          url: /beegfs-design-executive-summary.html
-    - title: Second-Generation
-      entries:
-        - title: Requirements
-          url: /beegfs-design-technology-requirements.html
-        - title: Design
-          entries:
-          - title: Architecture
-            url: /beegfs-design-solution-architecture.html
-          - title: Verfication
-            url: /beegfs-design-solution-verification.html
-          - title: Sizing guidelines
-            url: /beegfs-design-solution-sizing-guidelines.html
-        - title: Deploy
-          entries:
-              - title: Best practice
-                url: /deploy/overview.html
-              - title: Hardware
-                url: /deploy/overview.html
-              - title: Software
-                url: /deploy/overview.html
-              - title: Validation
-                url: /deploy/overview.html
-              - title: Performance tuning
-                url: /deploy/overview.html
-        - title: More information
-          url: /beegfs-design-conclusion.html
-    - title: Upgrade
-      entries:
-          - title: Overview
-            url: /upgrade/overview.html
-    - title: Troubleshoot
-      entries:
-          - title: Overview
-            url: /troubleshoot/overview.html
+    - section: get-started
+    - section: second-gen
