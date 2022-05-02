@@ -1,12 +1,12 @@
 settings:
-  name: "beegfs"
+  name: "BeeGFS on E-Series"
   internal:
     pdf_enabled: true
   prod:
     pdf_enabled: true
 sidebar:
   entries:
-  - title: BeeGFS docs
+  - title: BeeGFS on E-Series docs
     url: "/index.html"
   - title: NetApp Validated Architectures
     entries:
