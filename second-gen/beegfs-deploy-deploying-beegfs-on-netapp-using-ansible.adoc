@@ -1,0 +1,1390 @@
+---
+sidebar: sidebar
+permalink: beegfs-deploy-deploying-beegfs-on-netapp-using-ansible.html
+keywords:
+summary:
+---
+
+= Deploying BeeGFS on NetApp using Ansible
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+//
+// This file was created with NDAC Version 2.0 (August 17, 2020)
+//
+// 2022-05-02 10:33:57.205412
+//
+
+[.lead]
+To tell Ansible about the file and block nodes set up in previous sections, you need to build an inventory including hosts, groups, and variables the desired BeeGFS file system. Sample inventories can be downloaded from .
+
+To actually apply the configuration described by this inventory,  use the various Ansible modules and roles provided in the NetApp E-Series Ansible collections, in particular the https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_2[BeeGFS HA 7.2 role^] that deploys the end-to-end solution.  While in- depth documentation is provided with the role, this deployment guide describes how to use it specifically to deploy a NetApp Verified Architecture using the second generation BeeGFS building block design.
+
+[NOTE]
+Although this section attempts to provide enough detail that prior experience with Ansible is not a prerequisite to deploy the solution, some familiarity with Ansible and related terminology is strongly recommended. 
+
+The building block architecture described by this NetApp Verified Architecture makes this process straightforward, outside of differing host names and management IPs, the only configuration options that change between each building block is whether it should run:
+
+* BeeGFS management, metadata, and storage services.  The first building block deployed in each filesystem requires this configuration and is sometimes referred to as the base building block.
+* BeeGFS Metadata and Storage services.
+* BeeGFS Storage services.The use of these different configuration profiles for each building block allows the file system to flexibly scale to meet variable performance and capacity requirements using the same underlying hardware platforms and building block design.
+
+=== General configuration
+
+First, define the configuration that applies to all building blocks, regardless of which eventual configuration profile  applied to them individually.
+
+. On your Ansible control node,  identify a directory used to store the Ansible inventory and playbook files that describe this BeeGFS deployment.  Unless otherwise noted,  all files and directories created in this and following sections  created relative to this directory.
++
+While outside the scope of this document, storing the contents of the directory containing the inventory and playbook files describing your BeeGFS deployment in a source/version control system like BitBucket or Git is *strongly *recommended. Creating a `.gitignore` file that ignores the packages/directory is also recommended to avoid storing large files in Git if Ansible is used to manage SANtricity OS software and other potentially large files.
+
+. Create the following subdirectories: `host_vars`,  `group_vars`, and `packages`. 
+
+==== Specifying configuration for individual file and block nodes
+
+. Under `host_vars/`,  create a file for each BeeGFS file node named `<HOSTNAME>.yml `with the following content, paying special attention to the notes regarding content to populate for BeeGFS cluster IPs and host names ending in odd versus even numbers.
++
+You might have noticed that initially the file node  interface names that do match up with what is listed here (such as ib0 or ibs1f0). These custom names  configured in a later section (see: `eseries_ib_base_udev_rules`). 
+
+....
+ansible_host: “<MANAGEMENT_IP>”
+eseries_ipoib_interfaces:  # Used to configure BeeGFS cluster IP addresses.
+  - name: i1b
+    address: 100.127.100. <NUMBER_FROM_HOSTNAME>/16
+  - name: i4b
+    address: 100.128.100. <NUMBER_FROM_HOSTNAME>/16
+beegfs_ha_cluster_node_ips:
+  - <MANAGEMENT_IP>
+  - <i1b_BEEGFS_CLUSTER_IP>
+  - <i4b_BEEGFS_CLUSTER_IP>
+# NVMe over InfiniBand storage communication protocol information
+# For odd numbered file nodes (i.e., h01, h03, ..):
+eseries_nvme_ib_interfaces:
+  - name: i1a
+    address: 192.168.1.10/24
+    configure: true
+  - name: i2a
+    address: 192.168.3.10/24
+    configure: true
+  - name: i3a
+    address: 192.168.5.10/24
+    configure: true
+  - name: i4a
+    address: 192.168.7.10/24
+    configure: true
+# For even numbered file nodes (i.e., h02, h04, ..):
+# NVMe over InfiniBand storage communication protocol information
+eseries_nvme_ib_interfaces:
+  - name: i1a
+    address: 192.168.2.10/24
+    configure: true
+  - name: i2a
+    address: 192.168.4.10/24
+    configure: true
+  - name: i3a
+    address: 192.168.6.10/24
+    configure: true
+  - name: i4a
+    address: 192.168.8.10/24
+    configure: true
+....
+
+[NOTE]
+If you have already deployed the BeeGFS cluster, you must stop the cluster before adding or changing statically configured IP addresses including cluster IPs and IPs used for NVMe/IB. This is required to these changes take effect properly and do not disrupt cluster operations.
+
+. Under `host_vars/`,  create a file for each BeeGFS block node named `<HOSTNAME>.yml `and populate with the following contentagain paying special attention to the notes regarding content to populate for storage array names ending in odd vs even numbers. For each block node,  you only create one file and specify the `<MANAGEMENT_IP> `for one of the two controllers (usually the A one).
+
+....
+eseries_system_name: <STORAGE_ARRAY_NAME>
+eseries_system_api_url: https://<MANAGEMENT_IP>:8443/devmgr/v2/
+eseries_initiator_protocol: nvme_ib
+# For odd numbered block nodes (i.e., a01, a03, ..):
+eseries_controller_nvme_ib_port:
+  controller_a:
+    - 192.168.1.101
+    - 192.168.2.101
+    - 192.168.1.100
+    - 192.168.2.100
+  controller_b:
+    - 192.168.3.101
+    - 192.168.4.101
+    - 192.168.3.100
+    - 192.168.4.100
+# For even numbered block nodes (i.e., a02, a04, ..):
+eseries_controller_nvme_ib_port:
+  controller_a:
+    - 192.168.5.101
+    - 192.168.6.101
+    - 192.168.5.100
+    - 192.168.6.100
+  controller_b:
+    - 192.168.7.101
+    - 192.168.8.101
+    - 192.168.7.100
+    - 192.168.8.100
+....
+
+==== Specifying common file and block node configuration
+
+Ansible allows us to define configuration common to a group of hosts under `group_vars` in a file name that corresponds with the group. Among other benefits, this prevents repeating shared configuration in multiple places. Hosts can be in more than one group, and at runtime Ansible choose what variables apply to a particular host based on its https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html[variable precedence^] rules.  Host-to-group assignments are defined in the actual Ansible inventory file, which  created towards the end of this section.
+
+. In Ansible any configuration,  you want to apply to all hosts that can be defined in a group called All.  Create the file `group_vars/all.yml` with the following content:
+
+....
+ansible_python_interpreter: /usr/bin/python3
+beegfs_ha_ntp_server_pools:  # Modify the NTP server addressess if desired.
+  - "pool 0.pool.ntp.org iburst maxsources 3"
+  - "pool 1.pool.ntp.org iburst maxsources 3"
+....
+
+==== Specifying common file node configuration
+
+The shared configuration for file nodes is defined in a group called `ha_cluster`. The steps in this section build out the configuration that should be included in the `group_vars/ha_cluster.yml` file. 
+
+. At the top of the file,  define a few defaults, including the password that should be used to become the sudo user on the file nodes.
+
+....
+### ha_cluster Ansible group inventory file. 
+# Place all default/common variables for BeeGFS HA cluster resources below.
+### Cluster node defaults
+ansible_ssh_user: root
+ansible_become_password: <PASSWORD>
+eseries_ipoib_default_hook_templates:
+  - 99-multihoming.j2 # This is required when configuring additional static IPs (for example cluster IPs) when multiple IB ports are in the same IPoIB subnet.
+# If the following options are specified, then Ansible will automatically reboot nodes when necessary for changes to take effect: 
+eseries_common_allow_host_reboot: true
+eseries_common_reboot_test_command: "systemctl --state=active,exited | grep eseries_nvme_ib.service"
+....
+
+[NOTE]
+Particularly for production environments,  do note store passwords in plain text and instead use https://docs.ansible.com/ansible/latest/user_guide/vault.html[Ansible Vault^] or the `--ask-become-pass` option when running the playbook.  If the `ansible_ssh_user` is already root, then omitting the `ansible_become_password` is another option.
+
+. Optionally,  configure a name for the high-availability (HA) cluster and specify a user that should be created for intracluster communication. If the private IP addressing scheme is being modified the default `beegfs_ha_mgmtd_floating_ip` need to be updatedote this must match what is configured in a later section for the BeeGFS Management resource group. Lastly,  specify one or more emails that should receive alerts for cluster events using `beegfs_ha_alert_email_list`.
+
+....
+### Cluster information
+# The following variables should be adjusted depending on the desired configuration: 
+beegfs_ha_cluster_name: hacluster                  # BeeGFS HA cluster name.
+beegfs_ha_cluster_username: hacluster              # BeeGFS HA cluster username.
+beegfs_ha_cluster_password: hapassword             # BeeGFS HA cluster username's password.
+beegfs_ha_cluster_password_sha512_salt: randomSalt # BeeGFS HA cluster username's password salt.
+beegfs_ha_mgmtd_floating_ip: 100.127.101.0         # BeeGFS management service IP address.
+# Email Alerts Configuration
+beegfs_ha_enable_alerts: True
+beegfs_ha_alert_email_list: ["email@example.com"]  # E-mail recipient list for notifications when BeeGFS HA resources change or fail.  Often a distribution list for the team responsible for managing the cluster.
+beegfs_ha_alert_conf_ha_group_options:
+      mydomain: “example.com” 
+# The mydomain parameter specifies the local internet domain name. This is optional when the cluster nodes have fully qualified hostnames (i.e. host.example.com).
+# Adjusting the following parameters is optional:
+beegfs_ha_alert_timestamp_format: "%Y-%m-%d %H:%M:%S.%N" #%H:%M:%S.%N
+beegfs_ha_alert_verbosity: 3  
+#  1) high-level node activity
+#  3) high-level node activity + fencing action information + resources (filter on X-monitor)
+#  5) high-level node activity + fencing action information + resources
+....
+
+[NOTE]
+While seemingly redundant here, `beegfs_ha_mgmtd_floating_ip` is important when scaling the BeeGFS file system beyond a single HA cluster. Subsequent HA clusters are deployed without an additional BeeGFS management service and point at the management service provided by the first cluster.
+
+. Configure https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters[fencing^]. By default,  fencing is enabled, but you need to configure a fencing agent. The output shows examples configuring common fencing agents (choose one). The `<HOSTNAME>` specified in the `pcmk_host_map` or `pcmk_host_list` must correspond with the hostname in the Ansible inventory.
+
+** Although the BeeGFS cluster can be deployed and run without fencing, this is not supported, particularly in production. This is largely to ensure when BeeGFS services including any resource dependencies like block devices failover due to an issue, there is no risk of concurrent access by multiple nodes that result in file system corruption or other undesirableunexpected behavior.
+** If fencing must be disabled,  refer to the general notes in the BeeGFS HA role’s getting started guide and set `beegfs_ha_cluster_crm_config_options[“stonith-enabled”]` to false in `ha_cluster.yml`.
+** There are multiple node- level fencing devices available, and the BeeGFS HA role can configure any fencing agent available in the Red Hat HA package repository. When possible,  a fencing agent that works through the uninterruptible power supply (UPS) or rack power distribution unit (rPDU) because some fencing agents such as the baseboard management controller (BMC) or other lights-out devices that are built into the server not respond to the fence request under certain failure scenarios.
+
+....
+### Fencing configuration: 
+# OPTION 1: To enable fencing using APC Power Distribution Units (PDUs): 
+beegfs_ha_fencing_agents:
+ fence_apc:
+   - ipaddr: <PDU_IP_ADDRESS>
+     login: <PDU_USERNAME>
+     passwd: <PDU_PASSWORD>
+     pcmk_host_map: "<HOSTNAME>:<PDU_PORT>,<PDU_PORT>;<HOSTNAME>:<PDU_PORT>,<PDU_PORT>"
+# OPTION 2: To enable fencing using the Redfish APIs provided by the Lenovo XCC (and other BMCs):  
+redfish: &redfish
+  username: <BMC_USERNAME>
+  password: <BMC_PASSWORD>
+  ssl_insecure: 1 # If a valid SSL certificate is not available specify “1”. 
+beegfs_ha_fencing_agents:
+  fence_redfish:
+    - pcmk_host_list: <HOSTNAME>
+      ip: <BMC_IP>
+      <<: *redfish
+    - pcmk_host_list: <HOSTNAME>
+      ip: <BMC_IP>
+      <<: *redfish
+# For details on configuring other fencing agents see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters. 
+....
+
+. As part of the performance benchmark testing used to verify this NetApp Verified Architecture,  several optional adjustments to the block device and virtual memory subsystem configuration on the file nodes. While many users find these generally work well, further improving performance for a particular workload is possible by further tuning. As such,  these recommendations are included in the BeeGFS role but not enabled by default to ensure users are aware of the tuning applied to their file system. To enable performance tuning,  specify:
+
+....
+### Performance Configuration:
+beegfs_ha_enable_performance_tuning: True
+....
+
+[NOTE]
+For a comprehensive list of available tuning parameters that can be adjusted,  see the Performance Tuning Defaults section of the https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_2/defaults/main.yml[BeeGFS ^]HA role.  The default values can be overridden for all nodes in the cluster in this file or the `host_vars` file for an individual node.
+
+. To allow full 200Gb/HDR connectivity between block and file nodes the Open Subnet Manager (OpenSM) package from the Mellanox Open Fabrics Enterprise Distribution (MLNX_OFED)  the inbox `opensm` package does not support the necessary virtualization functionality. Although deployment using Ansible is supported, the desired packages must first be downloaded to the Ansible control node used to run the BeeGFS role:
+.. Download the packages for the version of OpenSM listed in the technology requirements section from Mellanox’s website to the `packages/` directory using curl or the tool of choice example:
+
+....
+curl -o packages/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm 
+curl -o packages/opensm-5.9.0. MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm  
+....
+
+.. Populate the following in `group_vars/ha_cluster.yml` (adjust packages as needed): 
+
+....
+### OpenSM package and configuration information
+eseries_ib_opensm_allow_upgrades: true
+eseries_ib_opensm_skip_package_validation: true
+eseries_ib_opensm_rhel_packages: []
+eseries_ib_opensm_custom_packages:
+  install:
+    - files:
+        add:
+          "packages/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm": "/tmp/"
+          "packages/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm": "/tmp/"
+    - packages:
+        add:
+          - /tmp/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
+          - /tmp/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
+  uninstall:
+    - packages:
+        remove:
+          - opensm
+          - opensm-libs
+      files:
+        remove:
+          - /tmp/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
+          - /tmp/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
+eseries_ib_opensm_options:
+  virt_enabled: "2"
+....
+
+. To consistent mapping of logical InfiniBand port identifiers to underlying PCIe devices, a udev rule must be configured that is unique to the PCIe topology of each server platform used as a BeeGFS file node. Use the following values for verified file nodes: 
+
+....
+### Ensure Consistent Logical IB Port Numbering
+# Name of the udev rule to create (do not modify): 
+eseries_ib_base_udev_name: 99-beegfs-ib.rules
+# OPTION 1: Lenovo SR665 PCIe address-to-logical IB port mapping:  
+eseries_ib_base_udev_rules:
+  "0000:41:00.0": i1a
+  "0000:41:00.1": i1b
+  "0000:01:00.0": i2a
+  "0000:01:00.1": i2b  
+  "0000:a1:00.0": i3a
+  "0000:a1:00.1": i3b
+  "0000:81:00.0": i4a
+  "0000:81:00.1": i4b
+  
+# Note: At this time no other x86 servers have been qualified. Configuration for future qualified file nodes will be added here.
+....
+
+. Update the metadata target selection algorithm if desired. 
+
+....
+beegfs_ha_beegfs_meta_conf_ha_group_options:
+  tuneTargetChooser: randomrobin
+
+[NOTE]
+In our verification testing,  `randomrobin` was typically used to test files were evenly distributed across all BeeGFS storage targets during https://doc.beegfs.io/latest/advanced_topics/benchmark.html[performance benchmarking^].  With real world use this might cause lowernumbered targets to fill up faster than higher numbered targets. Omitting this and just using the default `randomized` value has been shown to provide good performance while still utilization all available targets.
+
+==== Specifying common block node configuration
+
+The shared configuration for block nodes is defined in a group called `eseries_storage_systems`. The steps in this section build out the configuration that should be included in the `group_vars/ eseries_storage_systems.yml` file.
+
+. Normally,  Ansible uses SSH to connect to managed hosts, but in the case of the NetApp E-Series storage systems used as block nodes,  the modules use the REST API for communication. To facilitate this,  you need to set the Ansible connection to local, provide the system password, and specify if SSL certificates should be verified. At the top of the file add:
+
+....
+### eseries_storage_systems Ansible group inventory file. 
+# Place all default/common variables for NetApp E-Series Storage Systems here: 
+ansible_connection: local
+eseries_system_password: <PASSWORD>
+eseries_validate_certs: false
+....
+
+[NOTE]
+Listing any passwords in plaintext is not recommended. Use Ansible vault or provide the `eseries_system_password` when running Ansible using `--extra-vars`.
+
+. This NetApp Verified Architecture recommends specific versions of the E-Series SANtricity OS controller software and NVSRAM. optimal performance, install the versions listed under the technology requirements section for block nodes. Download the corresponding https://mysupport.netapp.com/site/products/all/details/eseries-santricityos/downloads-tab[files^] from the https://mysupport.netapp.com/site/products/all/details/eseries-santricityos/downloads-tab[NetApp Support site^] and either upgrade manually or include them in the `packages/` directory of the Ansible control node and populate the following in `eseries_storage_systems.yml `to upgrade using Ansible:
+
+....
+# Firmware, NVSRAM, and Drive Firmware (modify the filenames as needed):
+eseries_firmware_firmware: "packages/RCB_11.70.2_6000_61b1131d.dlp"
+eseries_firmware_nvsram: "packages/N6000-872834-D06.dlp"
+eseries_drive_firmware_firmware_list:
+  - "packages/D_MZWLJ3T8HBLS-0G5_30604635_NA51_XXXX_000.dlp"
+....
+
+. NetApp recommends installing the latest drive firmware available.  Download the corresponding https://mysupport.netapp.com/NOW/download/tools/diskfw_eseries/[files^] for the drives installed in your block nodes from the NetApp Support site either upgrade manually or include them in the `packages/` directory of the Ansible control node and populate the following in `eseries_storage_systems.yml `to upgrade using Ansible:
+
+....
+eseries_drive_firmware_firmware_list:
+  - "packages/<FILENAME>.dlp"
+eseries_drive_firmware_upgrade_drives_online: true
+....
+
+[NOTE]
+Setting `eseries_drive_firmware_upgrade_drives_online` to `false` will speed up the upgrade but should not be done after BeeGFS is deployed because it requires stopping all I/O to the drives before the upgrade to avoid application errors.  Because performing an online drive firmware upgrade before configuring volumes is still quick, always setting this to `true` is recommended to avoid issues later. 
+
+. Several changes to the global configuration are recommended to optimize performance for this NetApp Verified Architecture.
+
+....
+# Global Configuration Defaults
+eseries_system_cache_block_size: 32768
+eseries_system_cache_flush_threshold: 80
+eseries_system_default_host_type: linux dm-mp
+eseries_system_autoload_balance: disabled
+eseries_system_host_connectivity_reporting: disabled
+eseries_system_controller_shelf_id: 99 # Required.
+....
+
+. Specify parameters to optimal volume provisioning and behavior.
+
+....
+# Storage Provisioning Defaults
+eseries_volume_size_unit: pct
+eseries_volume_read_cache_enable: true
+eseries_volume_read_ahead_enable: false
+eseries_volume_write_cache_enable: true
+eseries_volume_write_cache_mirror_enable: true
+eseries_volume_cache_without_batteries: false
+eseries_storage_pool_usable_drives: "99:0,99:23,99:1,99:22,99:2,99:21,99:3,99:20,99:4,99:19,99:5,99:18,99:6,99:17,99:7,99:16,99:8,99:15,99:9,99:14,99:10,99:13,99:11,99:12"
+....
+
+[NOTE]
+The value specified for `eseries_storage_pool_usable_drives` is specific to NetApp EF600 block nodes and controls the order in which drives are assigned to new volume groups. This ordering the I/O to each group is evenly distributed across backend drive channels. 
+
+=== Creating an Ansible inventory for the BeeGFS file system
+
+==== Introducing the inventory layout for a BeeGFS HA cluster
+
+This section p an overview of the Ansible inventory structure used to define a BeeGFS HA cluster.  Anyone with previous Ansible experience should be aware the BeeGFS HA role implements a custom method of discovering which variables (or facts) apply to each host. This is required to simplify building an Ansible inventory that describes resources that can run one multiple servers.
+
+[NOTE]
+Don’t create any files with the content in this subsection is intended as an example to help the reader understand the scheme that is used in the following sections.
+
+An Ansible inventory typically consists of three things, the files in `host_vars` and `group_vars` and an `inventory.yml` file that assigns hosts to specific groups (and potentially groups to other groups).  Although this configuration is predetermined based on the configuration profile, a general understanding of how everything is laid out as an Ansible inventory might be helpful:
+
+....
+# BeeGFS HA (High Availability) cluster inventory.
+all:
+  children:
+    # Ansible group representing all block nodes: 
+    eseries_storage_systems:
+      hosts:
+        ictad22a01:
+        ictad22a02:
+        ictad22a03:
+        ictad22a04:
+        ictad22a05:
+        ictad22a06:
+    # Ansible group representing all file nodes: 
+    ha_cluster:
+      children:
+        meta_01:  # Group representing a metadata service with ID 01. 
+          hosts:
+            file_node_01:  # This service is preferred on the first file node. 
+            file_node_02:  # And can failover to the second file node. 
+        meta_02:  # Group representing a metadata service with ID 02.
+          hosts:
+            file_node_02:  # This service is preferred on the second file node.
+            file_node_01: # And can failover to the first file node. 
+....
+
+For each service,  an additional file is created under `group_vars` describing its configuration.
+
+....
+# meta_01 - BeeGFS HA Metadata Resource Group
+beegfs_ha_beegfs_meta_conf_resource_group_options:
+  connMetaPortTCP: 8015
+  connMetaPortUDP: 8015
+  tuneBindToNumaZone: 0
+floating_ips:
+  - i1b: <IP>/<SUBNET_MASK>
+  - i4b: <IP>/<SUBNET_MASK>
+# Type of BeeGFS service the HA resource group will manage. 
+beegfs_service: metadata # Choices: management, metadata, storage.
+# What block node should be used to create a volume for this service: 
+beegfs_targets:
+  ictad22a01:
+    eseries_storage_pool_configuration:
+      - name: beegfs_m1_m2_m5_m6
+        raid_level: raid1
+        criteria_drive_count: 4
+        owning_controller: A
+        common_volume_configuration:
+          segment_size_kb: 128 
+        volumes:
+          - size: 21.25
+....
+
+This allows the BeeGFS service, network, and storage configuration for each resource to be defined in a single place. Behind the scenes,  the BeeGFS role handles aggregating the necessary configuration for each file and block node based on this inventory structure.  For more information, see this https://www.netapp.com/blog/accelerate-deployment-of-ha-for-beegfs-with-ansible/[blog post^]. 
+
+[NOTE]
+The BeeGFS numerical and string node ID for each service is automatically configured based on the group name. Thus,  in addition to the general Ansible requirement for group names to be unique, groups representing a BeeGFS service must end in a number that is unique for the type of BeeGFS service the group represents. For example,  meta_01 and stor_01 are allowed, but metadata_01 and meta_01 are not.
+
+==== Building the initial Ansible inventory
+
+his deployment guide shows how to deploy a BeeGFS file system that consists of one base building block including management, metadata, and storage services a second building block with metadata and storage services and a third storage only building block.  This is intended to show the full range of typical configuration profiles that can be used to configure NetApp BeeGFS building blocks to meet the requirements of the overall BeeGFS file system.
+
+[NOTE]
+In this and subsequent sections,  adjust as needed to build the inventory representing the BeeGFS file system you want to deploy. In particular, Ansible host names that represent each block or file node and the desired IP addressing scheme for the storage network to ensure it can scale to the number of BeeGFS file nodes and clients. 
+
+Create a new file `inventory.yml` and insert the following, replacing the hosts under `eseries_storage_systems` as needed to represent the block nodes in your deploymenthe names should correspond with the name used for `host_vars/<FILENAME>. yml`.
+
+....
+# BeeGFS HA (High Availability) cluster inventory.
+all:
+  children:
+    # Ansible group representing all block nodes: 
+    eseries_storage_systems:
+      hosts:
+        ictad22a01:
+        ictad22a02:
+        ictad22a03:
+        ictad22a04:
+        ictad22a05:
+        ictad22a06:
+    # Ansible group representing all file nodes: 
+    ha_cluster:
+      children:
+....
+
+In the subsequent sections,  you will create additional Ansible groups under `ha`_`cluster` that represent BeeGFS services you want to run in the cluster.
+
+==== Configuring the inventory for a management, metadata, and storage building block
+
+The first building block in the cluster or base building block must include the BeeGFS management service along with metadata and storage services: 
+
+. In `inventory.yml`,  populate the following under `ha_cluster: children`:
+
+....
+      # ictad22h01/ictad22h02 HA Pair (mgmt/meta/storage building block):
+        mgmt:
+          hosts:
+            ictad22h01:
+            ictad22h02:
+        meta_01:
+          hosts:
+            ictad22h01:
+            ictad22h02:
+        stor_01:
+          hosts:
+            ictad22h01:
+            ictad22h02:
+        meta_02:
+          hosts:
+            ictad22h01:
+            ictad22h02:
+        stor_02:
+          hosts:
+            ictad22h01:
+            ictad22h02:
+        meta_03:
+          hosts:
+            ictad22h01:
+            ictad22h02:
+        stor_03:
+          hosts:
+            ictad22h01:
+            ictad22h02:
+        meta_04:
+          hosts:
+            ictad22h01:
+            ictad22h02:
+        stor_04:
+          hosts:
+            ictad22h01:
+            ictad22h02:
+        meta_05:
+          hosts:
+            ictad22h02:
+            ictad22h01:
+        stor_05:
+          hosts:
+            ictad22h02:
+            ictad22h01:
+        meta_06:
+          hosts:
+            ictad22h02:
+            ictad22h01:
+        stor_06:
+          hosts:
+            ictad22h02:
+            ictad22h01:
+        meta_07:
+          hosts:
+            ictad22h02:
+            ictad22h01:
+        stor_07:
+          hosts:
+            ictad22h02:
+            ictad22h01:
+        meta_08:
+          hosts:
+            ictad22h02:
+            ictad22h01:
+        stor_08:
+          hosts:
+            ictad22h02:
+            ictad22h01:
+....
+
+. Create the file `group_vars/mgmt.yml` and include the following: 
+
+....
+# mgmt - BeeGFS HA Management Resource Group
+# OPTIONAL: Override default BeeGFS management configuration:
+# beegfs_ha_beegfs_mgmtd_conf_resource_group_options:
+#  <beegfs-mgmt.conf:key>:<beegfs-mgmt.conf:value>
+floating_ips:
+  - i1b: 100.127.101.0/16
+  - i2b: 100.128.102.0/16
+beegfs_service: management
+beegfs_targets:
+  ictad22a01:
+    eseries_storage_pool_configuration:
+      - name: beegfs_m1_m2_m5_m6
+        raid_level: raid1
+        criteria_drive_count: 4
+        common_volume_configuration:                
+          segment_size_kb:  128
+        volumes:
+          - size: 1
+            owning_controller: A
+....
+
+. Under `group_vars/`,  create files for resource groups `meta_01`  `meta_08` using the following template, then fill in the placeholder values for each service referencing the table below: 
+
+....
+# meta_0X - BeeGFS HA Metadata Resource Group
+beegfs_ha_beegfs_meta_conf_resource_group_options:
+  connMetaPortTCP: <PORT>
+  connMetaPortUDP: <PORT>
+  tuneBindToNumaZone: <NUMA ZONE>
+floating_ips:
+  - <PREFERRED PORT:IP/SUBNET> # Example: i1b:192.168.120.1/16
+  - <SECONDARY PORT:IP/SUBNET>
+beegfs_service: metadata
+beegfs_targets:
+  <BLOCK NODE>:
+    eseries_storage_pool_configuration:
+      - name: <STORAGE POOL>
+        raid_level: raid1
+        criteria_drive_count: 4
+        common_volume_configuration:
+          segment_size_kb:  128 
+        volumes:
+          - size: 21.25 # SEE NOTE BELOW!
+            owning_controller: <OWNING CONTROLLER>         
+....
+
+The volume size is specified as a percentage of the overall storage pool (also referred to as a volume group). NetApp highly recommends that you leave some free capacity in each pool to allow room for SSD https://www.netapp.com/pdf.html?item=/media/17009-tr4800pdf.pdf[overprovisioning^]. Storage pool `beegfs_m1_m2_m5_m6 `also allocates 1% of the pool’s capacity for the management service. Thus,  for metadata volumes in storage pool `beegfs_m1_m2_m5_m6 `when 1.92TB or 3.84TB drives are used set this value to `21.25`, for 7.65TB drives set this value to `22.25`, and for 15. 3TB drives set this value to 23.75. For  storage pool beegfs_m3_m4_m7_m8 (and all other storage pools), see Appendix B: Recommended storage pool overprovisioning percentages<<xref>>.
+
+|===
+|File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
+
+|meta_01.yml
+|8015
+|i1b:100.127.101.1/16
+i2b:100.128.102.1/16
+|0
+|ictad22a01
+
+|beegfs_m1_m2_m5_m6
+|A
+|meta_02.yml
+|8025
+|i2b:100.128.102.2/16
+i1b:100.127.101.2/16
+|0
+|ictad22a01
+
+|beegfs_m1_m2_m5_m6
+|B
+|meta_03.yml
+|8035
+|i3b:100.127.101.3/16
+i4b:100.128.102.3/16
+|1
+|ictad22a02
+|beegfs_m3_m4_m7_m8
+|A
+|meta_04.yml
+|8045
+|i4b:100.128.102.4/16
+i3b:100.127.101.4/16
+|1
+|ictad22a02
+|beegfs_m3_m4_m7_m8
+|B
+|meta_05.yml
+|8055
+|i1b:100.127.101.5/16
+i2b:100.128.102.5/16
+|0
+|ictad22a01
+|beegfs_m1_m2_m5_m6
+|A
+|meta_06.yml
+|8065
+|i2b:100.128.102.6/16
+i1b:100.127.101.6/16
+|0
+|ictad22a01
+|beegfs_m1_m2_m5_m6
+|B
+|meta_07.yml
+|8075
+|i3b:100.127.101.7/16
+i4b:100.128.102.7/16
+|1
+|ictad22a02
+|beegfs_m3_m4_m7_m8
+|A
+|meta_08.yml
+|8085
+|i4b:100.128.102.8/16
+i3b:100.127.101.8/16
+|1
+|ictad22a02
+|beegfs_m3_m4_m7_m8
+|B
+|===
+
+. Under `group_vars/`,  create files for resource groups stor_01 – stor_08 using the following template, then fill in the placeholder values for each service referencing the ta:
+
+....
+# stor_0X - BeeGFS HA Storage Resource Groupbeegfs_ha_beegfs_storage_conf_resource_group_options:
+  connStoragePortTCP: <PORT>
+  connStoragePortUDP: <PORT>
+  tuneBindToNumaZone: <NUMA ZONE>
+floating_ips:
+  - <PREFERRED PORT:IP/SUBNET>
+  - <SECONDARY PORT:IP/SUBNET>
+beegfs_service: storage
+beegfs_targets:
+  <BLOCK NODE>:
+    eseries_storage_pool_configuration:
+      - name: <STORAGE POOL>
+        raid_level: raid6
+        criteria_drive_count: 10
+        common_volume_configuration:
+          segment_size_kb: 512        volumes:
+          - size: 21.50 # See note below!             owning_controller: <OWNING CONTROLLER>         
+          - size: 21.50            owning_controller: <OWNING CONTROLLER>         
+....
+
+[NOTE]
+ For the correct size to use,  see Appendix B: Recommended storage pool overprovisioning percentages <<xref>>.
+
+|===
+|File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
+
+|stor_01.yml
+|8013
+|i1b:100.127.103.1/16
+i2b:100.128.104.1/16
+|0
+|ictad22a01
+
+|beegfs_s1_s2
+|A
+|stor_02.yml
+|8023
+|i2b:100.128.104.2/16
+i1b:100.127.103.2/16
+|0
+|ictad22a01
+
+|beegfs_s1_s2
+|B
+|stor_03.yml
+|8033
+|i3b:100.127.103.3/16
+i4b:100.128.104.3/16
+|1
+|ictad22a02
+|beegfs_s3_s4
+|A
+|stor_04.yml
+|8043
+|i4b:100.128.104.4/16
+i3b:100.127.103.4/16
+|1
+|ictad22a02
+|beegfs_s3_s4
+|B
+|stor_05.yml
+|8053
+|i1b:100.127.103.5/16
+i2b:100.128.104.5/16
+|0
+|ictad22a01
+|beegfs_s5_s6
+|A
+|stor_06.yml
+|8063
+|i2b:100.128.104.6/16
+i1b:100.127.103.6/16
+|0
+|ictad22a01
+|beegfs_s5_s6
+|B
+|stor_07.yml
+|8073
+|i3b:100.127.103.7/16
+i4b:100.128.104.7/16
+|1
+|ictad22a02
+|beegfs_s7_s8
+|A
+|stor_08.yml
+|8083
+|i4b:100.128.104.8/16
+i3b:100.127.103.8/16
+|1
+|ictad22a02
+|beegfs_s7_s8
+|B
+|===
+
+==== Configuring the inventory for a Metadata + storage building block
+
+This section walks you through setting up an Ansible inventory that describes a BeeGFS metadata + storage building block:
+
+. In `inventory.yml`,  populate the following under the existing configuration:
+
+....
+        meta_09:
+          hosts:
+            ictad22h03:
+            ictad22h04:
+        stor_09:
+          hosts:
+            ictad22h03:
+            ictad22h04:
+        meta_10:
+          hosts:
+            ictad22h03:
+            ictad22h04:
+        stor_10:
+          hosts:
+            ictad22h03:
+            ictad22h04:
+        meta_11:
+          hosts:
+            ictad22h03:
+            ictad22h04:
+        stor_11:
+          hosts:
+            ictad22h03:
+            ictad22h04:
+        meta_12:
+          hosts:
+            ictad22h03:
+            ictad22h04:
+        stor_12:
+          hosts:
+            ictad22h03:
+            ictad22h04:
+        meta_13:
+          hosts:
+            ictad22h04:
+            ictad22h03:
+        stor_13:
+          hosts:
+            ictad22h04:
+            ictad22h03:
+        meta_14:
+          hosts:
+            ictad22h04:
+            ictad22h03:
+        stor_14:
+          hosts:
+            ictad22h04:
+            ictad22h03:
+        meta_15:
+          hosts:
+            ictad22h04:
+            ictad22h03:
+        stor_15:
+          hosts:
+            ictad22h04:
+            ictad22h03:
+        meta_16:
+          hosts:
+            ictad22h04:
+            ictad22h03:
+        stor_16:
+          hosts:
+            ictad22h04:
+            ictad22h03:
+....
+
+. Under `group_vars/`,  create files for resource groups meta_09  meta_16 using the following template,  then fill in the placeholder values for each service referencing the table:
+
+....
+# meta_0X - BeeGFS HA Metadata Resource Group
+beegfs_ha_beegfs_meta_conf_resource_group_options:
+  connMetaPortTCP: <PORT>
+  connMetaPortUDP: <PORT>
+  tuneBindToNumaZone: <NUMA ZONE>
+floating_ips:
+  - <PREFERRED PORT:IP/SUBNET>
+  - <SECONDARY PORT:IP/SUBNET>
+beegfs_service: metadata
+beegfs_targets:
+  <BLOCK NODE>:
+    eseries_storage_pool_configuration:
+      - name: <STORAGE POOL>
+        raid_level: raid1
+        criteria_drive_count: 4
+        common_volume_configuration:                
+          segment_size_kb: 128
+        volumes:
+          - size: 21.5 # SEE NOTE BELOW!
+            owning_controller: <OWNING CONTROLLER>         
+....
+
+[NOTE]
+For the correct size to use,  see Appendix B: Recommended storage pool overprovisioning percentages <<xref>>.
+
+|===
+|File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
+
+|meta_09.yml
+|8015
+|i1b:100.127.101.9/16
+i2b:100.128.102.9/16
+|0
+|ictad22a03
+
+|beegfs_m9_m10_m13_m14
+|A
+|meta_10.yml
+|8025
+|i2b:100.128.102.10/16
+i1b:100.127.101.10/16
+|0
+|ictad22a03
+
+|beegfs_m9_m10_m13_m14
+|B
+|meta_11.yml
+|8035
+|i3b:100.127.101.11/16
+i4b:100.128.102.11/16
+|1
+|ictad22a04
+|beegfs_m11_m12_m15_m16
+|A
+|meta_12.yml
+|8045
+|i4b:100.128.102.12/16
+i3b:100.127.101.12/16
+|1
+|ictad22a04
+|beegfs_m11_m12_m15_m16
+|B
+|meta_13.yml
+|8055
+|i1b:100.127.101.13/16
+i2b:100.128.102.13/16
+|0
+|ictad22a03
+|beegfs_m9_m10_m13_m14
+|A
+|meta_14.yml
+|8065
+|i2b:100.128.102.14/16
+i1b:100.127.101.14/16
+|0
+|ictad22a03
+|beegfs_m9_m10_m13_m14
+|B
+|meta_15.yml
+|8075
+|i3b:100.127.101.15/16
+i4b:100.128.102.15/16
+|1
+|ictad22a04
+|beegfs_m11_m12_m15_m16
+|A
+|meta_16.yml
+|8085
+|i4b:100.128.102.16/16
+i3b:100.127.101.16/16
+|1
+|ictad22a04
+|beegfs_m11_m12_m15_m16
+|B
+|===
+
+. Under `group_vars/,` create files for resource groups stor_09  stor_16 using the following template,  then fill in the placeholder values for each service referencing the table: 
+
+....
+# stor_0X - BeeGFS HA Storage Resource Group
+beegfs_ha_beegfs_storage_conf_resource_group_options:
+  connStoragePortTCP: <PORT>
+  connStoragePortUDP: <PORT>
+  tuneBindToNumaZone: <NUMA ZONE>
+floating_ips:
+  - <PREFERRED PORT:IP/SUBNET>
+  - <SECONDARY PORT:IP/SUBNET>
+beegfs_service: storage
+beegfs_targets:
+  <BLOCK NODE>:
+    eseries_storage_pool_configuration:
+      - name: <STORAGE POOL>
+        raid_level: raid6
+        criteria_drive_count: 10
+        common_volume_configuration:
+          segment_size_kb: 512        volumes:
+          - size: 21.50 # See note below! 
+            owning_controller: <OWNING CONTROLLER>         
+          - size: 21.50            owning_controller: <OWNING CONTROLLER>         
+....
+
+[NOTE]
+ For the correct size to use, see Appendix B: Recommended storage pool overprovisioning percentages <<xref>>.
+
+|===
+|File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
+
+|stor_09.yml
+|8013
+|i1b:100.127.103.9/16
+i2b:100.128.104.9/16
+|0
+|ictad22a03
+
+|beegfs_s9_s10
+|A
+|stor_10.yml
+|8023
+|i2b:100.128.104.10/16
+i1b:100.127.103.10/16
+|0
+|ictad22a03
+
+|beegfs_s9_s10
+|B
+|stor_11.yml
+|8033
+|i3b:100.127.103.11/16
+i4b:100.128.104.11/16
+|1
+|ictad22a04
+|beegfs_s11_s12
+|A
+|stor_12.yml
+|8043
+|i4b:100.128.104.12/16
+i3b:100.127.103.12/16
+|1
+|ictad22a04
+|beegfs_s11_s12
+|B
+|stor_13.yml
+|8053
+|i1b:100.127.103.13/16
+i2b:100.128.104.13/16
+|0
+|ictad22a03
+|beegfs_s13_s14
+|A
+|stor_14.yml
+|8063
+|i2b:100.128.104.14/16
+i1b:100.127.103.14/16
+|0
+|ictad22a03
+|beegfs_s13_s14
+|B
+|stor_15.yml
+|8073
+|i3b:100.127.103.15/16
+i4b:100.128.104.15/16
+|1
+|ictad22a04
+|beegfs_s15_s16
+|A
+|stor_16.yml
+|8083
+|i4b:100.128.104.16/16
+i3b:100.127.103.16/16
+|1
+|ictad22a04
+|beegfs_s15_s16
+|B
+|===
+
+==== Configuring the inventory for a storage-only building block
+
+This section walks you through setting up an Ansible inventory that describes a BeeGFS storage- only building block.  The major difference between setting up the configuration for a metadata + storage versus a storage- only building block is the omission of all metadata resource groups and changing `criteria_drive_count` from 10 to 12 for each storage pool.
+
+. In `inventory.yml`,  populate the following under the existing configuration:
+
+....
+      # ictad22h05/ictad22h06 HA Pair (storage only building block):            
+        stor_17:
+          hosts:
+            ictad22h05:
+            ictad22h06:
+        stor_18:
+          hosts:
+            ictad22h05:
+            ictad22h06:
+        stor_19:
+          hosts:
+            ictad22h05:
+            ictad22h06:
+        stor_20:
+          hosts:
+            ictad22h05:
+            ictad22h06:
+        stor_21:
+          hosts:
+            ictad22h06:
+            ictad22h05:
+        stor_22:
+          hosts:
+            ictad22h06:
+            ictad22h05:
+        stor_23:
+          hosts:
+            ictad22h06:
+            ictad22h05:
+        stor_24:
+          hosts:
+            ictad22h06:
+            ictad22h05:
+....
+
+. Under `group_vars/`,  create files for resource groups stor_17  stor_24 using the following template, then fill in the placeholder values for each service referencing the table:
+
+....
+# stor_0X - BeeGFS HA Storage Resource Group
+beegfs_ha_beegfs_storage_conf_resource_group_options:
+  connStoragePortTCP: <PORT>
+  connStoragePortUDP: <PORT>
+  tuneBindToNumaZone: <NUMA ZONE>
+floating_ips:
+  - <PREFERRED PORT:IP/SUBNET>
+  - <SECONDARY PORT:IP/SUBNET>
+beegfs_service: storage
+beegfs_targets:
+  <BLOCK NODE>:
+    eseries_storage_pool_configuration:
+      - name: <STORAGE POOL>
+        raid_level: raid6
+        criteria_drive_count: 12
+        common_volume_configuration:
+          segment_size_kb: 512
+        volumes:
+          - size: 21.50 # See note below! 
+            owning_controller: <OWNING CONTROLLER>         
+          - size: 21.50
+            owning_controller: <OWNING CONTROLLER>         
+....
+
+[NOTE]
+ For  the correct size to use, see Appendix B: Recommended storage pool overprovisioning percentages <<xref>>.
+
+|===
+|File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
+
+|stor_17.yml
+|8013
+|i1b:100.127.103.17/16
+i2b:100.128.104.17/16
+|0
+|ictad22a05
+
+|beegfs_s17_s18
+|A
+|stor_18.yml
+|8023
+|i2b:100.128.104.18/16
+i1b:100.127.103.18/16
+|0
+|ictad22a05
+
+|beegfs_s17_s18
+|B
+|stor_19.yml
+|8033
+|i3b:100.127.103.19/16
+i4b:100.128.104.19/16
+|1
+|ictad22a06
+|beegfs_s19_s20
+|A
+|stor_20.yml
+|8043
+|i4b:100.128.104.20/16
+i3b:100.127.103.20/16
+|1
+|ictad22a06
+|beegfs_s19_s20
+|B
+|stor_21.yml
+|8053
+|i1b:100.127.103.21/16
+i2b:100.128.104.21/16
+|0
+|ictad22a05
+|beegfs_s21_s22
+|A
+|stor_22.yml
+|8063
+|i2b:100.128.104.22/16
+i1b:100.127.103.22/16
+|0
+|ictad22a05
+|beegfs_s21_s22
+|B
+|stor_23.yml
+|8073
+|i3b:100.127.103.23/16
+i4b:100.128.104.23/16
+|1
+|ictad22a06
+|beegfs_s23_s24
+|A
+|stor_24.yml
+|8083
+|i4b:100.128.104.24/16
+i3b:100.127.103.24/16
+|1
+|ictad22a06
+|beegfs_s23_s24
+|B
+|===
+
+=== Setting up a playbook and deploying BeeGFS
+
+[NOTE]
+Currently,  at least two building blocks (four file nodes) are required to deploy BeeGFS unless a separate quorum device is configured as a tiebreaker to mitigate any issues when establishing quorum with a two-node cluster.
+
+Deploying and managing the configuration defined above involves running one or more playbooks that contain the tasks Ansible needs to execute to bring the overall system to the desired state. While all tasks could be included in a single playbook, for complex systems,  this quickly becomes unwieldy to manage. Ansible allows you to create and distribute https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html[roles^] as a way of packaging reusable playbooks and related content (for example,  default variables, tasks, and handlers). Roles are often distributed as part of an Ansible collection contain related roles and modules. Thus,  the playbooks used here primarily just import several roles distributed in the various NetApp E-Series Ansible Collections.
+
+. Create a new file `playbook.yml` and include the following:
+
+....
+# BeeGFS HA (High Availability) cluster playbook.
+- hosts: eseries_storage_systems
+  gather_facts: false
+  collections:
+    - netapp_eseries.santricity
+  tasks:
+    - name: Configure NetApp E-Series block nodes.
+      import_role:
+        name: nar_santricity_management
+- hosts: all
+  any_errors_fatal: true
+  gather_facts: false
+  collections:
+    - netapp_eseries.beegfs
+  pre_tasks:
+    - name: Ensure a supported version of Python is available on all file nodes.
+      block:
+        - name: Check if python is installed.
+          failed_when: false
+          changed_when: false
+          raw: python --version
+          register: python_version
+        - name: Check if python3 is installed.
+          raw: python3 --version
+          failed_when: false
+          changed_when: false
+          register: python3_version
+          when: 'python_version["rc"] != 0 or (python_version["stdout"] | regex_replace("Python ", "")) is not version("3.0", ">=")'
+        - name: Install python3 if needed.
+          raw: |
+            id=$(grep "^ID=" /etc/*release* | cut -d= -f 2 | tr -d '"')
+            case $id in
+              ubuntu) sudo apt install python3 ;;
+              rhel|centos) sudo yum -y install python3 ;;
+              sles) sudo zypper install python3 ;;
+            esac
+          args:
+            executable: /bin/bash
+          register: python3_install
+          when: python_version['rc'] != 0 and python3_version['rc'] != 0
+          become: true
+        - name: Create a symbolic link to python from python3.
+          raw: ln -s /usr/bin/python3 /usr/bin/python
+          become: true
+          when: python_version['rc'] != 0
+      when: inventory_hostname not in groups[beegfs_ha_ansible_storage_group]
+    - name: Verify any provided tags are supported. 
+      fail:
+        msg: "{{ item }} tag is not a supported BeeGFS HA tag. Rerun your playbook command with --list-tags to see all valid playbook tags."
+      when: 'item not in ["all", "storage", "beegfs_ha", "beegfs_ha_package", "beegfs_ha_configure", "beegfs_ha_configure_resource", "beegfs_ha_performance_tuning", "beegfs_ha_backup", "beegfs_ha_client"]'
+      loop: "{{ ansible_run_tags }}"
+  tasks:
+    - name: Verify before proceeding.
+      pause:
+        prompt: "Are you ready to proceed with running the BeeGFS HA role? Depending on the size of the deployment and network performance between the Ansible control node and BeeGFS file and block nodes this can take awhile (10+ minutes) to complete."
+    - name: Verify the BeeGFS HA cluster is properly deployed.
+      import_role:
+        name: beegfs_ha_7_2
+
+[NOTE]
+This playbook runs a few `pre_tasks` that verify Python 3 is installed on the file nodes and check that the Ansible tags provided are supported.
+
+. Use the `ansible-playbook` command with the inventory and playbook files when you’re ready to deploy BeeGFS. The deployment will run all `pre_tasks` then prompt for user confirmation before proceeding with the actual BeeGFS deployment. Run the following command adjusting the number of forks as needed (see the note below): 
+
+....
+ansible-playbook -i inventory.yml playbook.yml --forks 20 
+....
+
+[NOTE]
+Especially for larger deployments, overriding the https://www.ansible.com/blog/ansible-performance-tuning[default number of forks^] (5) using the https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html[--forks^] parameters is recommended to increase the number of hosts that Ansible configure in parallel. The maximum value this can be set to depends on the processing power available on the Ansible control nodeabove example of 20 was run on a virtual Ansible control node with  CPUs (Intel(R) Xeon(R) Gold 6146 CPU @ 3.20GHz).
+
+. Depending on the size of the deployment and network performance between the Ansible control node and BeeGFS file and block nodes, deployment time might vary.
+
+=== Configuring BeeGFS clients
+
+The BeeGFS client must be installed and configured on any hosts such as compute or GPU nodes needing access to the BeeGFS file system. his can be done using Ansible and the BeeGFS collection.
+
+. If needed, set up passwordless SSH from the Ansible control node to each of the hosts you want to configure as BeeGFS clients: `ssh-copy-id <user>@<HOSTNAME_OR_IP>`.
+. Under `host_vars/`,  create a file for each BeeGFS client named `<HOSTNAME>.yml `with the following content, filling in the placeholder text with the correct information for your environment:
+
+....
+# BeeGFS Client
+ansible_host: <MANAGEMENT_IP>
+# OPTIONAL: If you want to use the NetApp E-Series Host Collection’s IPoIB role to configure InfiniBand interfaces for clients to connect to BeeGFS file systems:
+eseries_ipoib_interfaces:
+  - name: <INTERFACE>
+    address: <IP>/<SUBNET_MASK> # Example: 100.127.1. 1/16 
+  - name: <INTERFACE>0
+    address: <IP>/<SUBNET_MASK>
+....
+
+[NOTE]
+Currently,  two InfiniBand interfaces must be configured on each client, one in each of the two storage IPoIB subnets. If using the example subnets and recommended ranges for each BeeGFS service listed in this document,  clients should have one interface configured in the. range `100.127.1. 0` - `100.127.99.255` and the other in `100.128.1. 0` - `100.128. 99.255`. 
+
+. Create a new file `client_inventory.yml` and populate the following at the top:
+
+....
+# BeeGFS client inventory. 
+all:
+  vars:
+    ansible_ssh_user: <USER> # This is the user Ansible should use to connect to each client. 
+    ansible_become_password: <PASSWORD> # This is the password Ansible will use for privilege escalation, and requires the ansible_ssh_user be root, or have sudo privileges. 
+The defaults set by the BeeGFS HA role are based on the testing performed as part of this NetApp Verified Architecture and differ from the typical BeeGFS client defaults. 
+....
+
+[NOTE]
+It bears repeating, particularly for production environments,  not store passwords in plain text https://docs.ansible.com/ansible/latest/user_guide/vault.html[Ansible Vault^] orthe `--ask-become-pass` option when running the playbook.
+
+. In the `client_inventory.yml` file,  list all hosts that should be configured as BeeGFS clients under the `beegfs_clients` group and specify any additional configuration required to build the BeeGFS client kernel module.
+
+....
+  children:
+    # Ansible group representing all BeeGFS clients: 
+    beegfs_clients:
+      hosts:
+        ictad21h01: 
+        ictad21h02:
+        ictad21h03:
+        ictad21h04:
+        ictad21h05:
+        ictad21h06:
+        ictad21h07:
+        ictad21h08:
+        ictad21h09:
+        ictad21h10:
+      vars:
+        # OPTION 1: If you’re using the Mellanox OFED drivers and they are already installed:
+        eseries_ib_base_skip: True # Skip installing inbox drivers when using the IPoIB role.
+        beegfs_client_ofed_enable: True
+        beegfs_client_ofed_include_path: "/usr/src/ofa_kernel/default/include"
+        # OPTION 2: If you’re using inbox IB/RDMA drivers and they are already installed:
+        eseries_ib_base_skip: True # Skip installing inbox drivers when using the IPoIB role.
+        # OPTION 3: If you want to use inbox IB/RDMA drivers and need them installed/configured.
+        eseries_ib_base_skip: False # Default value.
+        beegfs_client_ofed_enable: False # Default value.
+
+[NOTE]
+When using the Mellanox OFED drivers,  `beegfs`_`client`_`ofed`_`include`_`path `points at the correct https://doc.beegfs.io/latest/advanced_topics/rdma_support.html[header include path^] for your Linux installation.  
+
+. In the `client_inventory.yml` file,  list the BeeGFS file systems you want mounted at the bottom of any previously defined `vars`.
+
+....
+        beegfs_client_mounts:
+          - sysMgmtdHost: 100.127.101.0 # Primary IP of the BeeGFS management service. 
+            mount_point: /mnt/beegfs    # Path to mount BeeGFS on the client.
+            connInterfaces:
+              - <INTERFACE> # Example: ibs4f1
+              - <INTERFACE>
+            beegfs_client_config:
+              # Maximum number of simultaneous connections to the same node.
+              connMaxInternodeNum: 128 # BeeGFS Client Default: 12
+              # Allocates the number of buffers for transferring IO.
+              connRDMABufNum: 36 # BeeGFS Client Default: 70
+              # Size of each allocated RDMA buffer 
+              connRDMABufSize: 65536 # BeeGFS Client Default: 8192
+              # Required when using the BeeGFS client with the shared-disk HA solution.
+              # This does require BeeGFS targets be mounted in the default “sync” mode.
+              # See the documentation included with the BeeGFS client role for full details.
+              sysSessionChecksEnabled: false
+....
+
+[NOTE]
+The `beegfs_client_config` represents the settings that were tested for this NetApp Verified Architecture. See the documentation included with the `netapp_eseries.beegfs `collection’s `beegfs_client` role for a comprehensive overview of all options. This includes details around mounting multiple BeeGFS file systems or mounting the same BeeGFS file system multiple times.
+
+. Create a new `client_playbook.yml` file and populate the following: 
+
+....
+# BeeGFS client playbook. 
+- hosts: beegfs_clients
+  any_errors_fatal: true
+  gather_facts: true
+  collections:
+    - netapp_eseries.beegfs
+    - netapp_eseries.host
+  tasks:
+    - name: Ensure IPoIB is configured
+      import_role:
+        name: ipoib  
+    - name: Verify the BeeGFS clients are configured.
+      import_role:
+        name: beegfs_client
+
+[NOTE]
+Omit importing the `netapp_eseries.host` collection and `ipoib` role if you have already installed required IB/RDMA drivers and configured IPs on the appropriate IPoIB interfaces.
+
+. To install/build the client and mount BeeGFS,  run the following command:
+
+....
+ansible-playbook -i client_inventory.yml client_playbook.yml
+....
+
+=== Scaling beyond five building blocks
+
+Pacemaker and Corosync can be configured to scale beyond five building blocks (10 file nodes),  there are drawbacks to larger clusters, and eventually Pacemaker and Corosync do impose a maximum of 32 nodes. As such,  NetApp has only tested BeeGFS HA clusters up to 10 nodes and scaling individual clusters beyond this limit is not recommended or supported.
+
+However,  BeeGFS file systems still need to scale far beyond 10 nodes, and NetApp has accounted for this in the BeeGFS on NetApp architecture. By deploying multiple HA clusters containing a subset of the building blocks in each file system, you can scale the overall BeeGFS file system independently of any recommended or hard limits on the underlying HA clustering mechanisms.
+
+In this scenario,  create a new Ansible inventory representing the additional HA clusters and simply omit configuring another management service. Instead,  point the `beegfs_ha_mgmtd_floating_ip` variable in each additional clusters `ha_cluster.yml` at the IP for the first BeeGFS management service.
+
+When adding additional HA clusters to the same file system,  :
+
+* BeeGFS node IDs are always unique. This means the file names corresponding with each service under `group_vars` must be unique across all clusters.
+* BeeGFS client and server IP addresses are unique across all clusters.
+* The first HA cluster containing the BeeGFS management service is running before trying to deploy/update additional clusters.Inventories for each HA cluster should be maintained separately in their own directory tree. Trying to mix the inventory files for multiple clusters in one directory tree might cause issues with how the BeeGFS HA role aggregates the configuration applied to a particular cluster.
+
+[NOTE]
+There is no requirement that each HA cluster scale to five building blocks before creating a new one. In many cases,  using fewer building blocks per cluster  easier to manage. One approach is to configure the building blocks in each single rack as an HA cluster.

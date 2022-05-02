@@ -14,14 +14,14 @@ entries:
   - title: Deploy
     entries:
         - title: Overview
-          url: /deploy/overview.html
+          url: /beegfs-deploy-deployment-procedures.html
         - title: Deploy hardware
-          url: /deploy/overview.html
+          url: /beegfs-deploy-hardware-deployment.html
         - title: Deploy software
-          url: /deploy/overview.html
+          url: /beegfs-deploy-software-deployment.html
         - title: Performance tuning
-          url: /deploy/overview.html
+          url: /beegfs-deploy-performance-tuning.html
         - title: Recommended volume size percentages
-          url: /deploy/overview.html
+          url: /beegfs-deploy-recommended-volume-percentages.html
   - title: More information
     url: /beegfs-conclusion.html

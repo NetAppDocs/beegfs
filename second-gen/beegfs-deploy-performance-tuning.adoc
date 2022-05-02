@@ -1,0 +1,94 @@
+---
+sidebar: sidebar
+permalink: beegfs-deploy-performance-tuning.html
+keywords:
+summary:
+---
+
+= File node BIOS/UEFI performance tuning
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+//
+// This file was created with NDAC Version 2.0 (August 17, 2020)
+//
+// 2022-05-02 10:33:57.462593
+//
+
+[.lead]
+This appendix describes the various tuning parameters that need to be set in the BIOS/UEFI setup of the various NetApp verified file nodes validated for the second-generation building block design.
+
+=== Lenovo SR665
+
+Under UEFI Setup > System Settings,  adjust the following settings:
+
+* Operating modes:
+** Operating Mode > Custom
+** cTDP > Manual
+** cTDP Manual > 350
+** Package Power Limit > Manual
+** Efficiency Mode > Disable
+** Global-Cstate-Control > Disable
+** SOC P-states > P0
+** DF C-States > Disable
+** P-State 1 > Disable
+** Memory Power Down Enable > Disable
+** NUMA Nodes per Socket > NPS1
+* Devices and I/O ports:
+** IOMMU: Disable
+* Power:
+** PCIe Power Brake > Disable
+* Processors:
+** Global C-state Control > Disable
+** DF C-States > Disable
+** SMT Mode > Disable
+** CPPC > DisableThe following screenshots show what these settings look like in the Lenovo XClarity Provisioning Manager.
+
+This screenshot shows the Lenovo XClarity Provisioning Manager: Operating Modes.
+
+image:beegfs-deploy-image6.png[Error: Missing Graphic Image]
+
+This screenshot shows the Lenovo XClarity Provisioning Manager: Devices and I/O Ports.
+
+image:beegfs-deploy-image7.png[Error: Missing Graphic Image]
+
+This screenshot shows the Lenovo XClarity Provisioning Manager: Power.
+
+image:beegfs-deploy-image8.png[Error: Missing Graphic Image]
+
+This screenshot shows the Lenovo XClarity Provisioning Manager: Processors.
+
+image:beegfs-deploy-image9.png[Error: Missing Graphic Image]
+
+These settings can also be applied programmatically using the Redfish API, for example:
+
+....
+curl --request PATCH \
+  --url https://<BMC_IP_ADDRESS>/redfish/v1/Systems/1/Bios/Pending \
+  --user <BMC_USER>:<BMC- PASSWORD> \
+  --header 'Content-Type: application/json' \
+  --data '{
+"Attributes": {
+"OperatingModes_ChooseOperatingMode": "CustomMode",
+"Processors_cTDP": "Manual",
+"Processors_PackagePowerLimit": "Manual",
+"Power_EfficiencyMode": "Disable",
+"Processors_GlobalC_stateControl": "Disable",
+"Processors_SOCP_states": "P0",
+"Processors_DFC_States": "Disable",
+"Processors_P_state1": "Disable",
+"Memory_MemoryPowerDownEnable": "Disable",
+"DevicesandIOPorts_IOMMU": "Disable",
+"Power_PCIePowerBrake": "Disable",
+"Processors_GlobalC_stateControl": "Disable",
+"Processors_DFC_States": "Disable",
+"Processors_SMTMode": "Disable",
+"Processors_CPPC": "Disable",
+"Memory_NUMANodesperSocket":"NPS1"
+}
+}
+'
+....

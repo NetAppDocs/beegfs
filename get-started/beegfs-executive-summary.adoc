@@ -33,4 +33,6 @@ The NetApp Verified Architecture program provides customers with reference confi
 
 * Thoroughly tested
 * Designed to minimize deployment risks
-* Designed to accelerate time to market This document is for NetApp and partner solutions engineers and customer strategic decision makers. It describes the architecture design considerations that were used to determine the specific equipment, cabling, and configurations required to support the validated workload.
+* Designed to accelerate time to market
+
+This doc site is for NetApp and partner solutions engineers and customer strategic decision makers. It describes the architecture design considerations that were used to determine the specific equipment, cabling, and configurations required to support the validated workload.
