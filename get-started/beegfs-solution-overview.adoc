@@ -19,7 +19,7 @@ summary:
 //
 
 [.lead]
-This NetApp Verified Architecture describes how to deploy BeeGFS on NetApp using validated BeeGFS file servers (referred to throughout as file nodes) attached to block storage systems (referred to throughout as block nodes) using the second generation of the NetApp BeeGFS building block design.
+This NetApp Verified Architecture describes how to design and deploy BeeGFS on NetApp using validated BeeGFS file servers (referred to throughout as file nodes) attached to block storage systems (referred to throughout as block nodes) using the second generation of the NetApp BeeGFS building block design.
 
 This design takes advantage of the performance density delivered by the latest enterprise server and storage hardware and network speeds, requiring file nodes that feature dual AMD EPYC 7003 “Milan” processors and support for PCIe 4.0 with direct connects using 200Gb (HDR) InfiniBand to block nodes that provide end-to-end NVMe and NVMeOF using the NVMe/IB protocol.
 
