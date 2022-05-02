@@ -13,15 +13,15 @@ entries:
       url: /beegfs-design-solution-sizing-guidelines.html
   - title: Deploy
     entries:
-        - title: Best practice
+        - title: Overview
           url: /deploy/overview.html
-        - title: Hardware
+        - title: Deploy hardware
           url: /deploy/overview.html
-        - title: Software
-          url: /deploy/overview.html
-        - title: Validation
+        - title: Deploy software
           url: /deploy/overview.html
         - title: Performance tuning
+          url: /deploy/overview.html
+        - title: Recommended volume size percentages
           url: /deploy/overview.html
   - title: More information
     url: /beegfs-conclusion.html
