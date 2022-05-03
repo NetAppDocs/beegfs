@@ -29,7 +29,7 @@ entries:
               url: /beegfs-deploy-beegfs-general-config.html
             - title: Create Ansible inventory
               url: /beegfs-deploy-beegfs-build-inventory.html
-            - title: Set up playbook
+            - title: Deploy BeeGFS
               url: /beegfs-deploy-beegfs-playbook.html
             - title: Configure BeeGFS client
               url: /beegfs-deploy-beegfs-configure-clients.html

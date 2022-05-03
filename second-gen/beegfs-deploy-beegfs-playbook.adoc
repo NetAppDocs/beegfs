@@ -5,7 +5,7 @@ keywords:
 summary:
 ---
 
-= Set up playbook and complete deployment
+= Deploy BeeGFS
 :hardbreaks:
 :nofooter:
 :icons: font
