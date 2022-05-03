@@ -29,7 +29,7 @@ entries:
               url: /beegfs-deploy-beegfs-on-netapp-using-ansible.html
         - title: Performance tuning
           url: /beegfs-deploy-performance-tuning.html
-        - title: Recommended volume size percentages
+        - title: Recommended percentages
           url: /beegfs-deploy-recommended-volume-percentages.html
   - title: More information
     url: /beegfs-moreinfo.html
