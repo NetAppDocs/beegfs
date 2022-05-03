@@ -1,9 +1,9 @@
 section: get-started
 title: Get started
 entries:
-  - title: Executive summary
-    url: /beegfs-executive-summary.html
   - title: Program summary
     url: /beegfs-program-summary.html
+  - title: Executive summary
+    url: /beegfs-executive-summary.html
   - title: Solution overview
     url: /beegfs-solution-overview.html

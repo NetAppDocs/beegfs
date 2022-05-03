@@ -30,13 +30,3 @@ This https://www.netapp.com/blog/beegfs-for-ai-ml-dl/[shift toward HPC-style wor
 NetApp brings decades of experience building trusted enterprise storage systems,  with its E-Series and EF-Series arrays being the most deployed block layer behind various parallel file systems in traditional HPC and media and entertainment environments.
 
 It is from this rich history NetApp steps forward to deliver https://www.netapp.com/blog/solution-support-for-beegfs-and-e-series/[fully supported^], next generation parallel file system storage solutions for both traditional and enterprise HPC workloads, https://www.netapp.com/blog/beefs-for-ai-fact-vs-fiction/[including HPC-style ML/DL training^] and large-scale natural language processing (NLP) and natural language understanding (NLU) workloads.
-
-=== Program summary
-
-The NetApp Verified Architecture program provides customers with reference configurations and sizing guidance for specific workloads and use cases. These solutions are:
-
-* Thoroughly tested
-* Designed to minimize deployment risks
-* Designed to accelerate time to market
-
-This doc site is intended for NetApp and partner solutions engineers and customer strategic decision makers. It describes the architecture design considerations that are used to determine the specific equipment, cabling, and configurations required to support the validated workload.
