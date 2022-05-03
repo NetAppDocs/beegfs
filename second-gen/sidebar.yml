@@ -31,13 +31,13 @@ entries:
               entries:
               - title: Overview
                 url: /beegfs-deploy-beegfs-create-inventory-overview.html
-              - title: Step 1-Build inventory
+              - title: Step 1\:\ Build inventory
                 url: /beegfs-deploy-beegfs-create-inventory-stepone.html
-              - title: Step 2-Configure inventory for management, metadata, and storage building block
+              - title: Step 2\:\ Configure inventory for management, metadata, and storage building block
                 url: /beegfs-deploy-beegfs-configure-inventory-steptwo.html
-              - title: Step 3-Configure inventory for metadata plus storage building block
+              - title: Step 3\:\ Configure inventory for metadata plus storage building block
                 url: /beegfs-deploy-beegfs-configure-inventory-stepthree.html
-              - title: Step 4-Configure inventory for storage-only building block
+              - title: Step 4\:\ Configure inventory for storage-only building block
                 url: /beegfs-deploy-beegfs-configure-inventory-stepfour.html
             - title: Set up playbook
               url: /beegfs-deploy-beegfs-playbook.html
