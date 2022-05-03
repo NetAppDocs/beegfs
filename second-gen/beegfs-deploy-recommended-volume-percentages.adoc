@@ -29,6 +29,6 @@ When following the standard four volumes per storage pool configuration for seco
 |===
 
 [NOTE]
-Thguidance does not apply to the storage pool containing the management service, which should reduce the sizes above by .25% to allocate 1% of the storage pool for management data.
+The above guidance does not apply to the storage pool containing the management service, which should reduce the sizes above by .25% to allocate 1% of the storage pool for management data.
 
 To understand how these values were determined, see https://www.netapp.com/media/17009-tr4800.pdf[TR-4800: Appendix A: Understanding SSD endurance and overprovisioning^].
