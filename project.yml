@@ -1,5 +1,5 @@
 settings:
-  name: "BeeGFS on NetApp"
+  name: "BeeGFS on NetApp with E-Series Storage"
   internal:
     pdf_enabled: true
   prod:
