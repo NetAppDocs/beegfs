@@ -38,18 +38,18 @@ The deploy prcedures includes several examples where text needs to be copied to 
   - "pool 1.pool.ntp.org iburst maxsources 3"`
 
 == Deploying BeeGFS on NetApp using Ansible
-  To tell Ansible about the file and block nodes set up in previous sections, you need to build an inventory including hosts, groups, and variables describing the desired BeeGFS file system.
+To tell Ansible about the file and block nodes set up in previous sections, you need to build an inventory including hosts, groups, and variables describing the desired BeeGFS file system.
 
-  Sample inventories can be downloaded from https://github.com/netappeseries/beegfs/tree/master/getting_started/[here].
+Sample inventories can be downloaded from https://github.com/netappeseries/beegfs/tree/master/getting_started/[here].
 
-  To actually apply the configuration described by this inventory,  use the various Ansible modules and roles provided in the NetApp E-Series Ansible collections, in particular the https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_2[BeeGFS HA 7.2 role^] that deploys the end-to-end solution.
+To actually apply the configuration described by this inventory,  use the various Ansible modules and roles provided in the NetApp E-Series Ansible collections, in particular the https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_2[BeeGFS HA 7.2 role^] that deploys the end-to-end solution.
 
-  While in- depth documentation is provided with the role, this topic section describes how to use it specifically to deploy a NetApp Verified Architecture using the second generation BeeGFS building block design.
+While in- depth documentation is provided with the role, this topic section describes how to use it specifically to deploy a NetApp Verified Architecture using the second generation BeeGFS building block design.
 
-  [NOTE]
+[NOTE]
   Although the deploy steps attempt to provide enough detail that prior experience with Ansible is not a prerequisite to deploy the solution, some familiarity with Ansible and related terminology is strongly recommended.
 
-  The building block architecture described by this NetApp Verified Architecture makes this process straightforward, outside of differing host names and management IPs, the only configuration options that change between each building block is whether it should run:
+The building block architecture described by this NetApp Verified Architecture makes this process straightforward, outside of differing host names and management IPs, the only configuration options that change between each building block is whether it should run:
 
   * BeeGFS management, metadata, and storage services.  The first building block deployed in each filesystem requires this configuration and is sometimes referred to as the base building block.
   * BeeGFS Metadata and Storage services.
@@ -58,7 +58,7 @@ The deploy prcedures includes several examples where text needs to be copied to 
 == Inventory layout for a BeeGFS HA cluster
 This section provides an overview of the Ansible inventory structure used to define a BeeGFS HA cluster.
 
-Anyone with previous Ansible experience should be aware the BeeGFS HA role implements a custom method of discovering which variables (or facts) apply to each host. This is required to simplify building an Ansible inventory that describes resources that can run one multiple servers. 
+Anyone with previous Ansible experience should be aware the BeeGFS HA role implements a custom method of discovering which variables (or facts) apply to each host. This is required to simplify building an Ansible inventory that describes resources that can run one multiple servers.
 
 An Ansible inventory typically consists of three things, the files in `host_vars` and `group_vars` and an `inventory.yml` file that assigns hosts to specific groups (and potentially groups to other groups).
 
