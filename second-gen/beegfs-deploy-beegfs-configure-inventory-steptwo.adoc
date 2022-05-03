@@ -1,11 +1,11 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-beegfs-create-inventory.html
+permalink: beegfs-deploy-beegfs-configure-inventory-steptwo.html
 keywords:
 summary:
 ---
 
-= Create an Ansible inventory for the BeeGFS file system
+= Step 2: Configure the inventory for a management, metadata, and storage building block
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -13,108 +13,7 @@ summary:
 :imagesdir: ./media/
 
 [.lead]
-This section provides an overview of the Ansible inventory structure used to define a BeeGFS HA cluster.
-
-Anyone with previous Ansible experience should be aware the BeeGFS HA role implements a custom method of discovering which variables (or facts) apply to each host. This is required to simplify building an Ansible inventory that describes resources that can run one multiple servers.
-
-[NOTE]
-Don’t create any files with the content in this subsection is intended as an example to help the reader understand the scheme that is used in the following sections.
-
-An Ansible inventory typically consists of three things, the files in `host_vars` and `group_vars` and an `inventory.yml` file that assigns hosts to specific groups (and potentially groups to other groups).  Although this configuration is predetermined based on the configuration profile, a general understanding of how everything is laid out as an Ansible inventory might be helpful:
-
-....
-# BeeGFS HA (High Availability) cluster inventory.
-all:
-  children:
-    # Ansible group representing all block nodes:
-    eseries_storage_systems:
-      hosts:
-        ictad22a01:
-        ictad22a02:
-        ictad22a03:
-        ictad22a04:
-        ictad22a05:
-        ictad22a06:
-    # Ansible group representing all file nodes:
-    ha_cluster:
-      children:
-        meta_01:  # Group representing a metadata service with ID 01.
-          hosts:
-            file_node_01:  # This service is preferred on the first file node.
-            file_node_02:  # And can failover to the second file node.
-        meta_02:  # Group representing a metadata service with ID 02.
-          hosts:
-            file_node_02:  # This service is preferred on the second file node.
-            file_node_01: # And can failover to the first file node.
-....
-
-For each service,  an additional file is created under `group_vars` describing its configuration.
-
-....
-# meta_01 - BeeGFS HA Metadata Resource Group
-beegfs_ha_beegfs_meta_conf_resource_group_options:
-  connMetaPortTCP: 8015
-  connMetaPortUDP: 8015
-  tuneBindToNumaZone: 0
-floating_ips:
-  - i1b: <IP>/<SUBNET_MASK>
-  - i4b: <IP>/<SUBNET_MASK>
-# Type of BeeGFS service the HA resource group will manage.
-beegfs_service: metadata # Choices: management, metadata, storage.
-# What block node should be used to create a volume for this service:
-beegfs_targets:
-  ictad22a01:
-    eseries_storage_pool_configuration:
-      - name: beegfs_m1_m2_m5_m6
-        raid_level: raid1
-        criteria_drive_count: 4
-        owning_controller: A
-        common_volume_configuration:
-          segment_size_kb: 128
-        volumes:
-          - size: 21.25
-....
-
-This allows the BeeGFS service, network, and storage configuration for each resource to be defined in a single place. Behind the scenes,  the BeeGFS role handles aggregating the necessary configuration for each file and block node based on this inventory structure.  For more information, see this https://www.netapp.com/blog/accelerate-deployment-of-ha-for-beegfs-with-ansible/[blog post^].
-
-[NOTE]
-The BeeGFS numerical and string node ID for each service is automatically configured based on the group name. Thus,  in addition to the general Ansible requirement for group names to be unique, groups representing a BeeGFS service must end in a number that is unique for the type of BeeGFS service the group represents. For example,  meta_01 and stor_01 are allowed, but metadata_01 and meta_01 are not.
-
-== Step 1: Build the initial Ansible inventory
-
-The deployment procedures show how to deploy a BeeGFS file system that consists of one base building block including management, metadata, and storage services a second building block with metadata and storage services and a third storage only building block.
-
-This is intended to show the full range of typical configuration profiles that can be used to configure NetApp BeeGFS building blocks to meet the requirements of the overall BeeGFS file system.
-
-[NOTE]
-In this and subsequent sections,  adjust as needed to build the inventory representing the BeeGFS file system you want to deploy. In particular, Ansible host names that represent each block or file node and the desired IP addressing scheme for the storage network to ensure it can scale to the number of BeeGFS file nodes and clients.
-
-.Steps
-. Create a new file `inventory.yml` and insert the following, replacing the hosts under `eseries_storage_systems` as needed to represent the block nodes in your deploymenthe names should correspond with the name used for `host_vars/<FILENAME>. yml`.
-+
-....
-# BeeGFS HA (High Availability) cluster inventory.
-all:
-  children:
-    # Ansible group representing all block nodes:
-    eseries_storage_systems:
-      hosts:
-        ictad22a01:
-        ictad22a02:
-        ictad22a03:
-        ictad22a04:
-        ictad22a05:
-        ictad22a06:
-    # Ansible group representing all file nodes:
-    ha_cluster:
-      children:
-....
-+
-In the subsequent sections,  you will create additional Ansible groups under `ha`_`cluster` that represent BeeGFS services you want to run in the cluster.
-
-== Step 2: Configure the inventory for a management, metadata, and storage building block
-
-The first building block in the cluster or base building block must include the BeeGFS management service along with metadata and storage services:
+The first building block in the cluster or base building block must include the BeeGFS management service along with metadata and storage services.
 
 .Steps
 . In `inventory.yml`,  populate the following under `ha_cluster: children`:
