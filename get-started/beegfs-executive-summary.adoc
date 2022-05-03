@@ -25,7 +25,11 @@ HPC-style workloads are typically characterized by multiple compute nodes or GPU
 
 The design of parallel file systems like BeeGFS have been proven historically as the preferred storage option for these HPC-style workloads. While traditionally these types of storage requirements were more commonly found in academic and research environments,  as the value of data continues to explode, enterprises are increasingly finding themselves with similar requirements. This is driven in no small part by the maturing of various AI techniques and the availability and affordability of hardware accelerators such as GPUs that put advanced AI capabilities in reach of all organizations.
 
-This https://www.netapp.com/blog/beegfs-for-ai-ml-dl/[shift toward HPC-style workloads in the enterprise^] has introduced high standards around fault tolerance and high availability in addition to the extreme performance expected from parallel file systems.  NetApp brings decades of experience building trusted enterprise storage systems,  with its E-Series and EF-Series arrays being the most deployed block layer behind various parallel file systems in traditional HPC and media and entertainment environments.  It is from this rich history NetApp steps forward to deliver https://www.netapp.com/blog/solution-support-for-beegfs-and-e-series/[fully supported^], next generation parallel file system storage solutions for both traditional and enterprise HPC workloads, https://www.netapp.com/blog/beefs-for-ai-fact-vs-fiction/[including HPC-style ML/DL training^] and large-scale natural language processing (NLP) and natural language understanding (NLU) workloads.
+This https://www.netapp.com/blog/beegfs-for-ai-ml-dl/[shift toward HPC-style workloads in the enterprise^] has introduced high standards around fault tolerance and high availability in addition to the extreme performance expected from parallel file systems.
+
+NetApp brings decades of experience building trusted enterprise storage systems,  with its E-Series and EF-Series arrays being the most deployed block layer behind various parallel file systems in traditional HPC and media and entertainment environments.
+
+It is from this rich history NetApp steps forward to deliver https://www.netapp.com/blog/solution-support-for-beegfs-and-e-series/[fully supported^], next generation parallel file system storage solutions for both traditional and enterprise HPC workloads, https://www.netapp.com/blog/beefs-for-ai-fact-vs-fiction/[including HPC-style ML/DL training^] and large-scale natural language processing (NLP) and natural language understanding (NLU) workloads.
 
 === Program summary
 
@@ -35,4 +39,4 @@ The NetApp Verified Architecture program provides customers with reference confi
 * Designed to minimize deployment risks
 * Designed to accelerate time to market
 
-This doc site is for NetApp and partner solutions engineers and customer strategic decision makers. It describes the architecture design considerations that were used to determine the specific equipment, cabling, and configurations required to support the validated workload.
+This doc site is intended for NetApp and partner solutions engineers and customer strategic decision makers. It describes the architecture design considerations that are used to determine the specific equipment, cabling, and configurations required to support the validated workload.

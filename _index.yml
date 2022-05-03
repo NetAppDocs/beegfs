@@ -1,5 +1,6 @@
 indexpage:
-  lead:  BeeGFS with NetApp E-Series storage with is a proven, integrated solution with a simple, reliable, scalable, and cost-effective HPC infrastructure that keeps pace with your most extreme workloads.
+  lead: BeeGFS on NetApp E-Series storage with is a proven, integrated solution with a simple, reliable, scalable, and cost-effective HPC infrastructure that keeps pace with your most extreme workloads.
+
   tiles:
      - title: Get started
        links:
