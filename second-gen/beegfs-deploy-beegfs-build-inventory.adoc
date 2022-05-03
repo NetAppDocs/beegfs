@@ -1,11 +1,11 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-beegfs-create-inventory-stepone.html
+permalink: beegfs-deploy-beegfs-build-inventory.html
 keywords:
 summary:
 ---
 
-= Step 1: Build the initial Ansible inventory
+= Create an Ansible inventory for the BeeGFS file system
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -13,12 +13,16 @@ summary:
 :imagesdir: ./media/
 
 [.lead]
-The deployment procedures show how to deploy a BeeGFS file system that consists of one base building block including management, metadata, and storage services a second building block with metadata and storage services and a third storage only building block.
+Learn how to deploy a BeeGFS file system that consists of one base building block including management, metadata, and storage services; a second building block with metadata and storage services; and a third storage only building block.
 
-This is intended to show the full range of typical configuration profiles that can be used to configure NetApp BeeGFS building blocks to meet the requirements of the overall BeeGFS file system.
+This is intended to show the full range of typical configuration profiles that you can use to configure NetApp BeeGFS building blocks to meet the requirements of the overall BeeGFS file system.
 
 [NOTE]
-In this and subsequent sections,  adjust as needed to build the inventory representing the BeeGFS file system you want to deploy. In particular, Ansible host names that represent each block or file node and the desired IP addressing scheme for the storage network to ensure it can scale to the number of BeeGFS file nodes and clients.
+In this and subsequent sections, adjust as needed to build the inventory representing the BeeGFS file system you want to deploy. In particular, Ansible host names that represent each block or file node and the desired IP addressing scheme for the storage network to ensure it can scale to the number of BeeGFS file nodes and clients.
+
+
+== Step 1: Build the initial Ansible inventory
+Learn how to build the initial Ansible inventory structure.
 
 .Steps
 . Create a new file `inventory.yml` and insert the following, replacing the hosts under `eseries_storage_systems` as needed to represent the block nodes in your deploymenthe names should correspond with the name used for `host_vars/<FILENAME>. yml`.
