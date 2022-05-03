@@ -1,0 +1,151 @@
+---
+sidebar: sidebar
+permalink: beegfs-deploy-beegfs-configure-clients.html
+keywords:
+summary:
+---
+
+= Configure BeeGFS clients
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+[.lead]
+The BeeGFS client must be installed and configured on any hosts such as compute or GPU nodes needing access to the BeeGFS file system. This can be done using Ansible and the BeeGFS collection.
+
+.Steps
+. If needed, set up passwordless SSH from the Ansible control node to each of the hosts you want to configure as BeeGFS clients: `ssh-copy-id <user>@<HOSTNAME_OR_IP>`.
+
+. Under `host_vars/`,  create a file for each BeeGFS client named `<HOSTNAME>.yml `with the following content, filling in the placeholder text with the correct information for your environment:
++
+....
+# BeeGFS Client
+ansible_host: <MANAGEMENT_IP>
+# OPTIONAL: If you want to use the NetApp E-Series Host Collection’s IPoIB role to configure InfiniBand interfaces for clients to connect to BeeGFS file systems:
+eseries_ipoib_interfaces:
+  - name: <INTERFACE>
+    address: <IP>/<SUBNET_MASK> # Example: 100.127.1. 1/16
+  - name: <INTERFACE>0
+    address: <IP>/<SUBNET_MASK>
+....
++
+[NOTE]
+Currently,  two InfiniBand interfaces must be configured on each client, one in each of the two storage IPoIB subnets. If using the example subnets and recommended ranges for each BeeGFS service listed in this document,  clients should have one interface configured in the. range `100.127.1. 0` - `100.127.99.255` and the other in `100.128.1. 0` - `100.128. 99.255`.
+
+. Create a new file `client_inventory.yml` and populate the following at the top:
++
+....
+# BeeGFS client inventory.
+all:
+  vars:
+    ansible_ssh_user: <USER> # This is the user Ansible should use to connect to each client.
+    ansible_become_password: <PASSWORD> # This is the password Ansible will use for privilege escalation, and requires the ansible_ssh_user be root, or have sudo privileges.
+The defaults set by the BeeGFS HA role are based on the testing performed as part of this NetApp Verified Architecture and differ from the typical BeeGFS client defaults.
+....
++
+[NOTE]
+It bears repeating, particularly for production environments,  not store passwords in plain text https://docs.ansible.com/ansible/latest/user_guide/vault.html[Ansible Vault^] orthe `--ask-become-pass` option when running the playbook.
+
+. In the `client_inventory.yml` file,  list all hosts that should be configured as BeeGFS clients under the `beegfs_clients` group and specify any additional configuration required to build the BeeGFS client kernel module.
++
+....
+  children:
+    # Ansible group representing all BeeGFS clients:
+    beegfs_clients:
+      hosts:
+        ictad21h01:
+        ictad21h02:
+        ictad21h03:
+        ictad21h04:
+        ictad21h05:
+        ictad21h06:
+        ictad21h07:
+        ictad21h08:
+        ictad21h09:
+        ictad21h10:
+      vars:
+        # OPTION 1: If you’re using the Mellanox OFED drivers and they are already installed:
+        eseries_ib_base_skip: True # Skip installing inbox drivers when using the IPoIB role.
+        beegfs_client_ofed_enable: True
+        beegfs_client_ofed_include_path: "/usr/src/ofa_kernel/default/include"
+        # OPTION 2: If you’re using inbox IB/RDMA drivers and they are already installed:
+        eseries_ib_base_skip: True # Skip installing inbox drivers when using the IPoIB role.
+        # OPTION 3: If you want to use inbox IB/RDMA drivers and need them installed/configured.
+        eseries_ib_base_skip: False # Default value.
+        beegfs_client_ofed_enable: False # Default value.
+....
++
+[NOTE]
+When using the Mellanox OFED drivers,  `beegfs`_`client`_`ofed`_`include`_`path `points at the correct https://doc.beegfs.io/latest/advanced_topics/rdma_support.html[header include path^] for your Linux installation.
+
+. In the `client_inventory.yml` file,  list the BeeGFS file systems you want mounted at the bottom of any previously defined `vars`.
++
+....
+        beegfs_client_mounts:
+          - sysMgmtdHost: 100.127.101.0 # Primary IP of the BeeGFS management service.
+            mount_point: /mnt/beegfs    # Path to mount BeeGFS on the client.
+            connInterfaces:
+              - <INTERFACE> # Example: ibs4f1
+              - <INTERFACE>
+            beegfs_client_config:
+              # Maximum number of simultaneous connections to the same node.
+              connMaxInternodeNum: 128 # BeeGFS Client Default: 12
+              # Allocates the number of buffers for transferring IO.
+              connRDMABufNum: 36 # BeeGFS Client Default: 70
+              # Size of each allocated RDMA buffer
+              connRDMABufSize: 65536 # BeeGFS Client Default: 8192
+              # Required when using the BeeGFS client with the shared-disk HA solution.
+              # This does require BeeGFS targets be mounted in the default “sync” mode.
+              # See the documentation included with the BeeGFS client role for full details.
+              sysSessionChecksEnabled: false
+....
++
+[NOTE]
+The `beegfs_client_config` represents the settings that were tested for this NetApp Verified Architecture. See the documentation included with the `netapp_eseries.beegfs `collection’s `beegfs_client` role for a comprehensive overview of all options. This includes details around mounting multiple BeeGFS file systems or mounting the same BeeGFS file system multiple times.
+
+. Create a new `client_playbook.yml` file and populate the following:
++
+....
+# BeeGFS client playbook.
+- hosts: beegfs_clients
+  any_errors_fatal: true
+  gather_facts: true
+  collections:
+    - netapp_eseries.beegfs
+    - netapp_eseries.host
+  tasks:
+    - name: Ensure IPoIB is configured
+      import_role:
+        name: ipoib
+    - name: Verify the BeeGFS clients are configured.
+      import_role:
+        name: beegfs_client
+....
++
+[NOTE]
+Omit importing the `netapp_eseries.host` collection and `ipoib` role if you have already installed required IB/RDMA drivers and configured IPs on the appropriate IPoIB interfaces.
+
+. To install/build the client and mount BeeGFS,  run the following command:
++
+....
+ansible-playbook -i client_inventory.yml client_playbook.yml
+....
+
+=== Scaling beyond five building blocks
+
+Pacemaker and Corosync can be configured to scale beyond five building blocks (10 file nodes),  there are drawbacks to larger clusters, and eventually Pacemaker and Corosync do impose a maximum of 32 nodes. As such,  NetApp has only tested BeeGFS HA clusters up to 10 nodes and scaling individual clusters beyond this limit is not recommended or supported.
+
+However,  BeeGFS file systems still need to scale far beyond 10 nodes, and NetApp has accounted for this in the BeeGFS on NetApp architecture. By deploying multiple HA clusters containing a subset of the building blocks in each file system, you can scale the overall BeeGFS file system independently of any recommended or hard limits on the underlying HA clustering mechanisms.
+
+In this scenario,  create a new Ansible inventory representing the additional HA clusters and simply omit configuring another management service. Instead,  point the `beegfs_ha_mgmtd_floating_ip` variable in each additional clusters `ha_cluster.yml` at the IP for the first BeeGFS management service.
+
+When adding additional HA clusters to the same file system,  :
+
+* BeeGFS node IDs are always unique. This means the file names corresponding with each service under `group_vars` must be unique across all clusters.
+* BeeGFS client and server IP addresses are unique across all clusters.
+* The first HA cluster containing the BeeGFS management service is running before trying to deploy/update additional clusters.Inventories for each HA cluster should be maintained separately in their own directory tree. Trying to mix the inventory files for multiple clusters in one directory tree might cause issues with how the BeeGFS HA role aggregates the configuration applied to a particular cluster.
+
+[NOTE]
+There is no requirement that each HA cluster scale to five building blocks before creating a new one. In many cases,  using fewer building blocks per cluster  easier to manage. One approach is to configure the building blocks in each single rack as an HA cluster.

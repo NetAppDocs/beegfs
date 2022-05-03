@@ -21,12 +21,24 @@ entries:
           url: /beegfs-deploy-hardware.html
         - title: Deploy software
           entries:
-            - title: Prerequisite tasks
+            - title: Set up file and block nodes
               url: /beegfs-deploy-software-prereqs.html
             - title: Set up Ansible control node
               url: /beegfs-deploy-setting-up-an-ansible-control-node.html
             - title: Deploy BeeGFS on NetApp using Ansible
-              url: /beegfs-deploy-beegfs-on-netapp-using-ansible.html
+              entries:
+                - title: Overview
+                  url: /beegfs-deploy-beegfs-on-netapp-using-ansible.html
+                - title: Define general configuration
+                  url: /beegfs-deploy-beegfs-general-config.html
+                - title: Create Ansible inventory
+                  url: /beegfs-deploy-beegfs-create-inventory.html
+                - title: Set up playbook
+                  url: /beegfs-deploy-beegfs-playbook.html
+                - title: Configure BeeGFS client
+                  url: /beegfs-deploy-beegfs-configure-clients.html
+        - title: Scale BeeGFS clusters
+          url: /beegfs-deploy-beegfs-scale.html
         - title: Performance tuning
           url: /beegfs-deploy-performance-tuning.html
         - title: Recommended percentages

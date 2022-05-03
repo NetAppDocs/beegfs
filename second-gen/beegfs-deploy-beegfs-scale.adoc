@@ -1,0 +1,38 @@
+---
+sidebar: sidebar
+permalink: beegfs-deploy-beegfs-scale.html
+keywords:
+summary:
+---
+
+= Scale beyond five building blocks
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+[.lead]
+You can configure Pacemaker and Corosync to scale beyond five building blocks (10 file nodes). However, there are drawbacks to larger clusters, and eventually Pacemaker and Corosync do impose a maximum of 32 nodes.
+
+As such,  NetApp has only tested BeeGFS HA clusters up to 10 nodes and scaling individual clusters beyond this limit is not recommended or supported.
+
+However,  BeeGFS file systems still need to scale far beyond 10 nodes, and NetApp has accounted for this in the BeeGFS on NetApp architecture.
+
+.Steps
+
+. By deploying multiple HA clusters containing a subset of the building blocks in each file system, you can scale the overall BeeGFS file system independently of any recommended or hard limits on the underlying HA clustering mechanisms.
++
+In this scenario,  create a new Ansible inventory representing the additional HA clusters and simply omit configuring another management service. Instead,  point the `beegfs_ha_mgmtd_floating_ip` variable in each additional clusters `ha_cluster.yml` at the IP for the first BeeGFS management service.
+
+. When adding additional HA clusters to the same file system,  make sure you do the following:
+.. Make sure the BeeGFS node IDs are always unique. Make sure the file names corresponding with each service under `group_vars` is unique across all clusters.
+.. Make sure the BeeGFS client and server IP addresses are unique across all clusters.
+.. Make sure the first HA cluster containing the BeeGFS management service is running before trying to deploy or update additional clusters.
+
+. Maintain inventories for each HA cluster separately in their own directory tree.
++
+Trying to mix the inventory files for multiple clusters in one directory tree might cause issues with how the BeeGFS HA role aggregates the configuration applied to a particular cluster.
+
+[NOTE]
+There is no requirement that each HA cluster scale to five building blocks before creating a new one. In many cases,  using fewer building blocks per cluster is easier to manage. One approach is to configure the building blocks in each single rack as an HA cluster.

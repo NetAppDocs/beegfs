@@ -22,7 +22,7 @@ For each deployment the number of metadata and storage or storage only building 
 Deploying the solution involves the following high-level tasks:
 
 * Hardware deployment:
-** Physical assembly of each building block including rackingcabling hardware
+** Physical assembly of each building block including racking and cabling hardware
 * Software deployment:
 ** Configuring management IPs on block nodes
 ** Configuring BMC IPs on file nodes

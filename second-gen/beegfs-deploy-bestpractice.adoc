@@ -13,7 +13,7 @@ summary:
 :imagesdir: ./media/
 
 [.lead]
-Learn about the best practice to follow when deploying the BeeGFS on NetApp shared-disk high availability solution.
+Learn about the best practices to follow when deploying the BeeGFS on NetApp shared-disk high availability solution.
 
 == Standard conventions
 To simplify referring to nodes in subsequent sections and populating Ansible inventory files, this NetApp Verified Architecture presumes the following standard conventions are followed:

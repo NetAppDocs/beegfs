@@ -5,7 +5,7 @@ keywords:
 summary:
 ---
 
-= Prerequisite tasks
+= Prerequisite: Set up file nodes and block nodes
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -13,30 +13,53 @@ summary:
 :imagesdir: ./media/
 
 [.lead]
-While most software configuration tasks are automated using the NetApp provided Ansible collections,  there are a few prerequisite tasks that must be performed in advance:
+While most software configuration tasks are automated using the NetApp provided Ansible collections, you must configure networking on the baseboard management controller (BMC) of each server and configure the management port on each controller.
 
-. Set up all file nodes:
-.. Configure networking on the baseboard management controller (BMC) of each server. Guidance for Lenovo SR665 file nodes can be found https://thinksystem.lenovofiles.com/help/index.jsp?topic=%2F7D2W%2Fset_the_network_connection.html[here^].
+== Step 1: Set up all file nodes
+Configure networking on the baseboard management controller (BMC) of each server.
+
+Guidance for Lenovo SR665 file nodes can be found https://thinksystem.lenovofiles.com/help/index.jsp?topic=%2F7D2W%2Fset_the_network_connection.html[here^].
+
+.About this task
+A BMC (sometimes referred to as a service processor) is the generic name for the out-of-band management capability built into various server platforms that can provide remote access even if the operating system is not installed or accessible.
+
+Vendors typically market this functionality with their own branding. For example,  on the Lenovo SR665 this is referred to as the Lenovo XClarity Controller (XCC).
+
+.Steps
+. Configure the system settings for maximum performance.
 +
-A BMC (sometimes referred to as a service processor) is the generic name for the out-of-band management capability built into various server platforms that can provide remote access even if the operating system is not installed or accessible. Vendors typically market this functionality with their own branding. For example,  on the Lenovo SR665 this is referred to as the Lenovo XClarity Controller (XCC).
+This can be accomplished through the UEFI setup (formerly known as the BIOS) or by using the Redfish APIs provided by many BMCs.
++
+Settings for NetApp validated file nodes are documented in Appendix A: File node BIOS/UEFI performance tuning <<xref>>, but can vary for other server vendors.
 
-.. Configure the system settings for maximum performance. This can be accomplished through the UEFI setup (formerly known as the BIOS) or by using the Redfish APIs provided by many BMCs.  Settings for NetApp validated file nodes are documented in Appendix A: File node BIOS/UEFI performance tuning <<xref>>, but can vary for other server vendors.
-.. Install Red Hat 8. 4 and configure the host name and network port used to manage the operating system including SSH connectivity from the Ansible control node.  Do not configure IPs on any of the InfiniBand ports at this time.
-
+. Install Red Hat 8. 4 and configure the host name and network port used to manage the operating system including SSH connectivity from the Ansible control node.
++
+Do not configure IPs on any of the InfiniBand ports at this time.
++
 [NOTE]
 While not strictly required, subsequent sections presume that host names are sequentially numbered (such as h1-hN) and refer to tasks that should be completed on odd versus even numbered hosts.
 
-.. Use RedHat Subscription Manager to https://access.redhat.com/solutions/253273[register and subscribe^] the system to allow installation of the required packages from the official Red Hat repositories and https://access.redhat.com/solutions/2761031[limit updates^] to the supported version of Red Hat: `subscription-manager release --set=8.4`.
-. Enable the Red Hat repository containing the packages required for high availability.
+. Use RedHat Subscription Manager to https://access.redhat.com/solutions/253273[register and subscribe^] the system to allow installation of the required packages from the official Red Hat repositories and https://access.redhat.com/solutions/2761031[limit updates^] to the supported version of Red Hat: `subscription-manager release --set=8.4`.
 
+. Enable the Red Hat repository containing the packages required for high availability.
++
 ....
 subscription-manager repo-override --repo=rhel-8-for-x86_64-highavailability-rpms --add=enabled:1
 ....
 
-. Update all ConnectX-6 HCA firmware to the version recommended in the technology requirements section.  This can be done by downloading and running a version of the https://www.mellanox.com/support/firmware/mlxup-mft[mlxup^] tool that bundles the recommended firmware.
-. Set up all block nodes:
-.. Configure the management port on each controller. Guidance for EF600 block nodes can be found http://docs.netapp.com/ess-11/index.jsp?topic=%2Fcom.netapp.doc.e-f600-hw-install%2FGUID-3F3A4DDB-CF9E-4066-8A0E-D14641A37BBB.html&cp=2_0_3_3_1[here^].
-.. Optionally,  http://docs.netapp.com/ess-11/index.jsp?topic=%2Fcom.netapp.doc.ssm-sam-117%2FGUID-3B85F4A6-73EB-41EB-9F04-AF2EF14F127D.html&resultof=%22%65%64%69%74%22%20%22%73%74%6f%72%61%67%65%22%20%22%73%74%6f%72%61%67%22%20%22%61%72%72%61%79%22%20%22%61%72%72%61%69%22%20%22%6e%61%6d%65%22%20[set the storage array name^] for each system.  While this can also be set using Ansible, this can make it easier to refer to each system in subsequent sections.
+. Update all ConnectX-6 HCA firmware to the version recommended in the technology requirements section.
++
+This can be done by downloading and running a version of the https://www.mellanox.com/support/firmware/mlxup-mft[mlxup^] tool that bundles the recommended firmware.
+
+== Step 2: Set up all block nodes
+
+. Configure the management port on each controller.
++
+Guidance for EF600 block nodes can be found http://docs.netapp.com/ess-11/index.jsp?topic=%2Fcom.netapp.doc.e-f600-hw-install%2FGUID-3F3A4DDB-CF9E-4066-8A0E-D14641A37BBB.html&cp=2_0_3_3_1[here^].
+
+. Optionally,  http://docs.netapp.com/ess-11/index.jsp?topic=%2Fcom.netapp.doc.ssm-sam-117%2FGUID-3B85F4A6-73EB-41EB-9F04-AF2EF14F127D.html&resultof=%22%65%64%69%74%22%20%22%73%74%6f%72%61%67%65%22%20%22%73%74%6f%72%61%67%22%20%22%61%72%72%61%79%22%20%22%61%72%72%61%69%22%20%22%6e%61%6d%65%22%20[set the storage array name^] for each system.
++
+While this can also be set using Ansible, this can make it easier to refer to each system in subsequent sections.
 
 [NOTE]
 While not strictly required, subsequent sections presume storage array names are sequentially numbered (such as c1- cN) and refer to tasks that should be completed on odd versus even numbered systems.
