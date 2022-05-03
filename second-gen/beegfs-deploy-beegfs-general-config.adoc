@@ -5,7 +5,7 @@ keywords:
 summary:
 ---
 
-= Define general configuration
+= Define the general configuration for file and block nodes
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -29,7 +29,8 @@ Creating a `.gitignore` file that ignores the packages/directory is also recomme
 
 . Create the following subdirectories: `host_vars`,  `group_vars`, and `packages`.
 
-== Step 2: Specify configuration for individual file and block nodes
+== Step 2: Define configuration for individual file and block nodes
+Define the configuration that applies to individual file nodes and individual building block nodes.
 
 . Under `host_vars/`,  create a file for each BeeGFS file node named `<HOSTNAME>.yml `with the following content, paying special attention to the notes regarding content to populate for BeeGFS cluster IPs and host names ending in odd versus even numbers.
 +
@@ -115,7 +116,7 @@ eseries_controller_nvme_ib_port:
     - 192.168.8.100
 ....
 
-== Step 3: Specify common file and block node configuration
+== Step 3: Define the configuration for common file and block nodes
 
 Ansible allows us to define configuration common to a group of hosts under `group_vars` in a file name that corresponds with the group. Among other benefits, this prevents repeating shared configuration in multiple places.
 
@@ -134,7 +135,7 @@ beegfs_ha_ntp_server_pools:  # Modify the NTP server addressess if desired.
   - "pool 1.pool.ntp.org iburst maxsources 3"
 ....
 
-== Step 4: Specify common file node configuration
+== Step 4: Define the configuration for the common file node
 
 The shared configuration for file nodes is defined in a group called `ha_cluster`. The steps in this section build out the configuration that should be included in the `group_vars/ha_cluster.yml` file.
 
@@ -318,7 +319,7 @@ beegfs_ha_beegfs_meta_conf_ha_group_options:
 [NOTE]
 In our verification testing,  `randomrobin` was typically used to test files were evenly distributed across all BeeGFS storage targets during https://doc.beegfs.io/latest/advanced_topics/benchmark.html[performance benchmarking^].  With real world use this might cause lowernumbered targets to fill up faster than higher numbered targets. Omitting this and just using the default `randomized` value has been shown to provide good performance while still utilization all available targets.
 
-== Step 5: Specify common block node configuration
+== Step 5: Define the configuration for the common block node
 
 The shared configuration for block nodes is defined in a group called `eseries_storage_systems`.
 

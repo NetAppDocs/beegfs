@@ -21,7 +21,7 @@ entries:
           url: /beegfs-deploy-hardware.html
         - title: Deploy software
           entries:
-            - title: Set up file and block nodes
+            - title: Define configuration for file and block nodes
               url: /beegfs-deploy-software-prereqs.html
             - title: Set up Ansible control node
               url: /beegfs-deploy-setting-up-an-ansible-control-node.html
