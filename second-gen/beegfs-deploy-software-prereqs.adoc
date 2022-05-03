@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-software-deployment.html
+permalink: beegfs-deploy-software-prereqs.html
 keywords:
 summary:
 ---

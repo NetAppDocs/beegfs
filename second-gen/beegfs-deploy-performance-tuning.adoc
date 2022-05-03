@@ -5,7 +5,7 @@ keywords:
 summary:
 ---
 
-= File node BIOS/UEFI performance tuning
+= Performance tuning
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -19,7 +19,7 @@ summary:
 //
 
 [.lead]
-This appendix describes the various tuning parameters that need to be set in the BIOS/UEFI setup of the various NetApp verified file nodes validated for the second-generation building block design.
+Learn how the various tuning parameters need to be set in the BIOS/UEFI setup of the various NetApp verified file nodes validated for the second-generation building block design.
 
 === Lenovo SR665
 

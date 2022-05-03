@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-hardware-deployment.html
+permalink: beegfs-deploy-hardware.html
 keywords:
 summary:
 ---
