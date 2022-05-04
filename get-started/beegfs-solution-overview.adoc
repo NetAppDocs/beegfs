@@ -5,7 +5,7 @@ keywords:
 summary:
 ---
 
-= Solution overview
+= Learn about the BeeGFS on NetApp solution
 :hardbreaks:
 :nofooter:
 :icons: font

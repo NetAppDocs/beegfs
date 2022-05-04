@@ -19,7 +19,7 @@ summary:
 //
 
 [.lead]
-To provide customers a flexible and robust storage architecture for demanding HPC and HPC-style ML/DL workloads, NetApp provides a NetApp Verified Architectures describing building blocks that combine the BeeGFS parallel file system with NetApp EF600 storage systems.
+To provide customers a flexible and robust storage architecture for demanding HPC and HPC-style ML/DL workloads, NetApp provides a NetApp Verified Architecture describing building blocks that combine the BeeGFS parallel file system with NetApp EF600 storage systems.
 
 This modular building block approach allows organizations to start small and scale over time to whatever performance and/or capacity requirements the future may hold.
 
