@@ -10,6 +10,8 @@ sidebar:
     url: "/index.html"
   - title: NetApp Validated Architectures
     entries:
+    - title: About BeeGFS On NetApp
+      url: beegfs-executive-summary.html
     - section: first-gen
     - section: second-gen
   - title: Legal notices

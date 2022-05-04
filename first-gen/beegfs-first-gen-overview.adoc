@@ -19,4 +19,4 @@ summary:
 //
 
 [.lead]
-Need sumary of first gen design and link to 
+Need sumary of first gen design and link to https://www.netapp.com/pdf.html?item=/media/25445-nva-1156-design.pdf[First Gen Design]
