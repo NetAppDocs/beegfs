@@ -5,7 +5,7 @@ keywords:
 summary:
 ---
 
-= Design overview
+= Overview of design
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -27,7 +27,7 @@ The BeeGFS on NetApp solution combines the BeeGFS parallel file system with the 
 * Designed to minimize deployment risks
 * Designed to accelerate time to market
 
-The BeeGFS on NetApp solution is optimized to meet the performance requirements of demanding workloads including high-performance computing (HPC) and HPC-style machine learning (ML), deep learning (DL) and similar artificial intelligence (AI) techniques. 
+The BeeGFS on NetApp solution is optimized to meet the performance requirements of demanding workloads including high-performance computing (HPC) and HPC-style machine learning (ML), deep learning (DL) and similar artificial intelligence (AI) techniques.
 
 By incorporating a shared-disk HA architecture, the BeeGFS on NetApp solution meets the data durability and availability requirements of enterprises and other organizations that cannot afford downtime or data loss as they look for storage that can scale to keep up with their next generation workloads and use cases.
 
