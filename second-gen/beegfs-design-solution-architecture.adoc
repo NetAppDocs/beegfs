@@ -5,7 +5,7 @@ keywords:
 summary:
 ---
 
-= Solution architecture
+= Solution architecture design
 :hardbreaks:
 :nofooter:
 :icons: font
