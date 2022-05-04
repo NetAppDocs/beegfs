@@ -123,7 +123,7 @@ image:beegfs-design-image10.png[Error: Missing Graphic Image]
 
 In the previous example,  clients and server services prefer to communicate with storage service 1 using interface i1b. Storage service 1 uses interface i1a as the preferred path to communicate with its volumes (storage_tgt_101, 102) on controller A of the first block node.  This arrangement allows us to make use of the full bidirectional PCIe bandwidth available to the InfiniBand adapter and achieve better performance from a dual- port HDR InfiniBand adapter than would otherwise be possible with PCIe 4.0.
 
-==== Performance tuning
+==== Performance tuning for block nodes
 
 Based on the configuration profiles applied to a particular BeeGFS building block, the volume groups configured on the block nodes change slightly. For example, with a 24-drive EF600 block node:
 

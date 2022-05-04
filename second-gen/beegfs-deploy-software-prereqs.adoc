@@ -15,15 +15,18 @@ summary:
 [.lead]
 While most software configuration tasks are automated using the NetApp provided Ansible collections, you must configure networking on the baseboard management controller (BMC) of each server and configure the management port on each controller.
 
-== Step 1: Set up file nodes
-Configure networking on the baseboard management controller (BMC) of each server. Guidance for Lenovo SR665 file nodes can be found https://thinksystem.lenovofiles.com/help/index.jsp?topic=%2F7D2W%2Fset_the_network_connection.html[here^].
+== Set up file nodes
 
-.About this task
-A BMC (sometimes referred to as a service processor) is the generic name for the out-of-band management capability built into various server platforms that can provide remote access even if the operating system is not installed or accessible.
-
-Vendors typically market this functionality with their own branding. For example,  on the Lenovo SR665 this is referred to as the Lenovo XClarity Controller (XCC).
 
 .Steps
+. Configure networking on the baseboard management controller (BMC) of each server.
++
+Guidance for Lenovo SR665 file nodes can be found https://thinksystem.lenovofiles.com/help/index.jsp?topic=%2F7D2W%2Fset_the_network_connection.html[here^].
++
+[NOTE]
+A BMC (sometimes referred to as a service processor) is the generic name for the out-of-band management capability built into various server platforms that can provide remote access even if the operating system is not installed or accessible.
+Vendors typically market this functionality with their own branding. For example,  on the Lenovo SR665 this is referred to as the Lenovo XClarity Controller (XCC).
+
 . Configure the system settings for maximum performance.
 +
 This can be accomplished through the UEFI setup (formerly known as the BIOS) or by using the Redfish APIs provided by many BMCs.
@@ -49,10 +52,10 @@ subscription-manager repo-override --repo=rhel-8-for-x86_64-highavailability-rpm
 +
 This can be done by downloading and running a version of the https://www.mellanox.com/support/firmware/mlxup-mft[mlxup^] tool that bundles the recommended firmware.
 
-== Step 2: Set up block nodes
+== Set up block nodes
 Set up the EF600 block nodes by configuring the management port on each controller.
 
-. Configure the management port on each controller.
+. Configure the management port on each EF600 controller.
 +
 Guidance for EF600 block nodes can be found http://docs.netapp.com/ess-11/index.jsp?topic=%2Fcom.netapp.doc.e-f600-hw-install%2FGUID-3F3A4DDB-CF9E-4066-8A0E-D14641A37BBB.html&cp=2_0_3_3_1[here^].
 

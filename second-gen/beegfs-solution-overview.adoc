@@ -5,7 +5,7 @@ keywords:
 summary:
 ---
 
-= Learn about the BeeGFS on NetApp solution
+= Second generation overview
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -16,7 +16,7 @@ summary:
 [.lead]
 The NetApp Verified Architecture describes how to design and deploy BeeGFS on NetApp using validated BeeGFS file servers (referred to throughout as file nodes) attached to block storage systems (referred to throughout as block nodes) using the second generation of the NetApp BeeGFS building block design.
 
-Our design takes advantage of the performance density delivered by the latest enterprise server and storage hardware and network speeds, requiring file nodes that feature dual AMD EPYC 7003 “Milan” processors and support for PCIe 4.0 with direct connects using 200Gb (HDR) InfiniBand to block nodes that provide end-to-end NVMe and NVMeOF using the NVMe/IB protocol.
+Our second generation design takes advantage of the performance density delivered by the latest enterprise server and storage hardware and network speeds, requiring file nodes that feature dual AMD EPYC 7003 “Milan” processors and support for PCIe 4.0 with direct connects using 200Gb (HDR) InfiniBand to block nodes that provide end-to-end NVMe and NVMeOF using the NVMe/IB protocol.
 
 A benefit of parallel file systems such as BeeGFS is their ability to be deployed and scaled out in different ways depending on the storage requirements. For example, use cases primarily featuring lots of small files will benefit from extra metadata performance and capacity, whereas use cases featuring fewer larger files might favor more storage capacity and performance for actual file contents. The fact that there are multiple considerations that impact different dimensions of the parallel file system deployment adds complexity to designing, deploying, and managing the parallel file system.
 

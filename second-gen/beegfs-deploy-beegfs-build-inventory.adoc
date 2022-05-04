@@ -5,7 +5,7 @@ keywords:
 summary:
 ---
 
-= Create an Ansible inventory for the BeeGFS file system
+= Define Ansible Inventory for BeeGFS building blocks
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -13,7 +13,7 @@ summary:
 :imagesdir: ./media/
 
 [.lead]
-Learn how to deploy a BeeGFS file system that consists of one base building block including management, metadata, and storage services; a second building block with metadata and storage services; and a third storage only building block.
+Learn how to build an Ansible inventory file for BeeGFS building blocks. The BeeGFS file system consists of one base building block including management, metadata, and storage services; a second building block with metadata and storage services; and a third storage only building block.
 
 This is intended to show the full range of typical configuration profiles that you can use to configure NetApp BeeGFS building blocks to meet the requirements of the overall BeeGFS file system.
 

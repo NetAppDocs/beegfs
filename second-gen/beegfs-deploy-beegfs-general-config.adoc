@@ -5,7 +5,7 @@ keywords:
 summary:
 ---
 
-= Define the general configuration for file and block nodes
+= Create the Ansible inventory
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -13,7 +13,9 @@ summary:
 :imagesdir: ./media/
 
 [.lead]
-Learn how to define the general configuration for file and block nodes.
+Use Ansible to configure and deploy the BeeGFS on NetApp solution using the second generation BeeGFS building block design.
+
+The Ansible inventory defines the configuration for file and block nodes and represents the BeeGFS file system you want to deploy. The inventory includes hosts, groups, and variables describing the desired BeeGFS file system.
 
 == Step 1: Define configuration for all building blocks
 Define the configuration that applies to all building blocks, regardless of which eventual configuration profile  applied to them individually.

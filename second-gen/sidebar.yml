@@ -1,8 +1,14 @@
 section: second-gen
 title: Second generation design
 entries:
-  - title: Requirements
-    url: /beegfs-technology-requirements.html
+  - title: Get started
+    entries:
+    - title: Solution overview
+      url: /beegfs-solution-overview.html
+    - title: Technical requirements
+      url: /beegfs-technology-requirements.html
+    - title: More information
+      url: /beegfs-moreinfo.html
   - title: Design
     entries:
     - title: Design overview
@@ -29,9 +35,9 @@ entries:
               url: /beegfs-deploy-software-prereqs.html
             - title: Set up Ansible control node
               url: /beegfs-deploy-setting-up-an-ansible-control-node.html
-            - title: Define configuration files
+            - title: Create the Ansible inventory
               url: /beegfs-deploy-beegfs-general-config.html
-            - title: Create Ansible inventory
+            - title: Define BeeGFS building blocks
               url: /beegfs-deploy-beegfs-build-inventory.html
             - title: Deploy BeeGFS
               url: /beegfs-deploy-beegfs-playbook.html
@@ -41,7 +47,5 @@ entries:
           url: /beegfs-deploy-beegfs-scale.html
         - title: Performance tuning
           url: /beegfs-deploy-performance-tuning.html
-        - title: Recommended percentages
+        - title: Recommended volume percentages
           url: /beegfs-deploy-recommended-volume-percentages.html
-  - title: More information
-    url: /beegfs-moreinfo.html

@@ -24,11 +24,14 @@ Deploying the solution involves the following high-level tasks:
 * Hardware deployment:
 ** Physical assembly of each building block including racking and cabling hardware
 * Software deployment:
-** Configure BMC IPs on file nodes
-** Configure management IPs on block nodes
-** Install a supported operating system and configure management networking on file nodes
+** Set up file and block nodes:
+*** Configure BMC IPs on file nodes
+*** Install a supported operating system and configure management networking on file nodes
+*** Configure management IPs on block nodes
+
 ** Set up an Ansible control node
 ** Define an Ansible inventory describing the desired BeeGFS file system
+** Define Ansible Inventory for BeeGFS building blocks
 ** Deploy BeeGFS using Ansible
 
 [NOTE]
