@@ -33,8 +33,10 @@ https://www.netapp.com/support-and-training/documentation/[https://www.netapp.co
 +
 https://doc.beegfs.io/[https://doc.beegfs.io/^]
 
-Refer to the http://mysupport.netapp.com/matrix[Interoperability Matrix Tool (IMT)] on the NetApp Support site to validate that the exact product and feature versions described in this document are supported for your specific environment.
-
+* Interoperability Matrix Tool (IMT)
++
+Refer to the http://mysupport.netapp.com/matrix[Interoperability Matrix Tool (IMT)] on the NetApp Support site to validate that the exact product and feature versions described in the NetApp Verified Architecture are supported for your specific environment.
++
 The NetApp IMT defines the product components and versions that can be used to construct configurations that are supported by NetApp. Specific results depend on each customer’s installation in accordance with published specifications.
 
 === Version history
