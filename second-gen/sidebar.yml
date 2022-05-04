@@ -35,7 +35,7 @@ entries:
               url: /beegfs-deploy-software-prereqs.html
             - title: Set up Ansible control node
               url: /beegfs-deploy-setting-up-an-ansible-control-node.html
-            - title: Create the Ansible inventory
+            - title: Create Ansible inventory
               url: /beegfs-deploy-beegfs-general-config.html
             - title: Define BeeGFS building blocks
               url: /beegfs-deploy-beegfs-build-inventory.html
