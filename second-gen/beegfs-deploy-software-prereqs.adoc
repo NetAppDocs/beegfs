@@ -5,7 +5,7 @@ keywords:
 summary:
 ---
 
-= Prerequisite: Set up file nodes and block nodes
+= Set up file nodes and block nodes
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -15,10 +15,8 @@ summary:
 [.lead]
 While most software configuration tasks are automated using the NetApp provided Ansible collections, you must configure networking on the baseboard management controller (BMC) of each server and configure the management port on each controller.
 
-== Step 1: Set up all file nodes
-Configure networking on the baseboard management controller (BMC) of each server.
-
-Guidance for Lenovo SR665 file nodes can be found https://thinksystem.lenovofiles.com/help/index.jsp?topic=%2F7D2W%2Fset_the_network_connection.html[here^].
+== Step 1: Set up file nodes
+Configure networking on the baseboard management controller (BMC) of each server. Guidance for Lenovo SR665 file nodes can be found https://thinksystem.lenovofiles.com/help/index.jsp?topic=%2F7D2W%2Fset_the_network_connection.html[here^].
 
 .About this task
 A BMC (sometimes referred to as a service processor) is the generic name for the out-of-band management capability built into various server platforms that can provide remote access even if the operating system is not installed or accessible.
@@ -30,7 +28,7 @@ Vendors typically market this functionality with their own branding. For example
 +
 This can be accomplished through the UEFI setup (formerly known as the BIOS) or by using the Redfish APIs provided by many BMCs.
 +
-Settings for NetApp validated file nodes are documented in Appendix A: File node BIOS/UEFI performance tuning <<xref>>, but can vary for other server vendors.
+Settings for NetApp validated file nodes are documented in link:beegfs-deploy-performance-tuning.html[Performance tuning], but can vary for other server vendors.
 
 . Install Red Hat 8. 4 and configure the host name and network port used to manage the operating system including SSH connectivity from the Ansible control node.
 +
@@ -51,7 +49,8 @@ subscription-manager repo-override --repo=rhel-8-for-x86_64-highavailability-rpm
 +
 This can be done by downloading and running a version of the https://www.mellanox.com/support/firmware/mlxup-mft[mlxup^] tool that bundles the recommended firmware.
 
-== Step 2: Set up all block nodes
+== Step 2: Set up block nodes
+Set up the EF600 block nodes by configuring the management port on each controller.
 
 . Configure the management port on each controller.
 +

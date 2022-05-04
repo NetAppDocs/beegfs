@@ -1,9 +1,7 @@
 section: get-started
 title: Get started
 entries:
-  - title: Program summary
-    url: /beegfs-program-summary.html
-  - title: Executive summary
+  - title: Overview
     url: /beegfs-executive-summary.html
-  - title: Solution overview
+  - title: Learn about BeeGFS on NetApp solution
     url: /beegfs-solution-overview.html

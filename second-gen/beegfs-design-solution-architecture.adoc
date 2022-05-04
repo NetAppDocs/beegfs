@@ -19,13 +19,16 @@ summary:
 //
 
 [.lead]
-Many different design choices were made in developing this NetApp Validated Architecture. This section provides additional details that might be useful to anyone considering or implementing this solution who wants to understand why those choices were made.
+Many intentional design choices were made in developing the NetApp Validated Architecture for the BeeGFS on NetApp solution. This section provides additional details that might be useful to anyone considering or implementing this solution who wants to understand why those choices were made.
 
-=== Hardware configuration
+== Hardware configuration
+Learn about the file nodes and network cabling required to support the BeeGFS on NetApp solution.
 
-==== File nodes
+=== File nodes
 
-File nodes include two CPU sockets configured as separate NUMA zones that includes local access to an equal number of PCIe slots and memory. Populating InfiniBand adapters in the appropriate PCI risers/slots is important to balance workload over the available PCIe lanes and memory channels by fully isolating work for individual BeeGFS services to a particular NUMA node. The goal is to achieve similar performance from each file node as if it was two independent single socket servers.
+File nodes include two CPU sockets configured as separate NUMA zones that includes local access to an equal number of PCIe slots and memory.
+
+Populating InfiniBand adapters in the appropriate PCI risers/slots is important to balance workload over the available PCIe lanes and memory channels by fully isolating work for individual BeeGFS services to a particular NUMA node. The goal is to achieve similar performance from each file node as if it was two independent single socket servers.
 
 The following diagram shows the file node NUMA configuration.
 
@@ -35,12 +38,14 @@ By pinning BeeGFS processes to a particular NUMA zone and ensuring the interface
 
 ==== Network cabling
 
-Within each building block,  each file node is connected to both block nodes using a total of four redundant InfiniBand connections.  Additionally, each file node also has four redundant connections to the InfiniBand storage network. In the following diagram,  all file- node ports outlined in green are used to connect to the storage fabric;  all others are the direct connects to the block nodes.
+Within each building block,  each file node is connected to both block nodes using a total of four redundant InfiniBand connections.  Additionally, each file node also has four redundant connections to the InfiniBand storage network.
+
+In the following figure, all file node ports outlined in green are used to connect to the storage fabric; all others are the direct connects to the block nodes.
 
 image:beegfs-design-image6.png[Error: Missing Graphic Image]
 
 [NOTE]
-For storage networks with redundant switches, ports outlined in light green should connect to one switch, and ports in dark green to another.  
+For storage networks with redundant switches, ports outlined in light green should connect to one switch, and ports in dark green to another.
 
 The two InfiniBand ports in a particular NUMA zone connect to the A and B controllers of the same block node.  Ports in NUMA node 0 always connect to the first block node, and ports in NUMA node 1 connect to the second block node.  This allows us to configure BeeGFS services to run in the same NUMA zone regardless of which file node is running them.  The overall configuration makes sure that BeeGFS services have secondary optimal paths to the front- end storage network and back- end block nodes regardless of where a failure occurs.  This helps minimizes performance effects if a file node or controller in a block node requires maintenance.
 
@@ -48,29 +53,36 @@ Another consideration is that the theoretical maximum speed (not accounting for 
 
 Each BeeGFS service is configured so the preferred port used for client traffic and the path to the block nodes controller that is the primary owner of that services volumes are through the same adapter.  This is covered in more depth in the next section.
 
-The following diagram shows the cabling to leverage the full PCIe bidirectional bandwidth. 
+The following figure shows the cabling to leverage the full PCIe bidirectional bandwidth.
 
 image:beegfs-design-image7.png[Error: Missing Graphic Image]
 
-=== Software configuration
+== Software configuration
+Learn about the software configuration required to support the BeeGFS on NetApp solution.
 
-==== BeeGFS network configuration
+=== BeeGFS network configuration
+The BeeGFS network configuration consists of the following components.
 
-===== Floating IPs
+==== Floating IPs
+Each BeeGFS server service has its own IP addresses that can move between file nodes depending on where the BeeGFS service is running.
 
-Each BeeGFS server service has its own IP addresses that can move between file nodes depending on where the BeeGFS service is running. This arrangement allows failovers to be opaque from the client’s perspective;  all the client knows is the IP to contact a particular BeeGFS service. Therefore, they do not need to worry about what file node is currently running that service.
+This arrangement allows failovers to be opaque from the client’s perspective;  all the client knows is the IP to contact a particular BeeGFS service. Therefore, they do not need to worry about what file node is currently running that service.
 
-===== BeeGFS server multihoming configuration
+==== BeeGFS server multi-homing configuration
 
-To increase the density of the solution,  each file node has multiple storage interfaces with IPs configured in the same IP subnet. Additional configuration is required to make sure that this works as expected with the Linux networking stack, because,  by default,  requests to one interface can be responded to on a different interface if their IPs are in the same subnet. In addition to other drawbacks, this default behavior makes it impossible to properly establish/maintain RDMA connections.
+To increase the density of the solution,  each file node has multiple storage interfaces with IPs configured in the same IP subnet.
 
-The Ansible- based deployment handles tightening the reverse path (RP) and address resolution protocol (ARP) behavior along with ensuring when floating IPs are started or stopped. Corresponding IP routes and rules are dynamically created to allow the multi- homed network configuration to work properly.
+Additional configuration is required to make sure that this works as expected with the Linux networking stack, because,  by default,  requests to one interface can be responded to on a different interface if their IPs are in the same subnet. In addition to other drawbacks, this default behavior makes it impossible to properly establish or maintain RDMA connections.
 
-===== BeeGFS client multirail configuration
+The Ansible-based deployment handles tightening the reverse path (RP) and address resolution protocol (ARP) behavior along with ensuring when floating IPs are started or stopped. Corresponding IP routes and rules are dynamically created to allow the multi- homed network configuration to work properly.
 
-Multirail refers to the ability of an application to use multiple independent network “rails” to increase performance. Although BeeGFS can use RDMA for connectivity, to simplify discovering and establishing RDMA connections, BeeGFS uses IPoIB. Thus, one option to allow BeeGFS clients to use multiple InfiniBand interfaces is to configure each with an IP in a different subnet and then configure the preferred interfaces for half of the BeeGFS server services in each subnet.  In the following diagram,  interfaces highlighted in light green are in one IP subnet (for example, `100.127.0.0/16`) and the dark green interfaces are in another (for example, `100.128.0.0/16`). 
+===== BeeGFS client multi-rail configuration
 
-This diagram shows the balancing of traffic across multiple BeeGFS client interfaces.
+Multi-rail refers to the ability of an application to use multiple independent network “rails” to increase performance.
+
+Although BeeGFS can use RDMA for connectivity, to simplify discovering and establishing RDMA connections, BeeGFS uses IPoIB. Thus, one option to allow BeeGFS clients to use multiple InfiniBand interfaces is to configure each with an IP in a different subnet and then configure the preferred interfaces for half of the BeeGFS server services in each subnet.  In the following diagram,  interfaces highlighted in light green are in one IP subnet (for example, `100.127.0.0/16`) and the dark green interfaces are in another (for example, `100.128.0.0/16`).
+
+The following figure shows the balancing of traffic across multiple BeeGFS client interfaces.
 
 image:beegfs-design-image8.png[Error: Missing Graphic Image]
 
@@ -97,21 +109,23 @@ It is important to note the use of two IPoIB subnets is a logical distinction, a
 [NOTE]
 Multirail support was added in BeeGFS 7.3.0 to allow the use of multiple IB interfaces in a single IPoIB subnet. This NetApp Verified Architecture was developed prior to the general availability of BeeGFS 7.3.0 and thus demonstrates the use of two IP subnets to use two IB interfaces on the BeeGFS clients. One advantage of the multiple IP subnet approach is eliminating the need to https://doc.beegfs.io/7.3.0/advanced_topics/rdma_support.html[configure multihoming^] on BeeGFS client nodes.
 
-==== Block node configuration
+=== Block node configuration
 
-Block nodes are comprised of two active/active RAID controllers all with shared access to the same set of drives. Typically,  each controller owns half the volumes configured on the system but can take over for the other controller as needed.  Multipathing software on the file nodes is responsible for determining the active/optimized path to each volume and automatically moving to the alternate path in the event of a cable, adapter, or controller failure.
+Block nodes are comprised of two active/active RAID controllers all with shared access to the same set of drives. Typically,  each controller owns half the volumes configured on the system but can take over for the other controller as needed.
+
+Multipathing software on the file nodes is responsible for determining the active/optimized path to each volume and automatically moving to the alternate path in the event of a cable, adapter, or controller failure.
 
 The following diagram shows the controller layout in EF600 block nodes.
 
 image:beegfs-design-image9.png[Error: Missing Graphic Image]
 
-To facilitate the shared-disk HA solution,  volumes are mapped to both file nodes so that they can take over for each other as needed. The following diagram shows an example of how BeeGFS service and preferred volume ownership is configured for maximum performance. The interface to the left of each BeeGFS service indicates the preferred interface that clients and other services use to contact it. 
+To facilitate the shared-disk HA solution,  volumes are mapped to both file nodes so that they can take over for each other as needed. The following diagram shows an example of how BeeGFS service and preferred volume ownership is configured for maximum performance. The interface to the left of each BeeGFS service indicates the preferred interface that clients and other services use to contact it.
 
 image:beegfs-design-image10.png[Error: Missing Graphic Image]
 
 In the previous example,  clients and server services prefer to communicate with storage service 1 using interface i1b. Storage service 1 uses interface i1a as the preferred path to communicate with its volumes (storage_tgt_101, 102) on controller A of the first block node.  This arrangement allows us to make use of the full bidirectional PCIe bandwidth available to the InfiniBand adapter and achieve better performance from a dual- port HDR InfiniBand adapter than would otherwise be possible with PCIe 4.0.
 
-===== Performance tuning
+==== Performance tuning
 
 Based on the configuration profiles applied to a particular BeeGFS building block, the volume groups configured on the block nodes change slightly. For example, with a 24-drive EF600 block node:
 
@@ -120,27 +134,28 @@ Based on the configuration profiles applied to a particular BeeGFS building bloc
 ** 2x 8+10 RAID 6 volume groups for BeeGFS storage services
 * For a BeeGFS metadata + storage building block:
 ** 1x 2+2 RAID 10 volume group for BeeGFS metadata services
-** 2x 8+2 RAID 6 volume groups for BeeGFS storage services 
+** 2x 8+2 RAID 6 volume groups for BeeGFS storage services
 * For BeeGFS storage only building block:
 ** 2x 10+2 RAID 6 volume groups for BeeGFS storage services
 
 [NOTE]
-As BeeGFS needs significantly less storage space for management and metadata versus storage, one option is to use smaller drives for the RAID 10 volume groups. Smaller drives should be populated in the outermost drive slots. For more information, see NVA-1164-DEPLOY-BeeGFS on NetApp deployment guide (xref). 
+As BeeGFS needs significantly less storage space for management and metadata versus storage, one option is to use smaller drives for the RAID 10 volume groups. Smaller drives should be populated in the outermost drive slots. For more information, see NVA-1164-DEPLOY-BeeGFS on NetApp deployment guide (xref).
 
-These are all configured by the Ansible- based deployment, along with several other settings generally recommended to optimize performance/behavior including: 
+These are all configured by the Ansible- based deployment, along with several other settings generally recommended to optimize performance/behavior including:
 
 * Adjusting the global cache block size to 32KiB and adjusting demand-based cache flushing to 80%.
 * Disabling autoload balancing (ensuring controller volume assignments stay as intended).
-* Enabling read caching and disabling read- ahead caching. 
+* Enabling read caching and disabling read- ahead caching.
 * Enabling write caching with mirroring and requiring battery backup so that caches persist through failure of a block node controller.
 * Specifying the order drives are assigned to volume groups balancing I/O across available drive channels.
 
 [NOTE]
 For a full list of available performance tuning parameters, see NVA-1164-DEPLOY: BeeGFS on NetApp deployment guide (xref).
 
-==== File node configuration
+=== File node configuration
+Learn about the file node configuration required to support the BeeGFS on NetApp solution.
 
-===== High availability clustering
+==== High availability clustering
 
 Typically, when you start a BeeGFS service (with or without HA), a few resources must be in place:
 
@@ -152,7 +167,7 @@ To facilitate failover of BeeGFS services between multiple nodes, the file nodes
 
 When BeeGFS is running in an HA cluster, all BeeGFS services and underlying resources are managed by Pacemaker. Each BeeGFS service and the resources it depends on are configured into a resource group, which ensures resources are started and stopped in the correct order and collocated on the same node. For each BeeGFS resource group,  Pacemaker also runs a custom BeeGFS monitoring resource that is responsible for detecting failure conditions and intelligently triggering failovers when a BeeGFS service is no longer accessible on a particular node.
 
-The following diagram shows the Pacemaker- controlled BeeGFS services and dependencies.
+The following figure shows the Pacemaker-controlled BeeGFS services and dependencies.
 
 image:beegfs-design-image11.png[Error: Missing Graphic Image]
 
@@ -185,7 +200,7 @@ Because multiple nodes can start each BeeGFS service, Pacemaker must make sure e
 
 If a failure occurs in the cluster,  Pacemaker reacts and restarts BeeGFS resources on another node.  In some scenarios,  Pacemaker might not be able to communicate with the original faulty node to confirm the resources are stopped. To verify that the node is down before restarting BeeGFS resources elsewhere,  Pacemaker fences off the faulty node, ideally by removing power. Many open-source fencing agents are available that enable Pacemaker to fence a node with a power distribution unit (PDU) or by using the server baseboard management controller (BMC) with APIs such as Redfish.
 
-==== Performance tuning
+== Performance tuning
 
 Although BeeGFS provides reasonable performance out of the box, NetApp has developed a set of recommended tuning parameters to maximize performance, especially given the capabilities of the underlying E-Series block nodes and to account for any special requirements need to run BeeGFS in a shared-disk HA architecture.
 
@@ -205,7 +220,7 @@ The available tuning parameters can be sorted into three categories:
 [NOTE]
 For a full list of available performance tuning parameters, see NVA-1164-DEPLOY: BeeGFS on NetApp deployment guide (xref).
 
-=== Deployment strategy
+== Deployment strategy
 
 Ansible is a popular IT automation engine used to automate cloud provisioning, configuration management,  and other aspects of application deployments and intra-service orchestration ( https://www.ansible.com/overview/how-ansible-works?hsLang=en-us[reference^]). Ansible allows companies such as NetApp to expand on built-in functionality using https://galaxy.ansible.com/netapp_eseries[Collections^] hosted on Ansible Galaxy. Collections include modules that perform some specific function or task (like create an E-Series volume) and roles that can call multiple modules and other roles to automate the multiple tasks needed to bring even the most complex systems to a desired state.
 

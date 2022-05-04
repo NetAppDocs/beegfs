@@ -5,7 +5,9 @@ entries:
     url: /beegfs-technology-requirements.html
   - title: Design
     entries:
-    - title: Architecture
+    - title: Design overview
+      url: /beegfs-design-overview.html
+    - title: Architecture design
       url: /beegfs-design-solution-architecture.html
     - title: Verfication
       url: /beegfs-design-solution-verification.html
@@ -13,8 +15,10 @@ entries:
       url: /beegfs-design-solution-sizing-guidelines.html
   - title: Deploy
     entries:
-        - title: Overview
+        - title: Deploy overview
           url: /beegfs-deploy-overview.html
+        - title: Learn about Ansible
+          url: /beegfs-deploy-learn-ansible.html
         - title: Best practice
           url: /beegfs-deploy-bestpractice.html
         - title: Deploy hardware
