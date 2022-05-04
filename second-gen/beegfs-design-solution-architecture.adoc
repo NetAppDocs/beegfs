@@ -36,7 +36,7 @@ image:beegfs-design-image5.png[Error: Missing Graphic Image]
 
 By pinning BeeGFS processes to a particular NUMA zone and ensuring the interfaces they use are in the same zone, we avoid the need for remote access over the intersocket connection. This intersocket connection is sometimes known as the QPI or GMI2 link and,  even in modern processor architectures,  can be a bottleneck when using high speed networking like HDR InfiniBand.
 
-==== Network cabling
+=== Network cabling
 
 Within each building block,  each file node is connected to both block nodes using a total of four redundant InfiniBand connections.  Additionally, each file node also has four redundant connections to the InfiniBand storage network.
 
@@ -76,7 +76,7 @@ Additional configuration is required to make sure that this works as expected wi
 
 The Ansible-based deployment handles tightening the reverse path (RP) and address resolution protocol (ARP) behavior along with ensuring when floating IPs are started or stopped. Corresponding IP routes and rules are dynamically created to allow the multi- homed network configuration to work properly.
 
-===== BeeGFS client multi-rail configuration
+==== BeeGFS client multi-rail configuration
 
 Multi-rail refers to the ability of an application to use multiple independent network “rails” to increase performance.
 
