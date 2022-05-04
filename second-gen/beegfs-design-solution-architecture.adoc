@@ -69,7 +69,6 @@ Each BeeGFS server service has its own IP addresses that can move between file n
 This arrangement allows failovers to be opaque from the client’s perspective;  all the client knows is the IP to contact a particular BeeGFS service. Therefore, they do not need to worry about what file node is currently running that service.
 
 ==== BeeGFS server multi-homing configuration
-
 To increase the density of the solution,  each file node has multiple storage interfaces with IPs configured in the same IP subnet.
 
 Additional configuration is required to make sure that this works as expected with the Linux networking stack, because,  by default,  requests to one interface can be responded to on a different interface if their IPs are in the same subnet. In addition to other drawbacks, this default behavior makes it impossible to properly establish or maintain RDMA connections.
@@ -77,7 +76,6 @@ Additional configuration is required to make sure that this works as expected wi
 The Ansible-based deployment handles tightening the reverse path (RP) and address resolution protocol (ARP) behavior along with ensuring when floating IPs are started or stopped. Corresponding IP routes and rules are dynamically created to allow the multi- homed network configuration to work properly.
 
 ==== BeeGFS client multi-rail configuration
-
 Multi-rail refers to the ability of an application to use multiple independent network “rails” to increase performance.
 
 Although BeeGFS can use RDMA for connectivity, to simplify discovering and establishing RDMA connections, BeeGFS uses IPoIB. Thus, one option to allow BeeGFS clients to use multiple InfiniBand interfaces is to configure each with an IP in a different subnet and then configure the preferred interfaces for half of the BeeGFS server services in each subnet.  In the following diagram,  interfaces highlighted in light green are in one IP subnet (for example, `100.127.0.0/16`) and the dark green interfaces are in another (for example, `100.128.0.0/16`).
