@@ -5,7 +5,7 @@ keywords:
 summary:
 ---
 
-= Solution sizing guidelines
+= Sizing guidelines
 :hardbreaks:
 :nofooter:
 :icons: font
