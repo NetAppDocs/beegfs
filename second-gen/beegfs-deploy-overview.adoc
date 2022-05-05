@@ -15,7 +15,7 @@ summary:
 [.lead]
 Learn how to assemble second-generation NetApp BeeGFS hardware building blocks and deploy the BeeGFS on NetApp shared-disk high availability solution.
 
-The Deploy setion walks through deploying a BeeGFS file system that consists of one base building block including management, metadata, and storage services, a second building block with metadata and storage services, and a third storage only building block.  This demonstrates the full range of recommended configuration “profiles” for NetApp BeeGFS building blocks.
+The Deploy section walks through deploying a BeeGFS file system that consists of one base building block including management, metadata, and storage services, a second building block with metadata and storage services, and a third storage only building block.  This demonstrates the full range of recommended configuration “profiles” for NetApp BeeGFS building blocks.
 
 For each deployment the number of metadata and storage or storage only building blocks may vary from what is demonstrated here depending on capacity and performance requirements.
 
@@ -35,7 +35,7 @@ Deploying the solution involves the following high-level tasks:
 ** Deploy BeeGFS using Ansible
 
 [NOTE]
-The deploy prcedures includes several examples where text needs to be copied to a file. Pay close attention to any inline comments denoted by “#” or “//” characters for anything that should or can be modified for a specific deployment. For example:
+The deploy procedures includes several examples where text needs to be copied to a file. Pay close attention to any inline comments denoted by “#” or “//” characters for anything that should or can be modified for a specific deployment. For example:
 `beegfs_ha_ntp_server_pools:  # THIS IS AN EXAMPLE OF A COMMENT!
   - "pool 0.pool.ntp.org iburst maxsources 3"
   - "pool 1.pool.ntp.org iburst maxsources 3"`
