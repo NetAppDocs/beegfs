@@ -32,4 +32,4 @@ The architecture design, developed and verified by NetApp and NVIDIA, gives IT o
 
 NetApp EF-Series AI tightly integrates DGX A100 systems, NetApp EF600 NVMe storage systems, and the BeeGFS parallel file systems with state-of-the-art IB networking. NetApp EF600 AI simplifies artificial intelligence deployments by eliminating design complexity and guesswork. Customers can start small and scale seamlessly from science experiments and proof-of-concepts to production and beyond.
 
-To learn moe, see link:https://www.netapp.com/pdf.html?item=/media/25445-nva-1156-design.pdf[First Generation Design: NetApp EF-Series AI with NVIDIA DGX A100 Systems and BeeGFS]. 
+To learn more, see link:https://www.netapp.com/pdf.html?item=/media/25445-nva-1156-design.pdf[First Generation Design: NetApp EF-Series AI with NVIDIA DGX A100 Systems and BeeGFS]. 
