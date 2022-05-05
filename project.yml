@@ -12,7 +12,8 @@ sidebar:
     entries:
     - title: About BeeGFS On NetApp
       url: beegfs-executive-summary.html
-    - section: first-gen
+    - title: First generation NVA
+      url: /beegfs-first-gen-overview.html
     - section: second-gen
   - title: Legal notices
     url: /legal-notices.html
