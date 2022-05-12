@@ -25,6 +25,7 @@ This section covers the technology requirements for the BeeGFS on NetApp solutio
 
 The following table lists the hardware components that are required to implement a single second- generation BeeGFS building block.  The hardware components used in any particular implementation of the solution might vary based on customer requirements.
 
+[options="header" cols="10%,20%,70%"]
 |===
 |Count |Hardware component |Requirements
 
