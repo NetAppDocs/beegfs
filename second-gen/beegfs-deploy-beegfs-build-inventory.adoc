@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-beegfs-build-inventory.html
-keywords:
-summary:
+keywords: Ansible, EF600, NetApp, BeeGFS, Verified Architecture
+summary: "Learn how to build an Ansible inventory file for BeeGFS building blocks."
 ---
 
 = Define Ansible Inventory for BeeGFS building blocks

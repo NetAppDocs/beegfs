@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-setting-up-an-ansible-control-node.html
-keywords:
-summary:
+keywords: Ansible control node, set up, EF600, NetApp, BeeGFS, Verified Architecture
+summary: "Set up an Ansible control node."
 ---
 
 = Set up an Ansible control node

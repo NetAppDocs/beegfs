@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-design-abstract.html
-keywords:
-summary:
+keywords: EF600, NetApp, BeeGFS, Verified Architecture
+summary: "The NetApp Verified Architecture describes the design of the NetApp second-generation BeeGFS hardware building blocks and the BeeGFS on NetApp shared-disk high-availability (HA) solution."
 ---
 
 = Introduction

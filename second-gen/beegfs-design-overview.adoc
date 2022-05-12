@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-design-overview.html
-keywords:
-summary:
+keywords: EF600, NetApp, BeeGFS, Verified Architecture, design
+summary: "Describes the architecture and design considerations used to determine the specific equipment, cabling, and configurations required to support the BeeGFS on NetApp solution."
 ---
 
 = Overview of design

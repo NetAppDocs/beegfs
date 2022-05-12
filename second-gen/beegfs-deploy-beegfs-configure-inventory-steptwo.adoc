@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-beegfs-configure-inventory-steptwo.html
-keywords:
-summary:
+keywords: Configure inventory, EF600, NetApp, BeeGFS, Verified Architecture
+summary: "Configure the inventory for a management, metadata, and storage building block."
 ---
 
 = Step 2: Configure the inventory for a management, metadata, and storage building block

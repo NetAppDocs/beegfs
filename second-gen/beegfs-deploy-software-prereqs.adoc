@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-software-prereqs.html
-keywords:
-summary:
+keywords: Set up, file nodes, block nodes, EF600, NetApp, BeeGFS, Verified Architecture
+summary: "Set up file nodes and block nodes."
 ---
 
 = Set up file nodes and block nodes

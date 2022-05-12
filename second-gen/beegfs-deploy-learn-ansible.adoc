@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-learn-ansible.html
-keywords:
-summary:
+keywords: EF600, NetApp, BeeGFS, Verified Architecture
+summary: "Use Ansible to configure and deploy the BeeGFS on NetApp solution using the second generation BeeGFS building block design."
 ---
 
 = Learn about Ansible
@@ -13,7 +13,7 @@ summary:
 :imagesdir: ./media/
 
 [.lead]
-You use Ansible to configure and deploy the BeeGFS on NetApp solution using the second generation BeeGFS building block design.
+Use Ansible to configure and deploy the BeeGFS on NetApp solution using the second generation BeeGFS building block design.
 
 The Ansible inventory defines the configuration for file and block nodes and represents the BeeGFS file system you want to deploy. The inventory includes hosts, groups, and variables describing the desired BeeGFS file system.
 

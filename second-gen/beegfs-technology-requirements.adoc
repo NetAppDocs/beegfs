@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-technology-requirements.html
-keywords:
-summary:
+keywords: Technical requirements, EF600, NetApp, BeeGFS, Verified Architecture
+summary: "This section covers the technology requirements for the BeeGFS on NetApp solution."
 ---
 
 = Technology requirements

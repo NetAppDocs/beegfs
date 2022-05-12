@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-design-solution-verification.html
-keywords:
-summary:
+keywords: Validate, solution, EF600, NetApp, BeeGFS, Verified Architecture
+summary: "This architecture was verified using three second-generation building blocks, each deployed in one of the three available configuration profiles."
 ---
 
 = Solution verification
@@ -19,7 +19,11 @@ summary:
 //
 
 [.lead]
-This architecture was verified using three second-generation building blocks, each deployed in one of the three available configuration profiles. The building blocks were attached to two Mellanox Quantum InfiniBand (MQM8700) switches. Ten BeeGFS clients were also attached to the InfiniBand switches and used to run synthetic benchmark utilities. The following diagram is the BeeGFS configuration used to validate this NetApp Verified Architecture.
+This architecture was verified using three second-generation building blocks, each deployed in one of the three available configuration profiles.
+
+The building blocks were attached to two Mellanox Quantum InfiniBand (MQM8700) switches. Ten BeeGFS clients were also attached to the InfiniBand switches and used to run synthetic benchmark utilities.
+
+The following diagram is the BeeGFS configuration used to validate this NetApp Verified Architecture.
 
 image:beegfs-design-image12.png[Error: Missing Graphic Image]
 
@@ -100,11 +104,11 @@ As part of validating this architecture, several functional tests were executed 
 * Triggering an immediate server power off using the BMC.
 * Gracefully placing a node in standby and failing over service to another node.
 * Gracefully placing a node back online and failing back services to the original node.
-* Powering off one of the InfiniBand switches using the PDU.All tests were performed while stress testing was in progress with the `sysSessionChecksEnabled: false` parameter set on the BeeGFS clients. No errors or disruption to I/O was observed. 
+* Powering off one of the InfiniBand switches using the PDU.All tests were performed while stress testing was in progress with the `sysSessionChecksEnabled: false` parameter set on the BeeGFS clients. No errors or disruption to I/O was observed.
 
 [NOTE]
-There is a https://github.com/netappeseries/beegfs/blob/master/CHANGELOG.md[known issue^] when BeeGFS client/server RDMA connections are disrupted unexpectedly, either through loss off the primary interface (as defined in `connInterfacesFile`) or a BeeGFS server failing, active client I/O can hang for up to ten minutes before resuming. This issue does not occur when BeeGFS nodes are gracefully placed in and out of standby for planned maintenance or if TCP is in use. 
+There is a https://github.com/netappeseries/beegfs/blob/master/CHANGELOG.md[known issue^] when BeeGFS client/server RDMA connections are disrupted unexpectedly, either through loss off the primary interface (as defined in `connInterfacesFile`) or a BeeGFS server failing, active client I/O can hang for up to ten minutes before resuming. This issue does not occur when BeeGFS nodes are gracefully placed in and out of standby for planned maintenance or if TCP is in use.
 
 === NVIDIA DGX A100 SuperPOD validation
 
-A similar BeeGFS file system consisting of three building blocks with the metadata + storage configuration profile applied was validated as a storage solution for NVIDIAs DGX A100 SuperPOD. The qualification effort involved testing the solution described by this NVA with twenty DGX A100 GPU servers running a variety of storage, machine learning, and deep learning benchmarks. 
+A similar BeeGFS file system consisting of three building blocks with the metadata + storage configuration profile applied was validated as a storage solution for NVIDIAs DGX A100 SuperPOD. The qualification effort involved testing the solution described by this NVA with twenty DGX A100 GPU servers running a variety of storage, machine learning, and deep learning benchmarks.

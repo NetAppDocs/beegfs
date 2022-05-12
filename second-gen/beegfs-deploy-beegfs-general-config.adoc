@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-beegfs-general-config.html
-keywords:
-summary:
+keywords: Create Ansible inventory, EF600, NetApp, BeeGFS, Verified Architecture
+summary: "Create the Ansible inventory."
 ---
 
 = Create the Ansible inventory

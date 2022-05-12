@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-recommended-volume-percentages.html
-keywords:
-summary:
+keywords: EF600, NetApp, BeeGFS, Verified Architecture
+summary: "Recommended storage pool overprovisioning percentages"
 ---
 
 = Recommended storage pool overprovisioning percentages

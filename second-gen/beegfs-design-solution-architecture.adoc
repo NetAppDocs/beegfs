@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-design-solution-architecture.html
-keywords:
-summary:
+keywords: Solution architecture, design, EF600, NetApp, BeeGFS, Verified Architecture
+summary: "Architecture design for BeeGFS on NetApp solution."
 ---
 
 = Solution architecture design

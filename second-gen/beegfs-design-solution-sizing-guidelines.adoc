@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-design-solution-sizing-guidelines.html
-keywords:
-summary:
+keywords: Sizing, EF600, NetApp, BeeGFS, Verified Architecture
+summary: "Sizing guidleines for BeeGFS on NetApp solution."
 ---
 
 = Sizing guidelines

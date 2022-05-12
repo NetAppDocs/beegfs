@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-beegfs-configure-clients.html
-keywords:
-summary:
+keywords: Configure BeeGFS clients, EF600, NetApp, BeeGFS, Verified Architecture
+summary: "Configure BeeGFS clients."
 ---
 
 = Configure BeeGFS clients

@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-beegfs-scale.html
-keywords:
-summary:
+keywords: EF600, NetApp, BeeGFS, Verified Architecture
+summary: "Configure Pacemaker and Corosync to scale beyond five building blocks."
 ---
 
 = Scale beyond five building blocks

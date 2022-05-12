@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-overview.html
-keywords:
-summary:
+keywords: Deploy, overview, EF600, NetApp, BeeGFS, Verified Architecture
+summary: "Overview of BeeGFS on NetApp deployment."
 ---
 
 = Overview of deployment

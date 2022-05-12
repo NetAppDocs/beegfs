@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-performance-tuning.html
-keywords:
-summary:
+keywords: Performance tuning, EF600, NetApp, BeeGFS, Verified Architecture
+summary: "Set the tuning parameters for optimal perfomance."
 ---
 
 = Performance tuning

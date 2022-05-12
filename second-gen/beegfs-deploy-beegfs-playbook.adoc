@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-beegfs-playbook.html
-keywords:
-summary:
+keywords: Deploy, EF600, NetApp, BeeGFS, Verified Architecture
+summary: "Deploy BeeGFS."
 ---
 
 = Deploy BeeGFS
