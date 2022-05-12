@@ -2,7 +2,7 @@
 sidebar: sidebar
 permalink: beegfs-moreinfo.html
 keywords: More information, EF600, NetApp, BeeGFS, Verified Architecture
-summary "Where to find additional information."
+summary: "Where to find additional information."
 ---
 
 = Where to find additional information
