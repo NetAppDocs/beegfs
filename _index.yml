@@ -4,11 +4,11 @@ indexpage:
   tiles:
      - title: Get started
        links:
-         - title: Intro
+         - title: Overview
            url:
-         - title: Lorem ipsum dolor
+         - title: Videos and Demos
            url:
-         - title: Lorem ipsum dolor
+         - title: Blogs
            url:
 
      - title: Tile 2
@@ -36,15 +36,17 @@ indexpage:
          - title: Lorem ipsum dolor
            url:
 
-     - title: Tile 5
+     - title: Additonal docs
        links:
-         - title: Lorem ipsum dolor
-           url:
-         - title: Lorem ipsum dolor
-           url:
+         - title: NetApp Product Documentation
+           url: https://www.netapp.com/support-and-training/documentation/
+         - title: BeeGFS Documentation
+           url: https://doc.beegfs.io/
 
      - title: Tools & support
        links:
+         - title: NetApp E-Series Collections on Ansible Galaxy
+           url: https://galaxy.ansible.com/netapp_eseries
          - title: NetApp Interoperability Matrix
            url: http://mysupport.netapp.com/matrix/
          - title: NetApp Knowledge Base

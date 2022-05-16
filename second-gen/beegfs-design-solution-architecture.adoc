@@ -19,7 +19,7 @@ summary: "Architecture design for BeeGFS on NetApp solution."
 //
 
 [.lead]
-Many intentional design choices were made in developing the NetApp Validated Architecture for the BeeGFS on NetApp solution. This section provides additional details that might be useful to anyone considering or implementing this solution who wants to understand why those choices were made.
+Many intentional design choices were made in designing the architecture for the BeeGFS on NetApp solution. This section provides additional details that might be useful to anyone considering or implementing this solution.
 
 == Hardware configuration
 Learn about the file nodes and network cabling required to support the BeeGFS on NetApp solution.
@@ -30,32 +30,34 @@ File nodes include two CPU sockets configured as separate NUMA zones that includ
 
 Populating InfiniBand adapters in the appropriate PCI risers/slots is important to balance workload over the available PCIe lanes and memory channels by fully isolating work for individual BeeGFS services to a particular NUMA node. The goal is to achieve similar performance from each file node as if it was two independent single socket servers.
 
-The following diagram shows the file node NUMA configuration.
+The following figure shows the file node NUMA configuration.
 
-image:beegfs-design-image5.png[Error: Missing Graphic Image]
+image:beegfs-design-image5.png[]
 
-By pinning BeeGFS processes to a particular NUMA zone and ensuring the interfaces they use are in the same zone, we avoid the need for remote access over the intersocket connection. This intersocket connection is sometimes known as the QPI or GMI2 link and,  even in modern processor architectures,  can be a bottleneck when using high speed networking like HDR InfiniBand.
+The BeeGFS processes are pinned to a particular NUMA zone to ensure that the interfaces the BeeGFS processes use are in the same zone. This avoids the need for remote access over the intersocket connection. The intersocket connection is sometimes known as the QPI or GMI2 link and, even in modern processor architectures, can be a bottleneck when using high speed networking like HDR InfiniBand.
 
 === Network cabling
 
-Within each building block,  each file node is connected to both block nodes using a total of four redundant InfiniBand connections.  Additionally, each file node also has four redundant connections to the InfiniBand storage network.
+Within each building block,  each file node is connected to both block nodes using a total of four redundant InfiniBand connections.  Additionally, each file node has four redundant connections to the InfiniBand storage network.
 
-In the following figure, all file node ports outlined in green are used to connect to the storage fabric; all others are the direct connects to the block nodes.
+In the following figure, all file node ports outlined in green are used to connect to the storage fabric; all other file node ports are the direct connects to the block nodes.
 
-image:beegfs-design-image6.png[Error: Missing Graphic Image]
+image:beegfs-design-image6.png[]
 
 [NOTE]
-For storage networks with redundant switches, ports outlined in light green should connect to one switch, and ports in dark green to another.
+For storage networks with redundant switches, ports outlined in light green should connect to one switch, and ports in dark green to another switch.
 
-The two InfiniBand ports in a particular NUMA zone connect to the A and B controllers of the same block node.  Ports in NUMA node 0 always connect to the first block node, and ports in NUMA node 1 connect to the second block node.  This allows us to configure BeeGFS services to run in the same NUMA zone regardless of which file node is running them.  The overall configuration makes sure that BeeGFS services have secondary optimal paths to the front- end storage network and back- end block nodes regardless of where a failure occurs.  This helps minimizes performance effects if a file node or controller in a block node requires maintenance.
+The two InfiniBand ports in a particular NUMA zone connect to the A and B controllers of the same block node.  Ports in NUMA node 0 always connect to the first block node, and ports in NUMA node 1 connect to the second block node.  This cabling design allows each BeeGFS service to run in the same NUMA zone regardless of which file node is running the BeeGFS service.
 
-Another consideration is that the theoretical maximum speed (not accounting for signaling and other overhead) of an HDR InfiniBand port is 25GBps. The maximum single direction bandwidth of a PCIe 4.0 x16 slot is 32GBps, creating a potential bottleneck when implementing file nodes that incorporate dual port InfiniBand adapters that can theoretically handle 50GBps of bandwidth.  Thus, when deploying this solution, it is important that one port on each InfiniBand adapter connects to the storage fabric, and the other to a block node so we can use the full PCIe bidirectional bandwidth.
+The overall cabling configuration makes sure that BeeGFS services have secondary optimal paths to the front-end storage network and to the back-end block nodes regardless of where a failure occurs. This cabling design helps minimize performance effects if a file node or controller in a block node requires maintenance.
+
+The theoretical maximum speed of an HDR InfiniBand port is 25GBps (not accounting for signaling and other overhead). The maximum single direction bandwidth of a PCIe 4.0 x16 slot is 32GBps, creating a potential bottleneck when implementing file nodes that incorporate dual port InfiniBand adapters that can theoretically handle 50GBps of bandwidth. To leverage the full PCIe bidirectional bandwidth, make sure one port on each InfiniBand adapter connects to the storage fabric, and the other port connects to a block node.
 
 Each BeeGFS service is configured so the preferred port used for client traffic and the path to the block nodes controller that is the primary owner of that services volumes are through the same adapter.  This is covered in more depth in the next section.
 
 The following figure shows the cabling to leverage the full PCIe bidirectional bandwidth.
 
-image:beegfs-design-image7.png[Error: Missing Graphic Image]
+image:beegfs-design-image7.png[]
 
 == Software configuration
 Learn about the software configuration required to support the BeeGFS on NetApp solution.
@@ -82,7 +84,7 @@ Although BeeGFS can use RDMA for connectivity, to simplify discovering and estab
 
 The following figure shows the balancing of traffic across multiple BeeGFS client interfaces.
 
-image:beegfs-design-image8.png[Error: Missing Graphic Image]
+image:beegfs-design-image8.png[]
 
 Because each file in BeeGFS is typically striped across multiple storage services, this configuration allows the clients to achieve more throughput than is possible with a single InfiniBand port. For example,  this is a common file- striping configuration that allows the client to balance traffic across both interfaces:
 
@@ -115,11 +117,11 @@ Multipathing software on the file nodes is responsible for determining the activ
 
 The following diagram shows the controller layout in EF600 block nodes.
 
-image:beegfs-design-image9.png[Error: Missing Graphic Image]
+image:beegfs-design-image9.png[]
 
 To facilitate the shared-disk HA solution,  volumes are mapped to both file nodes so that they can take over for each other as needed. The following diagram shows an example of how BeeGFS service and preferred volume ownership is configured for maximum performance. The interface to the left of each BeeGFS service indicates the preferred interface that clients and other services use to contact it.
 
-image:beegfs-design-image10.png[Error: Missing Graphic Image]
+image:beegfs-design-image10.png[]
 
 In the previous example,  clients and server services prefer to communicate with storage service 1 using interface i1b. Storage service 1 uses interface i1a as the preferred path to communicate with its volumes (storage_tgt_101, 102) on controller A of the first block node.  This arrangement allows us to make use of the full bidirectional PCIe bandwidth available to the InfiniBand adapter and achieve better performance from a dual- port HDR InfiniBand adapter than would otherwise be possible with PCIe 4.0.
 
@@ -167,7 +169,7 @@ When BeeGFS is running in an HA cluster, all BeeGFS services and underlying reso
 
 The following figure shows the Pacemaker-controlled BeeGFS services and dependencies.
 
-image:beegfs-design-image11.png[Error: Missing Graphic Image]
+image:../media/beegfs-design-image11.png[]
 
 [NOTE]
 So that multiple BeeGFS services of the same type are started on the same node, Pacemaker is configured to start BeeGFS services using the https://doc.beegfs.io/latest/advanced_topics/multimode.html[Multi Mode^] configuration method.

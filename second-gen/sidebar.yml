@@ -11,7 +11,7 @@ entries:
       url: /beegfs-moreinfo.html
   - title: Design
     entries:
-    - title: Design overview
+    - title: Overview
       url: /beegfs-design-overview.html
     - title: Architecture design
       url: /beegfs-design-solution-architecture.html
@@ -21,7 +21,7 @@ entries:
       url: /beegfs-design-solution-sizing-guidelines.html
   - title: Deploy
     entries:
-        - title: Deploy overview
+        - title: Overview
           url: /beegfs-deploy-overview.html
         - title: Learn about Ansible
           url: /beegfs-deploy-learn-ansible.html
