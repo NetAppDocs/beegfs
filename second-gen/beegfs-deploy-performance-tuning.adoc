@@ -49,19 +49,19 @@ Under UEFI Setup > System Settings,  adjust the following settings:
 
 This screenshot shows the Lenovo XClarity Provisioning Manager: Operating Modes.
 
-image:../media/beegfs-deploy-image6.png[]
+image:../media/lenova-opmodes.png[]
 
 This screenshot shows the Lenovo XClarity Provisioning Manager: Devices and I/O Ports.
 
-image:../media/beegfs-deploy-image7.png[]
+image:../media/lenova-ports
 
 This screenshot shows the Lenovo XClarity Provisioning Manager: Power.
 
-image:../media/beegfs-deploy-image8.png[]
+image:../media/lenova-power.png[]
 
 This screenshot shows the Lenovo XClarity Provisioning Manager: Processors.
 
-image:../media/beegfs-deploy-image9.png[]
+image:../media/lenova-process.png[]
 
 These settings can also be applied programmatically using the Redfish API, for example:
 

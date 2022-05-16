@@ -19,7 +19,7 @@ summary: "Describes the architecture and design considerations used to determine
 //
 
 [.lead]
-The NetApp Verified Architecture design describes the architecture and design considerations used to determine the specific equipment, cabling, and configurations required to support the BeeGFS on NetApp solution.
+Learn about the architecture and design considerations used to determine the specific equipment, cabling, and configurations required to support the BeeGFS on NetApp solution.
 
 The BeeGFS on NetApp solution combines the BeeGFS parallel file system with the NetApp EF600 storage systems. The solution is:
 

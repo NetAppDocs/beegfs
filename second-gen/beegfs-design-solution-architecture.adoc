@@ -34,7 +34,7 @@ The following figure shows the file node NUMA configuration.
 
 image:../media/beegfs-design-image5.png[]
 
-The BeeGFS processes are pinned to a particular NUMA zone to ensure that the interfaces the BeeGFS processes use are in the same zone. This avoids the need for remote access over the intersocket connection. The intersocket connection is sometimes known as the QPI or GMI2 link and, even in modern processor architectures, can be a bottleneck when using high speed networking like HDR InfiniBand.
+The BeeGFS processes are pinned to a particular NUMA zone to ensure the interfaces that the BeeGFS processes use are in the same zone. This design avoids the need for remote access over the intersocket connection. The intersocket connection is sometimes known as the QPI or GMI2 link and, even in modern processor architectures, can be a bottleneck when using high speed networking like HDR InfiniBand.
 
 === Network cabling
 
@@ -49,11 +49,11 @@ For storage networks with redundant switches, ports outlined in light green shou
 
 The two InfiniBand ports in a particular NUMA zone connect to the A and B controllers of the same block node.  Ports in NUMA node 0 always connect to the first block node, and ports in NUMA node 1 connect to the second block node.  This cabling design allows each BeeGFS service to run in the same NUMA zone regardless of which file node is running the BeeGFS service.
 
-The overall cabling configuration makes sure that BeeGFS services have secondary optimal paths to the front-end storage network and to the back-end block nodes regardless of where a failure occurs. This cabling design helps minimize performance effects if a file node or controller in a block node requires maintenance.
+The cabling configuration ensures that BeeGFS services have secondary optimal paths to the front-end storage network and to the back-end block nodes regardless of where a failure occurs. This cabling design helps minimize performance effects if a file node or controller in a block node requires maintenance.
 
 The theoretical maximum speed of an HDR InfiniBand port is 25GBps (not accounting for signaling and other overhead). The maximum single direction bandwidth of a PCIe 4.0 x16 slot is 32GBps, creating a potential bottleneck when implementing file nodes that incorporate dual port InfiniBand adapters that can theoretically handle 50GBps of bandwidth. To leverage the full PCIe bidirectional bandwidth, make sure one port on each InfiniBand adapter connects to the storage fabric, and the other port connects to a block node.
 
-Each BeeGFS service is configured so the preferred port used for client traffic and the path to the block nodes controller that is the primary owner of that services volumes are through the same adapter.  This is covered in more depth in the next section.
+For each BeeGFS service, use the same adapter to connect the preferred port used for client traffic with the path to the block nodes controller that is the primary owner of that services volumes.  This is covered in more depth in the next section.
 
 The following figure shows the cabling to leverage the full PCIe bidirectional bandwidth.
 
