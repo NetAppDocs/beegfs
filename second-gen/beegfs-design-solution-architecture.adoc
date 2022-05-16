@@ -32,7 +32,7 @@ Populating InfiniBand adapters in the appropriate PCI risers/slots is important 
 
 The following figure shows the file node NUMA configuration.
 
-image:beegfs-design-image5.png[]
+image:../media/beegfs-design-image5.png[]
 
 The BeeGFS processes are pinned to a particular NUMA zone to ensure that the interfaces the BeeGFS processes use are in the same zone. This avoids the need for remote access over the intersocket connection. The intersocket connection is sometimes known as the QPI or GMI2 link and, even in modern processor architectures, can be a bottleneck when using high speed networking like HDR InfiniBand.
 
@@ -42,7 +42,7 @@ Within each building block,  each file node is connected to both block nodes usi
 
 In the following figure, all file node ports outlined in green are used to connect to the storage fabric; all other file node ports are the direct connects to the block nodes.
 
-image:beegfs-design-image6.png[]
+image:../media/beegfs-design-image6.png[]
 
 [NOTE]
 For storage networks with redundant switches, ports outlined in light green should connect to one switch, and ports in dark green to another switch.
@@ -57,7 +57,7 @@ Each BeeGFS service is configured so the preferred port used for client traffic 
 
 The following figure shows the cabling to leverage the full PCIe bidirectional bandwidth.
 
-image:beegfs-design-image7.png[]
+image:../media/beegfs-design-image7.png[]
 
 == Software configuration
 Learn about the software configuration required to support the BeeGFS on NetApp solution.
@@ -84,7 +84,7 @@ Although BeeGFS can use RDMA for connectivity, to simplify discovering and estab
 
 The following figure shows the balancing of traffic across multiple BeeGFS client interfaces.
 
-image:beegfs-design-image8.png[]
+image:../media/beegfs-design-image8.png[]
 
 Because each file in BeeGFS is typically striped across multiple storage services, this configuration allows the clients to achieve more throughput than is possible with a single InfiniBand port. For example,  this is a common file- striping configuration that allows the client to balance traffic across both interfaces:
 
@@ -117,11 +117,11 @@ Multipathing software on the file nodes is responsible for determining the activ
 
 The following diagram shows the controller layout in EF600 block nodes.
 
-image:beegfs-design-image9.png[]
+image:../media/beegfs-design-image9.png[]
 
 To facilitate the shared-disk HA solution,  volumes are mapped to both file nodes so that they can take over for each other as needed. The following diagram shows an example of how BeeGFS service and preferred volume ownership is configured for maximum performance. The interface to the left of each BeeGFS service indicates the preferred interface that clients and other services use to contact it.
 
-image:beegfs-design-image10.png[]
+image:../media/beegfs-design-image10.png[]
 
 In the previous example,  clients and server services prefer to communicate with storage service 1 using interface i1b. Storage service 1 uses interface i1a as the preferred path to communicate with its volumes (storage_tgt_101, 102) on controller A of the first block node.  This arrangement allows us to make use of the full bidirectional PCIe bandwidth available to the InfiniBand adapter and achieve better performance from a dual- port HDR InfiniBand adapter than would otherwise be possible with PCIe 4.0.
 

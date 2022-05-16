@@ -28,9 +28,9 @@ Unless otherwise noted, the following steps are identical for each building bloc
 
 . Configure each BeeGFS block node with a dual-port 200Gb Host Interface Card (HIC) and install the HIC in each of its two storage controllers.
 +
-Make sure you rack the building blocks so the two BeeGFS file nodes are above the BeeGFS block nodes. The following figure shows the correct hardware configuration the BeeGFS building block (rear view).
+Rack the building blocks so the two BeeGFS file nodes are above the BeeGFS block nodes. The following figure shows the correct hardware configuration the BeeGFS building block (rear view).
 +
-image:beegfs-deploy-image2.png[Error: Missing Graphic Image]
+image:../media/beegfs-deploy-image2.png[]
 +
 [NOTE]
 The power supply configuration for production use cases should typically use redundant PSUs.
@@ -41,11 +41,11 @@ The power supply configuration for production use cases should typically use red
 +
 .. For all building block configurations,  if a drive enclosure is not fully populated, make sure an equal number of drives are populated in slots 0–11 and 12–23 for optimal performance.
 +
-image:beegfs-deploy-image3.png[Error: Missing Graphic Image]
+image:../media/beegfs-deploy-image3.png[]
 +
 . Use 1m InfiniBand HDR 200Gb direct attach copper cables to cable the file and block nodes together to match the topology shown in the figure below.
 +
-image:beegfs-deploy-image4.png[Error: Missing Graphic Image]
+image:../media/beegfs-deploy-image4.png[]
 +
 [NOTE]
 The nodes across multiple building blocks never directly connected. Each building block should be treated as a standalone unit and all communication between building blocks occurs through network switches.
@@ -54,7 +54,7 @@ The nodes across multiple building blocks never directly connected. Each buildin
 +
 . If there are redundant InfiniBand switches in use, cable the ports highlighted in light green versus dark green in the following figure to different switches.
 +
-image:beegfs-deploy-image5.png[Error: Missing Graphic Image]
+image:../media/beegfs-deploy-image5.png[]
 +
 . As needed, assemble additional building blocks following the same cabling guidelines.
 +
