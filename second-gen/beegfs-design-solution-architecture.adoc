@@ -38,7 +38,7 @@ The BeeGFS processes are pinned to a particular NUMA zone to ensure the interfac
 
 === Network cabling
 
-Within each building block,  each file node is connected to both block nodes using a total of four redundant InfiniBand connections.  Additionally, each file node has four redundant connections to the InfiniBand storage network.
+Within each building block, each file node is connected to both block nodes using a total of four redundant InfiniBand connections.  Additionally, each file node has four redundant connections to the InfiniBand storage network.
 
 In the following figure, all file node ports outlined in green are used to connect to the storage fabric; all other file node ports are the direct connects to the block nodes.
 
