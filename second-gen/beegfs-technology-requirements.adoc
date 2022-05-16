@@ -90,11 +90,10 @@ a|*Two EF600 storage controllers configured as follows:*
 
 For predictable performance and reliability, releases of the BeeGFS on NetApp solution are tested with specific versions of the software components required to implement the solution.
 
-The BeeGFS on NetApp solution is deployed and managed from an https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html[Ansible control node^].
-
 === Deploy sofware requirements
 The following table lists the software requirements deployed automatically as part of the Ansible-based BeeGFS deployment.
 
+[options="header" cols="20%,80%"]
 |===
 |Software |Version
 
@@ -105,13 +104,18 @@ The following table lists the software requirements deployed automatically as pa
 |Pacemaker
 |2.1.0-8
 |OpenSM
-|opensm-5.9.0 (from mlnx_ofed 5.4-1.0.3.0)
-Only required for the direct connects to enable virtualization.
+a|opensm-5.9.0 (from mlnx_ofed 5.4-1.0.3.0)
+
+NOTE: Only required for the direct connects to enable virtualization.
 |===
 
 
 === Ansible control node requirements
+The BeeGFS on NetApp solution is deployed and managed from an https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html[Ansible control node^].
+
 The software requirements listed in the following tables are specific to the version of the NetApp BeeGFS Ansible collection listed below.
+
+[options="header" cols="20%,80%"]
 |===
 |Software |Version
 
@@ -121,18 +125,20 @@ The software requirements listed in the following tables are specific to the ver
 |3.9
 |Additional Python packages
 |Cryptography-35.0.0, netaddr-0.8.0
-|
+|BeeGFS Ansible Collection
 |3.0.0
 |===
 
 
 === File node requirements
 
+[options="header" cols="20%,80%"]
 |===
 |Software |Version
 
-|RedHat Enterprise Linux
-|RedHat 8.4 Server Physical with High Availability (2 socket).
+a|RedHat Enterprise Linux
+a|RedHat 8.4 Server Physical with High Availability (2 socket).
+
 IMPORTANT: File nodes require a valid RedHat Enterprise Linux Server subscription and the Red Hat Enterprise Linux High Availability Add-On.
 |Linux Kernel
 |4.18.0-305.25.1.el8_4.x86_64
@@ -144,6 +150,7 @@ IMPORTANT: File nodes require a valid RedHat Enterprise Linux Server subscriptio
 
 === EF600 block node requirements
 
+[options="header" cols="20%,80%"]
 |===
 |Software |Version
 
@@ -155,7 +162,7 @@ IMPORTANT: File nodes require a valid RedHat Enterprise Linux Server subscriptio
 |Latest available for the drive models in use.
 |===
 
-=== Additional requirements
+== Additional requirements
 
 The equipment listed in the following table was used for the validation, but appropriate alternatives can be used as needed. In general, NetApp recommends running the latest software versions to avoid unanticipated issues.
 
