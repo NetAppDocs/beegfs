@@ -19,11 +19,11 @@ summary: "Set the tuning parameters for optimal perfomance."
 //
 
 [.lead]
-Learn how the various tuning parameters need to be set in the BIOS/UEFI setup of the various NetApp verified file nodes validated for the second-generation building block design.
+The verfied file node is the Lenovo ThinkSystem SR665 Server. Learn how to set the various tuning parameters using the BIOS/UEFI setup on the Lenovo ThinkSystem SR665 Server.
 
 === Lenovo SR665
 
-Under UEFI Setup > System Settings,  adjust the following settings:
+Under UEFI Setup > System Settings, adjust the following settings:
 
 * Operating modes:
 ** Operating Mode > Custom
@@ -45,25 +45,27 @@ Under UEFI Setup > System Settings,  adjust the following settings:
 ** Global C-state Control > Disable
 ** DF C-States > Disable
 ** SMT Mode > Disable
-** CPPC > DisableThe following screenshots show what these settings look like in the Lenovo XClarity Provisioning Manager.
+** CPPC > Disable
 
-This screenshot shows the Lenovo XClarity Provisioning Manager: Operating Modes.
+The following screenshots show what the system settings look like in the Lenovo XClarity Provisioning Manager.
+
+The following screenshot shows the settings for the Lenovo XClarity Provisioning Manager: Operating Modes.
 
 image:../media/lenova-opmodes.png[]
 
-This screenshot shows the Lenovo XClarity Provisioning Manager: Devices and I/O Ports.
+The following screenshot shows the settings for the Lenovo XClarity Provisioning Manager: Devices and I/O Ports.
 
-image:../media/lenova-ports
+image:../media/lenova-ports.png[]
 
-This screenshot shows the Lenovo XClarity Provisioning Manager: Power.
+The following screenshot shows the settings for the Lenovo XClarity Provisioning Manager: Power.
 
 image:../media/lenova-power.png[]
 
-This screenshot shows the Lenovo XClarity Provisioning Manager: Processors.
+The following screenshot shows the settings for the Lenovo XClarity Provisioning Manager: Processors.
 
 image:../media/lenova-process.png[]
 
-These settings can also be applied programmatically using the Redfish API, for example:
+You can also apply the system settings on the Lenovo ThinkSystem SR665 Server using the Redfish API, for example:
 
 ....
 curl --request PATCH \
