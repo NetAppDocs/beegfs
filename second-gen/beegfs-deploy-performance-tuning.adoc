@@ -49,19 +49,19 @@ Under UEFI Setup > System Settings,  adjust the following settings:
 
 This screenshot shows the Lenovo XClarity Provisioning Manager: Operating Modes.
 
-image:beegfs-deploy-image6.png[Error: Missing Graphic Image]
+image:../media/beegfs-deploy-image6.png[]
 
 This screenshot shows the Lenovo XClarity Provisioning Manager: Devices and I/O Ports.
 
-image:beegfs-deploy-image7.png[Error: Missing Graphic Image]
+image:../media/beegfs-deploy-image7.png[]
 
 This screenshot shows the Lenovo XClarity Provisioning Manager: Power.
 
-image:beegfs-deploy-image8.png[Error: Missing Graphic Image]
+image:../media/beegfs-deploy-image8.png[]
 
 This screenshot shows the Lenovo XClarity Provisioning Manager: Processors.
 
-image:beegfs-deploy-image9.png[Error: Missing Graphic Image]
+image:../media/beegfs-deploy-image9.png[]
 
 These settings can also be applied programmatically using the Redfish API, for example:
 
