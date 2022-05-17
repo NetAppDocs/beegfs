@@ -1,0 +1,67 @@
+---
+sidebar: sidebar
+permalink: beegfs-design-hardware-architecture.html
+keywords: hardware configuration, design, EF600, NetApp, BeeGFS
+summary: "Hardware configuration for the BeeGFS on NetApp solution."
+---
+
+= Hardware configuration
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+//
+// This file was created with NDAC Version 2.0 (August 17, 2020)
+//
+// 2022-04-29 10:21:46.087339
+//
+
+[.lead]
+Learn about the hardware configuration required to support the BeeGFS on NetApp solution.
+
+Many intentional design choices were made in architecting the hardware configuration for the BeeGFS on NetApp solution. This topic provides additional details that might be useful to anyone considering or implementing this solution.
+
+== File node configuration
+
+File nodes include two CPU sockets configured as separate NUMA zones that includes local access to an equal number of PCIe slots and memory.
+
+Populating InfiniBand adapters in the appropriate PCI risers or slots is important to balance workload over the available PCIe lanes and memory channels. You balance the workload by fully isolating work for individual BeeGFS services to a particular NUMA node. The goal is to achieve similar performance from each file node as if it were two independent single socket servers.
+
+The following figure shows the file node NUMA configuration.
+
+image:../media/beegfs-design-image5.png[]
+
+The BeeGFS processes are pinned to a particular NUMA zone to ensure the interfaces that the BeeGFS processes use are in the same zone. This configuration avoids the need for remote access over the intersocket connection. The intersocket connection is sometimes known as the QPI or GMI2 link and, even in modern processor architectures, can be a bottleneck when using high speed networking like HDR InfiniBand.
+
+== Network cabling configuration
+
+Within each building block, each file node is connected to two block nodes using a total of four redundant InfiniBand connections. In addition, each file node has four redundant connections to the InfiniBand storage network.
+
+In the following figure, notice that:
+
+* All file node ports outlined in green are used to connect to the storage fabric; all other file node ports are the direct connects to the block nodes.
+* Two InfiniBand ports in a specific NUMA zone connect to the A and B controllers of the same block node.
+* Ports in NUMA node 0 always connect to the first block node.
+* Ports in NUMA node 1 connect to the second block node.
+
+image:../media/beegfs-design-image6.png[]
+
+[NOTE]
+For storage networks with redundant switches, ports outlined in light green should connect to one switch, and ports in dark green to another switch.
+
+The cabling configuration depicted in the figure above allows each BeeGFS service to:
+
+* Run in the same NUMA zone regardless of which file node is running the BeeGFS service.
+* Have secondary optimal paths to the front-end storage network and to the back-end block nodes regardless of where a failure occurs.
+* Minimize performance effects if a file node or controller in a block node requires maintenance.
+
+.Cabling to leverage bandwidth
+To leverage the full PCIe bidirectional bandwidth, make sure one port on each InfiniBand adapter connects to the storage fabric, and the other port connects to a block node. The theoretical maximum speed of an HDR InfiniBand port is 25GBps (not accounting for signaling and other overhead). The maximum single direction bandwidth of a PCIe 4.0 x16 slot is 32GBps, creating a potential bottleneck when implementing file nodes that incorporate dual port InfiniBand adapters that can theoretically handle 50GBps of bandwidth.
+
+The following figure shows the cabling design used to leverage the full PCIe bidirectional bandwidth.
+
+image:../media/beegfs-design-image7.png[]
+
+For each BeeGFS service, use the same adapter to connect the preferred port used for client traffic with the path to the block nodes controller that is the primary owner of that services volumes.  This is covered in more depth in the next section.

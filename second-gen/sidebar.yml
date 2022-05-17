@@ -11,8 +11,10 @@ entries:
     entries:
     - title: Overview
       url: /beegfs-design-overview.html
-    - title: Architecture design
-      url: /beegfs-design-solution-architecture.html
+    - title: Hardware design
+      url: /beegfs-design-hardware-architecture.html
+    - title: Software design
+      url: /beegfs-design-software-architecture.html
     - title: Verfication
       url: /beegfs-design-solution-verification.html
     - title: Sizing guidelines

@@ -19,11 +19,80 @@ summary: "Set the tuning parameters for optimal perfomance."
 //
 
 [.lead]
-The verfied file node is the Lenovo ThinkSystem SR665 Server. Learn how to set the various tuning parameters using the BIOS/UEFI setup on the Lenovo ThinkSystem SR665 Server.
+Although BeeGFS provides reasonable performance out of the box, NetApp has developed a set of recommended tuning parameters to maximize performance, especially given the capabilities of the underlying E-Series block nodes and to account for any special requirements need to run BeeGFS in a shared-disk HA architecture.
 
-=== Lenovo SR665
+== Tuning parameters
+The available tuning parameters can be sorted into three categories:
 
-Under UEFI Setup > System Settings, adjust the following settings:
+. Mandatory parameters.
++
+ The mandatory parameters affect how BeeGFS services are configured. They also affect how E-Series volumes (block devices) are formatted and mounted by Pacemaker. These E-Series volumes are used as BeeGFS targets.
++
+You can tune the mandatory parameters to:
+
+* Optimize initial volume formatting based on the target type (such as management, metadata, or storage), along with the RAID configuration and segment size of the underlying volume.
+* Adjust how Pacemaker mounts each volume to ensure that changes are immediately flushed to E-series block nodes. This prevents data loss when file nodes fail with active writes in progress.
+
+. Optional parameters set in the UEFI/BIOS of file nodes.
++
+These parameters vary based on the server model used as a file node. The parameters must be manually applied based on the server model in use. For verified file nodes like the Lenovo ThinkSystem SR665 server, use the BIOS/UEFI setup utility to configure the parameters. See <<Performance tuning for the verfied file node>>.
+
+. Optional parameters set in the Linux OS installed on the file node.
++
+These parameters can be automatically applied as part of deploying the BeeGFS on NetApp solution using Ansible. The provided defaults are what were used to validate the BeeGFS on NetApp solution and can be further tuned to specific workloads or use cases.
+
+=== Performance tuning for block nodes
+
+Based on the configuration profiles applied to a particular BeeGFS building block, the volume groups configured on the block nodes change slightly. For example, with a 24-drive EF600 block node:
+
+* For the single base building block, including BeeGFS management, metadata, and storage services:
+** 1x 2+2 RAID 10 volume group for BeeGFS management and metadata services
+** 2x 8+10 RAID 6 volume groups for BeeGFS storage services
+* For a BeeGFS metadata + storage building block:
+** 1x 2+2 RAID 10 volume group for BeeGFS metadata services
+** 2x 8+2 RAID 6 volume groups for BeeGFS storage services
+* For BeeGFS storage only building block:
+** 2x 10+2 RAID 6 volume groups for BeeGFS storage services
+
+[NOTE]
+As BeeGFS needs significantly less storage space for management and metadata versus storage, one option is to use smaller drives for the RAID 10 volume groups. Smaller drives should be populated in the outermost drive slots. For more information, see NVA-1164-DEPLOY-BeeGFS on NetApp deployment guide (xref).
+
+These are all configured by the Ansible-based deployment, along with several other settings generally recommended to optimize performance/behavior including:
+
+* Adjusting the global cache block size to 32KiB and adjusting demand-based cache flushing to 80%.
+* Disabling autoload balancing (ensuring controller volume assignments stay as intended).
+* Enabling read caching and disabling read- ahead caching.
+* Enabling write caching with mirroring and requiring battery backup so that caches persist through failure of a block node controller.
+* Specifying the order drives are assigned to volume groups balancing I/O across available drive channels.
+
+== Examples of optional parameters set in the Linux OS
+Some examples of optional parameters that can be automatically applied as part of deploying the BeeGFS on NetApp solution using Ansible include the following:
+
+* I/O queues on E-Series block devices.
++
+You can configure I/O queues on the E-Series block devices used as BeeGFS targets to:
+
+** Adjust the scheduling algorithm based on the device type (NVMe, HDD, and so on).
+** Increase the number of outstanding requests.
+** Adjust request sizes.
+** Optimize read ahead behavior.
+
+* Virtual memory settings.
++
+You can adjust virtual memory settings for optimal sustained streaming performance.
+
+* CPU settings.
++
+You can adjust the CPU frequency governor and other CPU configurations for maximum performance.
+
+* Read request size.
++
+You can increase the maximum read request size for Mellanox HCAs.
+
+== Performance tuning for the verfied file node
+The verfied file node is the Lenovo ThinkSystem SR665 Server. You configure the performance parameters using the BIOS/UEFI setup on the Lenovo ThinkSystem SR665 Server.
+
+Under UEFI Setup > System Settings, adjust the following system settings:
 
 * Operating modes:
 ** Operating Mode > Custom
@@ -46,8 +115,6 @@ Under UEFI Setup > System Settings, adjust the following settings:
 ** DF C-States > Disable
 ** SMT Mode > Disable
 ** CPPC > Disable
-
-The following screenshots show what the system settings look like in the Lenovo XClarity Provisioning Manager.
 
 The following screenshot shows the settings for the Lenovo XClarity Provisioning Manager: Operating Modes.
 
