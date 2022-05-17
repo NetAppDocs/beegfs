@@ -15,7 +15,7 @@ summary: "Deploy BeeGFS."
 [.lead]
 Deploying and managing the configuration involves running one or more playbooks that contain the tasks Ansible needs to execute to bring the overall system to the desired state.
 
-While all tasks could be included in a single playbook, for complex systems,  this quickly becomes unwieldy to manage. Ansible allows you to create and distribute https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html[roles^] as a way of packaging reusable playbooks and related content (for example,  default variables, tasks, and handlers).
+While all tasks could be included in a single playbook, for complex systems, this quickly becomes unwieldy to manage. Ansible allows you to create and distribute https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html[roles^] as a way of packaging reusable playbooks and related content (for example,  default variables, tasks, and handlers).
 
 Roles are often distributed as part of an Ansible collection contain related roles and modules. Thus,  the playbooks used here primarily just import several roles distributed in the various NetApp E-Series Ansible Collections.
 

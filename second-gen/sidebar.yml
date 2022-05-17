@@ -19,6 +19,8 @@ entries:
       url: /beegfs-design-solution-verification.html
     - title: Sizing guidelines
       url: /beegfs-design-solution-sizing-guidelines.html
+    - title: Performance tuning
+      url: /beegfs-deploy-performance-tuning.html
   - title: Deploy
     entries:
         - title: Overview
@@ -32,7 +34,7 @@ entries:
         - title: Deploy software
           entries:
             - title: Set up file nodes and block nodes
-              url: /beegfs-deploy-software-prereqs.html
+              url: /beegfs-deploy-setup-nodes.html
             - title: Set up Ansible control node
               url: /beegfs-deploy-setting-up-an-ansible-control-node.html
             - title: Create Ansible inventory
@@ -45,7 +47,5 @@ entries:
               url: /beegfs-deploy-beegfs-configure-clients.html
         - title: Scale BeeGFS clusters
           url: /beegfs-deploy-beegfs-scale.html
-        - title: Performance tuning
-          url: /beegfs-deploy-performance-tuning.html
         - title: Recommended volume percentages
           url: /beegfs-deploy-recommended-volume-percentages.html

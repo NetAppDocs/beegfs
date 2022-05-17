@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-software-prereqs.html
+permalink: beegfs-deploy-setup-nodes.html
 keywords: Set up, file nodes, block nodes, EF600, NetApp, BeeGFS, Verified Architecture
 summary: "Set up file nodes and block nodes."
 ---
@@ -21,17 +21,16 @@ While most software configuration tasks are automated using the NetApp provided 
 .Steps
 . Configure networking on the baseboard management controller (BMC) of each server.
 +
-Guidance for Lenovo SR665 file nodes can be found https://thinksystem.lenovofiles.com/help/index.jsp?topic=%2F7D2W%2Fset_the_network_connection.html[here^].
+To learn how to configure networking for the validated Lenovo SR665 file nodes, see the https://thinksystem.lenovofiles.com/help/index.jsp?topic=%2F7D2W%2Fset_the_network_connection.html[Lenova ThinkSystem Documentation^].
 +
 [NOTE]
-A BMC (sometimes referred to as a service processor) is the generic name for the out-of-band management capability built into various server platforms that can provide remote access even if the operating system is not installed or accessible.
-Vendors typically market this functionality with their own branding. For example,  on the Lenovo SR665 this is referred to as the Lenovo XClarity Controller (XCC).
+A  baseboard management controller (BMC), sometimes referred to as a service processor, is the generic name for the out-of-band management capability built into various server platforms that can provide remote access even if the operating system is not installed or accessible. Vendors typically market this functionality with their own branding. For example, on the Lenovo SR665 the BMC is referred to as the Lenovo XClarity Controller (XCC).
 
 . Configure the system settings for maximum performance.
 +
-This can be accomplished through the UEFI setup (formerly known as the BIOS) or by using the Redfish APIs provided by many BMCs.
+You configure the system settings using the UEFI setup (formerly known as the BIOS) or by using the Redfish APIs provided by many BMCs. The system settings vary based on the server model used as a file node.
 +
-Settings for NetApp validated file nodes are documented in link:beegfs-deploy-performance-tuning.html[Performance tuning], but can vary for other server vendors.
+To learn how to configure the system settings for the validated Lenovo SR665 file nodes, see <<Configure system settings for the validated Lenovo SR665 file nodes>>.
 
 . Install Red Hat 8. 4 and configure the host name and network port used to manage the operating system including SSH connectivity from the Ansible control node.
 +

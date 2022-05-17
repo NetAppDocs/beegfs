@@ -230,21 +230,20 @@ beegfs_ha_fencing_agents:
 # For details on configuring other fencing agents see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters.
 ....
 +
-. Enable pereformance tuning.
+. Enable recommended performance tuning in the Linux OS.
 +
-As part of the performance benchmark testing used to verify this NetApp Verified Architecture,  several optional adjustments must be made to the block device and virtual memory subsystem configuration on the file nodes.
+While many users find the default settings for the performance parameters generally work well, you can choose to change the default settings for a particular workload. As such, these recommendations are included in the BeeGFS role but not enabled by default to ensure users are aware of the tuning applied to their file system.
 +
-While many users find these generally work well, further improving performance for a particular workload is possible by further tuning. As such,  these recommendations are included in the BeeGFS role but not enabled by default to ensure users are aware of the tuning applied to their file system.
-+
-To enable performance tuning,  specify:
+To enable performance tuning, specify:
 +
 ....
 ### Performance Configuration:
 beegfs_ha_enable_performance_tuning: True
 ....
 +
-[NOTE]
-For a comprehensive list of available tuning parameters that can be adjusted,  see the Performance Tuning Defaults section of the https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_2/defaults/main.yml[BeeGFS ^]HA role.  The default values can be overridden for all nodes in the cluster in this file or the `host_vars` file for an individual node.
+. (Optional) You can adjust the performance tuning parameters in the Linux OS as needed.
++
+For a comprehensive list of the available tuning parameters that you can adjust, see the Performance Tuning Defaults section of the https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_2/defaults/main.yml[BeeGFS ^]HA role.  The default values can be overridden for all nodes in the cluster in this file or the `host_vars` file for an individual node.
 
 . To allow full 200Gb/HDR connectivity between block and file nodes the Open Subnet Manager (OpenSM) package from the Mellanox Open Fabrics Enterprise Distribution (MLNX_OFED) must be used as the inbox `opensm` package does not support the necessary virtualization functionality.
 +
