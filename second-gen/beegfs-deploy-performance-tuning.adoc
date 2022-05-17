@@ -26,7 +26,7 @@ The available tuning parameters can be sorted into three categories:
 
 . Mandatory parameters.
 +
- The mandatory parameters affect how BeeGFS services are configured. They also affect how E-Series volumes (block devices) are formatted and mounted by Pacemaker. These E-Series volumes are used as BeeGFS targets.
+The mandatory parameters affect how BeeGFS services are configured. They also affect how E-Series volumes (block devices) are formatted and mounted by Pacemaker. These E-Series volumes are used as BeeGFS targets.
 +
 You can tune the mandatory parameters to:
 
