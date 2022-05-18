@@ -19,8 +19,13 @@ summary: "Sizing guidleines for BeeGFS on NetApp solution."
 //
 
 [.lead]
-The objective with a building-block architecture is to create a solution that is simple to size by adding together multiple building blocks to meet the requirements for a particular BeeGFS system. Based on the verification tests above, the following table can be used to estimate the quantity and types of BeeGFS building blocks that are needed to meet the requirements of a particular environment. It is an important caveat that inevitably these estimates should always be treated as best- case performance. Synthetic benchmarking applications are written and utilized to optimize the use of underlying file systems in ways real-world applications might not.
+The objective with a building-block architecture is to create a solution that is simple to size by adding together multiple building blocks to meet the requirements for a particular BeeGFS system.
 
+Based on the verification tests, use the following table to estimate the quantity and types of BeeGFS building blocks that are needed to meet the requirements of a particular environment.
+
+These estimates should always be treated as best-case performance. Synthetic benchmarking applications are written and utilized to optimize the use of underlying file systems in ways real-world applications might not.
+
+== Performance sizing
 The following table provides rule-of-thumb performance sizing.
 
 |===
@@ -34,9 +39,12 @@ The following table provides rule-of-thumb performance sizing.
 |21GiBps
 |===
 
-Metadata capacity sizing estimates are based on the https://doc.beegfs.io/latest/system_design/system_requirements.html[rule of thumb^] that 500GB of capacity is sufficient for roughly 150 million files in BeeGFS. The use of features like access control lists and the number of directories and files per directory also affect how quickly metadata space is consumed. Storage capacity estimates do account for usable drive capacity along with RAID 6 and XFS overhead.
+Metadata capacity sizing estimates are based on the https://doc.beegfs.io/latest/system_design/system_requirements.html[rule of thumb^] that 500GB of capacity is sufficient for roughly 150 million files in BeeGFS.
 
-The following table provides rule- of- thumb capacity sizing for metadata + storage building blocks.
+The use of features like access control lists and the number of directories and files per directory also affect how quickly metadata space is consumed. Storage capacity estimates do account for usable drive capacity along with RAID 6 and XFS overhead.
+
+== Capacity sizing for metadata + storage building blocks
+The following table provides rule-of-thumb capacity sizing for metadata + storage building blocks.
 
 |===
 |Drive size (2+2 RAID 1) metadata volume groups |Metadata capacity (number of files) |Drive size (8+2 RAID 6) storage volume groups |Storage capacity (file content)
@@ -62,7 +70,8 @@ The following table provides rule- of- thumb capacity sizing for metadata + stor
 [NOTE]
 When sizing metadata + storage building blocks, smaller drives can be used for metadata volume groups versus storage volume groups to reduce cost.
 
-The following table provides rule- of- thumb capacity sizing for storage-only building blocks.
+== Capacity sizing for storage-only building blocks
+The following table provides rule-of-thumb capacity sizing for storage-only building blocks.
 
 |===
 |Drive size (8+2 RAID 6) storage volume groups |Storage capacity (file content)
