@@ -10,7 +10,7 @@ sidebar:
     url: "/index.html"
   - title: NetApp Validated Architectures
     entries:
-    - title: About BeeGFS On NetApp
+    - title: Learn about BeeGFS On NetApp
       url: beegfs-executive-summary.html
     - title: First generation NVA
       url: /beegfs-first-gen-overview.html
