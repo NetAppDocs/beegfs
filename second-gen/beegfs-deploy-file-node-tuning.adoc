@@ -26,208 +26,110 @@ The Lenovo SR665 server's system firmware contains numerous tuning parameters th
 
 Under *UEFI Setup > System Settings*, adjust the following system settings:
 
-.Operating Mode menu
+=== Operating Mode menu
 
 [cols=",",options="header",]
 |===
 a|
-
 *System Setting*
-
-
 a|
-
 *Change to*
-
-
 a|
-
 Operating Mode
-
-
 a|
-
 Custom
-
-
 a|
-
 cTDP
-
-
 a|
-
 Manual
-
-
 a|
-
 cTDP Manual
-
-
 a|
-
 350
-
-
 a|
-
 Package Power Limit
-
-
 a|
-
 Manual
-
-
 a|
-
 Efficiency Mode
-
-
 a|
-
 Disable
-
-
 a|
-
 Global-Cstate-Control
-
-
 a|
-
 Disable
-
-
 a|
-
 SOC P-states
-
-
 a|
-
 P0
-
-
 a|
-
 DF C-States
-
-
 a|
-
 Disable
-
-
 a|
-
 P-State 1
-
-
 a|
-
 Disable
-
-
 a|
-
 Memory Power Down Enable
-
-
 a|
-
 Disable
-
-
 a|
-
 NUMA Nodes per Socket
-
-
 a|
-
 NPS1
-
-
 |===
 
-.Devices and I/O ports menu
+=== Devices and I/O ports menu
 
 [cols=",",options="header",]
 |===
 a|
 
 *System Setting*
-
-
 a|
-
 *Change to*
-
-
-|IOMMU a|
-
+a|
+IOMMU
+a|
 Disable
-
-
 |===
 
-.Power menu
+=== Power menu
 
 [cols=",",options="header",]
 |===
 a|
-
 *System Setting*
-
-
 a|
-
 *Change to*
-
-
-|PCIe Power Brake a|
-
+a|
+PCIe Power Brake
+a|
 Disable
-
-
 |===
 
-.Processors menu
+=== Processors menu
 
 [cols=",",options="header",]
 |===
 a|
-
 *System Setting*
-
-
 a|
-
 *Change to*
-
-
-|Global C-state Control a|
-
+a|
+Global C-state Control
+a|
 Disable
-
-
-|DF C-States a|
-
+a|DF C-States
+a|
 Disable
-
-
-|SMT Mode a|
-
+a|SMT Mode
+a|
 Disable
-
-
-|CPPC a|
-
+a|CPPC
+a|
 Disable
-
-
 |===
 
 The following screenshot shows the settings for the Lenovo XClarity Provisioning Manager: Operating Modes.
