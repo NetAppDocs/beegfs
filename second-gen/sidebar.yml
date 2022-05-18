@@ -20,7 +20,7 @@ entries:
     - title: Sizing guidelines
       url: /beegfs-design-solution-sizing-guidelines.html
     - title: Performance tuning
-      url: /beegfs-deploy-performance-tuning.html
+      url: /beegfs-design-performance-tuning.html
   - title: Deploy
     entries:
         - title: Overview
