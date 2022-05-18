@@ -13,21 +13,20 @@ summary: "Create the Ansible inventory."
 :imagesdir: ./media/
 
 [.lead]
-Use Ansible to configure and deploy the BeeGFS on NetApp solution using the second generation BeeGFS building block design.
-
 The Ansible inventory defines the configuration for file and block nodes and represents the BeeGFS file system you want to deploy. The inventory includes hosts, groups, and variables describing the desired BeeGFS file system.
 
 == Step 1: Define configuration for all building blocks
-Define the configuration that applies to all building blocks, regardless of which eventual configuration profile  applied to them individually.
+Define the configuration that applies to all building blocks, regardless of which configuration profile you may apply to them individually.
+
+.Before you begin
+* Use a source control system like BitBucket or Git to store the contents of the directory containing the Ansible inventory and playbook files.
+
+* Create a `.gitignore` file that specifies the files that Git should ignore. This helps avoids storing large files in Git.
 
 .Steps
-. On your Ansible control node,  identify a directory used to store the Ansible inventory and playbook files that describe this BeeGFS deployment.
+. On your Ansible control node, identify a directory that you want to use to store the Ansible inventory and playbook files that describe this BeeGFS deployment.
 +
-Unless otherwise noted,  all files and directories created in this and following sections  created relative to this directory.
-+
-While outside the scope of this document, storing the contents of the directory containing the inventory and playbook files describing your BeeGFS deployment in a source/version control system like BitBucket or Git is *strongly* recommended.
-+
-Creating a `.gitignore` file that ignores the packages/directory is also recommended to avoid storing large files in Git if Ansible is used to manage SANtricity OS software and other potentially large files.
+Unless otherwise noted, all files and directories created in this step and following steps are created relative to this directory.
 
 . Create the following subdirectories: `host_vars`,  `group_vars`, and `packages`.
 
@@ -36,7 +35,7 @@ Define the configuration that applies to individual file nodes and individual bu
 
 . Under `host_vars/`,  create a file for each BeeGFS file node named `<HOSTNAME>.yml `with the following content, paying special attention to the notes regarding content to populate for BeeGFS cluster IPs and host names ending in odd versus even numbers.
 +
-You might have noticed that initially the file node  interface names that do match up with what is listed here (such as ib0 or ibs1f0). These custom names  configured in a later section (see: `eseries_ib_base_udev_rules`).
+You might have noticed that initially the file node  interface names that do match up with what is listed here (such as ib0 or ibs1f0). These custom names  configured in a later section (see `eseries_ib_base_udev_rules`).
 +
 ....
 ansible_host: “<MANAGEMENT_IP>”

@@ -33,7 +33,7 @@ entries:
           url: /beegfs-deploy-hardware.html
         - title: Deploy software
           entries:
-            - title: Set up file nodes and block nodes
+            - title: Set up file and block nodes
               url: /beegfs-deploy-setup-nodes.html
             - title: Set up Ansible control node
               url: /beegfs-deploy-setting-up-an-ansible-control-node.html
@@ -45,6 +45,8 @@ entries:
               url: /beegfs-deploy-beegfs-playbook.html
             - title: Configure BeeGFS client
               url: /beegfs-deploy-beegfs-configure-clients.html
+            - title: Tune system settings for performance
+              url:  beegfs-deploy-file-node-tuning.html
         - title: Scale BeeGFS clusters
           url: /beegfs-deploy-beegfs-scale.html
         - title: Recommended volume percentages
