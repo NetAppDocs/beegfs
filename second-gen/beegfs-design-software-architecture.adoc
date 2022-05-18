@@ -39,13 +39,15 @@ The Ansible-based deployment handles tightening the reverse path (RP) and addres
 === BeeGFS client multi-rail configuration
 Multi-rail refers to the ability of an application to use multiple independent network “rails” to increase performance.
 
-Although BeeGFS can use RDMA for connectivity, to simplify discovering and establishing RDMA connections, BeeGFS uses IPoIB. Thus, one option to allow BeeGFS clients to use multiple InfiniBand interfaces is to configure each with an IP in a different subnet and then configure the preferred interfaces for half of the BeeGFS server services in each subnet.  In the following diagram,  interfaces highlighted in light green are in one IP subnet (for example, `100.127.0.0/16`) and the dark green interfaces are in another subnet (for example, `100.128.0.0/16`).
+Although BeeGFS can use RDMA for connectivity, to simplify discovering and establishing RDMA connections, BeeGFS uses IPoIB. Thus, one option to allow BeeGFS clients to use multiple InfiniBand interfaces is to configure each with an IP in a different subnet and then configure the preferred interfaces for half of the BeeGFS server services in each subnet.
+
+In the following diagram,  interfaces highlighted in light green are in one IP subnet (for example, `100.127.0.0/16`) and the dark green interfaces are in another subnet (for example, `100.128.0.0/16`).
 
 The following figure shows the balancing of traffic across multiple BeeGFS client interfaces.
 
 image:../media/beegfs-design-image8.png[]
 
-Because each file in BeeGFS is typically striped across multiple storage services, this configuration allows the clients to achieve more throughput than is possible with a single InfiniBand port. For example, the following code sample shows a common file-striping configuration that allows the client to balance traffic across both interfaces:
+Because each file in BeeGFS is typically striped across multiple storage services, the multi-rail configuration allows the client to achieve more throughput than is possible with a single InfiniBand port. For example, the following code sample shows a common file-striping configuration that allows the client to balance traffic across both interfaces:
 
 ....
 root@ictad21h01:/mnt/beegfs# beegfs-ctl --getentryinfo myfile
@@ -78,26 +80,33 @@ The following diagram shows the controller layout in EF600 block nodes.
 
 image:../media/beegfs-design-image9.png[]
 
-To facilitate the shared-disk HA solution,  volumes are mapped to both file nodes so that they can take over for each other as needed. The following diagram shows an example of how BeeGFS service and preferred volume ownership is configured for maximum performance. The interface to the left of each BeeGFS service indicates the preferred interface that clients and other services use to contact it.
+To facilitate the shared-disk HA solution, volumes are mapped to both file nodes so that they can take over for each other as needed. The following diagram shows an example of how BeeGFS service and preferred volume ownership is configured for maximum performance. The interface to the left of each BeeGFS service indicates the preferred interface that clients and other services use to contact it.
 
 image:../media/beegfs-design-image10.png[]
 
-In the previous example,  clients and server services prefer to communicate with storage service 1 using interface i1b. Storage service 1 uses interface i1a as the preferred path to communicate with its volumes (storage_tgt_101, 102) on controller A of the first block node.  This arrangement allows us to make use of the full bidirectional PCIe bandwidth available to the InfiniBand adapter and achieve better performance from a dual- port HDR InfiniBand adapter than would otherwise be possible with PCIe 4.0.
+In the previous example, clients and server services prefer to communicate with storage service 1 using interface i1b. Storage service 1 uses interface i1a as the preferred path to communicate with its volumes (storage_tgt_101, 102) on controller A of the first block node.  This arrangement allows us to make use of the full bidirectional PCIe bandwidth available to the InfiniBand adapter and achieve better performance from a dual-port HDR InfiniBand adapter than would otherwise be possible with PCIe 4.0.
 
-== File node configuration
-Learn about the file node configuration required to support the BeeGFS on NetApp solution.
-
-=== High availability clustering
-
+== BeeGFS file node configuration
 Typically, when you start a BeeGFS service (with or without HA), a few resources must be in place:
 
 * IP addresses where the service is reachable at, typically configured by Network Manager.
 * Underlying file systems used as the targets for BeeGFS to store data.  These are typically defined in `/etc/fstab` and mounted by Systemd.
-* A Systemd service responsible for starting BeeGFS processes once the other resources are ready.Without additional software,  these resources are only able to start on a single node. Therefore, if the node goes offline for any reason, a portion of the BeeGFS filesystem is inaccessible.
+* A Systemd service responsible for starting BeeGFS processes once the other resources are ready.
+Without additional software,  these resources are only able to start on a single node. Therefore, if the node goes offline for any reason, a portion of the BeeGFS filesystem is inaccessible.
 
-To facilitate failover of BeeGFS services between multiple nodes, the file nodes in the NetApp BeeGFS building blocks are configured into an HA cluster.  This cluster is built on two widely used Linux HA projects, https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_overview-of-high-availability-configuring-and-managing-high-availability-clusters[Corosync for cluster membership and Pacemaker for cluster resource management^]. NetApp has also authored and extended several open cluster framework (OCF) resource agents that implement functionality that allows the cluster to intelligently start and monitor these BeeGFS resources.
+=== High-Availability cluster configuration
 
-When BeeGFS is running in an HA cluster, all BeeGFS services and underlying resources are managed by Pacemaker. Each BeeGFS service and the resources it depends on are configured into a resource group, which ensures resources are started and stopped in the correct order and collocated on the same node. For each BeeGFS resource group,  Pacemaker also runs a custom BeeGFS monitoring resource that is responsible for detecting failure conditions and intelligently triggering failovers when a BeeGFS service is no longer accessible on a particular node.
+To facilitate failover of BeeGFS services between multiple nodes, the file nodes in the NetApp BeeGFS building blocks are configured into a High-Availability (HA) cluster.
+
+The HA cluster is built on two widely used Linux HA projects, https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_overview-of-high-availability-configuring-and-managing-high-availability-clusters[Corosync for cluster membership and Pacemaker for cluster resource management^].
+
+NetApp has also authored and extended several open cluster framework (OCF) resource agents that implement functionality that allows the cluster to intelligently start and monitor these BeeGFS resources.
+
+When BeeGFS is running in an HA cluster, all BeeGFS services and underlying resources are managed by Pacemaker in resource groups.
+
+Each BeeGFS service and the resources it depends on are configured into a resource group, which ensures resources are started and stopped in the correct order and collocated on the same node.
+
+For each BeeGFS resource group, Pacemaker runs a custom BeeGFS monitoring resource that is responsible for detecting failure conditions and intelligently triggering failovers when a BeeGFS service is no longer accessible on a particular node.
 
 The following figure shows the Pacemaker-controlled BeeGFS services and dependencies.
 
