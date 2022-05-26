@@ -29,7 +29,7 @@ The BeeGFS network configuration consists of the following components.
 * *Floating IPs*
 Floating IPs are a kind of virtual IP address that can be dynamically routed to any server in the same network. Multiple servers can own the same Floating IP address, but it can only be active on one server at any given time.
 +
-Each BeeGFS server service has its own IP address that can move between file nodes depending on the run location of the BeeGFS server service. This floating IP configuration allows failovers to be opaque from the client’s perspective; the client simply needs to know the IP address for a particular BeeGFS service. The client does not need to know which file node is currently running that service.
+Each BeeGFS server service has its own IP address that can move between file nodes depending on the run location of the BeeGFS server service. This floating IP configuration allows each service to fail over independently to the other file node. The client simply needs to know the IP address for a particular BeeGFS service; it does not need to know which file node is currently running that service.
 
 * *BeeGFS server multi-homing configuration*
 To increase the density of the solution, each file node has multiple storage interfaces with IPs configured in the same IP subnet.
