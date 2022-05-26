@@ -20,11 +20,20 @@ The second generation design takes advantage of the performance density delivere
 
 A benefit of parallel file systems such as BeeGFS is their ability to be deployed and scaled out in different ways depending on the storage requirements. For example, use cases primarily featuring lots of small files will benefit from extra metadata performance and capacity, whereas use cases featuring fewer larger files might favor more storage capacity and performance for actual file contents. The fact that there are multiple considerations that impact different dimensions of the parallel file system deployment adds complexity to designing, deploying, and managing the parallel file system.
 
-To address these challenges, NetApp has designed a standard building block architecture that is used to scale out each of these dimensions. Typically, BeeGFS building blocks are deployed in one of three configuration profiles:
+To address these challenges, NetApp has designed a standard building block architecture that is used to scale out each of these dimensions.
 
-* A single base building block, including BeeGFS management, metadata, and storage services
-* A BeeGFS metadata + storage building block
-* A BeeGFS storage only building block
+== BeeGFS building blocks
+Typically, BeeGFS building blocks are deployed in one of three configuration profiles:
+
+* BeeGFS management, metadata, and storage services.
++
+The first building block deployed in each filesystem requires this configuration and is sometimes referred to as the base building block.
+
+* BeeGFS Metadata and Storage services.
+
+* BeeGFS Storage services.
++
+The use of these different configuration profiles for each building block allows the file system to flexibly scale to meet variable performance and capacity requirements using the same underlying hardware platforms and building block design.
 
 The only (optional) hardware change between these three options is the use of smaller drives for BeeGFS metadata. Otherwise, all configuration changes are applied through software, and the use of Ansible as the deployment engine makes it straightforward to set the profile desired for a particular building block.
 

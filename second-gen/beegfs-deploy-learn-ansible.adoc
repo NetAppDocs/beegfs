@@ -26,7 +26,6 @@ Each role in the NetApp E-Series Ansible collection is a complete end-to-end dep
 
 While in-depth documentation is provided with the roles, the deploy procedures describe how to use the role to deploy a NetApp Verified Architecture using the second generation BeeGFS building block design.
 
-
 [NOTE]
   Although the deploy steps attempt to provide enough detail that prior experience with Ansible is not a prerequisite to deploy the solution, some familiarity with Ansible and related terminology is strongly recommended.
 
