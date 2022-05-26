@@ -63,4 +63,4 @@ Guidance for EF600 block nodes can be found http://docs.netapp.com/ess-11/index.
 While this can also be set using Ansible, this can make it easier to refer to each system in subsequent sections.
 
 [NOTE]
-While not strictly required, subsequent sections presume storage array names are sequentially numbered (such as c1- cN) and refer to tasks that should be completed on odd versus even numbered systems.
+While not strictly required, subsequent topics presume storage array names are sequentially numbered (such as c1- cN) and refer to the steps that should be completed on odd versus even numbered systems.
