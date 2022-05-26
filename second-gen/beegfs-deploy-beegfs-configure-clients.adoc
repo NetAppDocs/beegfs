@@ -16,9 +16,11 @@ summary: "Configure BeeGFS clients."
 The BeeGFS client must be installed and configured on any hosts such as compute or GPU nodes needing access to the BeeGFS file system. This can be done using Ansible and the BeeGFS collection.
 
 .Steps
-. If needed, set up passwordless SSH from the Ansible control node to each of the hosts you want to configure as BeeGFS clients: `ssh-copy-id <user>@<HOSTNAME_OR_IP>`.
+. If needed, set up passwordless SSH from the Ansible control node to each of the hosts you want to configure as BeeGFS clients:
++
+`ssh-copy-id <user>@<HOSTNAME_OR_IP>`.
 
-. Under `host_vars/`,  create a file for each BeeGFS client named `<HOSTNAME>.yml `with the following content, filling in the placeholder text with the correct information for your environment:
+. Under `host_vars/`,  create a file for each BeeGFS client named `<HOSTNAME>.yml` with the following content, filling in the placeholder text with the correct information for your environment:
 +
 ....
 # BeeGFS Client
@@ -46,9 +48,9 @@ The defaults set by the BeeGFS HA role are based on the testing performed as par
 ....
 +
 [NOTE]
-It bears repeating, particularly for production environments,  not store passwords in plain text https://docs.ansible.com/ansible/latest/user_guide/vault.html[Ansible Vault^] orthe `--ask-become-pass` option when running the playbook.
+Do not store passwords in plain text. Instead use https://docs.ansible.com/ansible/latest/user_guide/vault.html[Ansible Vault^] or the `--ask-become-pass` option when running the playbook.
 
-. In the `client_inventory.yml` file,  list all hosts that should be configured as BeeGFS clients under the `beegfs_clients` group and specify any additional configuration required to build the BeeGFS client kernel module.
+. In the `client_inventory.yml` file, list all hosts that should be configured as BeeGFS clients under the `beegfs_clients` group and specify any additional configuration required to build the BeeGFS client kernel module.
 +
 ....
   children:
@@ -78,7 +80,7 @@ It bears repeating, particularly for production environments,  not store passwor
 ....
 +
 [NOTE]
-When using the Mellanox OFED drivers,  `beegfs`_`client`_`ofed`_`include`_`path `points at the correct https://doc.beegfs.io/latest/advanced_topics/rdma_support.html[header include path^] for your Linux installation.
+When using the Mellanox OFED drivers, make sure  `beegfs`_`client`_`ofed`_`include`_`path` points to the correct https://doc.beegfs.io/latest/advanced_topics/rdma_support.html[header include path^] for your Linux installation.
 
 . In the `client_inventory.yml` file,  list the BeeGFS file systems you want mounted at the bottom of any previously defined `vars`.
 +
