@@ -19,18 +19,16 @@ The Ansible inventory defines the configuration for file and block nodes and rep
 
 Sample inventories can be downloaded from https://github.com/netappeseries/beegfs/tree/master/getting_started/[here].
 
-To apply the configuration described by the Ansible inventory, use the various Ansible modules and roles provided in the NetApp E-Series Ansible collections, in particular the https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_2[BeeGFS HA 7.2 role^] that deploys the end-to-end solution.
+.Using Ansible modules and roles
+To apply the configuration described by the Ansible inventory, use the various Ansible modules and roles provided in the NetApp E-Series Ansible collection, in particular the https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_2[BeeGFS HA 7.2 role^] that deploys the end-to-end solution.
 
-While in-depth documentation is provided with the role, the deploy procedures describe how to use it specifically to deploy a NetApp Verified Architecture using the second generation BeeGFS building block design.
+Each role in the NetApp E-Series Ansible collection is a complete end-to-end deployment of the BeeGFS on NetApp solution. The roles use the NetApp E-Series SANtricity, Host, and BeeGFS collections that allow you to configure the BeeGFS file system with HA and provision, map storage and ensure the cluster storage is ready for use.
+
+While in-depth documentation is provided with the roles, the deploy procedures describe how to use the role to deploy a NetApp Verified Architecture using the second generation BeeGFS building block design.
+
 
 [NOTE]
   Although the deploy steps attempt to provide enough detail that prior experience with Ansible is not a prerequisite to deploy the solution, some familiarity with Ansible and related terminology is strongly recommended.
-
-The building block architecture described by this NetApp Verified Architecture makes this process straightforward, outside of differing host names and management IPs, the only configuration options that change between each building block is whether it should run:
-
-  * BeeGFS management, metadata, and storage services.  The first building block deployed in each filesystem requires this configuration and is sometimes referred to as the base building block.
-  * BeeGFS Metadata and Storage services.
-  * BeeGFS Storage services. The use of these different configuration profiles for each building block allows the file system to flexibly scale to meet variable performance and capacity requirements using the same underlying hardware platforms and building block design.
 
 == Inventory layout for a BeeGFS HA cluster
 Use the Ansible inventory structure to define a BeeGFS HA cluster.
