@@ -33,9 +33,9 @@ Unless otherwise noted, all files and directories created in this step and follo
 == Step 2: Define configuration for individual file and block nodes
 Define the configuration that applies to individual file nodes and individual building block nodes.
 
-. Under `host_vars/`,  create a file for each BeeGFS file node named `<HOSTNAME>.yml `with the following content, paying special attention to the notes regarding content to populate for BeeGFS cluster IPs and host names ending in odd versus even numbers.
+. Under `host_vars/`,  create a file for each BeeGFS file node named `<HOSTNAME>.yml` with the following content, paying special attention to the notes regarding content to populate for BeeGFS cluster IPs and host names ending in odd versus even numbers.
 +
-You might have noticed that initially the file node  interface names that do match up with what is listed here (such as ib0 or ibs1f0). These custom names  configured in a later section (see `eseries_ib_base_udev_rules`).
+You might have noticed that initially the file node  interface names that do match up with what is listed here (such as ib0 or ibs1f0). These custom names are configured in <<Step 4: Define the configuration for the common file node>>.
 +
 ....
 ansible_host: “<MANAGEMENT_IP>”
@@ -83,9 +83,11 @@ eseries_nvme_ib_interfaces:
 [NOTE]
 If you have already deployed the BeeGFS cluster, you must stop the cluster before adding or changing statically configured IP addresses including cluster IPs and IPs used for NVMe/IB. This is required to these changes take effect properly and do not disrupt cluster operations.
 
-. Under `host_vars/`,  create a file for each BeeGFS block node named `<HOSTNAME>.yml `and populate with the following contentagain paying special attention to the notes regarding content to populate for storage array names ending in odd vs even numbers.
+. Under `host_vars/`,  create a file for each BeeGFS block node named `<HOSTNAME>.yml` and populate with the following content.
 +
-For each block node,  you only create one file and specify the `<MANAGEMENT_IP> `for one of the two controllers (usually the A one).
+Pay special attention to the notes regarding content to populate for storage array names ending in odd versus even numbers.
++
+For each block node, create one file and specify the `<MANAGEMENT_IP>` for one of the two controllers (usually the A one).
 +
 ....
 eseries_system_name: <STORAGE_ARRAY_NAME>
@@ -119,12 +121,12 @@ eseries_controller_nvme_ib_port:
 
 == Step 3: Define the configuration for common file and block nodes
 
-Ansible allows us to define configuration common to a group of hosts under `group_vars` in a file name that corresponds with the group. Among other benefits, this prevents repeating shared configuration in multiple places.
+You can define a configuration common to a group of hosts under `group_vars` in a file name that corresponds with the group. Among other benefits, this prevents repeating a shared configuration in multiple places.
 
 .About this task
 Hosts can be in more than one group, and at runtime Ansible chooses what variables apply to a particular host based on its https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html[variable precedence^] rules.
 
-Host-to-group assignments are defined in the actual Ansible inventory file, which is created towards the end of this section.
+Host-to-group assignments are defined in the actual Ansible inventory file, which is created towards the end of this procedure.
 
 .Steps
 . In Ansible any configuration,  you want to apply to all hosts that can be defined in a group called All.  Create the file `group_vars/all.yml` with the following content:

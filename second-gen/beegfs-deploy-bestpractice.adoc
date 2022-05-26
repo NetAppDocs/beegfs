@@ -180,4 +180,4 @@ The following table provides the range for Subnet B: 100.128.0.0/16.
 |===
 
 [NOTE]
-Not all IPs in the above ranges are used in this NetApp Verified Architecture. They demonstrate how IP addresses can be preallocated to allow easy file system expansion  a consistent IP addressing scheme. In this scheme,  BeeGFS file node and service IDs correspond with the fourth octet of a well-known range of IPs. The file system certainly scale beyond 255 nodes or services if needed.
+Not all IPs in the above ranges are used in this NetApp Verified Architecture. They demonstrate how IP addresses can be preallocated to allow easy file system expansion  a consistent IP addressing scheme. In this scheme,  BeeGFS file node and service IDs correspond with the fourth octet of a well-known range of IPs. The file system can certainly scale beyond 255 nodes or services if needed.
