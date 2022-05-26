@@ -132,6 +132,8 @@ a|
 Disable
 |===
 
+=== Jolie/Joe: Do we really need the following screenshots?
+I DONT THINK THESE SCREEN SHOT HELP AND JUST ADD CONFUSION.
 The following screenshot shows the settings for the Lenovo XClarity Provisioning Manager: Operating Modes.
 
 image:../media/lenova-opmodes.png[]
