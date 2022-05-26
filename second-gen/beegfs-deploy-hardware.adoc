@@ -13,7 +13,7 @@ summary: "To deploy the hardware you must assemble a single building block. Each
 :imagesdir: ./media/
 
 [.lead]
-To deploy the hardware you must physically assemble a single building block. Each building block consists of two validated x86 file nodes directly connected using HDR (200Gb) InfiniBand to two NetApp block nodes.
+To deploy the hardware you must physically assemble a two building blocks. Each building block consists of two validated x86 file nodes directly connected to two block nodes using HDR (200Gb) InfiniBand cables.
 
 [NOTE]
 Because each building block includes two BeeGFS file nodes, a minimum of two building blocks is required to establish quorum in the failover cluster. While it is possible to configure a two-node cluster, there are limitations to this configuration that can prevent a successful failover to occur in some scenarios.  If a two-node cluster is required,  it is also possible to incorporate a third device as a tiebreaker,  though that is not covered in this deployment procedure.
@@ -28,9 +28,9 @@ Unless otherwise noted, the following steps are identical for each building bloc
 
 . Configure each BeeGFS block node with a dual-port 200Gb Host Interface Card (HIC) and install the HIC in each of its two storage controllers.
 +
-Rack the building blocks so the two BeeGFS file nodes are above the BeeGFS block nodes. The following figure shows the correct hardware configuration the BeeGFS building block (rear view).
+Rack the building blocks so the two BeeGFS file nodes are above the BeeGFS block nodes. The following figure shows the correct hardware configuration for the BeeGFS building block (rear view).
 +
-image:../media/beegfs-deploy-image2.png[]
+image:../media/buildingblocks.png[]
 +
 [NOTE]
 The power supply configuration for production use cases should typically use redundant PSUs.
@@ -41,20 +41,20 @@ The power supply configuration for production use cases should typically use red
 +
 .. For all building block configurations,  if a drive enclosure is not fully populated, make sure an equal number of drives are populated in slots 0–11 and 12–23 for optimal performance.
 +
-image:../media/beegfs-deploy-image3.png[]
+image:../media/driveslots.png[]
 +
 . Use 1m InfiniBand HDR 200Gb direct attach copper cables to cable the file and block nodes together to match the topology shown in the figure below.
 +
-image:../media/beegfs-deploy-image4.png[]
+image:../media/directattachcable.png[]
 +
 [NOTE]
 The nodes across multiple building blocks never directly connected. Each building block should be treated as a standalone unit and all communication between building blocks occurs through network switches.
 +
 . Use 2m (or the appropriate length) InfiniBand HDR 200Gb direct attach copper cables to cable the remaining InfiniBand ports on each file node to the InfiniBand switches that will be used for the storage network.
 +
-. If there are redundant InfiniBand switches in use, cable the ports highlighted in light green versus dark green in the following figure to different switches.
+. If there are redundant InfiniBand switches in use, cable the ports highlighted in light green in the following figure to different switches.
 +
-image:../media/beegfs-deploy-image5.png[]
+image:../media/networkcable.png[]
 +
 . As needed, assemble additional building blocks following the same cabling guidelines.
 +
