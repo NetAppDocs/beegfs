@@ -36,7 +36,7 @@ indexpage:
          - title: Lorem ipsum dolor
            url:
 
-     - title: Additonal docs
+     - title: Additional docs
        links:
          - title: NetApp Product Documentation
            url: https://www.netapp.com/support-and-training/documentation/
