@@ -11,31 +11,6 @@ indexpage:
          - title: Blogs
            url:
 
-     - title: Tile 2
-       links:
-         - title: Lorem ipsum dolor
-           url:
-         - title: Lorem ipsum dolor
-           url:
-         - title: Lorem ipsum dolor
-           url:
-
-     - title: Tile 3
-       links:
-         - title: Lorem ipsum dolor
-           url:
-         - title: Lorem ipsum dolor
-           url:
-         - title: Lorem ipsum dolor
-           url:
-
-     - title: Tile 4
-       links:
-         - title: Lorem ipsum dolor
-           url:
-         - title: Lorem ipsum dolor
-           url:
-
      - title: Additional docs
        links:
          - title: NetApp Product Documentation
