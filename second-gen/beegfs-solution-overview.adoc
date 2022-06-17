@@ -16,7 +16,7 @@ summary: "The second generation NetApp Verified Architecture (NVA) provides cust
 [.lead]
 The BeeGFS on NetApp solution uses the second generation of the NetApp building block architecture to provide customers with a https://www.netapp.com/blog/high-availability-beegfs/[shared-disk HA design^] powered by BeeGFS file servers and E-Series block storage systems.
 
-The The BeeGFS on NetApp solution takes advantage of the performance density delivered by the latest enterprise server and storage hardware and network speeds, requiring file nodes that feature dual AMD EPYC 7003 “Milan” processors and support for PCIe 4.0 with direct connects using 200Gb (HDR) InfiniBand to block nodes that provide end-to-end NVMe and NVMeOF using the NVMe/IB protocol.
+The BeeGFS on NetApp solution takes advantage of the performance density delivered by the latest enterprise server and storage hardware and network speeds, requiring file nodes that feature dual AMD EPYC 7003 “Milan” processors and support for PCIe 4.0 with direct connects using 200Gb (HDR) InfiniBand to block nodes that provide end-to-end NVMe and NVMeOF using the NVMe/IB protocol.
 
 A benefit of parallel file systems such as BeeGFS is their ability to be deployed and scaled out in different ways depending on the storage requirements. For example, use cases primarily featuring lots of small files will benefit from extra metadata performance and capacity, whereas use cases featuring fewer larger files might favor more storage capacity and performance for actual file contents. The fact that there are multiple considerations that impact different dimensions of the parallel file system deployment adds complexity to designing, deploying, and managing the parallel file system.
 
