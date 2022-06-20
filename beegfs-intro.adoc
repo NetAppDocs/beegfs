@@ -1,0 +1,17 @@
+---
+sidebar: sidebar
+permalink: beegfs-executive-summary.html
+keywords: BeeGFS, NetApp, solution
+summary: "NetApp Verified Architectures combine the BeeGFS parallel file system with NetApp EF600 storage systems."
+---
+
+= Introducing the BeeGFS on NetApp solution
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+_Include an intro that will work for any of the "generations"_

@@ -14,6 +14,27 @@ summary: "The second generation NetApp Verified Architecture (NVA) provides cust
 
 
 [.lead]
+_Create a shorter overview, and link to more info_
+
+
+_Copied from the Executive Summary --_
+
+The BeeGFS on NetApp solution gives customers a flexible and robust storage architecture for demanding HPC and HPC-style ML/DL workloads. The solution provides building blocks that combine the BeeGFS parallel file system with the NetApp EF600 storage systems.
+
+The modular building block approach allows organizations to start small and scale over time to whatever performance and capacity requirements the future may hold.
+
+HPC-style workloads are typically characterized by multiple compute nodes or GPUs (often referred to as clients) all needing to access the same dataset in parallel to facilitate a distributed compute or training job. These datasets are often comprised of large files that should be striped across multiple physical storage nodes to eliminate the traditional hardware bottlenecks that would prevent concurrent access from tens, hundreds, or even thousands of clients to a single file.
+
+The design of parallel file systems like BeeGFS have been proven historically as the preferred storage option for these HPC-style workloads. While traditionally these types of storage requirements were more commonly found in academic and research environments,  as the value of data continues to explode, enterprises are increasingly finding themselves with similar requirements. This is driven in no small part by the maturing of various AI techniques and the availability and affordability of hardware accelerators such as GPUs that put advanced AI capabilities in reach of all organizations.
+
+This https://www.netapp.com/blog/beegfs-for-ai-ml-dl/[shift toward HPC-style workloads in the enterprise^] has introduced high standards around fault tolerance and high availability in addition to the extreme performance expected from parallel file systems.
+
+NetApp brings decades of experience building trusted enterprise storage systems,  with its E-Series and EF-Series arrays being the most deployed block layer behind various parallel file systems in traditional HPC and media and entertainment environments.
+
+It is from this rich history NetApp steps forward to deliver https://www.netapp.com/blog/solution-support-for-beegfs-and-e-series/[fully supported^], next generation parallel file system storage solutions for both traditional and enterprise HPC workloads, https://www.netapp.com/blog/beefs-for-ai-fact-vs-fiction/[including HPC-style ML/DL training^] and large-scale natural language processing (NLP) and natural language understanding (NLU) workloads.
+
+_Part of the Solution overview--_
+
 The BeeGFS on NetApp solution uses the second generation of the NetApp building block architecture to provide customers with a https://www.netapp.com/blog/high-availability-beegfs/[shared-disk HA design^] powered by BeeGFS file servers and E-Series block storage systems.
 
 The BeeGFS on NetApp solution takes advantage of the performance density delivered by the latest enterprise server and storage hardware and network speeds, requiring file nodes that feature dual AMD EPYC 7003 “Milan” processors and support for PCIe 4.0 with direct connects using 200Gb (HDR) InfiniBand to block nodes that provide end-to-end NVMe and NVMeOF using the NVMe/IB protocol.

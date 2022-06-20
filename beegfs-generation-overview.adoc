@@ -1,0 +1,21 @@
+---
+sidebar: sidebar
+permalink: beegfs-generation-overview.html
+keywords: BeeGFS, NetApp, solution
+summary:
+---
+
+= Generation overview
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+BeeGFS on NetApp currently includes a first and second generation design.
+
+Both generations use a BeeGFS file system with an EF600 storage array in the architecture, but with the following differences:
+
+_Do a comparison table._
