@@ -13,7 +13,7 @@ sidebar:
   - title: Use first generation NVA
     url: /beegfs-first-gen-overview.html
   - title: Use second generation NVA
-  - entries:
+    entries:
     - title: Learn about this solution
       entries:
       - title: Solution overview
