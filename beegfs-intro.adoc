@@ -14,24 +14,24 @@ summary: "NetApp Verified Architectures combine the BeeGFS parallel file system 
 
 
 [.lead]
-_Include an intro that will work for any of the "generations"_ -- The BeeGFS on NetApp solution is a NetApp Verified Architecture (NVA) that includes a NetApp EF600 all-flash NVMe storage system and a ThinkParQ BeeGFS parallel filesystem to keep pace with extreme workloads.
+The BeeGFS on NetApp solution is a NetApp Verified Architecture (NVA) that includes an EF600 NVMe storage system and a BeeGFS parallel filesystem.
 
-If you are a NetApp solutions engineer or a customer strategic decision maker, use this site to learn more about architecture design considerations for determining the specific equipment, cabling, and configurations required to support the validated workload.
+With this thoroughly tested architecture, you can easily scale resources from rack configurations with predictable performance to extreme workload requirements. Use the information in this site to learn more about the architecture design considerations that were used to determine the specific equipment, cabling, and configurations required to support the architecture, and also learn how to design and deploy the configuration in your own environment.
 
-== NetApp Verified Architectures (NVAs)
+== NetApp Verified Architecture (NVA)
 
-The NetApp Verified Architecture program provides customers with reference configurations and sizing
-guidance for specific workloads and use cases. These solutions are:
-* Thoroughly tested
-* Designed to minimize deployment risks
-* Designed to accelerate time to market
+The NVA program provides reference configurations and sizing guidance for specific workloads and use cases. These solutions are thoroughly tested, and are designed to minimize deployment risks and to accelerate time to market.
 
+== First and second generation architecture
 
+The BeeGFS on NetApp architecture offers a first and second generational design, both including a BeeGFS file system and an NetApp NVMe EF600 storage system. The second generation builds on the first to include these additional features:
 
-== First and second generation architectures
+* Double the performance and capacity while adding only 2U of rack space
+* High availability (HA) based on a shared-disk, two-tier hardware design
+* External qualification for NVIDIA’s DGX A100 SuperPOD
 
-The BeeGFS on NetApp architecture offers a first and second generational design, both including a BeeGFS file system and an NetApp NVMe EF600 storage system. However, the second generation builds on the first to include these added features:
+== First generation
+The first generation of BeeGFS on NetApp was designed for machine learning (ML) and artificial intelligence (AI) workloads using NetApp EF600 NVMe storage systems, the BeeGFS parallel file system, NVIDIA DGX™ A100 systems, and NVIDIA® Mellanox® Quantum™ QM8700 200Gbps IB switches. This design also features 200Gbps InfiniBand (IB) for the storage and compute cluster interconnect fabric to provide customers with a completely IB-based architecture for high-performance workloads.
 
-* More than doubles performance and capacity while only adding 2U of rack space.
-* Introduces high availability based on a shared-disk two-tier hardware design.
-* Passed external qualification for NVIDIA’s DGX A100 SuperPOD.
+== Second generation
+The second generation of BeeGFS on NetApp is optimized to meet the performance requirements of demanding workloads including high-performance computing (HPC) and HPC-style machine learning (ML), deep learning (DL) and similar artificial intelligence (AI) techniques. By incorporating a shared-disk high-availability (HA) architecture, the solution also meets the data durability and availability requirements of enterprises and other organizations that cannot afford downtime or data loss as they look for storage that can scale to keep up with their next generation workloads and use cases. This solution has not only been verified by NetApp, but it also passed external qualification as a storage option for the NVIDIA DGX SuperPOD.
