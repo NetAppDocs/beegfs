@@ -14,4 +14,24 @@ summary: "NetApp Verified Architectures combine the BeeGFS parallel file system 
 
 
 [.lead]
-_Include an intro that will work for any of the "generations"_
+_Include an intro that will work for any of the "generations"_ -- The BeeGFS on NetApp solution is a NetApp Verified Architecture (NVA) that includes a NetApp EF600 all-flash NVMe storage system and a ThinkParQ BeeGFS parallel filesystem to keep pace with extreme workloads.
+
+If you are a NetApp solutions engineer or a customer strategic decision maker, use this site to learn more about architecture design considerations for determining the specific equipment, cabling, and configurations required to support the validated workload.
+
+== NetApp Verified Architectures (NVAs)
+
+The NetApp Verified Architecture program provides customers with reference configurations and sizing
+guidance for specific workloads and use cases. These solutions are:
+* Thoroughly tested
+* Designed to minimize deployment risks
+* Designed to accelerate time to market
+
+
+
+== First and second generation architectures
+
+The BeeGFS on NetApp architecture offers a first and second generational design, both including a BeeGFS file system and an NetApp NVMe EF600 storage system. However, the second generation builds on the first to include these added features:
+
+* More than doubles performance and capacity while only adding 2U of rack space.
+* Introduces high availability based on a shared-disk two-tier hardware design.
+* Passed external qualification for NVIDIA’s DGX A100 SuperPOD.

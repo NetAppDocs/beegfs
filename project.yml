@@ -9,14 +9,10 @@ sidebar:
   - title: BeeGFS on NetApp docs
     url: "/index.html"
   - title: Get started
-    entries:
-    - title: Learn about BeeGFS on NetApp
-      url: beegfs-intro.html
-    - title: Generation overview
-      url: beegfs-generation-overview.html
-  - title: Use first generation NVA
+    url: beegfs-intro.html
+  - title: First generation NVA
     url: /beegfs-first-gen-overview.html
-  - title: Use second generation NVA
+  - title: Second generation NVA
     entries:
     - title: Learn about this solution
       entries:
