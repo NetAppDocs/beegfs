@@ -14,7 +14,7 @@ summary: "The second generation NetApp Verified Architecture (NVA) provides cust
 
 
 [.lead]
-_Create a shorter overview, and link to more info_
+_Re-work in progress -- Create a shorter overview, create subheads (and maybe divide up into smaller topics)_
 
 
 _Copied from the Executive Summary --_
