@@ -8,8 +8,14 @@ sidebar:
   entries:
   - title: BeeGFS on NetApp docs
     url: "/index.html"
-  - title: Overview
-    url: /beegfs-intro.html
+  - title: Get started
+    entries:
+    - title: What's included in this site
+      url: whats-included.html
+    - title: Learn about BeeGFS on NetApp NVA
+      url: /beegfs-intro.html
+    - title: Learn about BeeGFS architecture
+      url: /beegfs-components.html
   - title: First generation NVA
     url: /beegfs-first-gen-overview.html
   - title: Second generation NVA

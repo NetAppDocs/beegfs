@@ -50,6 +50,10 @@ The second generation of BeeGFS on NetApp is optimized to meet the performance r
 For second generation information, see link:beegfs-solution-overview.html[Second generation overview].
 ====
 
-== What this site provides
+== BeeGFS architecture overview
 
-Use the information in this site to learn more about the architecture design considerations used to determine the specific equipment, cabling, and configurations required to support the second-generation architecture, and how to design and deploy the configuration in your own environment.
+BeeGFS is a parallel file system, which means that files are striped over multiple server nodes to maximize read/write performance and scalability of the file system. The fact that it is clustered indicates that these server nodes work together to deliver a single file system that can be simultaneously mounted and accessed by other server nodes, commonly known as clients. These clients can see and consume the distributed file system similarly to a local file system such as NTFS, XFS, or ext4.
+
+There are four main required BeeGFS components: the management, storage, metadata, and client services that run on a wide range of supported Linux distributions. These services communicate via any TCP/IP or RDMA-capable network, including InfiniBand (IB), Omni-Path (OPA), and RDMA over Converged Ethernet (RoCE). The BeeGFS server (management, storage, and metadata) services are user space daemons, while the client is a native kernel module (patchless). All components can be installed or updated without rebooting, and you can run any combination of services on the same node, including all of them.
+
+image:../media/component-overview.png[]

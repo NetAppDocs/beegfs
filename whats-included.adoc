@@ -1,0 +1,19 @@
+---
+sidebar: sidebar
+permalink: whats-included.html
+keywords: BeeGFS, NetApp, solution
+summary: "This site includes information specific to the NetApp Verified Architecture (NVA) for BeeGFS on NetApp solution."
+---
+
+= What's included in this site
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+This site includes information specific to the NetApp Verified Architecture (NVA) for BeeGFS on NetApp solution.
+
+Use the information in this site to learn more about the architecture design considerations used to determine the specific equipment, cabling, and configurations required to support the second-generation architecture, and how to design and deploy the configuration in your own environment.
