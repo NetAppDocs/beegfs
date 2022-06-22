@@ -16,6 +16,6 @@ summary: "This site includes information specific to the NetApp Verified Archite
 [.lead]
 This site includes information specific to the NetApp Verified Architecture (NVA) for BeeGFS on NetApp solution.
 
-The NVA program provides reference configurations and sizing guidance for specific workloads and use cases. These solutions are thoroughly tested, and are designed to minimize deployment risks and to accelerate time to market.
-
 Use the information in this site to learn more about the architecture design considerations used to determine the specific equipment, cabling, and configurations required to support the second-generation architecture, and how to design and deploy the configuration in your own environment.
+
+NOTE: The NVA program provides reference configurations and sizing guidance for specific workloads and use cases. These solutions are thoroughly tested, and are designed to minimize deployment risks and to accelerate time to market.
