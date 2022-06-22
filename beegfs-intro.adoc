@@ -52,4 +52,4 @@ For second generation information, see link:beegfs-solution-overview.html[Second
 
 == What this site provides
 
-Use the information in this site to learn more about the architecture design considerations used to determine the specific equipment, cabling, and configurations required to support the second-generation architecture, and how to design and deploy the configuration in your own environment. (For first generation design and deployment, see link:https://www.netapp.com/pdf.html?item=/media/25445-nva-1156-design.pdf[NetApp EF-Series AI with NVIDIA DGX A100 Systems and BeeGFS].)
+Use the information in this site to learn more about the architecture design considerations used to determine the specific equipment, cabling, and configurations required to support the second-generation architecture, and how to design and deploy the configuration in your own environment.
