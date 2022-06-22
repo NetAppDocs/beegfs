@@ -9,7 +9,7 @@ sidebar:
   - title: BeeGFS on NetApp docs
     url: "/index.html"
   - title: Overview
-    url: beegfs-intro.html
+    url: /beegfs-intro.html
   - title: First generation NVA
     url: /beegfs-first-gen-overview.html
   - title: Second generation NVA
