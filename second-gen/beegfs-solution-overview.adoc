@@ -5,7 +5,7 @@ keywords: Overview, EF600, NetApp, BeeGFS, Verified Architecture
 summary: "The second generation NetApp Verified Architecture (NVA) provides customers with a shared-disk HA architecture powered by BeeGFS file servers and NetApp E-Series and EF-Series storage systems."
 ---
 
-= Overview of the second generation NVA design
+= Second generation overview
 :hardbreaks:
 :nofooter:
 :icons: font
