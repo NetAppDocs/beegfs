@@ -14,10 +14,14 @@ summary: "This site includes information specific to the NetApp Verified Archite
 
 
 [.lead]
-This site includes information specific to the NetApp Verified Architecture (NVA) for BeeGFS on NetApp.
+This site provides information specific to the _second_ generation of the NetApp Verified Architecture (NVA) for BeeGFS on NetApp.
 
 NOTE: The NVA program provides reference configurations and sizing guidance for specific workloads and use cases. These solutions are thoroughly tested, and are designed to minimize deployment risks and to accelerate time to market.
 
-Use the information in this site to learn more about the architecture design considerations used to determine the specific equipment, cabling, and configurations required to support the architecture. This site also describes how to deploy BeeGFS on NetApp using validated BeeGFS file servers (file nodes) attached to block storage systems (block nodes) using the second generation of the NetApp BeeGFS building block design.
+Information includes:
 
-This site does not include design and deployment information for the first generation of the solution. For information about the first generation design, see link:https://www.netapp.com/pdf.html?item=/media/25445-nva-1156-design.pdf[First Generation Design: NetApp EF-Series AI with NVIDIA DGX A100 Systems and BeeGFS]
+* Architecture design considerations used to determine the specific equipment, cabling, and configurations required to support the architecture. For more information, see link:../second-gen/beegfs-design-overview.html[Design overview].
+
+* Deployment guidelines using validated BeeGFS file servers (file nodes) attached to block storage systems (block nodes). For more information, see link:../second-gen/beegfs-deploy-overview.html[Deployment overview].
+
+This site does _not_ include design and deployment information for the first generation of the solution. For the previous generation, see link:https://www.netapp.com/pdf.html?item=/media/25445-nva-1156-design.pdf[First Generation Design: NetApp EF-Series AI with NVIDIA DGX A100 Systems and BeeGFS]
