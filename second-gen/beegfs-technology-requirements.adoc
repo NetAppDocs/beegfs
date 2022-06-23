@@ -12,20 +12,15 @@ summary: "This section covers the technology requirements for the BeeGFS on NetA
 :linkattrs:
 :imagesdir: ./media/
 
-//
-// This file was created with NDAC Version 2.0 (August 17, 2020)
-//
-// 2022-04-29 10:21:46.073829
-//
 
 [.lead]
-Learn about the technical requirements for the BeeGFS on NetApp solution.
+To implement the BeeGFS on NetApp solution, make sure your environment meets the technology requirements.
 
 == Hardware requirements
 
 The following table lists the hardware components that are required to implement a single second-generation building block design of the BeeGFS on NetApp solution.
 
-The hardware components used in any particular implementation of the solution might vary based on customer requirements.
+NOTE: The hardware components used in any particular implementation of the solution might vary based on customer requirements.
 
 
 [options="header" cols="10%,20%,70%"]

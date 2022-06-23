@@ -1,5 +1,5 @@
 indexpage:
-  lead: BeeGFS on NetApp is a NetApp Verified Architecture (NVA) using a BeeGFS parallel filesystem and a NetApp E-Series storage system. This is a proven, integrated solution with a simple, reliable, scalable, and cost-effective HPC infrastructure that keeps pace with your most extreme workloads.
+  lead: BeeGFS on NetApp is a NetApp Verified Architecture (NVA), which provides building blocks that combine the BeeGFS parallel file system with NetApp EF600 storage systems. This solution is a reliable, scalable, and cost-effective infrastructure that keeps pace with your most extreme workloads.
 
   tiles:
      - title: Get started
