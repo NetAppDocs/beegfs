@@ -1,0 +1,37 @@
+---
+sidebar: sidebar
+permalink: beegfs-solution-usecase.html
+keywords: Overview, EF600, NetApp, BeeGFS, Verified Architecture
+summary: ""
+---
+
+= BeeGFS on NetApp use cases
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+_Re-work in progress -- trim down the marketing language_
+_Intro sentence about use cases_
+
+
+NetApp brings decades of experience building trusted enterprise storage systems, with its E-Series and EF-Series arrays being the most deployed block layer behind various parallel file systems in traditional HPC and media and entertainment environments. It is from this rich history NetApp steps forward to deliver fully supported, next generation parallel file system storage solutions for both traditional and enterprise HPC workloads, including HPC-style ML/DL training and large-scale natural language processing (NLP) and natural language understanding (NLU) workloads.
+
+HPC-style workloads are typically characterized by multiple compute nodes or GPUs (often referred to as clients), all needing to access the same dataset in parallel to facilitate a distributed compute or training job. These datasets are often comprised of large files that should be striped across multiple physical storage nodes to eliminate the traditional hardware bottlenecks that would prevent concurrent access from tens, hundreds, or even thousands of clients to a single file.
+
+The design of parallel file systems like BeeGFS have been proven historically as the preferred storage option for these HPC-style workloads. While traditionally these types of storage requirements were more commonly found in academic and research environments, as the value of data continues to explode, enterprises are increasingly finding themselves with similar requirements. This is driven in no small part by the maturing of various AI techniques and the availability and affordability of hardware accelerators such as GPUs that put advanced AI capabilities in reach of all organizations.
+
+This shift toward HPC-style workloads in the enterprise has introduced high standards around fault tolerance and high availability in addition to the extreme performance expected from parallel file systems. To learn more, see https://www.netapp.com/blog/beegfs-for-ai-ml-dl/[^Why BeeGFS goes beyond HPC].
+
+The BeeGFS on NetApp solution applies to the following use cases:
+
+* AI including ML, DL, NLP, and NLU
+* HPC including applications accelerated by MPI and other distributed computing techniques
+* Application workloads characterized by:
+** Reading or writing to files larger than 1GB
+** Reading or writing to the same file by multiple clients (10s, 100s, and 1000s)
+* Multi-terabyte or multi-petabyte datasets
+* Environments that need a single storage namespace optimizable for a mix of large and small files

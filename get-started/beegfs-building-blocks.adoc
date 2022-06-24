@@ -1,0 +1,42 @@
+---
+sidebar: sidebar
+permalink: beegfs-solution-overview.html
+keywords: Overview, EF600, NetApp, BeeGFS, Verified Architecture
+summary: "The second generation NetApp Verified Architecture (NVA) provides customers with a shared-disk HA architecture powered by BeeGFS file servers and NetApp E-Series and EF-Series storage systems."
+---
+
+= Building block overview
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+
+The second generation of the BeeGFS on NetApp solution gives customers a flexible and robust storage architecture for demanding high-performance computing (HPC) and HPC-style ML/DL workloads. The modular building block approach allows organizations to start small and scale over time to whatever performance and capacity requirements the future may hold.
+
+The BeeGFS on NetApp solution provides customers with a shared-disk HA design powered by BeeGFS file servers and E-Series block storage systems. (To learn more, see https://www.netapp.com/blog/high-availability-beegfs/[High Availability for BeeGFS Supported by NetApp^])
+
+The BeeGFS on NetApp solution takes advantage of the performance density delivered by the latest enterprise server and storage hardware and network speeds, requiring file nodes that feature dual AMD EPYC 7003 “Milan” processors and support for PCIe 4.0 with direct connects using 200Gb (HDR) InfiniBand to block nodes that provide end-to-end NVMe and NVMeOF using the NVMe/IB protocol.
+
+A benefit of parallel file systems such as BeeGFS is their ability to be deployed and scaled out in different ways depending on the storage requirements. For example, use cases primarily featuring lots of small files will benefit from extra metadata performance and capacity, whereas use cases featuring fewer larger files might favor more storage capacity and performance for actual file contents. The fact that there are multiple considerations that impact different dimensions of the parallel file system deployment adds complexity to designing, deploying, and managing the parallel file system.
+
+To address these challenges, NetApp has designed a standard building block architecture that is used to scale out each of these dimensions.
+
+Typically, BeeGFS building blocks are deployed in one of three configuration profiles:
+
+* BeeGFS management, metadata, and storage services.
++
+The first building block deployed in each filesystem requires this configuration and is sometimes referred to as the base building block.
+
+* BeeGFS Metadata and Storage services.
+
+* BeeGFS Storage services.
+
+The use of these different configuration profiles for each building block allows the file system to flexibly scale to meet variable performance and capacity requirements using the same underlying hardware platforms and building block design.
+
+The only (optional) hardware change between the three configuration profiles is the use of smaller drives for BeeGFS metadata. Otherwise, all configuration changes are applied through software, and the use of Ansible as the deployment engine makes it straightforward to set the profile desired for a particular building block.
+
+This approach provides administrators the flexibility needed to quickly adapt to diverse and shifting workload requirements while using a scalable building block architecture and the latest available hardware.

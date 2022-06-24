@@ -1,0 +1,51 @@
+---
+sidebar: sidebar
+permalink: beegfs-architecture.html
+keywords: BeeGFS, NetApp, solution
+summary: "NetApp Verified Architectures combine the BeeGFS parallel file system with NetApp EF600 storage systems."
+---
+
+= BeeGFS architecture overview
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+_Rework in progress_
+The BeeGFS architecture includes core components and general concepts behind its parallel cluster file system.
+
+As a parallel file system, BeeGFS stripes its files over multiple server nodes to maximize read/write performance and scalability. The server nodes work together to deliver a single file system that can be simultaneously mounted and accessed by other server nodes, commonly known as _clients_. These clients can see and consume the distributed file system similarly to a local file system such as NTFS, XFS, or ext4.
+
+There are four main required BeeGFS components: the management, storage, metadata, and client services that run on a wide range of supported Linux distributions. These services communicate via any TCP/IP or RDMA-capable network, including InfiniBand (IB), Omni-Path (OPA), and RDMA over Converged Ethernet (RoCE). The BeeGFS server (management, storage, and metadata) services are user space daemons, while the client is a native kernel module (patchless). All components can be installed or updated without rebooting, and you can run any combination of services on the same node.
+
+image:../media/beegfs-components.png[]
+
+_Copied from another section:_
+
+BeeGFS is a parallel file system with an architecture based on the following four main services:
+
+* *Management service.* Registers and monitors all other services.
+* *Storage service.* Stores the distributed user file contents known as data chunk files.
+* *Metadata service.* Keeps track of the file system layout, directory, and file attributes, and so on.
+* *Client service.* Mounts the file system to access the stored data. This design provides flexibility that is key to meeting diverse and evolving AI and HPC workloads. Use of NetApp EF-Series storage systems as the underlying block nodes supercharges BeeGFS storage and metadata services by offloading RAID and other storage tasks including drive monitoring and wear detection.
+
+The key benefits of the BeeGFS parallel file system include:
+
+* Allows optimization for diverse workloads within a single storage namespace.
++
+Do your compute or GPU nodes each need to access a large number of small files? Do they each need to access a single large file? Do they all need to access the same set of small or large files? Don’t know? Many storage solutions are only good at some of these. BeeGFS does it all.
+
+* Designed and developed for ease of use, straightforward installation, and simple management.
++
+Eliminate complexity associated with traditional parallel and distributed file systems while taking full advantage of the performance benefits.
+
+* Reduce client CPU overhead to facilitate network transfers and get data to the science faster by using remote direct memory access (RDMA) over IB.
++
+For servers that don’t support RDMA, BeeGFS can serve files over TCP/IP and remote direct memory access (RDMA) concurrently ensuring no one is left out.
+
+* Intelligently distributed file contents and metadata optimized for highly concurrent access.
++
+Avoid fundamental architectural limitations imposed by the design of some storage solutions.
