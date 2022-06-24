@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
-permalink: beegfs-solution-overview.html
+permalink: beegfs-building-blocks.html
 keywords: Overview, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "The second generation NetApp Verified Architecture (NVA) provides customers with a shared-disk HA architecture powered by BeeGFS file servers and NetApp E-Series and EF-Series storage systems."
+summary: ""
 ---
 
 = Building block overview
