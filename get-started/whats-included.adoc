@@ -14,14 +14,14 @@ summary: "This site includes information specific to the NetApp Verified Archite
 
 
 [.lead]
-This site provides information specific to the _second_ generation of the NetApp Verified Architecture (NVA) for BeeGFS on NetApp.
+This site provides information specific to the second generation of the NetApp Verified Architecture (NVA) for BeeGFS on NetApp.
 
 NOTE: The NVA program provides reference configurations and sizing guidance for specific workloads and use cases. These solutions are thoroughly tested, and are designed to minimize deployment risks and to accelerate time to market.
 
-Information includes:
+Information in this site includes:
 
 * Architecture design considerations used to determine the specific equipment, cabling, and configurations required to support the architecture. For more information, see link:beegfs-design-overview.html[Design overview].
 
 * Deployment guidelines using validated BeeGFS file servers (file nodes) attached to block storage systems (block nodes). For more information, see link:beegfs-deploy-overview.html[Deployment overview].
 
-This site does _not_ include design and deployment information for the first generation of the solution. For the previous generation, see link:https://www.netapp.com/pdf.html?item=/media/25445-nva-1156-design.pdf[First Generation Design: NetApp EF-Series AI with NVIDIA DGX A100 Systems and BeeGFS]
+This site does _not_ include design and deployment information for the first generation of the solution. For complete content on the previous generation, see link:https://www.netapp.com/pdf.html?item=/media/25445-nva-1156-design.pdf[NetApp EF-Series AI with NVIDIA DGX A100 Systems and BeeGFS].
