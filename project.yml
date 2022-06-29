@@ -18,6 +18,8 @@ sidebar:
       url: /beegfs-gens.html
     - title: Solution overview
       url: /beegfs-solution-overview.html
+    - title: Architecture overview
+      url: /beegfs-architecture-overview.html
     - title: Technical requirements
       url: /beegfs-technology-requirements.html
   - title: Review solution design

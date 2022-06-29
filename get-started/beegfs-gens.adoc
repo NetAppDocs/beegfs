@@ -25,26 +25,6 @@ Both the first and second generation include a base architecture that incorporat
 == Second generational design
 The second generation of BeeGFS on NetApp is optimized to meet the performance requirements of demanding workloads including high-performance computing (HPC) and HPC-style machine learning (ML), deep learning (DL) and similar artificial intelligence (AI) techniques. By incorporating a shared-disk high-availability (HA) architecture, the solution also meets the data durability and availability requirements of enterprises and other organizations that cannot afford downtime or data loss as they look for storage that can scale to keep up with their next generation workloads and use cases. This solution has not only been verified by NetApp, but it also passed external qualification as a storage option for the NVIDIA DGX SuperPOD.
 
-=== Use cases
-The following use cases apply to this solution:
-
-* AI including ML, DL, NLP, and NLU
-* HPC including applications accelerated by MPI and other distributed computing techniques
-* Application workloads characterized by:
-** Reading or writing to files larger than 1GB
-** Reading or writing to the same file by multiple clients (10s, 100s, and 1000s)
-* Multi-terabyte or multi-petabyte datasets
-* Environments that need a single storage namespace optimizable for a mix of large and small files
-
-=== Benefits
-In addition to being backed and supported by a leading on-premises and cloud storage provider, the key benefits of using BeeGFS on NetApp include:
-
-* Availability of verified hardware designs providing full integration of hardware and software components to ensure predicable performance and reliability.
-* Deployed and managed using Ansible for simplicity and consistency at scale.
-* Monitoring and observability provided using the https://www.netapp.com/blog/monitoring-netapp-eseries/[E-Series Performance Analyzer and BeeGFS plugin^].
-* High availability featuring a shared-disk architecture that provides data durability and availability.
-* Support for https://www.netapp.com/blog/kubernetes-meet-beegfs/[modern workload management and orchestration^] using containers and Kubernetes.
-
 == First generational design
 
 The first generation of BeeGFS on NetApp was designed for machine learning (ML) and artificial intelligence (AI) workloads using NetApp EF600 NVMe storage systems, the BeeGFS parallel file system, NVIDIA DGX™ A100 systems, and NVIDIA® Mellanox® Quantum™ QM8700 200Gbps IB switches. This design also features 200Gbps InfiniBand (IB) for the storage and compute cluster interconnect fabric to provide customers with a completely IB-based architecture for high-performance workloads.
