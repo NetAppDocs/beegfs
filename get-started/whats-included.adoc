@@ -20,7 +20,7 @@ NOTE: The NVA program provides reference configurations and sizing guidance for 
 
 Information in this site includes:
 
-* Architecture design considerations used to determine the specific equipment, cabling, and configurations required to support the architecture. For more information, see link:beegfs-design-overview.html[Design overview].
+* Architecture design considerations used to determine the specific equipment, cabling, and configurations required to support the architecture. For more information, see link:beegfs-design-overview.html[Design overview]. 
 
 * Deployment guidelines using validated BeeGFS file servers (file nodes) attached to block storage systems (block nodes). For more information, see link:beegfs-deploy-overview.html[Deployment overview].
 

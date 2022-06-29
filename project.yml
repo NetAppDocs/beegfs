@@ -14,16 +14,10 @@ sidebar:
       url: /whats-included.html
     - title: Design generations
       url: /beegfs-gens.html
-    - title: BeeGFS solution overview
+    - title: Solution overview
       url: /beegfs-solution-overview.html
-    - title: Use cases
-      url: /beegfs-solution-usecase.html
-    - title: BeeGFS architecture overview
+    - title: Architecture overview
       url: /beegfs-architecture.html
-    - title: Building block overview
-      url: /beegfs-building-blocks.html
-    - title: Verified nodes
-      url: /beegfs-verified.html
     - title: Technical requirements
       url: /beegfs-technology-requirements.html
   - title: Review solution design

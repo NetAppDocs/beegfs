@@ -2,10 +2,10 @@
 sidebar: sidebar
 permalink: beegfs-solution-overview.html
 keywords: Overview, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "The second generation NetApp Verified Architecture (NVA) provides customers with a shared-disk HA architecture powered by BeeGFS file servers and NetApp E-Series and EF-Series storage systems."
+summary: "The BeeGFS on NetApp solution is a NetApp Verified Architecture (NVA), which combines the BeeGFS parallel file system with NetApp EF600 storage systems."
 ---
 
-= BeeGFS on NetApp solution overview
+= Solution overview
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -14,23 +14,81 @@ summary: "The second generation NetApp Verified Architecture (NVA) provides cust
 
 
 [.lead]
-_Rework in progress; trim down marketing language_
+The BeeGFS on NetApp solution is a NetApp Verified Architecture (NVA), which combines the BeeGFS parallel file system with NetApp EF600 storage systems.
 
+The following figure shows BeeGFS solution components and relationships used with NetApp E-Series.
+
+image:../media/beegfs-components.png[]
+
+== BeeGFS file system overview
+
+The BeeGFS on NetApp solution includes validated BeeGFS file servers (file nodes) attached to block storage systems (block nodes) using the second generation of the NetApp BeeGFS building block design. This design takes advantage of the performance density delivered by the latest enterprise server and storage hardware and network speeds, requiring file nodes that feature dual AMD EPYC 7003 “Milan” processors and support for PCIe 4.0 with direct connects using 200Gb (HDR) InfiniBand to block nodes that provide end-to-end NVMe and NVMeOF using the NVMe/IB protocol.
+
+[%collapsible]
+.Key benefits:
+====
+The key benefits of the BeeGFS parallel file system include:
+
+* Optimized for diverse workloads within a single storage namespace.
+
+* Ease of use, straightforward installation, and simple management.
+
+* Reduced client CPU overhead to facilitate network transfers by using remote direct memory access (RDMA) over IB.
+
+* Intelligently distributed file contents and metadata optimized for highly concurrent access.
+====
+
+
+=== Building blocks
+
+Parallel file systems such as BeeGFS can be deployed and scaled out in different ways depending on the storage requirements. For example, use cases primarily featuring lots of small files will benefit from extra metadata performance and capacity, whereas use cases featuring fewer larger files might favor more storage capacity and performance for actual file contents. The fact that there are multiple considerations that impact different dimensions of the parallel file system deployment adds complexity to designing, deploying, and managing the parallel file system.
+
+To address deployment challenges, NetApp has designed a standard building block architecture. Typically, BeeGFS building blocks are deployed in one of three configuration profiles:
+
+* A single base building block, including BeeGFS management, metadata, and storage services
+* A BeeGFS metadata + storage building block
+* A BeeGFS storage only building block
+
+The only (optional) hardware change between these three options is the use of smaller drives for BeeGFS metadata. Otherwise, all configuration changes are applied through software, and the use of Ansible as the deployment engine makes it straightforward to set the profile desired for a particular building block.
+
+This approach provides administrators the flexibility needed to quickly adapt to diverse and shifting workload requirements while using a scalable building block architecture and the latest available hardware.
+
+For more technical details on the building blocks, see //xref to next topic (hardware)//
+
+=== Main services
+The architecture of the BeeGFS file system is based on the following four main services:
+
+* *Management service.* Registers and monitors all other services.
+* *Storage service.* Stores the distributed user file contents known as data chunk files.
+* *Metadata service.* Keeps track of the file system layout, directory, and file attributes, and so on.
+* *Client service.* Mounts the file system to access the stored data.
+
+As a parallel file system, BeeGFS stripes its files over multiple server nodes to maximize read/write performance and scalability. The server nodes work together to deliver a single file system that can be simultaneously mounted and accessed by other server nodes, commonly known as _clients_. These clients can see and consume the distributed file system similarly to a local file system such as NTFS, XFS, or ext4.
+
+The four main services run on a wide range of supported Linux distributions and communicate via any TCP/IP or RDMA-capable network, including InfiniBand (IB), Omni-Path (OPA), and RDMA over Converged Ethernet (RoCE). The BeeGFS server (management, storage, and metadata) services are user space daemons, while the client is a native kernel module (patchless). All components can be installed or updated without rebooting, and you can run any combination of services on the same node.
+
+
+== BeeGFS on NetApp features
 
 While the community edition of BeeGFS can be used free of charge, the enterprise edition requires purchasing a professional support subscription contract from a partner like NetApp. The enterprise edition allows use of several additional features including resiliency, quota enforcement, and storage pools.
 
 The BeeGFS on NetApp solution expands the functionality of the BeeGFS enterprise edition by creating a fully integrated solution with NetApp hardware and enabling high availability based on NetApp E-Series and EF-Series storage systems using a shared-disk HA architecture.
 
-The following figure compares the shared-nothing and shared-disk HA architectures.
+The following figure compares the shared-nothing and shared-disk high availability (HA) architectures.
 
 image:../media/beegfs-design-image1.png[]
 
 BeeGFS on NetApp is delivered and deployed using Ansible automation hosted on https://github.com/netappeseries/beegfs/[GitHub^] and https://galaxy.ansible.com/netapp_eseries/beegfs[Ansible Galaxy^] (see the  <<xref>> section for more details).  Although it is primarily tested with the hardware used to assemble the BeeGFS building blocks described in this NetApp Verified Architecture, it can be configured to run on virtually any x86 based server using a supported Linux distribution.
 
-In addition to being backed and supported by a leading on- premises and cloud storage provider, the key benefits of using BeeGFS on NetApp include the following:
+
+[%collapsible]
+.Key benefits:
+====
+In addition to being backed and supported by a leading on-premises and cloud storage provider, the key benefits of using BeeGFS on NetApp include:
 
 * Availability of verified hardware designs providing full integration of hardware and software components to ensure predicable performance and reliability.
 * Deployed and managed using Ansible for simplicity and consistency at scale.
 * Monitoring and observability provided using the https://www.netapp.com/blog/monitoring-netapp-eseries/[E-Series Performance Analyzer and BeeGFS plugin^].
 * High availability featuring a shared-disk architecture that provides data durability and availability.
 * Support for https://www.netapp.com/blog/kubernetes-meet-beegfs/[modern workload management and orchestration^] using containers and Kubernetes.
+====
