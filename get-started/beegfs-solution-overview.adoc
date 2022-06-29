@@ -14,18 +14,18 @@ summary: "The BeeGFS on NetApp solution is a NetApp Verified Architecture (NVA),
 
 
 [.lead]
-This NetApp Verified Architecture describes how to deploy BeeGFS on NetApp using validated BeeGFS file servers (referred to throughout as file nodes) attached to block storage systems (referred to throughout as block nodes) using the second generation of the NetApp BeeGFS building block design. This design takes advantage of the performance density delivered by the latest enterprise server and storage hardware and network speeds, requiring file nodes that feature dual AMD EPYC 7003 “Milan” processors and support for PCIe 4.0 with direct connects using 200Gb (HDR) InfiniBand to block nodes that provide end-to-end NVMe and NVMeOF using the NVMe/IB protocol.
+This NetApp Verified Architecture describes how to deploy BeeGFS on NetApp using validated BeeGFS file servers (referred to throughout as file nodes) attached to block storage systems (referred to throughout as block nodes) using the second generation of the NetApp BeeGFS building block design.
+
+This design takes advantage of the performance density delivered by the latest enterprise server and storage hardware and network speeds, requiring file nodes that feature dual AMD EPYC 7003 “Milan” processors and support for PCIe 4.0 with direct connects using 200Gb (HDR) InfiniBand to block nodes that provide end-to-end NVMe and NVMeOF using the NVMe/IB protocol.
 
 == NetApp Verified Architecture program
 
-The NetApp Verified Architecture program provides customers with reference configurations and sizing guidance for specific workloads and use cases. These solutions are:
-• Thoroughly tested
-• Designed to minimize deployment risks
-• Designed to accelerate time to market
-This document is for NetApp and partner solutions engineers and customer strategic decision makers. It describes the architecture design considerations that were used to determine the specific equipment, cabling, and configurations required to support the validated workload.
+The NetApp Verified Architecture program provides customers with reference configurations and sizing guidance for specific workloads and use cases. These solutions are thoroughly tested and designed to minimize deployment risks and to accelerate time to market.
+
+This site is for NetApp and partner solutions engineers and customer strategic decision makers. It describes the architecture design considerations that were used to determine the specific equipment, cabling, and configurations required to support the validated workload.
 
 
-=== Use cases
+== Use cases
 The following use cases apply to this solution:
 
 * AI including ML, DL, NLP, and NLU
@@ -36,7 +36,7 @@ The following use cases apply to this solution:
 * Multi-terabyte or multi-petabyte datasets
 * Environments that need a single storage namespace optimizable for a mix of large and small files
 
-=== Benefits
+== Benefits
 In addition to being backed and supported by a leading on-premises and cloud storage provider, the key benefits of using BeeGFS on NetApp include:
 
 * Availability of verified hardware designs providing full integration of hardware and software components to ensure predicable performance and reliability.
