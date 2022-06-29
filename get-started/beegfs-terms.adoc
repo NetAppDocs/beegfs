@@ -1,0 +1,39 @@
+---
+sidebar: sidebar
+permalink: beegfs-terms.html
+keywords: BeeGFS, NetApp, solution
+summary: "Terms and concepts that apply to BeeGFS on NetApp solution."
+---
+
+= Terms and concepts
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+[.lead]
+The following terms and concepts apply to the BeeGFS on NetApp solution.
+
+
+[cols="25h,~",options="header"]
+|===
+| Term | Description
+a|
+term
+a|
+description
+a|
+HA
+a|
+High availability
+a|
+HPC
+a|
+High-performance computing
+a|
+NVA
+a|
+The NetApp Verified Architecture (NVA) program provides reference configurations and sizing guidance for specific workloads and use cases. These solutions are thoroughly tested, and are designed to minimize deployment risks and to accelerate time to market.
+
+|===

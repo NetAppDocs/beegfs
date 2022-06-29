@@ -12,12 +12,12 @@ sidebar:
     entries:
     - title: What's included in this site
       url: /whats-included.html
+    - title: Terms and concepts
+      url: /beegfs-terms.html
     - title: Design generations
       url: /beegfs-gens.html
     - title: Solution overview
       url: /beegfs-solution-overview.html
-    - title: Architecture overview
-      url: /beegfs-architecture.html
     - title: Technical requirements
       url: /beegfs-technology-requirements.html
   - title: Review solution design
