@@ -83,8 +83,4 @@ The following image shows an 80-node fat-tree topology.
 
 image:../media/beegfs-design-image4.png[]
 
-== Ansible
-
-BeeGFS on NetApp is delivered and deployed using Ansible automation hosted on https://github.com/netappeseries/beegfs/[GitHub^] and https://galaxy.ansible.com/netapp_eseries/beegfs[Ansible Galaxy^] (see the  <<xref>> section for more details). Although Ansible is primarily tested with the hardware used to assemble the BeeGFS building blocks, you can configure it to run on virtually any x86 based server using a supported Linux distribution.
-
-By using Ansible as the deployment engine to deploy BeeGFS on NetApp, the entire environment is maintained using https://www.netapp.com/blog/deploying-beegfs-eseries/[modern infrastructure as code^] practices. This drastically simplifies what would otherwise be a complex system of systems, allowing administrators to define and adjust configuration all in one place and then verify that it is applied consistently regardless of how large the environment scales.
+By using Ansible as the deployment engine to deploy BeeGFS on NetApp, the entire environment is maintained using modern infrastructure as code practices. This drastically simplifies what would otherwise be a complex system of systems, allowing administrators to define and adjust configuration all in one place, then ensure it is applied consistently regardless of how large the environment scales. The BeeGFS collection is available from https://galaxy.ansible.com/netapp_eseries/beegfs[Ansible Galaxy^] and https://github.com/netappeseries/beegfs/[SANtricity GitHub^]). 

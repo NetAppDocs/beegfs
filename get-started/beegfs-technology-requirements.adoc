@@ -2,7 +2,7 @@
 sidebar: sidebar
 permalink: beegfs-technology-requirements.html
 keywords: Technical requirements, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "This section covers the technology requirements for the BeeGFS on NetApp solution."
+summary: "To implement the BeeGFS on NetApp solution, make sure your environment meets the technology requirements."
 ---
 
 = Technical requirements
@@ -74,7 +74,7 @@ a|Requires InfiniBand HDR cables (QSFP56 transceivers) of the appropriate length
 * MFS1S00-H003E (3m Mellanox active fiber cable, IB HDR, up to 200Gb/s, QSFP56)
 |2
 |E-Series block nodes
-a|*Two EF600 storage controllers configured as follows:*
+a|Two EF600 storage controllers configured as follows:
 
 * Memory: 256GB (128GB per controller).
 * Adapter: 2-port 200Gb/HDR (NVMe/IB).
@@ -106,7 +106,7 @@ NOTE: Only required for the direct connects to enable virtualization.
 
 
 === Ansible control node requirements
-The BeeGFS on NetApp solution is deployed and managed from an https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html[Ansible control node^].
+The BeeGFS on NetApp solution is deployed and managed from an Ansible control node. For more information, see the https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html[Ansible documentation^].
 
 The software requirements listed in the following tables are specific to the version of the NetApp BeeGFS Ansible collection listed below.
 
@@ -141,7 +141,7 @@ IMPORTANT: File nodes require a valid RedHat Enterprise Linux Server subscriptio
 |InfiniBand / RDMA Drivers
 |Inbox
 |ConnectX-6 HCA Firmware
-| (FW: 20.31.1014 | PXE: 3.6.0403 | UEFI: 14.24.0013)
+| FW: 20.31.1014 | PXE: 3.6.0403 | UEFI: 14.24.0013
 |===
 
 === EF600 block node requirements

@@ -53,3 +53,9 @@ The following figure compares the shared-nothing and shared-disk high availabili
 image:../media/beegfs-design-image1.png[]
 
 For more information, see https://www.netapp.com/blog/high-availability-beegfs/[Announcing High Availability for BeeGFS Supported by NetApp^].
+
+== Ansible
+
+BeeGFS on NetApp is delivered and deployed using Ansible automation hosted on GitHub and Ansible Galaxy (the BeeGFS collection is available from https://galaxy.ansible.com/netapp_eseries/beegfs[Ansible Galaxy^] and https://github.com/netappeseries/beegfs/[SANtricity GitHub^]). Although Ansible is primarily tested with the hardware used to assemble the BeeGFS building blocks, you can configure it to run on virtually any x86 based server using a supported Linux distribution.
+
+For more information, see https://www.netapp.com/blog/deploying-beegfs-eseries/[Deploying BeeGFS with E-Series Storage^].
