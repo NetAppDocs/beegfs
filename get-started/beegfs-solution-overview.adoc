@@ -2,7 +2,7 @@
 sidebar: sidebar
 permalink: beegfs-solution-overview.html
 keywords: Overview, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "The BeeGFS on NetApp solution is a NetApp Verified Architecture (NVA), which combines the BeeGFS parallel file system with NetApp EF600 storage systems."
+summary: "The BeeGFS on NetApp solution combines the BeeGFS parallel file system with NetApp EF600 storage systems for a reliable, scalable, and cost-effective infrastructure that keeps pace with demanding workloads."
 ---
 
 = Solution overview
@@ -14,37 +14,33 @@ summary: "The BeeGFS on NetApp solution is a NetApp Verified Architecture (NVA),
 
 
 [.lead]
-This NetApp Verified Architecture describes how to deploy BeeGFS on NetApp using validated BeeGFS file servers (referred to throughout as file nodes) attached to block storage systems (referred to throughout as block nodes) using the second generation of the NetApp BeeGFS building block design.
+The BeeGFS on NetApp solution combines the BeeGFS parallel file system with NetApp EF600 storage systems for a reliable, scalable, and cost-effective infrastructure that keeps pace with demanding workloads.
 
 This design takes advantage of the performance density delivered by the latest enterprise server and storage hardware and network speeds, requiring file nodes that feature dual AMD EPYC 7003 “Milan” processors and support for PCIe 4.0 with direct connects using 200Gb (HDR) InfiniBand to block nodes that provide end-to-end NVMe and NVMeOF using the NVMe/IB protocol.
 
-== NetApp Verified Architecture program
+== NetApp Verified Architecture (NVA) program
 
-The NetApp Verified Architecture program provides customers with reference configurations and sizing guidance for specific workloads and use cases. These solutions are thoroughly tested and designed to minimize deployment risks and to accelerate time to market.
-
-This site is for NetApp and partner solutions engineers and customer strategic decision makers. It describes the architecture design considerations that were used to determine the specific equipment, cabling, and configurations required to support the validated workload.
-
+The BeeGFS on NetApp solution is part of the NVA program, which provides customers with reference configurations and sizing guidance for specific workloads and use cases. NVA solutions are thoroughly tested and designed to minimize deployment risks and to accelerate time to market.
 
 == Use cases
-The following use cases apply to this solution:
+The following use cases apply to the BeeGFS on NetApp solution:
 
-* AI including ML, DL, NLP, and NLU
-* HPC including applications accelerated by MPI and other distributed computing techniques
+* Artificial Intelligence (AI) including machine learning (ML), deep learning (DL), large-scale natural language processing (NLP), and natural language understanding (NLU). For more information, see https://www.netapp.com/blog/beefs-for-ai-fact-vs-fiction/[BeeGFS for AI: Fact versus fiction^].
+* High-performance computing (HPC) including applications accelerated by MPI //message passing interface?// and other distributed computing techniques. For more information, see https://www.netapp.com/blog/beegfs-for-ai-ml-dl/[Why BeeGFS goes beyond HPC^].
 * Application workloads characterized by:
 ** Reading or writing to files larger than 1GB
 ** Reading or writing to the same file by multiple clients (10s, 100s, and 1000s)
-* Multi-terabyte or multi-petabyte datasets
-* Environments that need a single storage namespace optimizable for a mix of large and small files
+* Multi-terabyte or multi-petabyte datasets.
+* Environments that need a single storage namespace optimizable for a mix of large and small files.
 
 == Benefits
-In addition to being backed and supported by a leading on-premises and cloud storage provider, the key benefits of using BeeGFS on NetApp include:
+The key benefits of using BeeGFS on NetApp include:
 
 * Availability of verified hardware designs providing full integration of hardware and software components to ensure predicable performance and reliability.
 * Deployed and managed using Ansible for simplicity and consistency at scale.
-* Monitoring and observability provided using the https://www.netapp.com/blog/monitoring-netapp-eseries/[E-Series Performance Analyzer and BeeGFS plugin^].
+* Monitoring and observability provided using the E-Series Performance Analyzer and BeeGFS plugin. For more information, see https://www.netapp.com/blog/monitoring-netapp-eseries/[Introducing a Framework to Monitor NetApp E-Series Solutions^].
 * High availability featuring a shared-disk architecture that provides data durability and availability.
-* Support for https://www.netapp.com/blog/kubernetes-meet-beegfs/[modern workload management and orchestration^] using containers and Kubernetes.
-
+* Support for modern workload management and orchestration using containers and Kubernetes. For more information, see https://www.netapp.com/blog/kubernetes-meet-beegfs/[Kubernetes meet BeeGFS: A tale of future-proof investment^].
 
 == HA architecture
 
@@ -55,3 +51,5 @@ NOTE: While the BeeGFS community edition can be used free of charge, the enterpr
 The following figure compares the shared-nothing and shared-disk high availability (HA) architectures.
 
 image:../media/beegfs-design-image1.png[]
+
+For more information, see https://www.netapp.com/blog/high-availability-beegfs/[Announcing High Availability for BeeGFS Supported by NetApp^].

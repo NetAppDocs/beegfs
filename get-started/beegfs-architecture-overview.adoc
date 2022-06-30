@@ -2,7 +2,7 @@
 sidebar: sidebar
 permalink: beegfs-architecture-overview.html
 keywords: Overview, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "The BeeGFS on NetApp solution is a NetApp Verified Architecture (NVA), which combines the BeeGFS parallel file system with NetApp EF600 storage systems."
+summary: "The BeeGFS on NetApp solution includes architectural design considerations used to determine the specific equipment, cabling, and configurations required to support validated workloads."
 ---
 
 = Architecture overview

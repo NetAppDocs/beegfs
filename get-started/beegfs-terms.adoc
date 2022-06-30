@@ -26,13 +26,45 @@ term
 a|
 description
 a|
+AI
+a|
+artificial intelligence
+a|
+block nodes
+a|
+Storage systems
+a|
+DL
+a|
+deep learning
+a|
+file nodes
+a|
+BeeGFS file servers
+a|
 HA
 a|
 High availability
 a|
 HPC
 a|
-High-performance computing
+High-performance computing.
+a|
+HPC-style workloads
+a|
+HPC-style workloads are typically characterized by multiple compute nodes or GPUs all needing to access the same dataset in parallel to facilitate a distributed compute or training job. These datasets are often comprised of large files that should be striped across multiple physical storage nodes to eliminate the traditional hardware bottlenecks that would prevent concurrent access to a single file.
+a|
+ML
+a|
+machine learning
+a|
+NLP
+a|
+large-scale natural language processing
+a|
+NLU
+a|
+natural language understanding
 a|
 NVA
 a|

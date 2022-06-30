@@ -22,4 +22,4 @@ Information in this site includes:
 
 * Deployment guidelines using validated BeeGFS file servers (file nodes) attached to block storage systems (block nodes). For more information, see link:beegfs-deploy-overview.html[Deployment overview].
 
-This site does _not_ include design and deployment information for the first generation of the solution. For complete content on the previous generation, see link:https://www.netapp.com/pdf.html?item=/media/25445-nva-1156-design.pdf[NetApp EF-Series AI with NVIDIA DGX A100 Systems and BeeGFS].
+This site does _not_ include design and deployment information for the first generation of the solution. For complete content on the previous generation, see link:https://www.netapp.com/pdf.html?item=/media/25445-nva-1156-design.pdf[NetApp EF-Series AI with NVIDIA DGX A100 Systems and BeeGFS^].
