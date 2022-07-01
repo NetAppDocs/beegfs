@@ -30,7 +30,7 @@ sidebar:
       url: /beegfs-design-hardware-architecture.html
     - title: Software design
       url: /beegfs-design-software-architecture.html
-    - title: Verfication
+    - title: Verification
       url: /beegfs-design-solution-verification.html
     - title: Sizing guidelines
       url: /beegfs-design-solution-sizing-guidelines.html

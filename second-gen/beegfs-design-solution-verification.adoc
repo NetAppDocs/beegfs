@@ -12,11 +12,6 @@ summary: "This architecture was verified using three second-generation building 
 :linkattrs:
 :imagesdir: ./media/
 
-//
-// This file was created with NDAC Version 2.0 (August 17, 2020)
-//
-// 2022-04-29 10:21:46.122962
-//
 
 [.lead]
 The second-generation design for the BeeGFS on NetApp solution was verified using three building block configuration profiles.
@@ -24,28 +19,26 @@ The second-generation design for the BeeGFS on NetApp solution was verified usin
 The configuration profiles include the following:
 
 * A single base building block, including BeeGFS management, metadata, and storage services.
-* A BeeGFS metadata + storage building block.
-* A BeeGFS storage only building block.
+* A BeeGFS metadata plus a storage building block.
+* A BeeGFS storage-only building block.
 
 The building blocks were attached to two Mellanox Quantum InfiniBand (MQM8700) switches. Ten BeeGFS clients were also attached to the InfiniBand switches and used to run synthetic benchmark utilities.
 
 The following figure shows the BeeGFS configuration used to validate the BeeGFS on NetApp solution.
 
-image:beegfs-design-image12.png[Error: Missing Graphic Image]
+image:beegfs-design-image12.png[]
 
 == BeeGFS file striping
 
 A benefit of parallel file systems is the ability to stripe individual files across multiple storage targets, which could represent volumes on the same or different underlying storage systems.
 
-In BeeGFS,  https://doc.beegfs.io/latest/advanced_topics/striping.html[striping^] can be configured on a per-directory and per-file basis to control how many targets should be used for each file and to control the chunksize (or block size) used for each file stripe.
-
-This configuration allows the file system to support different types of workloads and I/O profiles without the need for reconfiguring or restarting services. You can apply stripe settings using the beegfs-ctl command line tool or with applications that use the https://doc.beegfs.io/latest/reference/striping_api.html[striping API^].
+In BeeGFS, you can configure striping on a per-directory and per-file basis to control the number of targets used for each file and to control the chunksize (or block size) used for each file stripe. This configuration allows the file system to support different types of workloads and I/O profiles without the need for reconfiguring or restarting services. You can apply stripe settings using the `beegfs-ctl` command line tool or with applications that use the striping API. For more information, see the BeeGFS documentation for https://doc.beegfs.io/latest/advanced_topics/striping.html[Striping^] and https://doc.beegfs.io/latest/reference/striping_api.html[Striping API^].
 
 To achieve the best performance, stripe patterns were adjusted throughout testing, and the parameters used for each test are noted.
 
 == IOR bandwidth tests: Multiple clients
 
-The IOR bandwidth tests used OpenMPI to run parallel jobs of the synthetic I/O generator tool https://github.com/hpc/ior[IOR^] across all 10 client nodes to one or more BeeGFS building blocks. Unless otherwise noted:
+The IOR bandwidth tests used OpenMPI to run parallel jobs of the synthetic I/O generator tool IOR (available from https://github.com/hpc/ior[HPC GitHub^]) across all 10 client nodes to one or more BeeGFS building blocks. Unless otherwise noted:
 
 * All tests used direct I/O with a 1MiB transfer size.
 * BeeGFS file striping was set to a 1MB chunksize and one target per file.
@@ -59,22 +52,22 @@ mpirun --allow-run-as-root --mca btl tcp -np 48 -map-by node -hostfile 10xnodes 
 .One BeeGFS base (management, metadata, and storage) building block
 The following figure shows the IOR test results with a single BeeGFS base (management, metadata, and storage) building block.
 
-image:beegfs-design-image13.png[Error: Missing Graphic Image]
+image:beegfs-design-image13.png[]
 
 .BeeGFS metadata + storage building block
 The following figure shows the IOR test results with a single BeeGFS metadata + storage building block.
 
-image:beegfs-design-image14.png[Error: Missing Graphic Image]
+image:beegfs-design-image14.png[]
 
 .BeeGFS storage-only building block
 The following figure shows the IOR test results with a single BeeGFS storage-only building block.
 
-image:beegfs-design-image15.png[Error: Missing Graphic Image]
+image:beegfs-design-image15.png[]
 
 .Three BeeGFS building blocks
 The following figure shows the IOR test results with three BeeGFS building blocks.
 
-image:beegfs-design-image16.png[Error: Missing Graphic Image]
+image:beegfs-design-image16.png[]
 
 As expected, the performance difference between the base building block and the subsequent metadata + storage building block is negligible. Comparing the metadata + storage building block and a storage-only building shows a slight increase in read performance due to the additional drives used as storage targets. However, there is no significant difference in write performance. To achieve higher performance, you can add multiple building blocks together to scale performance in a linear fashion.
 
@@ -88,7 +81,7 @@ The native caching mode uses the Linux kernel page-cache on the client, allowing
 
 The following diagram shows the IOR test results with three BeeGFS building blocks and a single client.
 
-image:beegfs-design-image17.png[Error: Missing Graphic Image]
+image:beegfs-design-image17.png[]
 
 [NOTE]
 BeeGFS striping for these tests was set to a 1MB chunksize with eight targets per file.
@@ -110,12 +103,12 @@ Metadata performance was measured first with one then two metadata + storage bui
 .One BeeGFS metadata + storage building block
 The following diagram shows the MDTest results with one BeeGFS metadata-and storage building blocks.
 
-image:beegfs-design-image18.png[Error: Missing Graphic Image]
+image:beegfs-design-image18.png[]
 
 .Two BeeGFS metadata + storage building blocks
 The following diagram shows the MDTest results with two BeeGFS metadata + storage building blocks.
 
-image:beegfs-design-image19.png[Error: Missing Graphic Image]
+image:beegfs-design-image19.png[]
 
 == Functional validation
 
@@ -126,11 +119,11 @@ As part of validating this architecture, several functional tests were executed 
 * Triggering an immediate server power off using the BMC.
 * Gracefully placing a node in standby and failing over service to another node.
 * Gracefully placing a node back online and failing back services to the original node.
-* Powering off one of the InfiniBand switches using the PDU.All tests were performed while stress testing was in progress with the `sysSessionChecksEnabled: false` parameter set on the BeeGFS clients. No errors or disruption to I/O was observed.
+* Powering off one of the InfiniBand switches using the PDU. All tests were performed while stress testing was in progress with the `sysSessionChecksEnabled: false` parameter set on the BeeGFS clients. No errors or disruption to I/O was observed.
 
 [NOTE]
-There is a https://github.com/netappeseries/beegfs/blob/master/CHANGELOG.md[known issue^] when BeeGFS client/server RDMA connections are disrupted unexpectedly, either through loss off the primary interface (as defined in `connInterfacesFile`) or a BeeGFS server failing, active client I/O can hang for up to ten minutes before resuming. This issue does not occur when BeeGFS nodes are gracefully placed in and out of standby for planned maintenance or if TCP is in use.
+There is a known issue (see the https://github.com/netappeseries/beegfs/blob/master/CHANGELOG.md[Changelog^]) when BeeGFS client/server RDMA connections are disrupted unexpectedly, either through loss off the primary interface (as defined in `connInterfacesFile`) or a BeeGFS server failing, active client I/O can hang for up to ten minutes before resuming. This issue does not occur when BeeGFS nodes are gracefully placed in and out of standby for planned maintenance or if TCP is in use.
 
 == NVIDIA DGX A100 SuperPOD validation
 
-A similar BeeGFS file system consisting of three building blocks with the metadata + storage configuration profile applied was validated as a storage solution for NVIDIAs DGX A100 SuperPOD. The qualification effort involved testing the solution described by this NVA with twenty DGX A100 GPU servers running a variety of storage, machine learning, and deep learning benchmarks.
+A similar BeeGFS file system consisting of three building blocks with the metadata plus storage configuration profile applied was validated as a storage solution for NVIDIAs DGX A100 SuperPOD. The qualification effort involved testing the solution described by this NVA with twenty DGX A100 GPU servers running a variety of storage, machine learning, and deep learning benchmarks.

@@ -13,7 +13,10 @@ summary: "Overview of BeeGFS on NetApp deployment."
 :imagesdir: ./media/
 
 [.lead]
-You deploy the BeeGFS on NetApp solution using Ansible. Ansible is a popular IT automation engine used to automate application deployments. Ansible uses an inventory file to model the BeeGFS file system you want to deploy.
+You can deploy BeeGFS on NetApp to validated file and block nodes using the second generation of NetApp’s BeeGFS building block design.
+
+== Ansible
+You deploy the BeeGFS on NetApp solution using Ansible, which is a popular IT automation engine used to automate application deployments. Ansible uses an inventory file to model the BeeGFS file system you want to deploy.
 
 Ansible allows companies such as NetApp to expand on built-in functionality using https://galaxy.ansible.com/netapp_eseries[Collections^] hosted on Ansible Galaxy. Collections include modules that perform some specific function or task (like create an E-Series volume) and roles that can call multiple modules and other roles to automate the multiple tasks needed to bring even the most complex systems to a desired state.
 
@@ -33,8 +36,8 @@ This demonstrates the full range of recommended configuration “profiles” for
 
 For each deployment, the number of metadata and storage building blocks or storage services only building blocks may vary from what is demonstrated here depending on capacity and performance requirements.
 
-== Overview of deploy steps
-Deploying the solution involves the following high-level tasks:
+== Overview of deployment steps
+Deployment involves the following high-level tasks:
 
 .Hardware deployment
 . Physically assemble each building block.

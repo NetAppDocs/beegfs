@@ -12,16 +12,9 @@ summary: "Software configuration for the BeeGFS on NetApp solution."
 :linkattrs:
 :imagesdir: ./media/
 
-//
-// This file was created with NDAC Version 2.0 (August 17, 2020)
-//
-// 2022-04-29 10:21:46.087339
-//
 
 [.lead]
-Learn about the software configuration required to support the BeeGFS on NetApp solution.
-
-Many intentional design choices were made in architecting the software configuration for the BeeGFS on NetApp solution. This topic provides additional details that might be useful to anyone considering or implementing this solution.
+The software configuration for BeeGFS on NetApp includes BeeGFS network components, EF600 block nodes, BeeGFS file nodes, and BeeGFS services.
 
 == BeeGFS network configuration
 The BeeGFS network configuration consists of the following components.
@@ -70,7 +63,7 @@ Stripe pattern details:
 It is important to note the use of two IPoIB subnets is a logical distinction. You can use a single physical InfiniBand subnet (storage network) if desired.
 +
 [NOTE]
-Multirail support was added in BeeGFS 7.3.0 to allow the use of multiple IB interfaces in a single IPoIB subnet. The design for the BeeGFS on Netapp solution was developed prior to the general availability of BeeGFS 7.3.0 and thus demonstrates the use of two IP subnets to use two IB interfaces on the BeeGFS clients. One advantage of the multiple IP subnet approach is eliminating the need to https://doc.beegfs.io/7.3.0/advanced_topics/rdma_support.html[configure multihoming^] on BeeGFS client nodes.
+Multi-rail support was added in BeeGFS 7.3.0 to allow the use of multiple IB interfaces in a single IPoIB subnet. The design for the BeeGFS on NetApp solution was developed before the general availability of BeeGFS 7.3.0, and thus demonstrates the use of two IP subnets to use two IB interfaces on the BeeGFS clients. One advantage of the multiple IP subnet approach is eliminating the need to configure multihoming on BeeGFS client nodes (for more information, see https://doc.beegfs.io/7.3.0/advanced_topics/rdma_support.html[BeeGFS RDMA support^]).
 
 == EF600 block node configuration
 
@@ -91,11 +84,11 @@ In the previous example, clients and server services prefer to communicate with 
 == BeeGFS file node configuration
 The BeeGFS file nodes are configured into a High-Availability (HA) cluster to facilitate failover of BeeGFS services between multiple file nodes.
 
-The HA cluster design is based on two widely used Linux HA projects, https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_overview-of-high-availability-configuring-and-managing-high-availability-clusters[Corosync for cluster membership and Pacemaker for cluster resource management^].
+The HA cluster design is based on two widely used Linux HA projects, Corosync for cluster membership and Pacemaker for cluster resource management. For more information, see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_overview-of-high-availability-configuring-and-managing-high-availability-clusters[Red Hat training for high-availability add-ons^].
 
 NetApp authored and extended several open cluster framework (OCF) resource agents to allow the cluster to intelligently start and monitor the BeeGFS resources.
 
-=== Resource groups
+== Resource groups
 When BeeGFS is running in an HA cluster, all BeeGFS services and underlying resources are managed by Pacemaker in resource groups. Each BeeGFS service and the resources it depends on, are configured into a resource group, which ensures resources are started and stopped in the correct order and collocated on the same node.
 
 For each BeeGFS resource group, Pacemaker runs a custom BeeGFS monitoring resource that is responsible for detecting failure conditions and intelligently triggering failovers when a BeeGFS service is no longer accessible on a particular node.
@@ -105,7 +98,7 @@ The following figure shows the Pacemaker-controlled BeeGFS services and dependen
 image:../media/beegfs-design-image11.png[]
 
 [NOTE]
-So that multiple BeeGFS services of the same type are started on the same node, Pacemaker is configured to start BeeGFS services using the https://doc.beegfs.io/latest/advanced_topics/multimode.html[Multi Mode^] configuration method.
+So that multiple BeeGFS services of the same type are started on the same node, Pacemaker is configured to start BeeGFS services using the Multi Mode configuration method. For more information, see the https://doc.beegfs.io/latest/advanced_topics/multimode.html[BeeGFS documentation on Multi Mode^].
 
 Because BeeGFS services must be able to start on multiple nodes, the configuration file for each service (normally located at `/etc/beegfs`) is stored on one of the E-Series volumes used as the BeeGFS target for that service. This makes the configuration along with the data for a particular BeeGFS service accessible to all nodes that might need to run the service.
 
@@ -129,7 +122,7 @@ stor_01_tgt_0101/
     └── connNetFilterFile.conf
 ....
 
-== Starting BeeGFS services
+== BeeGFS services
 Typically, when you start a BeeGFS service (with or without HA), a few resources must be in place:
 
 * IP addresses where the service is reachable, typically configured by Network Manager.

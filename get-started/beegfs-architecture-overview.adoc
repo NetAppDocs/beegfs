@@ -52,7 +52,7 @@ The BeeGFS on NetApp solution includes the following verified nodes: the NetApp 
 
 === Block node: EF600 storage system
 
-The NetApp EF600 all-flash storage ThinkSystem provides consistent, near-real-time access to data while supporting any number of workloads simultaneously. To enable fast, continuous feeding of data to AI and HPC applications, EF600 storage systems deliver up to two million cached read IOPS, response times of under 100 microseconds, and 42GBps sequential read bandwidth in one enclosure. With 99.9999% reliability from EF600 storage systems, data for AI and HPC operations is available whenever and wherever it is needed.
+The NetApp EF600 all-flash array provides consistent, near-real-time access to data while supporting any number of workloads simultaneously. To enable fast, continuous feeding of data to AI and HPC applications, EF600 storage systems deliver up to two million cached read IOPS, response times of under 100 microseconds, and 42GBps sequential read bandwidth in one enclosure.
 
 === File node: Lenovo ThinkSystem SR665 Server
 
@@ -83,4 +83,4 @@ The following image shows an 80-node fat-tree topology.
 
 image:../media/beegfs-design-image4.png[]
 
-By using Ansible as the deployment engine to deploy BeeGFS on NetApp, the entire environment is maintained using modern infrastructure as code practices. This drastically simplifies what would otherwise be a complex system of systems, allowing administrators to define and adjust configuration all in one place, then ensure it is applied consistently regardless of how large the environment scales. The BeeGFS collection is available from https://galaxy.ansible.com/netapp_eseries/beegfs[Ansible Galaxy^] and https://github.com/netappeseries/beegfs/[SANtricity GitHub^]). 
+By using Ansible as the deployment engine to deploy BeeGFS on NetApp, the entire environment is maintained using modern infrastructure as code practices. This drastically simplifies what would otherwise be a complex system of systems, allowing administrators to define and adjust configuration all in one place, then ensure it is applied consistently regardless of how large the environment scales. The BeeGFS collection is available from https://galaxy.ansible.com/netapp_eseries/beegfs[Ansible Galaxy^] and https://github.com/netappeseries/beegfs/[NetApp's E-Series GitHub^]. 
