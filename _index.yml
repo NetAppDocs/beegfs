@@ -4,12 +4,16 @@ indexpage:
   tiles:
      - title: Get started
        links:
-         - title: Overview
-           url:
-         - title: Videos and Demos
-           url:
-         - title: Blogs
-           url:
+         - title: Solution overview
+           url: /beegfs-solution-overview.html
+         - title: Architecture overview
+           url: /beegfs-architecture-overview.html
+         - title: Blog -- Learn about BeeGFS and E-Series
+           url: https://www.netapp.com/blog/solution-support-for-beegfs-and-e-series/
+         - title: Blog -- BeeGFS for beginners
+           url: https://www.netapp.com/blog/beegfs-for-beginners/
+         - title: Blog -- HA for BeeGFS
+           url: https://www.netapp.com/blog/high-availability-beegfs/
 
      - title: Additional docs
        links:
