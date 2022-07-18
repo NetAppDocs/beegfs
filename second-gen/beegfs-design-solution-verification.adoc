@@ -5,7 +5,7 @@ keywords: Validate, solution, EF600, NetApp, BeeGFS, Verified Architecture
 summary: "This architecture was verified using three second-generation building blocks, each deployed in one of the three available configuration profiles."
 ---
 
-= Verification
+= Profile verification
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -101,7 +101,7 @@ mpirun -h 10xnodes –map-by node np $processes mdtest -e 4k -w 4k -i 3 -I 16 -z
 Metadata performance was measured first with one then two metadata + storage building blocks to show how performance scales by adding additional building blocks.
 
 .One BeeGFS metadata + storage building block
-The following diagram shows the MDTest results with one BeeGFS metadata-and storage building blocks.
+The following diagram shows the MDTest results with one BeeGFS metadata + storage building blocks.
 
 image:beegfs-design-image18.png[]
 
@@ -112,7 +112,7 @@ image:beegfs-design-image19.png[]
 
 == Functional validation
 
-As part of validating this architecture, several functional tests were executed including the following:
+As part of validating this architecture, NetApp executed several functional tests including the following:
 
 * Failing a single client InfiniBand port by disabling the switch port.
 * Failing a single server InfiniBand port by disabling the switch port.
@@ -122,8 +122,8 @@ As part of validating this architecture, several functional tests were executed 
 * Powering off one of the InfiniBand switches using the PDU. All tests were performed while stress testing was in progress with the `sysSessionChecksEnabled: false` parameter set on the BeeGFS clients. No errors or disruption to I/O was observed.
 
 [NOTE]
-There is a known issue (see the https://github.com/netappeseries/beegfs/blob/master/CHANGELOG.md[Changelog^]) when BeeGFS client/server RDMA connections are disrupted unexpectedly, either through loss off the primary interface (as defined in `connInterfacesFile`) or a BeeGFS server failing, active client I/O can hang for up to ten minutes before resuming. This issue does not occur when BeeGFS nodes are gracefully placed in and out of standby for planned maintenance or if TCP is in use.
+There is a known issue (see the https://github.com/netappeseries/beegfs/blob/master/CHANGELOG.md[Changelog^]) when BeeGFS client/server RDMA connections are disrupted unexpectedly, either through loss off the primary interface (as defined in `connInterfacesFile`) or a BeeGFS server failing; active client I/O can hang for up to ten minutes before resuming. This issue does not occur when BeeGFS nodes are gracefully placed in and out of standby for planned maintenance or if TCP is in use.
 
 == NVIDIA DGX A100 SuperPOD validation
 
-A similar BeeGFS file system consisting of three building blocks with the metadata plus storage configuration profile applied was validated as a storage solution for NVIDIAs DGX A100 SuperPOD. The qualification effort involved testing the solution described by this NVA with twenty DGX A100 GPU servers running a variety of storage, machine learning, and deep learning benchmarks.
+NetApp validated a storage solution for NVIDIAs DGX A100 SuperPOD using a similar BeeGFS file system consisting of three building blocks with the metadata plus storage configuration profile applied. The qualification effort involved testing the solution described by this NVA with twenty DGX A100 GPU servers running a variety of storage, machine learning, and deep learning benchmarks.

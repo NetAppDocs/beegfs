@@ -14,7 +14,7 @@ summary: "Software configuration for the BeeGFS on NetApp solution."
 
 
 [.lead]
-The software configuration for BeeGFS on NetApp includes BeeGFS network components, EF600 block nodes, BeeGFS file nodes, and BeeGFS services.
+The software configuration for BeeGFS on NetApp includes BeeGFS network components, EF600 block nodes, BeeGFS file nodes, resource groups, and BeeGFS services.
 
 == BeeGFS network configuration
 The BeeGFS network configuration consists of the following components.
@@ -27,14 +27,14 @@ Each BeeGFS server service has its own IP address that can move between file nod
 * *BeeGFS server multi-homing configuration*
 To increase the density of the solution, each file node has multiple storage interfaces with IPs configured in the same IP subnet.
 +
-Additional configuration is required to make sure that this configuration works as expected with the Linux networking stack, because, by default, requests to one interface can be responded to on a different interface if their IPs are in the same subnet. In addition to other drawbacks, this default behavior makes it impossible to properly establish or maintain RDMA connections.
+Additional configuration is required to make sure that this configuration works as expected with the Linux networking stack, because by default, requests to one interface can be responded to on a different interface if their IPs are in the same subnet. In addition to other drawbacks, this default behavior makes it impossible to properly establish or maintain RDMA connections.
 +
-The Ansible-based deployment handles tightening the reverse path (RP) and address resolution protocol (ARP) behavior along with ensuring when floating IPs are started and stopped, corresponding IP routes and rules are dynamically created to allow the multihomed network configuration to work properly.
+The Ansible-based deployment handles tightening of the reverse path (RP) and address resolution protocol (ARP) behavior, along with ensuring when floating IPs are started and stopped; corresponding IP routes and rules are dynamically created to allow the multihomed network configuration to work properly.
 
 * *BeeGFS client multi-rail configuration*
-Multi-rail refers to the ability of an application to use multiple independent network “rails” to increase performance.
+_Multi-rail_ refers to the ability of an application to use multiple independent network “rails” to increase performance.
 +
-Although BeeGFS can use RDMA for connectivity, to simplify discovering and establishing RDMA connections, BeeGFS uses IPoIB. To allow BeeGFS clients to use multiple InfiniBand interfaces you can configure each client with an IP address located in a different subnet and then configure the preferred interfaces for half of the BeeGFS server services in each subnet.
+Although BeeGFS can use RDMA for connectivity, BeeGFS uses IPoIB to simplify discovering and establishing RDMA connections. To allow BeeGFS clients to use multiple InfiniBand interfaces, you can configure each client with an IP address located in a different subnet and then configure the preferred interfaces for half of the BeeGFS server services in each subnet.
 +
 In the following diagram, interfaces highlighted in light green are located in one IP subnet (for example, `100.127.0.0/16`) and the dark green interfaces are located in another subnet (for example, `100.128.0.0/16`).
 +
@@ -42,6 +42,7 @@ The following figure shows the balancing of traffic across multiple BeeGFS clien
 +
 image:../media/beegfs-design-image8.png[]
 +
+
 Because each file in BeeGFS is typically striped across multiple storage services, the multi-rail configuration allows the client to achieve more throughput than is possible with a single InfiniBand port. For example, the following code sample shows a common file-striping configuration that allows the client to balance traffic across both interfaces:
 +
 ....
@@ -60,14 +61,14 @@ Stripe pattern details:
   + 202 @ stor_02_tgt_0201 [ID: 201]
 ....
 +
-It is important to note the use of two IPoIB subnets is a logical distinction. You can use a single physical InfiniBand subnet (storage network) if desired.
+Using two IPoIB subnets is a logical distinction. You can use a single physical InfiniBand subnet (storage network), if desired.
 +
 [NOTE]
 Multi-rail support was added in BeeGFS 7.3.0 to allow the use of multiple IB interfaces in a single IPoIB subnet. The design for the BeeGFS on NetApp solution was developed before the general availability of BeeGFS 7.3.0, and thus demonstrates the use of two IP subnets to use two IB interfaces on the BeeGFS clients. One advantage of the multiple IP subnet approach is eliminating the need to configure multihoming on BeeGFS client nodes (for more information, see https://doc.beegfs.io/7.3.0/advanced_topics/rdma_support.html[BeeGFS RDMA support^]).
 
 == EF600 block node configuration
 
-Block nodes are comprised of two active/active RAID controllers with shared access to the same set of drives. Typically, each controller owns half the volumes configured on the system but can take over for the other controller as needed.
+Block nodes are comprised of two active/active RAID controllers with shared access to the same set of drives. Typically, each controller owns half the volumes configured on the system, but can take over for the other controller as needed.
 
 Multipathing software on the file nodes determines the active and optimized path to each volume and automatically moves to the alternate path in the event of a cable, adapter, or controller failure.
 
@@ -84,7 +85,7 @@ In the previous example, clients and server services prefer to communicate with 
 == BeeGFS file node configuration
 The BeeGFS file nodes are configured into a High-Availability (HA) cluster to facilitate failover of BeeGFS services between multiple file nodes.
 
-The HA cluster design is based on two widely used Linux HA projects, Corosync for cluster membership and Pacemaker for cluster resource management. For more information, see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_overview-of-high-availability-configuring-and-managing-high-availability-clusters[Red Hat training for high-availability add-ons^].
+The HA cluster design is based on two widely used Linux HA projects: Corosync for cluster membership and Pacemaker for cluster resource management. For more information, see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_overview-of-high-availability-configuring-and-managing-high-availability-clusters[Red Hat training for high-availability add-ons^].
 
 NetApp authored and extended several open cluster framework (OCF) resource agents to allow the cluster to intelligently start and monitor the BeeGFS resources.
 

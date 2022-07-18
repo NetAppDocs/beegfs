@@ -5,7 +5,7 @@ keywords: Deploy, overview, EF600, NetApp, BeeGFS, Verified Architecture
 summary: "Overview of BeeGFS on NetApp deployment."
 ---
 
-= Overview of deployment
+= Deployment overview
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -18,7 +18,7 @@ You can deploy BeeGFS on NetApp to validated file and block nodes using the seco
 == Ansible
 You deploy the BeeGFS on NetApp solution using Ansible, which is a popular IT automation engine used to automate application deployments. Ansible uses an inventory file to model the BeeGFS file system you want to deploy.
 
-Ansible allows companies such as NetApp to expand on built-in functionality using https://galaxy.ansible.com/netapp_eseries[Collections^] hosted on Ansible Galaxy. Collections include modules that perform some specific function or task (like create an E-Series volume) and roles that can call multiple modules and other roles to automate the multiple tasks needed to bring even the most complex systems to a desired state.
+Ansible allows companies such as NetApp to expand on built-in functionality using collections on Ansible Galaxy (see https://galaxy.ansible.com/netapp_eseries[NetApp E-Series BeeGFS collection^]. Collections include modules that perform some specific function or task (like create an E-Series volume) and roles that can call multiple modules and other roles to automate the multiple tasks needed to bring even the most complex systems to a desired state.
 
 This automated approach reduces the time needed to deploy the BeeGFS file system and the underlying HA cluster. In addition, it simplifies adding building blocks to expand the existing file systems.  A role is also provided that can optionally configure the BeeGFS client and mount BeeGFS to cluster login and compute and GPU nodes.
 

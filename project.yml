@@ -42,7 +42,7 @@ sidebar:
           url: /beegfs-deploy-overview.html
         - title: Learn about Ansible
           url: /beegfs-deploy-learn-ansible.html
-        - title: Best practice
+        - title: Review best practices
           url: /beegfs-deploy-bestpractice.html
         - title: Deploy hardware
           url: /beegfs-deploy-hardware.html

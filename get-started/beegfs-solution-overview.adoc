@@ -18,9 +18,9 @@ The BeeGFS on NetApp solution combines the BeeGFS parallel file system with NetA
 
 This design takes advantage of the performance density delivered by the latest enterprise server and storage hardware and network speeds, requiring file nodes that feature dual AMD EPYC 7003 “Milan” processors and support for PCIe 4.0 with direct connects using 200Gb (HDR) InfiniBand to block nodes that provide end-to-end NVMe and NVMeOF using the NVMe/IB protocol.
 
-== NetApp Verified Architecture (NVA) program
+== NVA program
 
-The BeeGFS on NetApp solution is part of the NVA program, which provides customers with reference configurations and sizing guidance for specific workloads and use cases. NVA solutions are thoroughly tested and designed to minimize deployment risks and to accelerate time to market.
+The BeeGFS on NetApp solution is part of the NetApp Verified Architecture (NVA) program, which provides customers with reference configurations and sizing guidance for specific workloads and use cases. NVA solutions are thoroughly tested and designed to minimize deployment risks and to accelerate time to market.
 
 == Use cases
 The following use cases apply to the BeeGFS on NetApp solution:
@@ -37,7 +37,7 @@ The following use cases apply to the BeeGFS on NetApp solution:
 The key benefits of using BeeGFS on NetApp include:
 
 * Availability of verified hardware designs providing full integration of hardware and software components to ensure predicable performance and reliability.
-* Deployed and managed using Ansible for simplicity and consistency at scale.
+* Deployment and management using Ansible for simplicity and consistency at scale.
 * Monitoring and observability provided using the E-Series Performance Analyzer and BeeGFS plugin. For more information, see https://www.netapp.com/blog/monitoring-netapp-eseries/[Introducing a Framework to Monitor NetApp E-Series Solutions^].
 * High availability featuring a shared-disk architecture that provides data durability and availability.
 * Support for modern workload management and orchestration using containers and Kubernetes. For more information, see https://www.netapp.com/blog/kubernetes-meet-beegfs/[Kubernetes meet BeeGFS: A tale of future-proof investment^].
@@ -48,7 +48,7 @@ BeeGFS on NetApp expands the functionality of the BeeGFS enterprise edition by c
 
 NOTE: While the BeeGFS community edition can be used free of charge, the enterprise edition requires purchasing a professional support subscription contract from a partner like NetApp. The enterprise edition allows use of several additional features including resiliency, quota enforcement, and storage pools.
 
-The following figure compares the shared-nothing and shared-disk high availability (HA) architectures.
+The following figure compares the shared-nothing and shared-disk HA architectures.
 
 image:../media/beegfs-design-image1.png[]
 
@@ -56,6 +56,6 @@ For more information, see https://www.netapp.com/blog/high-availability-beegfs/[
 
 == Ansible
 
-BeeGFS on NetApp is delivered and deployed using Ansible automation hosted on GitHub and Ansible Galaxy (the BeeGFS collection is available from https://galaxy.ansible.com/netapp_eseries/beegfs[Ansible Galaxy^] and https://github.com/netappeseries/beegfs/[NetApp's E-Series GitHub^]). Although Ansible is primarily tested with the hardware used to assemble the BeeGFS building blocks, you can configure it to run on virtually any x86 based server using a supported Linux distribution.
+BeeGFS on NetApp is delivered and deployed using Ansible automation, which is hosted on GitHub and Ansible Galaxy (the BeeGFS collection is available from https://galaxy.ansible.com/netapp_eseries/beegfs[Ansible Galaxy^] and https://github.com/netappeseries/beegfs/[NetApp's E-Series GitHub^]). Although Ansible is primarily tested with the hardware used to assemble the BeeGFS building blocks, you can configure it to run on virtually any x86-based server using a supported Linux distribution.
 
 For more information, see https://www.netapp.com/blog/deploying-beegfs-eseries/[Deploying BeeGFS with E-Series Storage^].

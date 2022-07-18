@@ -5,7 +5,7 @@ keywords: EF600, NetApp, BeeGFS, Verified Architecture, design
 summary: "Describes the architecture and design considerations used to determine the specific equipment, cabling, and configurations required to support the BeeGFS on NetApp solution."
 ---
 
-= Overview of design
+= Design overview
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -15,14 +15,10 @@ summary: "Describes the architecture and design considerations used to determine
 [.lead]
 Specific equipment, cabling, and configurations are required to support the BeeGFS on NetApp solution, which combines the BeeGFS parallel file system with the NetApp EF600 storage systems.
 
-This solution is optimized to meet the performance requirements of demanding workloads including high-performance computing (HPC) and HPC-style machine learning (ML), deep learning (DL), and similar artificial intelligence (AI) techniques. In addition, the solution incorporates a shared-disk high-availability (HA) architecture to meet data durability and availability requirements for organizations that cannot afford downtime or data loss.
-
-The BeeGFS on NetApp solution has not only been verified by NetApp, but it also passed external qualification as a storage option for the NVIDIA DGX SuperPOD.
-
 Learn more:
 
-* link:beegfs-design-hardware-architecture.html[Hardware design]
-* link:beegfs-design-software-architecture.html[Software design]
-* link:beegfs-design-solution-verification.html[Verification]
+* link:beegfs-design-hardware-architecture.html[Hardware configuration]
+* link:beegfs-design-software-architecture.html[Software configuration]
+* link:beegfs-design-solution-verification.html[Profile verification]
 * link:beegfs-design-solution-sizing-guidelines.html[Sizing guidelines]
 * link:beegfs-design-performance-tuning.html[Performance tuning]

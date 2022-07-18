@@ -13,24 +13,22 @@ summary: "To deploy the hardware you must assemble a single building block. Each
 :imagesdir: ./media/
 
 [.lead]
-To deploy the hardware you must physically assemble a two building blocks. Each building block consists of two validated x86 file nodes directly connected to two block nodes using HDR (200Gb) InfiniBand cables.
+To deploy the hardware, you must physically assemble two building blocks. Each building block consists of two validated x86 file nodes directly connected to two block nodes using HDR (200Gb) InfiniBand cables.
 
 [NOTE]
 Because each building block includes two BeeGFS file nodes, a minimum of two building blocks is required to establish quorum in the failover cluster. While it is possible to configure a two-node cluster, there are limitations to this configuration that can prevent a successful failover to occur in some scenarios.  If a two-node cluster is required,  it is also possible to incorporate a third device as a tiebreaker,  though that is not covered in this deployment procedure.
-
-== Rack and cable hardware
 
 Unless otherwise noted, the following steps are identical for each building block in the cluster regardless of whether it is used to run BeeGFS metadata and storage services or storage services only.
 
 .Steps
 
-. Configure each BeeGFS file node with four PCIe 4.0 ConnectX-6 dualport Host Channel Adapters (HCAs) in InfiniBand mode and install them in PCIe slots 2, 3, 5, and 6.
+. Configure each BeeGFS file node with four PCIe 4.0 ConnectX-6 dual port Host Channel Adapters (HCAs) in InfiniBand mode and install them in PCIe slots 2, 3, 5, and 6.
 
 . Configure each BeeGFS block node with a dual-port 200Gb Host Interface Card (HIC) and install the HIC in each of its two storage controllers.
 +
 Rack the building blocks so the two BeeGFS file nodes are above the BeeGFS block nodes. The following figure shows the correct hardware configuration for the BeeGFS building block (rear view).
 +
-image:../media/buildingblocks.png[]
+image:../media/buildingblock.png[]
 +
 [NOTE]
 The power supply configuration for production use cases should typically use redundant PSUs.

@@ -22,33 +22,33 @@ _work in progress_
 |===
 | Term | Description
 a|
-term
-a|
-description
-a|
 AI
 a|
-artificial intelligence
+Artificial Intelligence.
 a|
 block nodes
 a|
-Storage systems
+Storage systems.
+a|
+clients
+a|
+Server nodes.
 a|
 DL
 a|
-deep learning
+Deep Learning.
 a|
 file nodes
 a|
-BeeGFS file servers
+BeeGFS file servers.
 a|
 HA
 a|
-High availability
+High Availability.
 a|
 HPC
 a|
-High-performance computing.
+High-Performance Computing.
 a|
 HPC-style workloads
 a|
@@ -56,15 +56,15 @@ HPC-style workloads are typically characterized by multiple compute nodes or GPU
 a|
 ML
 a|
-machine learning
+Machine Learning.
 a|
 NLP
 a|
-large-scale natural language processing
+Natural Language Processing.
 a|
 NLU
 a|
-natural language understanding
+Natural Language Understanding.
 a|
 NVA
 a|

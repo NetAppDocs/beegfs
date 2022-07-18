@@ -5,7 +5,7 @@ keywords: Best practice, EF600, NetApp, BeeGFS, Verified Architecture
 summary: "Learn about the best practices to follow when deploying the BeeGFS on NetApp shared-disk high availability solution."
 ---
 
-= Best practice
+= Review best practices
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -13,45 +13,42 @@ summary: "Learn about the best practices to follow when deploying the BeeGFS on 
 :imagesdir: ./media/
 
 [.lead]
-Learn about the best practices to follow when deploying the BeeGFS on NetApp solution.
+You should follow the best practice guidelines when deploying the BeeGFS on NetApp solution.
 
 == Standard conventions
-The following standard conventions are followed when link:beegfs-deploy-beegfs-general-config.html[creating the Ansible inventory file].
-
+When creating the Ansible inventory file, you should follow these standard conventions (for more information, see link:beegfs-deploy-beegfs-general-config.html[Create the Ansible inventory].
 
 * File node host names are sequentially numbered (h01-hN) with lower numbers at the top of the rack and higher numbers at the bottom.
 +
-For example, the naming convention [location][row][rack]hN looks like ictad22h01.
+For example, the naming convention `[location][row][rack]hN` looks like `ictad22h01`.
 
 * Each block node is comprised of two storage controllers, each with their own host name.
 +
-A storage array name is used to refer to the whole block storage system as part of an Ansible inventory. The storage array names should be sequentially numbered (a01- aN), and the host names for individual controllers derived from that naming convention.
+A storage array name is used to refer to the whole block storage system as part of an Ansible inventory. The storage array names should be sequentially numbered (a01- aN), and the host names for individual controllers are derived from that naming convention.
 +
-For example, a block node named ictad22h01 typically host names configured for each controller like ictad22h01-a and ictad22h01-b but referred to in an Ansible inventory as ictad22h01.
+For example, a block node named `ictad22h01` typically can have host names configured for each controller like `ictad22h01-a` and `ictad22h01-b`, but be referred to in an Ansible inventory as `ictad22h01`.
 
-* File and block nodes within the same building block share the same numbering and adjacent to each other in the rack with both file nodes on top and both block nodes directly underneath them.
+* File and block nodes within the same building block share the same numbering and are adjacent to each other in the rack with both file nodes on top and both block nodes directly underneath them.
 +
-For example, in the first building block, file nodes h01 and h02 both directly connected to block nodes a01 and c02.  From top to bottom the host names  h01, h02, a01, a02.
+For example, in the first building block, file nodes h01 and h02 are both directly connected to block nodes a01 and c02. From top to bottom, the host names are h01, h02, a01, a02.
 
 * Building blocks are installed in sequential order based on their host names so that lower numbered host names are at the top of the rack and higher numbered host names are at the bottom.
 +
-The intent is to minimize the length of cable runs to top of rack switches and define a standard deployment practice to simplify troubleshooting.  For datacenters this is not allowed due to concerns around rack stability the inverse is certainly allowed, though cable lengths need to be adjusted accordingly.
+The intent is to minimize the length of cable running to top of rack switches, and to define a standard deployment practice to simplify troubleshooting. For datacenters, this is not allowed due to concerns around rack stability. The inverse is certainly allowed, although cable lengths need to be adjusted accordingly.
 
 == InfiniBand storage network configuration
 
 Half the InfiniBand ports on each file node are used to connect directly to block nodes. The other half are connected to the InfiniBand switches and are used for BeeGFS client-server connectivity.
 
-When determining the size of the IPoIB subnets that are used for BeeGFS clients and servers, you must consider the anticipated growth of your computeGPU cluster and BeeGFS file system.
+When determining the size of the IPoIB subnets that are used for BeeGFS clients and servers, you must consider the anticipated growth of your compute/GPU cluster and BeeGFS file system.
 
-If it is necessary to deviate from the recommended IP ranges,  each direct connect in a single building block has a unique subnet and there is no overlap with subnets used for client-server connectivity.
+If you must deviate from the recommended IP ranges, keep in mind that each direct connect in a single building block has a unique subnet and there is no overlap with subnets used for client-server connectivity.
 
 === Direct connects
 
 File and block nodes within each building block always use the IPs in the following table for their direct connects.
 
-This addressing scheme adheres to the following rule:
-
-The third octet is always odd or even depending on if the file node is odd or even.
+NOTE: This addressing scheme adheres to the following rule: The third octet is always odd or even depending on if the file node is odd or even.
 
 |===
 |File node |IB port |IP address |Block node |IB port |Physical IP |Virtual IP
@@ -122,18 +119,18 @@ Each file node runs multiple BeeGFS server services (management, metadata, or st
 
 While not mandatory, this deployment presumes the following IPoIB subnet ranges are in use for these connections and defines a standard addressing scheme that applies the following rules:
 
-* The second octet always odd or even  the file node InfiniBand port is oddeven.
+* The second octet is always odd or even, based on whether the file node InfiniBand port is odd or even.
 * BeeGFS cluster IPs are always `xxx. 127.100. yyy` or `xxx.128.100. yyy`.
 
 [NOTE]
-In addition to the interface used for in-band OS management, additional interfaces can be used by Corosync for cluster heart beating and synchronization. The loss of a single interface will not bring down the entire cluster.
+In addition to the interface used for in-band OS management, additional interfaces can be used by Corosync for cluster heart beating and synchronization. This ensures that the loss of a single interface does not bring down the entire cluster.
 
 * The BeeGFS Management service is always at `xxx.yyy.101.0` or `xxx.yyy.102.0`.
 * BeeGFS Metadata services are always at `xxx.yyy.101.zzz` or `xxx.yyy.102.zzz`.
 * BeeGFS Storage services are always at `xxx.yyy.103.zzz` or `xxx.yyy.103.zzz`.
 * Addresses in the range `100.xxx.1.1` - `100.xxx.99.255` are reserved for clients.
 
-.Subnet A: 100.127.0.0/16.
+.Subnet A: 100.127.0.0/16
 The following table provides the range for Subnet A: 100.127.0.0/16.
 
 |===
@@ -180,4 +177,4 @@ The following table provides the range for Subnet B: 100.128.0.0/16.
 |===
 
 [NOTE]
-Not all IPs in the above ranges are used in this NetApp Verified Architecture. They demonstrate how IP addresses can be preallocated to allow easy file system expansion  a consistent IP addressing scheme. In this scheme,  BeeGFS file node and service IDs correspond with the fourth octet of a well-known range of IPs. The file system can certainly scale beyond 255 nodes or services if needed.
+Not all IPs in the above ranges are used in this NetApp Verified Architecture. They demonstrate how IP addresses can be preallocated to allow easy file system expansion using a consistent IP addressing scheme. In this scheme, BeeGFS file node and service IDs correspond with the fourth octet of a well-known range of IPs. The file system could certainly scale beyond 255 nodes or services if needed.
