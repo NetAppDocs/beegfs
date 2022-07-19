@@ -8,13 +8,11 @@ indexpage:
            url: /beegfs-solution-overview.html
          - title: Architecture overview
            url: /beegfs-architecture-overview.html
-         - title: Video - Accelerating AI workloads with BeeGFS on NetApp
-           url: https://www.netapp.tv/details/28905?mcid=04158305605030681010298851103052321172
-         - title: Blog - Learn about BeeGFS and E-Series
+         - title: Learn about BeeGFS and E-Series
            url: https://www.netapp.com/blog/solution-support-for-beegfs-and-e-series/
-         - title: Blog - BeeGFS for beginners
+         - title: BeeGFS for beginners
            url: https://www.netapp.com/blog/beegfs-for-beginners/
-         - title: Blog - HA for BeeGFS
+         - title: HA for BeeGFS
            url: https://www.netapp.com/blog/high-availability-beegfs/
 
      - title: Additional docs
