@@ -13,7 +13,7 @@ summary: "Set up file nodes and block nodes."
 :imagesdir: ./media/
 
 [.lead]
-While most software configuration tasks are automated using the NetApp provided Ansible collections, you must configure networking on the baseboard management controller (BMC) of each server and configure the management port on each controller.
+While most software configuration tasks are automated using the NetApp-provided Ansible collections, you must configure networking on the baseboard management controller (BMC) of each server and configure the management port on each controller.
 
 == Set up file nodes
 
@@ -21,25 +21,25 @@ While most software configuration tasks are automated using the NetApp provided 
 .Steps
 . Configure networking on the baseboard management controller (BMC) of each server.
 +
-To learn how to configure networking for the validated Lenovo SR665 file nodes, see the https://thinksystem.lenovofiles.com/help/index.jsp?topic=%2F7D2W%2Fset_the_network_connection.html[Lenova ThinkSystem Documentation^].
+To learn how to configure networking for the validated Lenovo SR665 file nodes, see the https://thinksystem.lenovofiles.com/help/index.jsp?topic=%2F7D2W%2Fset_the_network_connection.html[Lenovo ThinkSystem Documentation^].
 +
 [NOTE]
-A  baseboard management controller (BMC), sometimes referred to as a service processor, is the generic name for the out-of-band management capability built into various server platforms that can provide remote access even if the operating system is not installed or accessible. Vendors typically market this functionality with their own branding. For example, on the Lenovo SR665 the BMC is referred to as the Lenovo XClarity Controller (XCC).
+A  baseboard management controller (BMC), sometimes referred to as a service processor, is the generic name for the out-of-band management capability built into various server platforms that can provide remote access even if the operating system is not installed or accessible. Vendors typically market this functionality with their own branding. For example, on the Lenovo SR665, the BMC is referred to as the _Lenovo XClarity Controller (XCC)_.
 
 . Configure the system settings for maximum performance.
 +
 You configure the system settings using the UEFI setup (formerly known as the BIOS) or by using the Redfish APIs provided by many BMCs. The system settings vary based on the server model used as a file node.
 +
-To learn how to configure the system settings for the validated Lenovo SR665 file nodes, see <<Configure system settings for the validated Lenovo SR665 file nodes>>.
+To learn how to configure the system settings for the validated Lenovo SR665 file nodes, see link:beegfs-deploy-file-node-tuning.html[Tune system settings for performance].
 
-. Install Red Hat 8. 4 and configure the host name and network port used to manage the operating system including SSH connectivity from the Ansible control node.
+. Install Red Hat 8.4 and configure the host name and network port used to manage the operating system including SSH connectivity from the Ansible control node.
 +
 Do not configure IPs on any of the InfiniBand ports at this time.
 +
 [NOTE]
 While not strictly required, subsequent sections presume that host names are sequentially numbered (such as h1-hN) and refer to tasks that should be completed on odd versus even numbered hosts.
 
-. Use RedHat Subscription Manager to https://access.redhat.com/solutions/253273[register and subscribe^] the system to allow installation of the required packages from the official Red Hat repositories and https://access.redhat.com/solutions/2761031[limit updates^] to the supported version of Red Hat: `subscription-manager release --set=8.4`.
+. Use RedHat Subscription Manager to register and subscribe the system to allow installation of the required packages from the official Red Hat repositories and to limit updates to the supported version of Red Hat: `subscription-manager release --set=8.4`. For instructions, see https://access.redhat.com/solutions/253273[How to register and subscribe a RHEL system^] and  https://access.redhat.com/solutions/2761031[How to limit updates^].
 
 . Enable the Red Hat repository containing the packages required for high availability.
 +
@@ -49,18 +49,18 @@ subscription-manager repo-override --repo=rhel-8-for-x86_64-highavailability-rpm
 
 . Update all ConnectX-6 HCA firmware to the version recommended in the technology requirements section.
 +
-This can be done by downloading and running a version of the https://www.mellanox.com/support/firmware/mlxup-mft[mlxup^] tool that bundles the recommended firmware.
+This update can be done by downloading and running a version of the mlxup tool that bundles the recommended firmware. You can download this tool from https://www.mellanox.com/support/firmware/mlxup-mft[mlxup - Update and Query Utility^].
 
 == Set up block nodes
 Set up the EF600 block nodes by configuring the management port on each controller.
 
 . Configure the management port on each EF600 controller.
 +
-Guidance for EF600 block nodes can be found http://docs.netapp.com/ess-11/index.jsp?topic=%2Fcom.netapp.doc.e-f600-hw-install%2FGUID-3F3A4DDB-CF9E-4066-8A0E-D14641A37BBB.html&cp=2_0_3_3_1[here^].
+For instructions on configuring ports, go to the http://docs.netapp.com/ess-11/index.jsp?topic=%2Fcom.netapp.doc.e-f600-hw-install%2FGUID-3F3A4DDB-CF9E-4066-8A0E-D14641A37BBB.html&cp=2_0_3_3_1[E-Series Documentation Center^].
 
-. Optionally,  http://docs.netapp.com/ess-11/index.jsp?topic=%2Fcom.netapp.doc.ssm-sam-117%2FGUID-3B85F4A6-73EB-41EB-9F04-AF2EF14F127D.html&resultof=%22%65%64%69%74%22%20%22%73%74%6f%72%61%67%65%22%20%22%73%74%6f%72%61%67%22%20%22%61%72%72%61%79%22%20%22%61%72%72%61%69%22%20%22%6e%61%6d%65%22%20[set the storage array name^] for each system.
+. Optionally, set the storage array name for each system.
 +
-While this can also be set using Ansible, this can make it easier to refer to each system in subsequent sections.
+Setting a name can make it easier to refer to each system in subsequent sections. For instructions on setting the array name,  go to the http://docs.netapp.com/ess-11/index.jsp?topic=%2Fcom.netapp.doc.e-f600-hw-install%2FGUID-3F3A4DDB-CF9E-4066-8A0E-D14641A37BBB.html&cp=2_0_3_3_1[E-Series Documentation Center^].
 
 [NOTE]
 While not strictly required, subsequent topics presume storage array names are sequentially numbered (such as c1- cN) and refer to the steps that should be completed on odd versus even numbered systems.

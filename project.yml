@@ -58,7 +58,7 @@ sidebar:
               url: /beegfs-deploy-beegfs-build-inventory.html
             - title: Deploy BeeGFS
               url: /beegfs-deploy-beegfs-playbook.html
-            - title: Configure BeeGFS client
+            - title: Configure BeeGFS clients
               url: /beegfs-deploy-beegfs-configure-clients.html
             - title: Tune system settings for performance
               url:  beegfs-deploy-file-node-tuning.html

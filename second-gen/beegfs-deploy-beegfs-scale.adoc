@@ -15,19 +15,17 @@ summary: "Configure Pacemaker and Corosync to scale beyond five building blocks.
 [.lead]
 You can configure Pacemaker and Corosync to scale beyond five building blocks (10 file nodes). However, there are drawbacks to larger clusters, and eventually Pacemaker and Corosync do impose a maximum of 32 nodes.
 
-As such,  NetApp has only tested BeeGFS HA clusters up to 10 nodes and scaling individual clusters beyond this limit is not recommended or supported.
+NetApp has only tested BeeGFS HA clusters up to 10 nodes; scaling individual clusters beyond this limit is not recommended or supported. However, BeeGFS file systems still need to scale far beyond 10 nodes, and NetApp has accounted for this in the BeeGFS on NetApp solution.
 
-However,  BeeGFS file systems still need to scale far beyond 10 nodes, and NetApp has accounted for this in the BeeGFS on NetApp solution.
+By deploying multiple HA clusters containing a subset of the building blocks in each file system, you can scale the overall BeeGFS file system independently of any recommended or hard limits on the underlying HA clustering mechanisms. In this scenario, do the following:
 
-By deploying multiple HA clusters containing a subset of the building blocks in each file system, you can scale the overall BeeGFS file system independently of any recommended or hard limits on the underlying HA clustering mechanisms. In this scenario,  do the following:
-
-* Create a new Ansible inventory representing the additional HA clusters and then omit configuring another management service. Instead,  point the `beegfs_ha_mgmtd_floating_ip` variable in each additional cluster `ha_cluster.yml` to the IP for the first BeeGFS management service.
+* Create a new Ansible inventory representing the additional HA clusters, and then omit configuring another management service. Instead, point the `beegfs_ha_mgmtd_floating_ip` variable in each additional cluster `ha_cluster.yml` to the IP for the first BeeGFS management service.
 
 * When adding additional HA clusters to the same file system,  make sure you do the following:
-** Make sure the BeeGFS node IDs are unique. 
-** Make sure the file names corresponding with each service under `group_vars` is unique across all clusters.
-** Make sure the BeeGFS client and server IP addresses are unique across all clusters.
-** Make sure the first HA cluster containing the BeeGFS management service is running before trying to deploy or update additional clusters.
+** The BeeGFS node IDs are unique.
+** The file names corresponding with each service under `group_vars` is unique across all clusters.
+** The BeeGFS client and server IP addresses are unique across all clusters.
+** The first HA cluster containing the BeeGFS management service is running before trying to deploy or update additional clusters.
 
 * Maintain inventories for each HA cluster separately in their own directory tree.
 +

@@ -13,18 +13,18 @@ summary: "Deploy BeeGFS."
 :imagesdir: ./media/
 
 [.lead]
-Deploying and managing the configuration involves running one or more playbooks that contain the tasks Ansible needs to execute to bring the overall system to the desired state.
+Deploying and managing the configuration involves running one or more playbooks that contain the tasks Ansible needs to execute and bring the overall system to the desired state.
 
-While all tasks could be included in a single playbook, for complex systems, this quickly becomes unwieldy to manage. Ansible allows you to create and distribute https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html[roles^] as a way of packaging reusable playbooks and related content (for example,  default variables, tasks, and handlers).
+While all tasks can be included in a single playbook, for complex systems, this quickly becomes unwieldy to manage. Ansible allows you to create and distribute roles as a way of packaging reusable playbooks and related content (for example: default variables, tasks, and handlers). For more information, see the Ansible documentation for https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html[Roles^].
 
-Roles are often distributed as part of an Ansible collection contain related roles and modules. Thus,  the playbooks used here primarily just import several roles distributed in the various NetApp E-Series Ansible Collections.
+Roles are often distributed as part of an Ansible collection containing related roles and modules. Thus, these playbooks primarily just import several roles distributed in the various NetApp E-Series Ansible collections.
 
 [NOTE]
-Currently,  at least two building blocks (four file nodes) are required to deploy BeeGFS unless a separate quorum device is configured as a tiebreaker to mitigate any issues when establishing quorum with a two-node cluster.
+Currently, at least two building blocks (four file nodes) are required to deploy BeeGFS, unless a separate quorum device is configured as a tiebreaker to mitigate any issues when establishing quorum with a two-node cluster.
 
 
 .Steps
-. Create a new file `playbook.yml` and include the following:
+. Create a new `playbook.yml` file and include the following:
 +
 ....
 # BeeGFS HA (High Availability) cluster playbook.
@@ -92,17 +92,15 @@ This playbook runs a few `pre_tasks` that verify Python 3 is installed on the fi
 +
 . Use the `ansible-playbook` command with the inventory and playbook files when you’re ready to deploy BeeGFS.
 +
-The deployment will run all `pre_tasks` then prompt for user confirmation before proceeding with the actual BeeGFS deployment.
+The deployment will run all `pre_tasks`, and then prompt for user confirmation before proceeding with the actual BeeGFS deployment.
 +
-Run the following command adjusting the number of forks as needed (see the note below):
+Run the following command, adjusting the number of forks as needed (see the note below):
 +
 ....
 ansible-playbook -i inventory.yml playbook.yml --forks 20
 ....
 +
 [NOTE]
-Especially for larger deployments, overriding the https://www.ansible.com/blog/ansible-performance-tuning[default number of forks^] (5) using the https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html[--forks^] parameters is recommended to increase the number of hosts that Ansible configure in parallel. The maximum value this can be set to depends on the processing power available on the Ansible control nodeabove example of 20 was run on a virtual Ansible control node with  CPUs (Intel(R) Xeon(R) Gold 6146 CPU @ 3.20GHz).
-
-. Deployment is complete.
+Especially for larger deployments, overriding the default number of forks (5) using the `forks` parameter is recommended to increase the number of hosts that Ansible configures in parallel. (For more information, see  https://www.ansible.com/blog/ansible-performance-tuning[Ansible Performance Tuning^] and https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html[Controlling playbook execution^].) The maximum value setting depends on the processing power available on the Ansible control node. The above example of 20 was run on a virtual Ansible control node with 4 CPUs (Intel(R) Xeon(R) Gold 6146 CPU @ 3.20GHz).
 +
 Depending on the size of the deployment and network performance between the Ansible control node and BeeGFS file and block nodes, deployment time might vary.

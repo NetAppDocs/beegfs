@@ -13,7 +13,7 @@ summary: "Configure BeeGFS clients."
 :imagesdir: ./media/
 
 [.lead]
-The BeeGFS client must be installed and configured on any hosts such as compute or GPU nodes needing access to the BeeGFS file system. This can be done using Ansible and the BeeGFS collection.
+You must install and configure the BeeGFS client on any hosts that need access to the BeeGFS file system, such as compute or GPU nodes. For this task, you can use Ansible and the BeeGFS collection.
 
 .Steps
 . If needed, set up passwordless SSH from the Ansible control node to each of the hosts you want to configure as BeeGFS clients:
@@ -34,9 +34,9 @@ eseries_ipoib_interfaces:
 ....
 +
 [NOTE]
-Currently,  two InfiniBand interfaces must be configured on each client, one in each of the two storage IPoIB subnets. If using the example subnets and recommended ranges for each BeeGFS service listed in this document,  clients should have one interface configured in the. range `100.127.1. 0` - `100.127.99.255` and the other in `100.128.1. 0` - `100.128. 99.255`.
+Currently, two InfiniBand interfaces must be configured on each client, one in each of the two storage IPoIB subnets. If using the example subnets and recommended ranges for each BeeGFS service listed here, clients should have one interface configured in the range of `100.127.1. 0` to `100.127.99.255` and the other in `100.128.1. 0` to `100.128. 99.255`.
 
-. Create a new file `client_inventory.yml` and populate the following at the top:
+. Create a new file `client_inventory.yml`, and then populate the following parameters at the top:
 +
 ....
 # BeeGFS client inventory.
@@ -48,9 +48,9 @@ The defaults set by the BeeGFS HA role are based on the testing performed as par
 ....
 +
 [NOTE]
-Do not store passwords in plain text. Instead use https://docs.ansible.com/ansible/latest/user_guide/vault.html[Ansible Vault^] or the `--ask-become-pass` option when running the playbook.
+Do not store passwords in plain text. Instead, use the Ansible Vault (see the Ansible documentation for https://docs.ansible.com/ansible/latest/user_guide/vault.html[Encrypting content with Ansible Vault^]) or use the `--ask-become-pass` option when running the playbook.
 
-. In the `client_inventory.yml` file, list all hosts that should be configured as BeeGFS clients under the `beegfs_clients` group and specify any additional configuration required to build the BeeGFS client kernel module.
+. In the `client_inventory.yml` file, list all hosts that should be configured as BeeGFS clients under the `beegfs_clients` group, and then specify any additional configuration required to build the BeeGFS client kernel module.
 +
 ....
   children:
@@ -80,9 +80,9 @@ Do not store passwords in plain text. Instead use https://docs.ansible.com/ansib
 ....
 +
 [NOTE]
-When using the Mellanox OFED drivers, make sure  `beegfs`_`client`_`ofed`_`include`_`path` points to the correct https://doc.beegfs.io/latest/advanced_topics/rdma_support.html[header include path^] for your Linux installation.
+When using the Mellanox OFED drivers, make sure that `beegfs_client_ofed_include_path` points to the correct header include path  for your Linux installation. For more information, see the BeeGFS documentation for https://doc.beegfs.io/latest/advanced_topics/rdma_support.html[RDMA support^].
 
-. In the `client_inventory.yml` file,  list the BeeGFS file systems you want mounted at the bottom of any previously defined `vars`.
+. In the `client_inventory.yml` file, list the BeeGFS file systems you want mounted at the bottom of any previously defined `vars`.
 +
 ....
         beegfs_client_mounts:
@@ -105,9 +105,9 @@ When using the Mellanox OFED drivers, make sure  `beegfs`_`client`_`ofed`_`inclu
 ....
 +
 [NOTE]
-The `beegfs_client_config` represents the settings that were tested for this NetApp Verified Architecture. See the documentation included with the `netapp_eseries.beegfs `collection’s `beegfs_client` role for a comprehensive overview of all options. This includes details around mounting multiple BeeGFS file systems or mounting the same BeeGFS file system multiple times.
+The `beegfs_client_config` represents the settings that were tested. See the documentation included with the `netapp_eseries.beegfs` collection’s `beegfs_client` role for a comprehensive overview of all options. This includes details around mounting multiple BeeGFS file systems or mounting the same BeeGFS file system multiple times.
 
-. Create a new `client_playbook.yml` file and populate the following:
+. Create a new `client_playbook.yml` file, and then populate the following parameters:
 +
 ....
 # BeeGFS client playbook.
@@ -127,9 +127,9 @@ The `beegfs_client_config` represents the settings that were tested for this Net
 ....
 +
 [NOTE]
-Omit importing the `netapp_eseries.host` collection and `ipoib` role if you have already installed required IB/RDMA drivers and configured IPs on the appropriate IPoIB interfaces.
+Omit importing the `netapp_eseries.host` collection and `ipoib` role if you have already installed the required IB/RDMA drivers and configured IPs on the appropriate IPoIB interfaces.
 
-. To install and build the client and mount BeeGFS,  run the following command:
+. To install and build the client and mount BeeGFS, run the following command:
 +
 ....
 ansible-playbook -i client_inventory.yml client_playbook.yml
