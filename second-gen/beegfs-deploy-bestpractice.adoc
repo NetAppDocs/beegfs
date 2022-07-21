@@ -16,7 +16,7 @@ summary: "Learn about the best practices to follow when deploying the BeeGFS on 
 You should follow the best practice guidelines when deploying the BeeGFS on NetApp solution.
 
 == Standard conventions
-When creating the Ansible inventory file, you should follow these standard conventions (for more information, see link:beegfs-deploy-beegfs-general-config.html[Create the Ansible inventory].
+When creating the Ansible inventory file, you should follow these standard conventions (for more information, see link:beegfs-deploy-beegfs-general-config.html[Create the Ansible inventory]).
 
 * File node host names are sequentially numbered (h01-hN) with lower numbers at the top of the rack and higher numbers at the bottom.
 +

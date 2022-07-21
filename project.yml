@@ -40,7 +40,7 @@ sidebar:
     entries:
         - title: Deployment overview
           url: /beegfs-deploy-overview.html
-        - title: Learn about Ansible
+        - title: Learn about the Ansible inventory
           url: /beegfs-deploy-learn-ansible.html
         - title: Review best practices
           url: /beegfs-deploy-bestpractice.html

@@ -5,7 +5,7 @@ keywords: EF600, NetApp, BeeGFS, Verified Architecture
 summary: "Use Ansible to configure and deploy the BeeGFS on NetApp solution using the second generation BeeGFS building block design."
 ---
 
-= Learn about Ansible
+= Learn about the Ansible inventory
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -19,7 +19,7 @@ The Ansible inventory defines the configuration for file and block nodes and rep
 
 Sample inventories can be downloaded from https://github.com/netappeseries/beegfs/tree/master/getting_started/[NetApp E-Series BeeGFS GitHub^].
 
-= Ansible modules and roles
+== Ansible modules and roles
 To apply the configuration described by the Ansible inventory, use the various Ansible modules and roles provided in the NetApp E-Series Ansible collection, in particular the https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_2[BeeGFS HA 7.2 role^] that deploys the end-to-end solution.
 
 Each role in the NetApp E-Series Ansible collection is a complete end-to-end deployment of the BeeGFS on NetApp solution. The roles use the NetApp E-Series SANtricity, Host, and BeeGFS collections that allow you to configure the BeeGFS file system with HA and provision, map storage and ensure the cluster storage is ready for use.
