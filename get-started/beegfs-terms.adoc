@@ -15,8 +15,6 @@ summary: "Terms and concepts that apply to BeeGFS on NetApp solution."
 [.lead]
 The following terms and concepts apply to the BeeGFS on NetApp solution.
 
-_work in progress_
-
 
 [cols="25h,~",options="header"]
 |===
@@ -25,6 +23,10 @@ a|
 AI
 a|
 Artificial Intelligence.
+a|
+BMC
+a|
+Baseboard management controller.
 a|
 block nodes
 a|

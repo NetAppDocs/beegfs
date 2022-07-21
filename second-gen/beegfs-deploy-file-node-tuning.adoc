@@ -127,23 +127,6 @@ a|
 Disable
 |===
 
-=== Jolie/Joe: Do we really need the following screenshots?
-I DONT THINK THESE SCREEN SHOT HELP AND JUST ADD CONFUSION.
-The following screenshot shows the settings for the Lenovo XClarity Provisioning Manager: Operating Modes.
-
-image:../media/lenova-opmodes.png[]
-
-The following screenshot shows the settings for the Lenovo XClarity Provisioning Manager: Devices and I/O Ports.
-
-image:../media/lenova-ports.png[]
-
-The following screenshot shows the settings for the Lenovo XClarity Provisioning Manager: Power.
-
-image:../media/lenova-power.png[]
-
-The following screenshot shows the settings for the Lenovo XClarity Provisioning Manager: Processors.
-
-image:../media/lenova-process.png[]
 
 == Use Redfish API to tune system settings
 In addition to using UEFI Setup, you can use the Redfish API to change system settings.

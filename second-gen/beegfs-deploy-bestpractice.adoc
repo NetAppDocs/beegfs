@@ -13,14 +13,14 @@ summary: "Learn about the best practices to follow when deploying the BeeGFS on 
 :imagesdir: ./media/
 
 [.lead]
-You should follow the best practice guidelines when deploying the BeeGFS on NetApp solution.
+Follow the best practice guidelines when deploying the BeeGFS on NetApp solution.
 
 == Standard conventions
-When creating the Ansible inventory file, you should follow these standard conventions (for more information, see link:beegfs-deploy-beegfs-general-config.html[Create the Ansible inventory]).
+When creating the Ansible inventory file, follow these standard conventions (for more information, see link:beegfs-deploy-beegfs-general-config.html[Create the Ansible inventory]).
 
 * File node host names are sequentially numbered (h01-hN) with lower numbers at the top of the rack and higher numbers at the bottom.
 +
-For example, the naming convention `[location][row][rack]hN` looks like `ictad22h01`.
+For example, the naming convention `[location][row][rack]hN` looks like: `ictad22h01`.
 
 * Each block node is comprised of two storage controllers, each with their own host name.
 +
@@ -38,17 +38,13 @@ The intent is to minimize the length of cable running to top of rack switches, a
 
 == InfiniBand storage network configuration
 
-Half the InfiniBand ports on each file node are used to connect directly to block nodes. The other half are connected to the InfiniBand switches and are used for BeeGFS client-server connectivity.
-
-When determining the size of the IPoIB subnets that are used for BeeGFS clients and servers, you must consider the anticipated growth of your compute/GPU cluster and BeeGFS file system.
-
-If you must deviate from the recommended IP ranges, keep in mind that each direct connect in a single building block has a unique subnet and there is no overlap with subnets used for client-server connectivity.
+Half the InfiniBand ports on each file node are used to connect directly to block nodes. The other half are connected to the InfiniBand switches and are used for BeeGFS client-server connectivity. When determining the size of the IPoIB subnets that are used for BeeGFS clients and servers, you must consider the anticipated growth of your compute/GPU cluster and BeeGFS file system. If you must deviate from the recommended IP ranges, keep in mind that each direct connect in a single building block has a unique subnet and there is no overlap with subnets used for client-server connectivity.
 
 === Direct connects
 
 File and block nodes within each building block always use the IPs in the following table for their direct connects.
 
-NOTE: This addressing scheme adheres to the following rule: The third octet is always odd or even depending on if the file node is odd or even.
+NOTE: This addressing scheme adheres to the following rule: The third octet is always odd or even, which depends on whether the file node is odd or even.
 
 |===
 |File node |IB port |IP address |Block node |IB port |Physical IP |Virtual IP
