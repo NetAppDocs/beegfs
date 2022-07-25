@@ -12,14 +12,12 @@ summary: "Set up an Ansible control node."
 :linkattrs:
 :imagesdir: ./media/
 
-
-
 [.lead]
 To set up an Ansible control node, you must identify a virtual or physical machine with network access to the management ports of all file and block nodes that can be used to configure the solution.
 
 The following steps were tested on CentOS 8.4. For steps specific to your preferred Linux distribution, see the https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html[Ansible documentation^].
 
-. Install Python 3.9 and ensure the correct version of `pip` is installed.
+. Install Python 3.9 and ensure that the correct version of `pip` is installed.
 +
 ....
 sudo dnf install python3.9 -y
@@ -70,7 +68,7 @@ sudo dnf install git -y
 
 .. Set up passwordless SSH to each of the file nodes using `ssh-copy-id <ip_or_hostname>`
 +
-Do not set up passwordless SSH to the block nodes. This is neither supported nor required.
+Do *not* set up passwordless SSH to the block nodes. This is neither supported nor required.
 
 . Use Ansible Galaxy to install the version of the BeeGFS collection listed in link:beegfs-technology-requirements.html[Technical requirements].
 +

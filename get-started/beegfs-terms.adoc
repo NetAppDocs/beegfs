@@ -26,7 +26,7 @@ Artificial Intelligence.
 a|
 BMC
 a|
-Baseboard management controller.
+Baseboard management controller. Sometimes referred to as a service processor.
 a|
 block nodes
 a|
@@ -48,7 +48,10 @@ HA
 a|
 High Availability.
 a|
-HPC
+HIC
+a|
+Host Interface Card.
+a|HPC
 a|
 High-Performance Computing.
 a|

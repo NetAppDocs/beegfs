@@ -33,20 +33,20 @@ image:../media/buildingblock.png[]
 [NOTE]
 The power supply configuration for production use cases should typically use redundant PSUs.
 +
-. If needed,  install the drives in each of the BeeGFS block nodes.
+. If needed, install the drives in each of the BeeGFS block nodes.
 +
-.. If the building block will be used to run BeeGFS metadata and storage services and smaller drives are used for metadata volumes, verify they are populated in the outermost drive slots, as shown in the figure below.
+.. If the building block will be used to run BeeGFS metadata and storage services and smaller drives are used for metadata volumes, verify that they are populated in the outermost drive slots, as shown in the figure below.
 +
-.. For all building block configurations,  if a drive enclosure is not fully populated, make sure an equal number of drives are populated in slots 0–11 and 12–23 for optimal performance.
+.. For all building block configurations, if a drive enclosure is not fully populated, make sure that an equal number of drives are populated in slots 0–11 and 12–23 for optimal performance.
 +
 image:../media/driveslots.png[]
 +
-. Use 1m InfiniBand HDR 200Gb direct attach copper cables to cable the file and block nodes together to match the topology shown in the figure below.
+. To cable the file and block nodes, use 1m InfiniBand HDR 200Gb direct attach copper cables, so that they match the topology shown in the figure below.
 +
 image:../media/directattachcable.png[]
 +
 [NOTE]
-The nodes across multiple building blocks never directly connected. Each building block should be treated as a standalone unit and all communication between building blocks occurs through network switches.
+The nodes across multiple building blocks are never directly connected. Each building block should be treated as a standalone unit and all communication between building blocks occurs through network switches.
 +
 . Use 2m (or the appropriate length) InfiniBand HDR 200Gb direct attach copper cables to cable the remaining InfiniBand ports on each file node to the InfiniBand switches that will be used for the storage network.
 +

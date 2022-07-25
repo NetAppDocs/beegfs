@@ -24,17 +24,17 @@ For example, the naming convention `[location][row][rack]hN` looks like: `ictad2
 
 * Each block node is comprised of two storage controllers, each with their own host name.
 +
-A storage array name is used to refer to the whole block storage system as part of an Ansible inventory. The storage array names should be sequentially numbered (a01- aN), and the host names for individual controllers are derived from that naming convention.
+A storage array name is used to refer to the whole block storage system as part of an Ansible inventory. The storage array names should be sequentially numbered (a01 - aN), and the host names for individual controllers are derived from that naming convention.
 +
 For example, a block node named `ictad22h01` typically can have host names configured for each controller like `ictad22h01-a` and `ictad22h01-b`, but be referred to in an Ansible inventory as `ictad22h01`.
 
-* File and block nodes within the same building block share the same numbering and are adjacent to each other in the rack with both file nodes on top and both block nodes directly underneath them.
+* File and block nodes within the same building block share the same numbering scheme and are adjacent to each other in the rack with both file nodes on top and both block nodes directly underneath them.
 +
-For example, in the first building block, file nodes h01 and h02 are both directly connected to block nodes a01 and c02. From top to bottom, the host names are h01, h02, a01, a02.
+For example, in the first building block, file nodes h01 and h02 are both directly connected to block nodes a01 and c02. From top to bottom, the host names are h01, h02, a01, and a02.
 
-* Building blocks are installed in sequential order based on their host names so that lower numbered host names are at the top of the rack and higher numbered host names are at the bottom.
+* Building blocks are installed in sequential order based on their host names, so that lower numbered host names are at the top of the rack and higher numbered host names are at the bottom.
 +
-The intent is to minimize the length of cable running to top of rack switches, and to define a standard deployment practice to simplify troubleshooting. For datacenters, this is not allowed due to concerns around rack stability. The inverse is certainly allowed, although cable lengths need to be adjusted accordingly.
+The intent is to minimize the length of cable running to the top of rack switches, and to define a standard deployment practice to simplify troubleshooting. For data centers, this is not allowed due to concerns around rack stability. The inverse is certainly allowed, although cable lengths need to be adjusted accordingly.
 
 == InfiniBand storage network configuration
 
@@ -116,7 +116,7 @@ Each file node runs multiple BeeGFS server services (management, metadata, or st
 While not mandatory, this deployment presumes the following IPoIB subnet ranges are in use for these connections and defines a standard addressing scheme that applies the following rules:
 
 * The second octet is always odd or even, based on whether the file node InfiniBand port is odd or even.
-* BeeGFS cluster IPs are always `xxx. 127.100. yyy` or `xxx.128.100. yyy`.
+* BeeGFS cluster IPs are always `xxx. 127.100.yyy` or `xxx.128.100.yyy`.
 
 [NOTE]
 In addition to the interface used for in-band OS management, additional interfaces can be used by Corosync for cluster heart beating and synchronization. This ensures that the loss of a single interface does not bring down the entire cluster.
@@ -124,7 +124,7 @@ In addition to the interface used for in-band OS management, additional interfac
 * The BeeGFS Management service is always at `xxx.yyy.101.0` or `xxx.yyy.102.0`.
 * BeeGFS Metadata services are always at `xxx.yyy.101.zzz` or `xxx.yyy.102.zzz`.
 * BeeGFS Storage services are always at `xxx.yyy.103.zzz` or `xxx.yyy.103.zzz`.
-* Addresses in the range `100.xxx.1.1` - `100.xxx.99.255` are reserved for clients.
+* Addresses in the range `100.xxx.1.1` through `100.xxx.99.255` are reserved for clients.
 
 .Subnet A: 100.127.0.0/16
 The following table provides the range for Subnet A: 100.127.0.0/16.
@@ -173,4 +173,4 @@ The following table provides the range for Subnet B: 100.128.0.0/16.
 |===
 
 [NOTE]
-Not all IPs in the above ranges are used in this NetApp Verified Architecture. They demonstrate how IP addresses can be preallocated to allow easy file system expansion using a consistent IP addressing scheme. In this scheme, BeeGFS file node and service IDs correspond with the fourth octet of a well-known range of IPs. The file system could certainly scale beyond 255 nodes or services if needed.
+Not all IPs in the above ranges are used in this NetApp Verified Architecture. They demonstrate how IP addresses can be pre-allocated to allow easy file system expansion using a consistent IP addressing scheme. In this scheme, BeeGFS file nodes and service IDs correspond with the fourth octet of a well-known range of IPs. The file system could certainly scale beyond 255 nodes or services if needed.
