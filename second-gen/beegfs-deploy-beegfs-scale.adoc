@@ -15,13 +15,13 @@ summary: "Configure Pacemaker and Corosync to scale beyond five building blocks.
 [.lead]
 You can configure Pacemaker and Corosync to scale beyond five building blocks (10 file nodes). However, there are drawbacks to larger clusters, and eventually Pacemaker and Corosync do impose a maximum of 32 nodes.
 
-NetApp has only tested BeeGFS HA clusters up to 10 nodes; scaling individual clusters beyond this limit is not recommended or supported. However, BeeGFS file systems still need to scale far beyond 10 nodes, and NetApp has accounted for this in the BeeGFS on NetApp solution.
+NetApp has only tested BeeGFS HA clusters for up to 10 nodes; scaling individual clusters beyond this limit is not recommended or supported. However, BeeGFS file systems still need to scale far beyond 10 nodes, and NetApp has accounted for this in the BeeGFS on NetApp solution.
 
 By deploying multiple HA clusters containing a subset of the building blocks in each file system, you can scale the overall BeeGFS file system independently of any recommended or hard limits on the underlying HA clustering mechanisms. In this scenario, do the following:
 
 * Create a new Ansible inventory representing the additional HA clusters, and then omit configuring another management service. Instead, point the `beegfs_ha_mgmtd_floating_ip` variable in each additional cluster `ha_cluster.yml` to the IP for the first BeeGFS management service.
 
-* When adding additional HA clusters to the same file system,  make sure you do the following:
+* When adding additional HA clusters to the same file system, ensure the following:
 ** The BeeGFS node IDs are unique.
 ** The file names corresponding with each service under `group_vars` is unique across all clusters.
 ** The BeeGFS client and server IP addresses are unique across all clusters.
@@ -32,4 +32,4 @@ By deploying multiple HA clusters containing a subset of the building blocks in 
 Trying to mix the inventory files for multiple clusters in one directory tree might cause issues with how the BeeGFS HA role aggregates the configuration applied to a particular cluster.
 
 [NOTE]
-There is no requirement that each HA cluster scale to five building blocks before creating a new one. In many cases,  using fewer building blocks per cluster is easier to manage. One approach is to configure the building blocks in each single rack as an HA cluster.
+There is no requirement that each HA cluster scale to five building blocks before creating a new one. In many cases, using fewer building blocks per cluster is easier to manage. One approach is to configure the building blocks in each single rack as an HA cluster.

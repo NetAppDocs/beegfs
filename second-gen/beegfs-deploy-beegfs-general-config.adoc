@@ -21,7 +21,7 @@ Define the configuration that applies to all building blocks, regardless of whic
 .Before you begin
 * Use a source control system like BitBucket or Git to store the contents of the directory containing the Ansible inventory and playbook files.
 
-* Create a `.gitignore` file that specifies the files that Git should ignore. This helps avoids storing large files in Git.
+* Create a `.gitignore` file that specifies the files that Git should ignore. This helps avoid storing large files in Git.
 
 .Steps
 . On your Ansible control node, identify a directory that you want to use to store the Ansible inventory and playbook files.
@@ -89,11 +89,11 @@ eseries_nvme_ib_interfaces:
 [NOTE]
 If you have already deployed the BeeGFS cluster, you must stop the cluster before adding or changing statically configured IP addresses, including cluster IPs and IPs used for NVMe/IB. This is required so these changes take effect properly and do not disrupt cluster operations.
 
-. Under `host_vars/`,  create a file for each BeeGFS block node named `<HOSTNAME>.yml` and populate with the following content.
+. Under `host_vars/`, create a file for each BeeGFS block node named `<HOSTNAME>.yml` and populate it with the following content.
 +
 Pay special attention to the notes regarding content to populate for storage array names ending in odd versus even numbers.
 +
-For each block node, create one file and specify the `<MANAGEMENT_IP>` for one of the two controllers (usually the A one).
+For each block node, create one file and specify the `<MANAGEMENT_IP>` for one of the two controllers (usually A).
 +
 ....
 eseries_system_name: <STORAGE_ARRAY_NAME>
