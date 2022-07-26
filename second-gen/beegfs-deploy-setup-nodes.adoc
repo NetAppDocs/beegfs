@@ -45,7 +45,7 @@ While not strictly required, subsequent sections presume that host names are seq
 subscription-manager repo-override --repo=rhel-8-for-x86_64-highavailability-rpms --add=enabled:1
 ....
 
-. Update all ConnectX-6 HCA firmware to the version recommended in the technology requirements section.
+. Update all ConnectX-6 HCA firmware to the version recommended in link:beegfs-technology-requirements.html[Technology requirements].
 +
 This update can be done by downloading and running a version of the mlxup tool that bundles the recommended firmware. You can download this tool from https://www.mellanox.com/support/firmware/mlxup-mft[mlxup - Update and Query Utility^].
 

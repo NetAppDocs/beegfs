@@ -125,9 +125,9 @@ eseries_controller_nvme_ib_port:
     - 192.168.8.100
 ....
 
-== Step 3: Define the configuration for common file and block nodes
+== Step 3: Define configuration that should apply to all file and block nodes
 
-You can define a configuration common to a group of hosts under `group_vars` in a file name that corresponds with the group. This prevents repeating a shared configuration in multiple places.
+You can define configuration common to a group of hosts under `group_vars` in a file name that corresponds with the group. This prevents repeating a shared configuration in multiple places.
 
 .About this task
 Hosts can be in more than one group, and at runtime, Ansible chooses what variables apply to a particular host based on its variable precedence rules. (For more information on these rules, see the Ansible documentation for https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html[Using variables^].)
@@ -144,7 +144,7 @@ beegfs_ha_ntp_server_pools:  # Modify the NTP server addressess if desired.
   - "pool 1.pool.ntp.org iburst maxsources 3"
 ....
 
-== Step 4: Define the configuration for the common file node
+== Step 4: Define configuration that should apply to all file nodes.
 
 The shared configuration for file nodes is defined in a group called `ha_cluster`. The steps in this section build out the configuration that should be included in the `group_vars/ha_cluster.yml` file.
 
@@ -170,8 +170,8 @@ Particularly for production environments, do not store passwords in plain text. 
 . Optionally, configure a name for the high-availability (HA) cluster and specify a user for intra-cluster communication.
 +
 If you are modifying the private IP addressing scheme, you must also update the default `beegfs_ha_mgmtd_floating_ip`. This must match what you configure later for the BeeGFS Management resource group.
-
-. Specify one or more emails that should receive alerts for cluster events using `beegfs_ha_alert_email_list`.
++
+Specify one or more emails that should receive alerts for cluster events using `beegfs_ha_alert_email_list`.
 +
 ....
 ### Cluster information
@@ -198,7 +198,7 @@ beegfs_ha_alert_verbosity: 3
 [NOTE]
 While seemingly redundant, `beegfs_ha_mgmtd_floating_ip` is important when you scale the BeeGFS file system beyond a single HA cluster. Subsequent HA clusters are deployed without an additional BeeGFS management service and point at the management service provided by the first cluster.
 +
-. Configure a Red Hat fencing agent. (For more details, see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters[Configure fencing in a Red Hat High Availability cluster^].) The following output shows examples for configuring common fencing agents. Choose one of these options.
+. Configure a fencing agent. (For more details, see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters[Configure fencing in a Red Hat High Availability cluster^].) The following output shows examples for configuring common fencing agents. Choose one of these options.
 +
 For this step, be aware that:
 
@@ -286,7 +286,7 @@ eseries_ib_opensm_options:
   virt_enabled: "2"
 ....
 
-. Configure the `udev` rule to ensure consistent mapping of logical InfiniBand port identifiers to underlying PCIe devices.
+. Configure the `udev` rule to ensure InfiniBand port identifiers map to underlying PCIe devices.
 +
 The `udev` rule must be unique to the PCIe topology of each server platform used as a BeeGFS file node.
 +
@@ -294,10 +294,8 @@ Use the following values for verified file nodes:
 +
 ....
 ### Ensure Consistent Logical IB Port Numbering
-# Name of the udev rule to create (do not modify):
-eseries_ib_base_udev_name: 99-beegfs-ib.rules
 # OPTION 1: Lenovo SR665 PCIe address-to-logical IB port mapping:
-eseries_ib_base_udev_rules:
+eseries_ipoib_udev_rules:
   "0000:41:00.0": i1a
   "0000:41:00.1": i1b
   "0000:01:00.0": i2a
@@ -346,8 +344,6 @@ Download the corresponding files from the https://mysupport.netapp.com/site/prod
 # Firmware, NVSRAM, and Drive Firmware (modify the filenames as needed):
 eseries_firmware_firmware: "packages/RCB_11.70.2_6000_61b1131d.dlp"
 eseries_firmware_nvsram: "packages/N6000-872834-D06.dlp"
-eseries_drive_firmware_firmware_list:
-  - "packages/D_MZWLJ3T8HBLS-0G5_30604635_NA51_XXXX_000.dlp"
 ....
 +
 . Download and install the latest drive firmware available for the drives installed in your block nodes from the https://mysupport.netapp.com/NOW/download/tools/diskfw_eseries/[NetApp Support site^]. You can either upgrade them manually or include them in the `packages/` directory of the Ansible control node, and then populate the following parameters in `eseries_storage_systems.yml` to upgrade using Ansible:

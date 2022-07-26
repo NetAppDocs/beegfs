@@ -5,7 +5,7 @@ keywords: Validate, solution, EF600, NetApp, BeeGFS, Verified Architecture
 summary: "This architecture was verified using three second-generation building blocks, each deployed in one of the three available configuration profiles."
 ---
 
-= Profile verification
+= Design verification
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -127,3 +127,5 @@ There is a known issue (see the https://github.com/netappeseries/beegfs/blob/mas
 == NVIDIA DGX A100 SuperPOD validation
 
 NetApp validated a storage solution for NVIDIAs DGX A100 SuperPOD using a similar BeeGFS file system consisting of three building blocks with the metadata plus storage configuration profile applied. The qualification effort involved testing the solution described by this NVA with twenty DGX A100 GPU servers running a variety of storage, machine learning, and deep learning benchmarks.
+
+For more information see https://www.netapp.com/pdf.html?item=/media/72718-nva-1167-DESIGN.pdf[NVIDIA DGX SuperPOD with NetApp^].

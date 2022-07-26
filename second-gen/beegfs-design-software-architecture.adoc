@@ -89,7 +89,24 @@ The HA cluster design is based on two widely used Linux HA projects: Corosync fo
 
 NetApp authored and extended several open cluster framework (OCF) resource agents to allow the cluster to intelligently start and monitor the BeeGFS resources.
 
-== Resource groups
+== BeeGFS HA clusters
+
+Typically, when you start a BeeGFS service (with or without HA), a few resources must be in place:
+
+* IP addresses where the service is reachable, typically configured by Network Manager.
+* Underlying file systems used as the targets for BeeGFS to store data.
++
+These are typically defined in `/etc/fstab` and mounted by Systemd.
+* A Systemd service responsible for starting BeeGFS processes when the other resources are ready.
++
+Without additional software, these resources start only on a single file node. Therefore, if the file node goes offline, a portion of the BeeGFS file system is inaccessible.
+
+Because multiple nodes can start each BeeGFS service, Pacemaker must make sure each service and dependent resources are only running on one node at a time. For example, if two nodes try to start the same BeeGFS service, there is a risk of data corruption if they both try to write to the same files on the underlying target. To avoid this scenario, Pacemaker relies on Corosync to reliably keep the state of the overall cluster in sync across all nodes and establish quorum.
+
+If a failure occurs in the cluster, Pacemaker reacts and restarts BeeGFS resources on another node.  In some scenarios,  Pacemaker might not be able to communicate with the original faulty node to confirm the resources are stopped. To verify that the node is down before restarting BeeGFS resources elsewhere,  Pacemaker fences off the faulty node, ideally by removing power.
+
+Many open-source fencing agents are available that enable Pacemaker to fence a node with a power distribution unit (PDU) or by using the server baseboard management controller (BMC) with APIs such as Redfish.
+
 When BeeGFS is running in an HA cluster, all BeeGFS services and underlying resources are managed by Pacemaker in resource groups. Each BeeGFS service and the resources it depends on, are configured into a resource group, which ensures resources are started and stopped in the correct order and collocated on the same node.
 
 For each BeeGFS resource group, Pacemaker runs a custom BeeGFS monitoring resource that is responsible for detecting failure conditions and intelligently triggering failovers when a BeeGFS service is no longer accessible on a particular node.
@@ -122,20 +139,3 @@ stor_01_tgt_0101/
     ├── connInterfacesFile.conf
     └── connNetFilterFile.conf
 ....
-
-== BeeGFS services
-Typically, when you start a BeeGFS service (with or without HA), a few resources must be in place:
-
-* IP addresses where the service is reachable, typically configured by Network Manager.
-* Underlying file systems used as the targets for BeeGFS to store data.
-+
-These are typically defined in `/etc/fstab` and mounted by Systemd.
-* A Systemd service responsible for starting BeeGFS processes when the other resources are ready.
-+
-Without additional software, these resources start only on a single file node. Therefore, if the file node goes offline, a portion of the BeeGFS file system is inaccessible.
-
-Because multiple nodes can start each BeeGFS service, Pacemaker must make sure each service and dependent resources are only running on one node at a time. For example, if two nodes try to start the same BeeGFS service, there is a risk of data corruption if they both try to write to the same files on the underlying target. To avoid this scenario, Pacemaker relies on Corosync to reliably keep the state of the overall cluster in sync across all nodes and establish quorum.
-
-If a failure occurs in the cluster, Pacemaker reacts and restarts BeeGFS resources on another node.  In some scenarios,  Pacemaker might not be able to communicate with the original faulty node to confirm the resources are stopped. To verify that the node is down before restarting BeeGFS resources elsewhere,  Pacemaker fences off the faulty node, ideally by removing power.
-
-Many open-source fencing agents are available that enable Pacemaker to fence a node with a power distribution unit (PDU) or by using the server baseboard management controller (BMC) with APIs such as Redfish.

@@ -69,13 +69,13 @@ Do not store passwords in plain text. Instead, use the Ansible Vault (see the An
         ictad21h10:
       vars:
         # OPTION 1: If you’re using the Mellanox OFED drivers and they are already installed:
-        eseries_ib_base_skip: True # Skip installing inbox drivers when using the IPoIB role.
+        eseries_ib_skip: True # Skip installing inbox drivers when using the IPoIB role.
         beegfs_client_ofed_enable: True
         beegfs_client_ofed_include_path: "/usr/src/ofa_kernel/default/include"
         # OPTION 2: If you’re using inbox IB/RDMA drivers and they are already installed:
-        eseries_ib_base_skip: True # Skip installing inbox drivers when using the IPoIB role.
+        eseries_ib_skip: True # Skip installing inbox drivers when using the IPoIB role.
         # OPTION 3: If you want to use inbox IB/RDMA drivers and need them installed/configured.
-        eseries_ib_base_skip: False # Default value.
+        eseries_ib_skip: False # Default value.
         beegfs_client_ofed_enable: False # Default value.
 ....
 +
@@ -134,3 +134,5 @@ Omit importing the `netapp_eseries.host` collection and `ipoib` role if you have
 ....
 ansible-playbook -i client_inventory.yml client_playbook.yml
 ....
+
+. Before you place the BeeGFS file system in production, we *strongly* recommend that you log in to any clients and run `beegfs-fsck --checkfs` to ensure that all nodes are reachable and there are no issues reported.

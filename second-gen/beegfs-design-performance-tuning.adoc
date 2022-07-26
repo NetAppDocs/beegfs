@@ -18,7 +18,7 @@ The BeeGFS solution includes recommendations for performance tuning that were ba
 
 Although BeeGFS provides reasonable performance out of the box, NetApp has developed a set of recommended tuning parameters to maximize performance. These parameters take into account the  capabilities of the underlying E-Series block nodes and any special requirements needed to run BeeGFS in a shared-disk HA architecture.
 
-== Performance tuning parameters
+== Performance tuning for file nodes
 The available tuning parameters that you can configure include the following:
 
 . *System settings in the UEFI/BIOS of file nodes.*
@@ -33,10 +33,8 @@ The required configuration parameters affect how BeeGFS services are configured 
 +
 You can override the default settings for the configuration parameters as needed. For the parameters that you can adjust for your specific workloads or use cases, see the https://github.com/netappeseries/beegfs/blob/135d9a04ae96f4d202300bae870c6404b77b6865/roles/beegfs_ha_7_2/defaults/main.yml#L155[BeeGFS service configuration parameters^].
 +
-* Volume formatting and mounting parameters
-+
-You can override the default settings for the configuration parameters if you want to do the following:
-+
+* Volume formatting and mounting parameters are set to recommended defaults, and should only be adjusted for advanced use cases. The default values will do the following:
+
 ** Optimize initial volume formatting based on the target type (such as management, metadata, or storage), along with the RAID configuration and segment size of the underlying volume.
 ** Adjust how Pacemaker mounts each volume to ensure that changes are immediately flushed to E-series block nodes. This prevents data loss when file nodes fail with active writes in progress.
 +
@@ -74,7 +72,7 @@ Based on the configuration profiles applied to a particular BeeGFS building bloc
 
 * For the single base building block, including BeeGFS management, metadata, and storage services:
 ** 1x 2+2 RAID 10 volume group for BeeGFS management and metadata services
-** 2x 8+10 RAID 6 volume groups for BeeGFS storage services
+** 2x 8+2 RAID 6 volume groups for BeeGFS storage services
 * For a BeeGFS metadata + storage building block:
 ** 1x 2+2 RAID 10 volume group for BeeGFS metadata services
 ** 2x 8+2 RAID 6 volume groups for BeeGFS storage services

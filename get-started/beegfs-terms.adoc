@@ -24,6 +24,10 @@ AI
 a|
 Artificial Intelligence.
 a|
+Ansible Inventory
+a|
+Directory structure containing YAML files that are used to describe the desired BeeGFS HA cluster.
+a|
 BMC
 a|
 Baseboard management controller. Sometimes referred to as a service processor.

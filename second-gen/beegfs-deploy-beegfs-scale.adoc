@@ -19,7 +19,7 @@ NetApp has only tested BeeGFS HA clusters for up to 10 nodes; scaling individual
 
 By deploying multiple HA clusters containing a subset of the building blocks in each file system, you can scale the overall BeeGFS file system independently of any recommended or hard limits on the underlying HA clustering mechanisms. In this scenario, do the following:
 
-* Create a new Ansible inventory representing the additional HA clusters, and then omit configuring another management service. Instead, point the `beegfs_ha_mgmtd_floating_ip` variable in each additional cluster `ha_cluster.yml` to the IP for the first BeeGFS management service.
+* Create a new Ansible inventory representing the additional HA cluster(s), and then omit configuring another management service. Instead, point the `beegfs_ha_mgmtd_floating_ip` variable in each additional cluster `ha_cluster.yml` to the IP for the first BeeGFS management service.
 
 * When adding additional HA clusters to the same file system, ensure the following:
 ** The BeeGFS node IDs are unique.
