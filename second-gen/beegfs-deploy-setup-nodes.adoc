@@ -54,11 +54,11 @@ Set up the EF600 block nodes by configuring the management port on each controll
 
 . Configure the management port on each EF600 controller.
 +
-For instructions on configuring ports, go to the http://docs.netapp.com/ess-11/index.jsp?topic=%2Fcom.netapp.doc.e-f600-hw-install%2FGUID-3F3A4DDB-CF9E-4066-8A0E-D14641A37BBB.html&cp=2_0_3_3_1[E-Series Documentation Center^].
+For instructions on configuring ports, go to the https://docs.netapp.com/us-en/e-series/maintenance-ef600/hpp-overview-supertask-concept.html[E-Series Documentation Center^].
 
 . Optionally, set the storage array name for each system.
 +
-Setting a name can make it easier to refer to each system in subsequent sections. For instructions on setting the array name,  go to the http://docs.netapp.com/ess-11/index.jsp?topic=%2Fcom.netapp.doc.e-f600-hw-install%2FGUID-3F3A4DDB-CF9E-4066-8A0E-D14641A37BBB.html&cp=2_0_3_3_1[E-Series Documentation Center^].
+Setting a name can make it easier to refer to each system in subsequent sections. For instructions on setting the array name,  go to the https://docs.netapp.com/us-en/e-series/maintenance-ef600/hpp-overview-supertask-concept.html[E-Series Documentation Center^].
 
 [NOTE]
 While not strictly required, subsequent topics presume storage array names are sequentially numbered (such as c1 - cN) and refer to the steps that should be completed on odd versus even numbered systems.
