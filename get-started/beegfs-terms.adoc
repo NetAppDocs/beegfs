@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar
 permalink: beegfs-terms.html
-keywords: BeeGFS, NetApp, solution
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "Terms and concepts that apply to BeeGFS on NetApp solution."
 ---
 

@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-hardware.html
-keywords: Deploy, hardware, rack, cable, EF600, NetApp, BeeGFS, Verified Architecture
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "Each building block consists of two validated x86 file nodes directly connected using HDR (200Gb) InfiniBand to two NetApp block nodes."
 ---
 

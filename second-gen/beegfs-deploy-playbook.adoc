@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-beegfs-playbook.html
-keywords: Deploy, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "Deploy BeeGFS."
+permalink: beegfs-deploy-playbook.html
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "Deploying and managing the configuration involves running one or more playbooks that contain the tasks Ansible needs to execute and bring the overall system to the desired state."
 ---
 
 = Deploy BeeGFS

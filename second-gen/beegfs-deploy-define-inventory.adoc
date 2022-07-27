@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-beegfs-build-inventory.html
-keywords: Ansible, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "Learn how to build an Ansible inventory file for BeeGFS building blocks."
+permalink: beegfs-deploy-define-inventory.html
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "After defining the general Ansible inventory structure, define the configuration for each building block in the BeeGFS file system."
 ---
 
 = Define Ansible inventory for BeeGFS building blocks
@@ -177,8 +177,6 @@ beegfs_targets:
 ....
 +
 NOTE: The volume size is specified as a percentage of the overall storage pool (also referred to as a volume group). NetApp highly recommends that you leave some free capacity in each pool to allow room for SSD overprovisioning (for more information, see https://www.netapp.com/pdf.html?item=/media/17009-tr4800pdf.pdf[Introduction to NetApp EF600 array^]). The storage pool, `beegfs_m1_m2_m5_m6`, also allocates 1% of the pool’s capacity for the management service. Thus, for metadata volumes in the storage pool, `beegfs_m1_m2_m5_m6`, when 1.92TB or 3.84TB drives are used, set this value to `21.25`; for 7.65TB drives, set this value to `22.25`; and for 15.3TB drives, set this value to `23.75`.
-+
-For the storage pool, `beegfs_m3_m4_m7_m8` (and all other storage pools), see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller

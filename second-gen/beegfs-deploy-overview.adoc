@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-overview.html
-keywords: Deploy, overview, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "Overview of BeeGFS on NetApp deployment."
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "You can deploy BeeGFS on NetApp to validated file and block nodes using the second generation of NetApp’s BeeGFS building block design."
 ---
 
 = Deployment overview
@@ -49,11 +49,12 @@ For detailed procedures, see link:beegfs-deploy-hardware.html[Deploy hardware].
 * Configure management IPs on block nodes
 
 . link:beegfs-deploy-setting-up-an-ansible-control-node.html[Set up an Ansible control node].
-. link:beegfs-deploy-beegfs-general-config.html[Create the Ansible inventory].
-. link:beegfs-deploy-beegfs-build-inventory.html[Define Ansible inventory for BeeGFS building blocks].
-. link:beegfs-deploy-beegfs-playbook.html[Deploy BeeGFS using Ansible].
-. link:beegfs-deploy-beegfs-configure-clients.html[Configure BeeGFS clients].
 . link:beegfs-deploy-file-node-tuning.html[Tune system settings for performance].
+. link:beegfs-deploy-create-inventory.html[Create the Ansible inventory].
+. link:beegfs-deploy-define-inventory.html[Define Ansible inventory for BeeGFS building blocks].
+. link:beegfs-deploy-playbook.html[Deploy BeeGFS using Ansible].
+. link:beegfs-deploy-configure-clients.html[Configure BeeGFS clients].
+
 
 [NOTE]
 The deploy procedures includes several examples where text needs to be copied to a file. Pay close attention to any inline comments denoted by “#” or “//” characters for anything that should or can be modified for a specific deployment. For example:

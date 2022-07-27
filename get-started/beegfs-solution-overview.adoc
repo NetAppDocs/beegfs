@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar
 permalink: beegfs-solution-overview.html
-keywords: Overview, EF600, NetApp, BeeGFS, Verified Architecture
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "The BeeGFS on NetApp solution combines the BeeGFS parallel file system with NetApp EF600 storage systems for a reliable, scalable, and cost-effective infrastructure that keeps pace with demanding workloads."
 ---
 

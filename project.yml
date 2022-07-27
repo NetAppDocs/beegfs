@@ -50,20 +50,20 @@ sidebar:
           entries:
             - title: Set up file and block nodes
               url: /beegfs-deploy-setup-nodes.html
+            - title: Tune system settings for performance
+              url:  beegfs-deploy-file-node-tuning.html
             - title: Set up Ansible control node
               url: /beegfs-deploy-setting-up-an-ansible-control-node.html
             - title: Create Ansible inventory
-              url: /beegfs-deploy-beegfs-general-config.html
+              url: /beegfs-deploy-create-inventory.html
             - title: Define BeeGFS building blocks
-              url: /beegfs-deploy-beegfs-build-inventory.html
+              url: /beegfs-deploy-define-inventory.html
             - title: Deploy BeeGFS
-              url: /beegfs-deploy-beegfs-playbook.html
+              url: /beegfs-deploy-playbook.html
             - title: Configure BeeGFS clients
-              url: /beegfs-deploy-beegfs-configure-clients.html
-            - title: Tune system settings for performance
-              url:  beegfs-deploy-file-node-tuning.html
+              url: /beegfs-deploy-configure-clients.html
         - title: Scale BeeGFS clusters
-          url: /beegfs-deploy-beegfs-scale.html
+          url: /beegfs-deploy-scale-building-blocks.html
         - title: Recommended volume percentages
           url: /beegfs-deploy-recommended-volume-percentages.html
   - title: Legal notices

@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-beegfs-general-config.html
-keywords: Create Ansible inventory, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "Create the Ansible inventory."
+permalink: beegfs-deploy-create-inventory.html
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "To define the configuration for file and block nodes, you create an Ansible inventory that represents the BeeGFS file system you want to deploy."
 ---
 
 = Create the Ansible inventory
@@ -286,7 +286,7 @@ eseries_ib_opensm_options:
   virt_enabled: "2"
 ....
 
-. Configure the `udev` rule to ensure InfiniBand port identifiers map to underlying PCIe devices.
+. Configure the `udev` rule to ensure consistent mapping of logical InfiniBand port identifiers to underlying PCIe devices.
 +
 The `udev` rule must be unique to the PCIe topology of each server platform used as a BeeGFS file node.
 +

@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-design-hardware-architecture.html
-keywords: hardware configuration, design, EF600, NetApp, BeeGFS
-summary: "Hardware configuration for the BeeGFS on NetApp solution."
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "The hardware configuration for BeeGFS on NetApp includes file nodes and network cabling."
 ---
 
 = Hardware configuration

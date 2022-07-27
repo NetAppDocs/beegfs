@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-design-overview.html
-keywords: EF600, NetApp, BeeGFS, Verified Architecture, design
-summary: "Describes the architecture and design considerations used to determine the specific equipment, cabling, and configurations required to support the BeeGFS on NetApp solution."
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "Specific equipment, cabling, and configurations are required to support the BeeGFS on NetApp solution, which combines the BeeGFS parallel file system with the NetApp EF600 storage systems."
 ---
 
 = Design overview

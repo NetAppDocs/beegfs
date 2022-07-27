@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-bestpractice.html
-keywords: Best practice, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "Learn about the best practices to follow when deploying the BeeGFS on NetApp shared-disk high availability solution."
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "Follow the best practice guidelines when deploying the BeeGFS on NetApp solution."
 ---
 
 = Review best practices

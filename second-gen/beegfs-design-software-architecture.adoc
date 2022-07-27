@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-design-software-architecture.html
-keywords: software architecture, design, EF600, NetApp, BeeGFS
-summary: "Software configuration for the BeeGFS on NetApp solution."
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "The software configuration for BeeGFS on NetApp includes BeeGFS network components, EF600 block nodes, BeeGFS file nodes, resource groups, and BeeGFS services."
 ---
 
 = Software configuration

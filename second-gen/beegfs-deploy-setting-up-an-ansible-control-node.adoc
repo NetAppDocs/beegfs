@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-setting-up-an-ansible-control-node.html
-keywords: Ansible control node, set up, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "Set up an Ansible control node."
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "To set up an Ansible control node, identify a virtual or physical machine with network access to the management ports of all file and block nodes that can be used to configure the solution."
 ---
 
 = Set up an Ansible control node
@@ -75,5 +75,5 @@ Do *not* set up passwordless SSH to the block nodes. This is neither supported n
 This installation includes additional Ansible dependencies, such as the NetApp SANtricity software and host collections.
 +
 ....
-ansible-galaxy collection install netapp_eseries.beegfs:==3.0.0
+ansible-galaxy collection install netapp_eseries.beegfs:==3.0.1
 ....

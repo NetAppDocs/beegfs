@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-learn-ansible.html
-keywords: EF600, NetApp, BeeGFS, Verified Architecture
-summary: "Use Ansible to configure and deploy the BeeGFS on NetApp solution using the second generation BeeGFS building block design."
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "Before you begin deployment, make sure you understand how to use Ansible to configure and deploy the BeeGFS on NetApp solution using the second generation BeeGFS building block design."
 ---
 
 = Learn about the Ansible inventory
@@ -30,7 +30,7 @@ While in-depth documentation is provided with the roles, the deployment procedur
 == Inventory layout for a BeeGFS HA cluster
 Use the Ansible inventory structure to define a BeeGFS HA cluster.
 
-Anyone with previous Ansible experience should be aware that the BeeGFS HA role implements a custom method of discovering which variables (or facts) apply to each host. This is required to simplify building an Ansible inventory that describes resources for running on multiple servers.
+Anyone with previous Ansible experience should be aware that the BeeGFS HA role implements a custom method of discovering which variables (or facts) apply to each host. This is required to simplify building an Ansible inventory that describes resources that can run on multiple servers.
 
 An Ansible inventory typically consists of the files in `host_vars` and `group_vars`, and an `inventory.yml` file that assigns hosts to specific groups (and potentially groups to other groups).
 
