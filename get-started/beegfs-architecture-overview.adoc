@@ -64,7 +64,7 @@ For more information about the Lenovo SR665, see https://lenovopress.com/lp1269-
 
 The solution's building blocks (shown in the following figure) uses two dual socket PCIe 4.0-capable servers for the BeeGFS file layer and two EF600 storage systems as the block layer.
 
-image:../media/beegfs-design-image2.png[]
+image:../media/beegfs-design-image2-small.png[]
 
 [NOTE]
 Because each building block includes two BeeGFS file nodes, a minimum of two building blocks is required to establish quorum in the failover cluster. While you can configure a two-node cluster, this configuration has limits that might prevent a successful failover to occur. If you require a two-node cluster, you can incorporate a third device as a tiebreaker (however, that design is not covered in this site).
