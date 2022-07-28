@@ -40,7 +40,7 @@ In the following diagram, interfaces highlighted in light green are located in o
 +
 The following figure shows the balancing of traffic across multiple BeeGFS client interfaces.
 +
-image:../media/beegfs-design-image8-small.png[]
+image:../media/beegfs-design-image8.png[]
 +
 
 Because each file in BeeGFS is typically striped across multiple storage services, the multi-rail configuration allows the client to achieve more throughput than is possible with a single InfiniBand port. For example, the following code sample shows a common file-striping configuration that allows the client to balance traffic across both interfaces:
@@ -113,7 +113,7 @@ For each BeeGFS resource group, Pacemaker runs a custom BeeGFS monitoring resour
 
 The following figure shows the Pacemaker-controlled BeeGFS services and dependencies.
 
-image:../media/beegfs-design-image11-small.png[]
+image:../media/beegfs-design-image11.png[]
 
 [NOTE]
 So that multiple BeeGFS services of the same type are started on the same node, Pacemaker is configured to start BeeGFS services using the Multi Mode configuration method. For more information, see the https://doc.beegfs.io/latest/advanced_topics/multimode.html[BeeGFS documentation on Multi Mode^].

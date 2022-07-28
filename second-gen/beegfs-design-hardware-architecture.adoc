@@ -55,6 +55,6 @@ To leverage the full PCIe bidirectional bandwidth, make sure one port on each In
 
 The following figure shows the cabling design used to leverage the full PCIe bidirectional bandwidth.
 
-image:../media/beegfs-design-image7-small.png[]
+image:../media/beegfs-design-image7.png[]
 
 For each BeeGFS service, use the same adapter to connect the preferred port used for client traffic with the path to the block nodes controller that is the primary owner of that services volumes. For more information, see link:beegfs-design-software-architecture.html[Software configuration].

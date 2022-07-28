@@ -75,12 +75,12 @@ The BeeGFS on NetApp solution runs across all building blocks in the deployment.
 
 Up to five building blocks are combined into a standalone Linux HA cluster, ensuring a reasonable number of resources per cluster resource manager (Pacemaker), and reducing the messaging overhead required to keep cluster members in sync (Corosync). A minimum of two building blocks per cluster is recommended to allow enough members to establish quorum. One or more of these standalone BeeGFS HA clusters are combined to create a BeeGFS file system (shown in the following figure) that is accessible to clients as a single storage namespace.
 
-image:../media/beegfs-design-image3-small.png[]
+image:../media/beegfs-design-image3.png[]
 
 Although ultimately the number of building blocks per rack depends on the power and cooling requirements for a given site, the solution was designed so that up to five building blocks can be deployed in a single 42U rack while still providing room for two 1U InfiniBand switches used for the storage/data network.  Each building block requires eight IB ports (four per switch for redundancy), so five building blocks leaves half the ports on a 40-port HDR InfiniBand switch (like the NVIDIA QM8700) available to implement a fat-tree or similar nonblocking topology. This configuration ensures that the number of storage or compute/GPU racks can be scaled up without networking bottlenecks. Optionally, an oversubscribed storage fabric can be used at the recommendation of the storage fabric vendor.
 
 The following image shows an 80-node fat-tree topology.
 
-image:../media/beegfs-design-image4-small.png[]
+image:../media/beegfs-design-image4.png[]
 
 By using Ansible as the deployment engine to deploy BeeGFS on NetApp, administrators can maintain the entire environment using modern infrastructure as code practices. This drastically simplifies what would otherwise be a complex system, allowing administrators to define and adjust configuration all in one place, then ensure it is applied consistently regardless of how large the environment scales. The BeeGFS collection is available from https://galaxy.ansible.com/netapp_eseries/beegfs[Ansible Galaxy^] and https://github.com/netappeseries/beegfs/[NetApp's E-Series GitHub^].
