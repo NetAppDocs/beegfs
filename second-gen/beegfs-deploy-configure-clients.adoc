@@ -18,7 +18,7 @@ You must install and configure the BeeGFS client on any hosts that need access t
 .Steps
 . If needed, set up passwordless SSH from the Ansible control node to each of the hosts you want to configure as BeeGFS clients:
 +
-`ssh-copy-id <user>@<HOSTNAME_OR_IP>`.
+`ssh-copy-id <user>@<HOSTNAME_OR_IP>`
 
 . Under `host_vars/`,  create a file for each BeeGFS client named `<HOSTNAME>.yml` with the following content, filling in the placeholder text with the correct information for your environment:
 +
@@ -80,7 +80,7 @@ Do not store passwords in plain text. Instead, use the Ansible Vault (see the An
 ....
 +
 [NOTE]
-When using the Mellanox OFED drivers, make sure that `beegfs_client_ofed_include_path` points to the correct header include path  for your Linux installation. For more information, see the BeeGFS documentation for https://doc.beegfs.io/latest/advanced_topics/rdma_support.html[RDMA support^].
+When using the Mellanox OFED drivers, make sure that `beegfs_client_ofed_include_path` points to the correct "header include path" for your Linux installation. For more information, see the BeeGFS documentation for https://doc.beegfs.io/latest/advanced_topics/rdma_support.html[RDMA support^].
 
 . In the `client_inventory.yml` file, list the BeeGFS file systems you want mounted at the bottom of any previously defined `vars`.
 +

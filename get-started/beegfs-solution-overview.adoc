@@ -36,7 +36,7 @@ The following use cases apply to the BeeGFS on NetApp solution:
 == Benefits
 The key benefits of using BeeGFS on NetApp include:
 
-* Availability of verified hardware designs providing full integration of hardware and software components to ensure predicable performance and reliability.
+* Availability of verified hardware designs providing full integration of hardware and software components to ensure predictable performance and reliability.
 * Deployment and management using Ansible for simplicity and consistency at scale.
 * Monitoring and observability provided using the E-Series Performance Analyzer and BeeGFS plugin. For more information, see https://www.netapp.com/blog/monitoring-netapp-eseries/[Introducing a Framework to Monitor NetApp E-Series Solutions^].
 * High availability featuring a shared-disk architecture that provides data durability and availability.

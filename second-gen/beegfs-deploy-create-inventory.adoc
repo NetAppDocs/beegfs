@@ -41,7 +41,7 @@ Define the configuration that applies to individual file nodes and individual bu
 
 . Under `host_vars/`,  create a file for each BeeGFS file node named `<HOSTNAME>.yml` with the following content, paying special attention to the notes regarding content to populate for BeeGFS cluster IPs and host names ending in odd versus even numbers.
 +
-Initially, the file node interface names do match what is listed here (such as ib0 or ibs1f0). These custom names are configured in <<Step 4: Define the configuration for the common file node>>.
+Initially, the file node interface names do match what is listed here (such as ib0 or ibs1f0). These custom names are configured in <<Step 4: Define configuration that should apply to all file nodes>>.
 +
 ....
 ansible_host: “<MANAGEMENT_IP>”
@@ -144,7 +144,7 @@ beegfs_ha_ntp_server_pools:  # Modify the NTP server addressess if desired.
   - "pool 1.pool.ntp.org iburst maxsources 3"
 ....
 
-== Step 4: Define configuration that should apply to all file nodes.
+== Step 4: Define configuration that should apply to all file nodes
 
 The shared configuration for file nodes is defined in a group called `ha_cluster`. The steps in this section build out the configuration that should be included in the `group_vars/ha_cluster.yml` file.
 
@@ -204,7 +204,7 @@ For this step, be aware that:
 
 * By default, fencing is enabled, but you need to configure a fencing _agent_.
 * The `<HOSTNAME>` specified in the `pcmk_host_map` or `pcmk_host_list` must correspond with the hostname in the Ansible inventory.
-* Running the BeeGFS cluster without fencing is not supported, particularly in production. This is largely to ensure when BeeGFS services including any resource dependencies like block devices failover due to an issue, there is no risk of concurrent access by multiple nodes that result in file system corruption or other undesirable or unexpected behavior. If fencing must be disabled, refer to the general notes in the BeeGFS HA role’s getting started guide and set `beegfs_ha_cluster_crm_config_options["stonith-enabled"]` to false in `ha_cluster.yml`.
+* Running the BeeGFS cluster without fencing is not supported, particularly in production. This is largely to ensure when BeeGFS services, including any resource dependencies like block devices, fail over due to an issue, there is no risk of concurrent access by multiple nodes that result in file system corruption or other undesirable or unexpected behavior. If fencing must be disabled, refer to the general notes in the BeeGFS HA role’s getting started guide and set `beegfs_ha_cluster_crm_config_options["stonith-enabled"]` to false in `ha_cluster.yml`.
 * There are multiple node-level fencing devices available, and the BeeGFS HA role can configure any fencing agent available in the Red Hat HA package repository. When possible, use a fencing agent that works through the uninterruptible power supply (UPS) or rack power distribution unit (rPDU), because some fencing agents such as the baseboard management controller (BMC) or other lights-out devices that are built into the server might not respond to the fence request under certain failure scenarios.
 +
 ....
@@ -355,7 +355,7 @@ eseries_drive_firmware_upgrade_drives_online: true
 ....
 +
 [NOTE]
-Setting `eseries_drive_firmware_upgrade_drives_online` to `false` will speed up the upgrade, but should not be done until after BeeGFS is deployed. This is because that setting requires stopping all I/O to the drives before the upgrade to avoid application errors. Although performing an online drive firmware upgrade before configuring volumes is still quick, we recomment you always set this value to `true` to avoid issues later.
+Setting `eseries_drive_firmware_upgrade_drives_online` to `false` will speed up the upgrade, but should not be done until after BeeGFS is deployed. This is because that setting requires stopping all I/O to the drives before the upgrade to avoid application errors. Although performing an online drive firmware upgrade before configuring volumes is still quick, we recommend you always set this value to `true` to avoid issues later.
 +
 . To optimize performance, make the following changes to the global configuration:
 +

@@ -26,9 +26,9 @@ sidebar:
     entries:
     - title: Design overview
       url: /beegfs-design-overview.html
-    - title: Hardware design
+    - title: Hardware configuration
       url: /beegfs-design-hardware-architecture.html
-    - title: Software design
+    - title: Software configuration
       url: /beegfs-design-software-architecture.html
     - title: Design verification
       url: /beegfs-design-solution-verification.html

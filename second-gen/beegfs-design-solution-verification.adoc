@@ -69,11 +69,11 @@ The following figure shows the IOR test results with three BeeGFS building block
 
 image:beegfs-design-image16.png[]
 
-As expected, the performance difference between the base building block and the subsequent metadata + storage building block is negligible. Comparing the metadata + storage building block and a storage-only building shows a slight increase in read performance due to the additional drives used as storage targets. However, there is no significant difference in write performance. To achieve higher performance, you can add multiple building blocks together to scale performance in a linear fashion.
+As expected, the performance difference between the base building block and the subsequent metadata + storage building block is negligible. Comparing the metadata + storage building block and a storage-only building block shows a slight increase in read performance due to the additional drives used as storage targets. However, there is no significant difference in write performance. To achieve higher performance, you can add multiple building blocks together to scale performance in a linear fashion.
 
 == IOR bandwidth tests: Single client
 
-The IOR bandwidth test used OpenMPI to run multiple IOR processes using a single high- performance GPU server to explore the performance achievable to a single client.
+The IOR bandwidth test used OpenMPI to run multiple IOR processes using a single high-performance GPU server to explore the performance achievable to a single client.
 
 This test also compares the reread behavior and performance of BeeGFS when the client is configured to use the Linux kernel page-cache (`tuneFileCacheType = native`) versus the default `buffered` setting.
 
@@ -122,10 +122,10 @@ As part of validating this architecture, NetApp executed several functional test
 * Powering off one of the InfiniBand switches using the PDU. All tests were performed while stress testing was in progress with the `sysSessionChecksEnabled: false` parameter set on the BeeGFS clients. No errors or disruption to I/O was observed.
 
 [NOTE]
-There is a known issue (see the https://github.com/netappeseries/beegfs/blob/master/CHANGELOG.md[Changelog^]) when BeeGFS client/server RDMA connections are disrupted unexpectedly, either through loss off the primary interface (as defined in `connInterfacesFile`) or a BeeGFS server failing; active client I/O can hang for up to ten minutes before resuming. This issue does not occur when BeeGFS nodes are gracefully placed in and out of standby for planned maintenance or if TCP is in use.
+There is a known issue (see the https://github.com/netappeseries/beegfs/blob/master/CHANGELOG.md[Changelog^]) when BeeGFS client/server RDMA connections are disrupted unexpectedly, either through loss of the primary interface (as defined in `connInterfacesFile`) or a BeeGFS server failing; active client I/O can hang for up to ten minutes before resuming. This issue does not occur when BeeGFS nodes are gracefully placed in and out of standby for planned maintenance or if TCP is in use.
 
 == NVIDIA DGX A100 SuperPOD validation
 
 NetApp validated a storage solution for NVIDIAs DGX A100 SuperPOD using a similar BeeGFS file system consisting of three building blocks with the metadata plus storage configuration profile applied. The qualification effort involved testing the solution described by this NVA with twenty DGX A100 GPU servers running a variety of storage, machine learning, and deep learning benchmarks.
 
-For more information see https://www.netapp.com/pdf.html?item=/media/72718-nva-1167-DESIGN.pdf[NVIDIA DGX SuperPOD with NetApp^].
+For more information, see https://www.netapp.com/pdf.html?item=/media/72718-nva-1167-DESIGN.pdf[NVIDIA DGX SuperPOD with NetApp^].

@@ -19,6 +19,6 @@ Learn more:
 
 * link:beegfs-design-hardware-architecture.html[Hardware configuration]
 * link:beegfs-design-software-architecture.html[Software configuration]
-* link:beegfs-design-solution-verification.html[Profile verification]
+* link:beegfs-design-solution-verification.html[Design verification]
 * link:beegfs-design-solution-sizing-guidelines.html[Sizing guidelines]
 * link:beegfs-design-performance-tuning.html[Performance tuning]
