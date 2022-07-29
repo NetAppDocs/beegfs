@@ -1,0 +1,36 @@
+---
+sidebar: sidebar
+permalink: beegfs-deploy-recommended-volume-percentages.html
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "When following the standard four volumes per storage pool configuration for second generation building blocks, refer to these recommended percentages."
+---
+
+= Recommended storage pool overprovisioning percentages
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+[.lead]
+When following the standard four volumes per storage pool configuration for second generation building blocks, refer to the following table.
+
+This table provides recommended percentages to use as the volume size in the `eseries_storage_pool_configuration` for each BeeGFS metadata or storage target:
+
+|===
+|Drive size |Size
+
+|1.92TB
+|18
+|3.84TB
+|21.5
+|7.68TB
+|22.5
+|15.3TB
+|24
+|===
+
+[NOTE]
+The above guidance does not apply to the storage pool containing the management service, which should reduce the sizes above by .25% to allocate 1% of the storage pool for management data.
+
+To understand how these values were determined, see https://www.netapp.com/media/17009-tr4800.pdf[TR-4800: Appendix A: Understanding SSD endurance and overprovisioning^].

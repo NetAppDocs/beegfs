@@ -1,0 +1,63 @@
+---
+sidebar: sidebar
+permalink: beegfs-deploy-overview.html
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "You can deploy BeeGFS on NetApp to validated file and block nodes using the second generation of NetApp’s BeeGFS building block design."
+---
+
+= Deployment overview
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+[.lead]
+You can deploy BeeGFS on NetApp to validated file and block nodes using the second generation of NetApp’s BeeGFS building block design.
+
+== Ansible collections and roles
+You deploy the BeeGFS on NetApp solution using Ansible, which is a popular IT automation engine used to automate application deployments. Ansible uses a series of files collectively known as an inventory, which models the BeeGFS file system you want to deploy.
+
+Ansible allows companies such as NetApp to expand on built-in functionality using collections on Ansible Galaxy (see https://galaxy.ansible.com/netapp_eseries[NetApp E-Series BeeGFS collection^]). Collections include modules that perform some specific function or task (like create an E-Series volume) and include roles that can call multiple modules and other roles. This automated approach reduces the time needed to deploy the BeeGFS file system and the underlying HA cluster. In addition, it simplifies adding building blocks to expand the existing file systems.
+
+For additional details, see link:beegfs-deploy-learn-ansible.html[Learn about the Ansible inventory].
+
+[NOTE]
+Because numerous steps are involved in deploying the BeeGFS on NetApp solution, NetApp does not support manually deploying the solution.
+
+== Configuration profiles for BeeGFS building blocks
+The deployment procedures cover the following configuration profiles:
+
+* One base building block that includes management, metadata, and storage services.
+* A second building block that includes metadata and storage services.
+* A third building block that includes only storage services.
+
+These profiles demonstrate the full range of recommended configuration profiles for the NetApp BeeGFS building blocks. For each deployment, the number of metadata and storage building blocks or storage services-only building blocks may vary in the procedures, depending on capacity and performance requirements.
+
+== Overview of deployment steps
+Deployment involves the following high-level tasks:
+
+.Hardware deployment
+. Physically assemble each building block.
+. Rack and cable hardware.
+For detailed procedures, see link:beegfs-deploy-hardware.html[Deploy hardware].
+
+.Software deployment
+. link:beegfs-deploy-setup-nodes.html[Set up file and block nodes].
+* Configure BMC IPs on file nodes
+* Install a supported operating system and configure management networking on file nodes
+* Configure management IPs on block nodes
+
+. link:beegfs-deploy-setting-up-an-ansible-control-node.html[Set up an Ansible control node].
+. link:beegfs-deploy-file-node-tuning.html[Tune system settings for performance].
+. link:beegfs-deploy-create-inventory.html[Create the Ansible inventory].
+. link:beegfs-deploy-define-inventory.html[Define Ansible inventory for BeeGFS building blocks].
+. link:beegfs-deploy-playbook.html[Deploy BeeGFS using Ansible].
+. link:beegfs-deploy-configure-clients.html[Configure BeeGFS clients].
+
+
+[NOTE]
+The deploy procedures includes several examples where text needs to be copied to a file. Pay close attention to any inline comments denoted by “#” or “//” characters for anything that should or can be modified for a specific deployment. For example:
+`beegfs_ha_ntp_server_pools:  # THIS IS AN EXAMPLE OF A COMMENT!
+  - "pool 0.pool.ntp.org iburst maxsources 3"
+  - "pool 1.pool.ntp.org iburst maxsources 3"`

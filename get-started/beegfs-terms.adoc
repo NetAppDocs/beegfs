@@ -1,0 +1,82 @@
+---
+sidebar: sidebar
+permalink: beegfs-terms.html
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "Terms and concepts that apply to BeeGFS on NetApp solution."
+---
+
+= Terms and concepts
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+[.lead]
+The following terms and concepts apply to the BeeGFS on NetApp solution.
+
+
+[cols="25h,~",options="header"]
+|===
+| Term | Description
+a|
+AI
+a|
+Artificial Intelligence.
+a|
+Ansible Inventory
+a|
+Directory structure containing YAML files that are used to describe the desired BeeGFS HA cluster.
+a|
+BMC
+a|
+Baseboard management controller. Sometimes referred to as a service processor.
+a|
+block nodes
+a|
+Storage systems.
+a|
+clients
+a|
+Server nodes.
+a|
+DL
+a|
+Deep Learning.
+a|
+file nodes
+a|
+BeeGFS file servers.
+a|
+HA
+a|
+High Availability.
+a|
+HIC
+a|
+Host Interface Card.
+a|HPC
+a|
+High-Performance Computing.
+a|
+HPC-style workloads
+a|
+HPC-style workloads are typically characterized by multiple compute nodes or GPUs all needing to access the same dataset in parallel to facilitate a distributed compute or training job. These datasets are often comprised of large files that should be striped across multiple physical storage nodes to eliminate the traditional hardware bottlenecks that would prevent concurrent access to a single file.
+a|
+ML
+a|
+Machine Learning.
+a|
+NLP
+a|
+Natural Language Processing.
+a|
+NLU
+a|
+Natural Language Understanding.
+a|
+NVA
+a|
+The NetApp Verified Architecture (NVA) program provides reference configurations and sizing guidance for specific workloads and use cases. These solutions are thoroughly tested, and are designed to minimize deployment risks and to accelerate time to market.
+
+|===

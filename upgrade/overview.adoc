@@ -1,0 +1,12 @@
+---
+permalink: upgrade/overview.html
+sidebar: sidebar
+keywords: upgrade, overview
+summary: "Upgrade overview"
+---
+= Upgrade overview
+:icons: font
+:imagesdir: ../media/
+
+[.lead]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

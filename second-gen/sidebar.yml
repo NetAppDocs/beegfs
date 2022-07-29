@@ -1,48 +1,33 @@
-settings:
-  name: "BeeGFS on NetApp with E-Series Storage"
-  internal:
-    pdf_enabled: true
-  prod:
-    pdf_enabled: true
-sidebar:
-  entries:
-  - title: BeeGFS on NetApp docs
-    url: "/index.html"
+section: second-gen
+title: Use second generation NVA
+entries:
   - title: Get started
     entries:
-    - title: What's included in this site
-      url: /whats-included.html
-    - title: Terms and concepts
-      url: /beegfs-terms.html
-    - title: Design generations
-      url: /beegfs-gens.html
     - title: Solution overview
       url: /beegfs-solution-overview.html
-    - title: Architecture overview
-      url: /beegfs-architecture-overview.html
     - title: Technical requirements
       url: /beegfs-technology-requirements.html
-  - title: Review solution design
+  - title: Design
     entries:
-    - title: Design overview
+    - title: Overview
       url: /beegfs-design-overview.html
-    - title: Hardware configuration
+    - title: Hardware design
       url: /beegfs-design-hardware-architecture.html
-    - title: Software configuration
+    - title: Software design
       url: /beegfs-design-software-architecture.html
-    - title: Design verification
+    - title: Verfication
       url: /beegfs-design-solution-verification.html
     - title: Sizing guidelines
       url: /beegfs-design-solution-sizing-guidelines.html
     - title: Performance tuning
       url: /beegfs-design-performance-tuning.html
-  - title: Deploy solution
+  - title: Deploy
     entries:
-        - title: Deployment overview
+        - title: Overview
           url: /beegfs-deploy-overview.html
-        - title: Learn about the Ansible inventory
+        - title: Learn about Ansible
           url: /beegfs-deploy-learn-ansible.html
-        - title: Review best practices
+        - title: Best practice
           url: /beegfs-deploy-bestpractice.html
         - title: Deploy hardware
           url: /beegfs-deploy-hardware.html
@@ -50,24 +35,19 @@ sidebar:
           entries:
             - title: Set up file and block nodes
               url: /beegfs-deploy-setup-nodes.html
-            - title: Tune system settings for performance
-              url:  beegfs-deploy-file-node-tuning.html
             - title: Set up Ansible control node
               url: /beegfs-deploy-setting-up-an-ansible-control-node.html
             - title: Create Ansible inventory
-              url: /beegfs-deploy-create-inventory.html
+              url: /beegfs-deploy-beegfs-general-config.html
             - title: Define BeeGFS building blocks
-              url: /beegfs-deploy-define-inventory.html
+              url: /beegfs-deploy-beegfs-build-inventory.html
             - title: Deploy BeeGFS
-              url: /beegfs-deploy-playbook.html
-            - title: Configure BeeGFS clients
-              url: /beegfs-deploy-configure-clients.html
+              url: /beegfs-deploy-beegfs-playbook.html
+            - title: Configure BeeGFS client
+              url: /beegfs-deploy-beegfs-configure-clients.html
+            - title: Tune system settings for performance
+              url:  beegfs-deploy-file-node-tuning.html
         - title: Scale BeeGFS clusters
-          url: /beegfs-deploy-scale-building-blocks.html
+          url: /beegfs-deploy-beegfs-scale.html
         - title: Recommended volume percentages
           url: /beegfs-deploy-recommended-volume-percentages.html
-  - title: Legal notices
-    url: /legal-notices.html
-product-family:
-  name: E-Series
-  repo: e-series-family
