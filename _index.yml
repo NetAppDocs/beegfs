@@ -23,6 +23,8 @@ indexpage:
            url: https://www.netapp.com/support-and-training/documentation/
          - title: BeeGFS Documentation
            url: https://doc.beegfs.io/
+         - title: TR-4915 - Data movement with E-Series and BeeGFS for AI
+           url: https://www.netapp.com/pdf.html?item=/media/65882-tr-4915.pdf
 
      - title: Tools & support
        links:
