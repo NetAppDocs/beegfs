@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-design-performance-tuning.html
-keywords: Performance tuning, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "Set the tuning parameters for optimal perfomance."
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "The BeeGFS solution includes recommendations for performance tuning that were based on verification tests."
 ---
 
 = Performance tuning
@@ -12,41 +12,36 @@ summary: "Set the tuning parameters for optimal perfomance."
 :linkattrs:
 :imagesdir: ./media/
 
-//
-// This file was created with NDAC Version 2.0 (August 17, 2020)
-//
-// 2022-05-02 10:33:57.462593
-//
 
 [.lead]
-Although BeeGFS provides reasonable performance out of the box, NetApp has developed a set of recommended tuning parameters to maximize performance, especially given the capabilities of the underlying E-Series block nodes and to account for any special requirements need to run BeeGFS in a shared-disk HA architecture.
+The BeeGFS solution includes recommendations for performance tuning that were based on verification tests.
 
-== Performance tuning parameters
+Although BeeGFS provides reasonable performance out of the box, NetApp has developed a set of recommended tuning parameters to maximize performance. These parameters take into account the  capabilities of the underlying E-Series block nodes and any special requirements needed to run BeeGFS in a shared-disk HA architecture.
+
+== Performance tuning for file nodes
 The available tuning parameters that you can configure include the following:
 
 . *System settings in the UEFI/BIOS of file nodes.*
-To maximize performance, we recommended configuring the system settings on the server model you use as your file nodes. You configure the system settings when you link:/beegfs-deploy-setup-nodes.html[set up your file nodes] by using either the system setup (UEFI/BIOS) or the Redfish APIs provided by the baseboard management controller (BMC).
+To maximize performance, we recommend configuring the system settings on the server model you use as your file nodes. You configure the system settings when you set up your file nodes by using either the system setup (UEFI/BIOS) or the Redfish APIs provided by the baseboard management controller (BMC).
 +
-The system settings vary depending on the server model you use as your file node. The settings must be manually configured based on the server model in use. To learn how to configure the system settings for the validated Lenovo SR665 file nodes, see link:beegfs-deploy-performance-tuning.html[Configure system settings for the validated Lenovo SR665 file nodes].
+The system settings vary depending on the server model you use as your file node. The settings must be manually configured based on the server model in use. To learn how to configure the system settings for the validated Lenovo SR665 file nodes, see link:beegfs-deploy-file-node-tuning.html[Tune file node system settings for performance].
 
 . *Default settings for required configuration parameters.*
 The required configuration parameters affect how BeeGFS services are configured and how E-Series volumes (block devices) are formatted and mounted by Pacemaker. These required configuration parameters include the following:
 +
 * BeeGFS Service configuration parameters
 +
-You can override the default settings for the configuration parameters as needed. See the https://github.com/netappeseries/beegfs/blob/135d9a04ae96f4d202300bae870c6404b77b6865/roles/beegfs_ha_7_2/defaults/main.yml#L155[BeeGFS service configuration parameters] that you can adjust for your specific workloads or use cases.
+You can override the default settings for the configuration parameters as needed. For the parameters that you can adjust for your specific workloads or use cases, see the https://github.com/netappeseries/beegfs/blob/135d9a04ae96f4d202300bae870c6404b77b6865/roles/beegfs_ha_7_2/defaults/main.yml#L155[BeeGFS service configuration parameters^].
 +
-* Volume formatting and mounting parameters
-+
-You can override the default settings for the configuration parameters if you want to do the following:
-+
+* Volume formatting and mounting parameters are set to recommended defaults, and should only be adjusted for advanced use cases. The default values will do the following:
+
 ** Optimize initial volume formatting based on the target type (such as management, metadata, or storage), along with the RAID configuration and segment size of the underlying volume.
 ** Adjust how Pacemaker mounts each volume to ensure that changes are immediately flushed to E-series block nodes. This prevents data loss when file nodes fail with active writes in progress.
 +
-See the  https://github.com/netappeseries/beegfs/blob/135d9a04ae96f4d202300bae870c6404b77b6865/roles/beegfs_ha_7_2/defaults/main.yml#L258[volume formatting and mounting configuration parameters] that you can adjust for your specific workloads or use cases.
+For the parameters that you can adjust for your specific workloads or use cases, see the https://github.com/netappeseries/beegfs/blob/135d9a04ae96f4d202300bae870c6404b77b6865/roles/beegfs_ha_7_2/defaults/main.yml#L258[volume formatting and mounting configuration parameters^].
 
 . *System settings in the Linux OS installed on the file nodes.*
-You can override the default Linux OS system settings when you create the Ansible inventory in link:/beegfs-deploy-beegfs-general-config.html#step-4-define-the-configuration-for-the-common-file-node[Step 4: Define the configuration for the common file node].
+You can override the default Linux OS system settings when you create the Ansible inventory in step 4 of link:beegfs-deploy-beegfs-general-config.html[Create the Ansible inventory].
 +
 The default settings were used to validate the BeeGFS on NetApp solution, but you can change them to adjust for your specific workloads or use cases. Some examples of the Linux OS system settings that you can change include the following:
 +
@@ -71,13 +66,13 @@ You can adjust the CPU frequency governor and other CPU configurations for maxim
 +
 You can increase the maximum read request size for Mellanox HCAs.
 
-=== Performance tuning for block nodes
+== Performance tuning for block nodes
 
 Based on the configuration profiles applied to a particular BeeGFS building block, the volume groups configured on the block nodes change slightly. For example, with a 24-drive EF600 block node:
 
 * For the single base building block, including BeeGFS management, metadata, and storage services:
 ** 1x 2+2 RAID 10 volume group for BeeGFS management and metadata services
-** 2x 8+10 RAID 6 volume groups for BeeGFS storage services
+** 2x 8+2 RAID 6 volume groups for BeeGFS storage services
 * For a BeeGFS metadata + storage building block:
 ** 1x 2+2 RAID 10 volume group for BeeGFS metadata services
 ** 2x 8+2 RAID 6 volume groups for BeeGFS storage services
@@ -85,12 +80,12 @@ Based on the configuration profiles applied to a particular BeeGFS building bloc
 ** 2x 10+2 RAID 6 volume groups for BeeGFS storage services
 
 [NOTE]
-As BeeGFS needs significantly less storage space for management and metadata versus storage, one option is to use smaller drives for the RAID 10 volume groups. Smaller drives should be populated in the outermost drive slots. For more information, see NVA-1164-DEPLOY-BeeGFS on NetApp deployment guide (xref).
+As BeeGFS needs significantly less storage space for management and metadata versus storage, one option is to use smaller drives for the RAID 10 volume groups. Smaller drives should be populated in the outermost drive slots. For more information, see the  link:beegfs-deploy-overview.html[deployment instructions].
 
 These are all configured by the Ansible-based deployment, along with several other settings generally recommended to optimize performance/behavior including:
 
 * Adjusting the global cache block size to 32KiB and adjusting demand-based cache flushing to 80%.
 * Disabling autoload balancing (ensuring controller volume assignments stay as intended).
-* Enabling read caching and disabling read- ahead caching.
-* Enabling write caching with mirroring and requiring battery backup so that caches persist through failure of a block node controller.
-* Specifying the order drives are assigned to volume groups balancing I/O across available drive channels.
+* Enabling read caching and disabling read-ahead caching.
+* Enabling write caching with mirroring and requiring battery backup, so that caches persist through failure of a block node controller.
+* Specifying the order that drives are assigned to volume groups, balancing I/O across available drive channels.

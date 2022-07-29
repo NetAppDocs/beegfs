@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-deploy-setting-up-an-ansible-control-node.html
-keywords: Ansible control node, set up, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "Set up an Ansible control node."
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "To set up an Ansible control node, identify a virtual or physical machine with network access to the management ports of all file and block nodes that can be used to configure the solution."
 ---
 
 = Set up an Ansible control node
@@ -12,16 +12,12 @@ summary: "Set up an Ansible control node."
 :linkattrs:
 :imagesdir: ./media/
 
-//
-// This file was created with NDAC Version 2.0 (August 17, 2020)
-//
-// 2022-05-02 10:33:57.198013
-//
-
 [.lead]
-Identify a virtual or physical machine that has network access to the management ports of all file and block nodes that can be used to configure the solution. The following steps were tested on CentOS 8.4.  For steps specific to your preferred Linux distribution, see the https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html[ Ansible documentation^] as needed.
+To set up an Ansible control node, you must identify a virtual or physical machine with network access to the management ports of all file and block nodes that can be used to configure the solution.
 
-. Install Python 3.9 and the correct version of pip is installed.
+The following steps were tested on CentOS 8.4. For steps specific to your preferred Linux distribution, see the https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html[Ansible documentation^].
+
+. Install Python 3.9 and ensure that the correct version of `pip` is installed.
 +
 ....
 sudo dnf install python3.9 -y
@@ -29,23 +25,23 @@ sudo dnf install python39-pip
 sudo dnf install sshpass
 ....
 
-. Create symbolic links the Python 3.9 binary is used whenever python3 or python is called.
+. Create symbolic links, ensuring that the Python 3.9 binary is used whenever `python3` or `python` is called.
 +
 ....
 sudo ln -sf /usr/bin/python3.9 /usr/bin/python3
 sudo ln -sf /usr/bin/python3 /usr/bin/python
 ....
 
-.  Install Python packages required by the NetApp BeeGFS collections.
+.  Install the Python packages required by the NetApp BeeGFS collections.
 +
 ....
 python3 -m pip install ansible cryptography netaddr
 ....
 +
 [NOTE]
-Always refer to the README for the version of the BeeGFS collection you’re using to ensure you are installing a supported version of Ansible and all required Python packages. These are also noted in the technology requirements section for each version of the NetApp Verified Architecture.
+To ensure that you are installing a supported version of Ansible and all required Python packages, refer to the BeeGFS collection's Readme file. Supported versions are also noted in link:beegfs-technology-requirements.html[Technical requirements].
 
-. Verify the installed version of Ansible and Python match what is expected.
+. Verify that the correct versions of Ansible and Python are installed.
 +
 ....
 ansible --version
@@ -60,28 +56,24 @@ ansible [core 2.11.6]
   libyaml = True
 ....
 
-. It is strongly recommended you store the Ansible inventories used to describe the BeeGFS deployment in source control systems such as Git or BitBucket.
-+
-Install Git to interact with those systems.
+. Store the Ansible inventories used to describe the BeeGFS deployment in source control systems such as Git or BitBucket, and then install Git to interact with those systems.
 +
 ....
 sudo dnf install git -y
 ....
 
-. The easiest way to allow Ansible to access the remote BeeGFS file nodes from the Ansible control node is by setting up passwordless SSH.
+. Set up passwordless SSH. This is the easiest way to allow Ansible to access the remote BeeGFS file nodes from the Ansible control node.
 +
 .. On the Ansible control node, if needed, generate a pair of public keys using `ssh-keygen`
 
-.. Setup passwordless SSH to each of the file nodes using `ssh-copy-id <ip_or_hostname>`
+.. Set up passwordless SSH to each of the file nodes using `ssh-copy-id <ip_or_hostname>`
 +
-Do not set up passwordless SSH to the block nodes. This is neither supported nor required.
+Do *not* set up passwordless SSH to the block nodes. This is neither supported nor required.
 
-. Use Ansible Galaxy to install the version of the BeeGFS collection listed in the technology requirements section.
+. Use Ansible Galaxy to install the version of the BeeGFS collection listed in link:beegfs-technology-requirements.html[Technical requirements].
 +
-This also installs any additional Ansible dependencies including the NetApp SANtricity and host collections.
+This installation includes additional Ansible dependencies, such as the NetApp SANtricity software and host collections.
 +
 ....
-ansible-galaxy collection install netapp_eseries.beegfs == 3. 0.0
+ansible-galaxy collection install netapp_eseries.beegfs:==3.0.1
 ....
-
-At this point you have finished configuring an Ansible control node that includes the required collections needed to deploy the solution.

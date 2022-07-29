@@ -1,15 +1,21 @@
 indexpage:
-  lead: BeeGFS on NetApp with E-Series storage is a proven, integrated solution with a simple, reliable, scalable, and cost-effective HPC infrastructure that keeps pace with your most extreme workloads.
+  lead: The BeeGFS on NetApp solution is a NetApp Verified Architecture (NVA), which combines the BeeGFS parallel file system with NetApp EF600 storage systems. This solution is a reliable, scalable, and cost-effective infrastructure that keeps pace with your most extreme workloads.
 
   tiles:
      - title: Get started
        links:
-         - title: Overview
-           url:
-         - title: Videos and Demos
-           url:
-         - title: Blogs
-           url:
+         - title: Solution overview
+           url: /beegfs-solution-overview.html
+         - title: Architecture overview
+           url: /beegfs-architecture-overview.html
+         - title: Blog - Learn about BeeGFS and E-Series
+           url: https://www.netapp.com/blog/solution-support-for-beegfs-and-e-series/
+         - title: Blog - BeeGFS for beginners
+           url: https://www.netapp.com/blog/beegfs-for-beginners/
+         - title: Blog - HA for BeeGFS
+           url: https://www.netapp.com/blog/high-availability-beegfs/
+         - title: Video - Accelerating AI workloads with BeeGFS on NetApp
+           url: https://www.netapp.tv/details/28905?mcid=04158305605030681010298851103052321172
 
      - title: Additional docs
        links:

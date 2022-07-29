@@ -1,11 +1,11 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-beegfs-configure-inventory-steptwo.html
-keywords: Configure inventory, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "Configure the inventory for a management, metadata, and storage building block."
+permalink: beegfs-deploy-define-inventory.html
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "After defining the general Ansible inventory structure, define the configuration for each building block in the BeeGFS file system."
 ---
 
-= Step 2: Configure the inventory for a management, metadata, and storage building block
+= Define Ansible inventory for BeeGFS building blocks
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -13,10 +13,47 @@ summary: "Configure the inventory for a management, metadata, and storage buildi
 :imagesdir: ./media/
 
 [.lead]
-The first building block in the cluster or base building block must include the BeeGFS management service along with metadata and storage services.
+After defining the general Ansible inventory structure, define the configuration for each building block in the BeeGFS file system.
+
+These deployment instructions demonstrate how to deploy a file system that consists of a base building block including management, metadata, and storage services; a second building block with metadata and storage services; and a third storage-only building block.
+
+These steps are intended to show the full range of typical configuration profiles that you can use to configure NetApp BeeGFS building blocks to meet the requirements of the overall BeeGFS file system.
+
+[NOTE]
+In this and subsequent sections, adjust as needed to build the inventory representing the BeeGFS file system that you want to deploy. In particular, use Ansible host names that represent each block or file node and the desired IP addressing scheme for the storage network to ensure it can scale to the number of BeeGFS file nodes and clients.
+
+
+== Step 1: Create the Ansible inventory file
 
 .Steps
-. In `inventory.yml`,  populate the following under `ha_cluster: children`:
+. Create a new `inventory.yml` file, and then insert the following parameters, replacing the hosts under `eseries_storage_systems` as needed to represent the block nodes in your deployment. The names should correspond with the name used for `host_vars/<FILENAME>.yml`.
++
+....
+# BeeGFS HA (High Availability) cluster inventory.
+all:
+  children:
+    # Ansible group representing all block nodes:
+    eseries_storage_systems:
+      hosts:
+        ictad22a01:
+        ictad22a02:
+        ictad22a03:
+        ictad22a04:
+        ictad22a05:
+        ictad22a06:
+    # Ansible group representing all file nodes:
+    ha_cluster:
+      children:
+....
++
+In the subsequent sections, you will create additional Ansible groups under `ha_cluster` that represent the BeeGFS services you want to run in the cluster.
+
+== Step 2: Configure the inventory for a management, metadata, and storage building block
+
+The first building block in the cluster or base building block must include the BeeGFS management service along with metadata and storage services:
+
+.Steps
+. In `inventory.yml`,  populate the following parameters under `ha_cluster: children`:
 +
 ....
       # ictad22h01/ictad22h02 HA Pair (mgmt/meta/storage building block):
@@ -114,7 +151,7 @@ beegfs_targets:
             owning_controller: A
 ....
 +
-. Under `group_vars/`,  create files for resource groups `meta_01`  `meta_08` using the following template, then fill in the placeholder values for each service referencing the table below:
+. Under `group_vars/`,  create files for resource groups `meta_01` through `meta_08` using the following template, and then fill in the placeholder values for each service referencing the table below:
 +
 ....
 # meta_0X - BeeGFS HA Metadata Resource Group
@@ -139,9 +176,7 @@ beegfs_targets:
             owning_controller: <OWNING CONTROLLER>
 ....
 +
-The volume size is specified as a percentage of the overall storage pool (also referred to as a volume group). NetApp highly recommends that you leave some free capacity in each pool to allow room for SSD https://www.netapp.com/pdf.html?item=/media/17009-tr4800pdf.pdf[overprovisioning^]. Storage pool `beegfs_m1_m2_m5_m6 `also allocates 1% of the pool’s capacity for the management service. Thus,  for metadata volumes in storage pool `beegfs_m1_m2_m5_m6 `when 1.92TB or 3.84TB drives are used set this value to `21.25`, for 7.65TB drives set this value to `22.25`, and for 15. 3TB drives set this value to 23.75.
-+
-For  storage pool beegfs_m3_m4_m7_m8 (and all other storage pools), see Recommended storage pool overprovisioning percentages<<xref>>.
+NOTE: The volume size is specified as a percentage of the overall storage pool (also referred to as a volume group). NetApp highly recommends that you leave some free capacity in each pool to allow room for SSD overprovisioning (for more information, see https://www.netapp.com/pdf.html?item=/media/17009-tr4800pdf.pdf[Introduction to NetApp EF600 array^]). The storage pool, `beegfs_m1_m2_m5_m6`, also allocates 1% of the pool’s capacity for the management service. Thus, for metadata volumes in the storage pool, `beegfs_m1_m2_m5_m6`, when 1.92TB or 3.84TB drives are used, set this value to `21.25`; for 7.65TB drives, set this value to `22.25`; and for 15.3TB drives, set this value to `23.75`.
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
@@ -214,7 +249,7 @@ i3b:100.127.101.8/16
 |B
 |===
 +
-. Under `group_vars/`,  create files for resource groups stor_01 – stor_08 using the following template, then fill in the placeholder values for each service referencing the ta:
+. Under `group_vars/`, create files for resource groups `stor_01` through `stor_08` using the following template, and then fill in the placeholder values for each service referencing the example:
 +
 ....
 # stor_0X - BeeGFS HA Storage Resource Groupbeegfs_ha_beegfs_storage_conf_resource_group_options:
@@ -238,7 +273,7 @@ beegfs_targets:
 ....
 +
 [NOTE]
- For the correct size to use,  see Appendix B: Recommended storage pool overprovisioning percentages <<xref>>.
+ For the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
@@ -313,10 +348,10 @@ i3b:100.127.103.8/16
 
 == Step 3: Configure the inventory for a Metadata + storage building block
 
-This section walks you through setting up an Ansible inventory that describes a BeeGFS metadata + storage building block:
+These steps describe how to set up an Ansible inventory for a BeeGFS metadata + storage building block.
 
 .Steps
-. In `inventory.yml`,  populate the following under the existing configuration:
+. In `inventory.yml`,  populate the following parameters under the existing configuration:
 +
 ....
         meta_09:
@@ -385,7 +420,7 @@ This section walks you through setting up an Ansible inventory that describes a 
             ictad22h03:
 ....
 +
-. Under `group_vars/`,  create files for resource groups meta_09  meta_16 using the following template,  then fill in the placeholder values for each service referencing the table:
+. Under `group_vars/`,  create files for resource groups `meta_09` through `meta_16` using the following template, and then fill in the placeholder values for each service referencing the example:
 +
 ....
 # meta_0X - BeeGFS HA Metadata Resource Group
@@ -411,7 +446,7 @@ beegfs_targets:
 ....
 +
 [NOTE]
-For the correct size to use,  see Appendix B: Recommended storage pool overprovisioning percentages <<xref>>.
+For the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
@@ -484,7 +519,7 @@ i3b:100.127.101.16/16
 |B
 |===
 +
-. Under `group_vars/,` create files for resource groups stor_09  stor_16 using the following template,  then fill in the placeholder values for each service referencing the table:
+. Under `group_vars/,` create files for resource groups `stor_09` through `stor_16` using the following template, and then fill in the placeholder values for each service referencing the example:
 +
 ....
 # stor_0X - BeeGFS HA Storage Resource Group
@@ -510,7 +545,7 @@ beegfs_targets:
 ....
 +
 [NOTE]
- For the correct size to use, see Appendix B: Recommended storage pool overprovisioning percentages <<xref>>.
+ For the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages]..
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
@@ -585,10 +620,10 @@ i3b:100.127.103.16/16
 
 == Step 4: Configure the inventory for a storage-only building block
 
-This section walks you through setting up an Ansible inventory that describes a BeeGFS storage- only building block.  The major difference between setting up the configuration for a metadata + storage versus a storage- only building block is the omission of all metadata resource groups and changing `criteria_drive_count` from 10 to 12 for each storage pool.
+These steps describe how to set up an Ansible inventory for a BeeGFS storage-only building block. The major difference between setting up the configuration for a metadata + storage versus a storage-only building block is the omission of all metadata resource groups and changing `criteria_drive_count` from 10 to 12 for each storage pool.
 
 .Steps
-. In `inventory.yml`,  populate the following under the existing configuration:
+. In `inventory.yml`,  populate the following parameters under the existing configuration:
 +
 ....
       # ictad22h05/ictad22h06 HA Pair (storage only building block):
@@ -626,7 +661,7 @@ This section walks you through setting up an Ansible inventory that describes a 
             ictad22h05:
 ....
 +
-. Under `group_vars/`,  create files for resource groups stor_17  stor_24 using the following template, then fill in the placeholder values for each service referencing the table:
+. Under `group_vars/`,  create files for resource groups `stor_17` through `stor_24` using the following template, and then fill in the placeholder values for each service referencing the example:
 +
 ....
 # stor_0X - BeeGFS HA Storage Resource Group
@@ -654,7 +689,7 @@ beegfs_targets:
 ....
 +
 [NOTE]
- For  the correct size to use, see Appendix B: Recommended storage pool overprovisioning percentages <<xref>>.
+ For  the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller

@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: beegfs-technology-requirements.html
-keywords: Technical requirements, EF600, NetApp, BeeGFS, Verified Architecture
-summary: "This section covers the technology requirements for the BeeGFS on NetApp solution."
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
+summary: "To implement the BeeGFS on NetApp solution, make sure your environment meets the technology requirements."
 ---
 
 = Technical requirements
@@ -12,20 +12,15 @@ summary: "This section covers the technology requirements for the BeeGFS on NetA
 :linkattrs:
 :imagesdir: ./media/
 
-//
-// This file was created with NDAC Version 2.0 (August 17, 2020)
-//
-// 2022-04-29 10:21:46.073829
-//
 
 [.lead]
-Learn about the technical requirements for the BeeGFS on NetApp solution.
+To implement the BeeGFS on NetApp solution, make sure your environment meets the technology requirements.
 
 == Hardware requirements
 
 The following table lists the hardware components that are required to implement a single second-generation building block design of the BeeGFS on NetApp solution.
 
-The hardware components used in any particular implementation of the solution might vary based on customer requirements.
+NOTE: The hardware components used in any particular implementation of the solution might vary based on customer requirements.
 
 
 [options="header" cols="10%,20%,70%"]
@@ -33,17 +28,17 @@ The hardware components used in any particular implementation of the solution mi
 |Count |Hardware component |Requirements
 
 a|2
-a| BeeGFS file nodes
+a| BeeGFS file nodes.
 a|Each file node should meet or exceed the following configuration to achieve expected performance.
 
 *Processors:*
 
-* 2x AMD EPYC 7343 16C 3.2 GHz
+* 2x AMD EPYC 7343 16C 3.2 GHz.
 * Configured as two NUMA zones.
 
 *Memory:*
 
-* 256GB
+* 256GB.
 * 16x 16GB TruDDR4 3200MHz (2Rx8 1.2V) RDIMM-A (prefer more smaller DIMMs over fewer larger DIMMs).
 * Populated to maximize memory bandwidth.
 
@@ -62,12 +57,12 @@ a|Each file node should meet or exceed the following configuration to achieve ex
 
 *Lenovo SR665:*
 
-* A custom NetApp model includes the required version of the XClarity Controller firmware needed to support dual-port Mellanox ConnectX-6 adapters. Please contact NetApp for ordering details.
+* A custom NetApp model includes the required version of the XClarity controller firmware needed to support dual-port Mellanox ConnectX-6 adapters. Contact NetApp for ordering details.
 |8
-|Mellanox ConnectX-6 HCAs (for file nodes)
-a|* MCX653106A-HDAT Host Channel Adapters (HDR IB 200Gb, Dual-port QSFP56, PCIe4.0 x16)
+|Mellanox ConnectX-6 HCAs (for file nodes).
+a|* MCX653106A-HDAT Host Channel Adapters (HDR IB 200Gb, Dual-port QSFP56, PCIe4.0 x16).
 |8
-|1m HDR InfiniBand cables (for file/block node direct connects)
+|1m HDR InfiniBand cables (for file/block node direct connects).
 a|* MCP1650-H001E30 (1m Mellanox Passive Copper cable, IB HDR, up to 200Gbps, QSFP56, 30AWG).
 
 The length can be adjusted to account for longer distances between the file and block nodes if required.
@@ -75,11 +70,11 @@ The length can be adjusted to account for longer distances between the file and 
 |HDR InfiniBand cables (for file node/storage switch connections)
 a|Requires InfiniBand HDR cables (QSFP56 transceivers) of the appropriate length to connect file nodes to storage leaf switches. Possible options include:
 
-* MCP1650-H002E26 (2m Mellanox Passive Copper cable, IB HDR, up to 200Gb/s, QSFP56, 30AWG)
-* MFS1S00-H003E (3m Mellanox active fiber cable, IB HDR, up to 200Gb/s, QSFP56)
+* MCP1650-H002E26 (2m Mellanox Passive Copper cable, IB HDR, up to 200Gb/s, QSFP56, 30AWG).
+* MFS1S00-H003E (3m Mellanox active fiber cable, IB HDR, up to 200Gb/s, QSFP56).
 |2
 |E-Series block nodes
-a|*Two EF600 storage controllers configured as follows:*
+a|Two EF600 controllers configured as follows:
 
 * Memory: 256GB (128GB per controller).
 * Adapter: 2-port 200Gb/HDR (NVMe/IB).
@@ -90,7 +85,7 @@ a|*Two EF600 storage controllers configured as follows:*
 
 For predictable performance and reliability, releases of the BeeGFS on NetApp solution are tested with specific versions of the software components required to implement the solution.
 
-=== Deploy sofware requirements
+=== Software deployment requirements
 The following table lists the software requirements deployed automatically as part of the Ansible-based BeeGFS deployment.
 
 [options="header" cols="20%,80%"]
@@ -111,7 +106,7 @@ NOTE: Only required for the direct connects to enable virtualization.
 
 
 === Ansible control node requirements
-The BeeGFS on NetApp solution is deployed and managed from an https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html[Ansible control node^].
+The BeeGFS on NetApp solution is deployed and managed from an Ansible control node. For more information, see the https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html[Ansible documentation^].
 
 The software requirements listed in the following tables are specific to the version of the NetApp BeeGFS Ansible collection listed below.
 
@@ -146,7 +141,7 @@ IMPORTANT: File nodes require a valid RedHat Enterprise Linux Server subscriptio
 |InfiniBand / RDMA Drivers
 |Inbox
 |ConnectX-6 HCA Firmware
-| (FW: 20.31.1014 | PXE: 3.6.0403 | UEFI: 14.24.0013)
+| FW: 20.31.1014 | PXE: 3.6.0403 | UEFI: 14.24.0013
 |===
 
 === EF600 block node requirements
