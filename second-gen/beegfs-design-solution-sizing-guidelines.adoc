@@ -69,7 +69,7 @@ When sizing metadata plus storage building blocks, you can reduce costs by using
 The following table provides rule-of-thumb capacity sizing for storage-only building blocks.
 
 |===
-|Drive size (8+2 RAID 6) storage volume groups |Storage capacity (file content)
+|Drive size (10+2 RAID 6) storage volume groups |Storage capacity (file content)
 
 |1.92TB
 |59.89TB
