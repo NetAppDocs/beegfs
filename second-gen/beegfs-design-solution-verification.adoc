@@ -124,8 +124,8 @@ As part of validating this architecture, NetApp executed several functional test
 [NOTE]
 There is a known issue (see the https://github.com/netappeseries/beegfs/blob/master/CHANGELOG.md[Changelog^]) when BeeGFS client/server RDMA connections are disrupted unexpectedly, either through loss of the primary interface (as defined in `connInterfacesFile`) or a BeeGFS server failing; active client I/O can hang for up to ten minutes before resuming. This issue does not occur when BeeGFS nodes are gracefully placed in and out of standby for planned maintenance or if TCP is in use.
 
-== NVIDIA DGX A100 SuperPOD validation
+== NVIDIA DGX A100 SuperPOD and BasePOD validation
 
-NetApp validated a storage solution for NVIDIAs DGX A100 SuperPOD using a similar BeeGFS file system consisting of three building blocks with the metadata plus storage configuration profile applied. The qualification effort involved testing the solution described by this NVA with twenty DGX A100 GPU servers running a variety of storage, machine learning, and deep learning benchmarks.
+NetApp validated a storage solution for NVIDIAs DGX A100 SuperPOD using a similar BeeGFS file system consisting of three building blocks with the metadata plus storage configuration profile applied. The qualification effort involved testing the solution described by this NVA with twenty DGX A100 GPU servers running a variety of storage, machine learning, and deep learning benchmarks. All storage certified for use in NVIDIA's DGX A100 SuperPOD is automatically certified for use in NVIDIA BasePOD Architectures as well.
 
-For more information, see https://www.netapp.com/pdf.html?item=/media/72718-nva-1167-DESIGN.pdf[NVIDIA DGX SuperPOD with NetApp^].
+For more information, see https://www.netapp.com/pdf.html?item=/media/72718-nva-1167-DESIGN.pdf[NVIDIA DGX SuperPOD with NetApp^] and https://www.nvidia.com/en-us/data-center/dgx-basepod/[NVIDIA DGX BasePOD].
