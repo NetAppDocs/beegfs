@@ -61,3 +61,7 @@ The deploy procedures includes several examples where text needs to be copied to
 `beegfs_ha_ntp_server_pools:  # THIS IS AN EXAMPLE OF A COMMENT!
   - "pool 0.pool.ntp.org iburst maxsources 3"
   - "pool 1.pool.ntp.org iburst maxsources 3"`
+
+Derivative architectures with variations in deployment recommendations:
+
+* link:beegfs-design-high-capacity-building-block.html[High Capacity Building Block]

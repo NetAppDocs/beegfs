@@ -45,21 +45,21 @@ The following table provides recommended capacity sizing for metadata plus stora
 |Drive size (2+2 RAID 1) metadata volume groups |Metadata capacity (number of files) |Drive size (8+2 RAID 6) storage volume groups |Storage capacity (file content)
 
 |1.92TB
-|1,797,120,000
+|1,938,577,200
 |1.92TB
-|47.91TB
+|51.77TB
 |3.84TB
-|3,594,240,000
+|3,880,388,400
 |3.84TB
-|95.84TB
+|103.55TB
 |7.68TB
-|7,557,120,000
+|8,125,278,000
 |7.68TB
-|201.51TB
+|216.74TB
 |15.3TB
-|16,156,800,000
+|17,269,854,000
 |15.3TB
-|430.84TB
+|460.60TB
 |===
 
 [NOTE]

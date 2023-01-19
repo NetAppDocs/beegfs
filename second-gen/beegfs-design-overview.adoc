@@ -22,3 +22,7 @@ Learn more:
 * link:beegfs-design-solution-verification.html[Design verification]
 * link:beegfs-design-solution-sizing-guidelines.html[Sizing guidelines]
 * link:beegfs-design-performance-tuning.html[Performance tuning]
+
+Derivative architectures with variations in design and performance:
+
+* link:beegfs-design-high-capacity-building-block.html[High Capacity Building Block]

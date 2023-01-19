@@ -1,0 +1,39 @@
+---
+sidebar: sidebar
+permalink: beegfs-design-high-capacity-building-block.html
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600, EF300, HDD, Expansion
+summary: "The design variations for a high capacity building block."
+---
+
+= High capacity building block
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+The standard BeeGFS solution design is built with high performance workloads in mind. Customers looking for a high capacity use cases should observe the variations in design and performance characteristics outlined here. 
+
+== Hardware and software configuration
+Hardware and software configuration for the high capacity building block is standard except that the EF600 controllers should be replaced with a EF300 controllers with an option to attach between 1 and 7 IOM expansion trays with 60 drives each for each storage array, totaling 2 to 14 expansions trays per building block.
+
+Customers deploying a high capacity building block design are likely to use only the base building block style configuration consisting of BeeGFS management, metadata, and storage services for each node. For cost efficiency, high capacity storage nodes should provision metadata volumes on the NVMe drives in the EF300 controller enclosure and should provision storage volumes to the NL-SAS drives in the expansion trays. 
+
+image:high-capacity-rack-diagram.png[]
+
+== Sizing guidelines
+
+These sizing guidelines assume high capacity building blocks are configured with one 2+2 NVMe SSD volume group for metadata in the base EF300 enclosure and 6x 8+2 NL-SAS volume groups per IOM expansion tray for storage. 
+|===
+|Drive size (capacity HDDs) |Capacity per BB (1 Tray)|Capacity per BB (2 Trays) |Capacity per BB (3 Trays) |Capacity per BB (4 Trays)
+
+|4TB |439TB |878 TB |1317 TB |1756 TB
+|8 TB |878 TB |1756 TB |2634 TB |3512 TB
+|10 TB |1097 TB |2195 TB |3292 TB |4390 TB
+|12 TB |1317 TB |2634 TB |3951 TB |5268 TB
+|16 TB |1756 TB |3512 TB |5268 TB |7024 TB
+|18 TB |1975 TB |3951 TB |5927 TB |7902 TB
+||
+|===
