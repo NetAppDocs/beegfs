@@ -2,9 +2,8 @@
 sidebar: sidebar
 permalink: whats-included.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
-summary: "This site includes information specific to the NetApp Verified Architecture (NVA) for BeeGFS on NetApp solution."
+summary: "This site documents how to deploy and manage BeeGFS on NetApp."
 ---
-
 = What's included in this site
 :hardbreaks:
 :nofooter:
@@ -14,12 +13,5 @@ summary: "This site includes information specific to the NetApp Verified Archite
 
 
 [.lead]
-This site provides information specific to the second generation of the NetApp Verified Architecture (NVA) for BeeGFS on NetApp.
+This site documents how to deploy and manage BeeGFS on NetApp using both NetApp Verified Architectures (NVAs) and custom architectures. NVA designs are thoroughly tested and provide customers with reference configurations and sizing guidance to minimize deployment risk and accelerate time to market. NetApp also supports custom BeeGFS architectures running on NetApp hardware, giving customers and partners flexibility designing file systems to meet a wide range of requirements. Both approaches leverage Ansible for deployment, providing an appliance-like approach managing BeeGFS at any scale across a flexible range of hardware.
 
-Information in this site includes:
-
-* Architecture design considerations used to determine the specific equipment, cabling, and configurations required to support the architecture. For more information, see link:beegfs-design-overview.html[Design overview].
-
-* Deployment guidelines using validated BeeGFS file servers (file nodes) attached to block storage systems (block nodes). For more information, see link:beegfs-deploy-overview.html[Deployment overview].
-
-This site does _not_ include design and deployment information for the first generation of the solution. For complete content on the previous generation, see link:https://www.netapp.com/pdf.html?item=/media/25445-nva-1156-design.pdf[NetApp EF-Series AI with NVIDIA DGX A100 Systems and BeeGFS^].

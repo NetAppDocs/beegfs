@@ -47,7 +47,7 @@ subscription-manager repo-override --repo=rhel-8-for-x86_64-highavailability-rpm
 
 . Update all ConnectX-6 HCA firmware to the version recommended in link:beegfs-technology-requirements.html[Technology requirements].
 +
-This update can be done by downloading and running a version of the mlxup tool that bundles the recommended firmware. You can download this tool from https://www.mellanox.com/support/firmware/mlxup-mft[mlxup - Update and Query Utility^].
+This update can be done by downloading and running a version of the mlxup tool that bundles the recommended firmware. You can download this tool from https://network.nvidia.com/support/firmware/mlxup-mft/[mlxup - Update and Query Utility^] (link:https://docs.nvidia.com/networking/display/MLXUPFWUTILITY/mlxup+-+Firmware+Utility+User+Guide[user guide^]).
 
 == Set up block nodes
 Set up the EF600 block nodes by configuring the management port on each controller.

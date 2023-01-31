@@ -1,0 +1,49 @@
+---
+sidebar: sidebar
+permalink: administer-clusters-maintenance-mode.html
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, maintenance
+summary: "Prevent the HA cluster from accidentally reacting to intended changes in the environment."
+---
+= Place the cluster in maintenance mode
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+Prevent the HA cluster from accidentally reacting to intended changes in the environment.
+
+== Overview 
+
+Putting the cluster in maintenance mode disables all resource monitoring and prevents Pacemaker from moving or otherwise managing resources in the cluster. All resources will remain running on their original nodes, regardless if there is a temporary failure condition that would prevent them from being accessible. Scenarios where this is recommended/useful include:
+
+* Network maintenance that may temporarily disrupt connections between file nodes and BeeGFS services. 
+* Block Node upgrades.
+* File Node operating system, kernel, or other package updates.
+
+Generally the only reason to manually put the cluster in maintenance mode is to prevent it from reacting to external changes in the environment. If an individual node in the cluster requires physical repair do not use maintenance mode and simply place that node in standby following the procedure above. Note that rerunning Ansible will automatically put the cluster in maintenance mode facilitating most software maintenance including upgrades and configuration changes.
+
+== Steps
+
+To check if the cluster is in maintenance mode run:
+
+[source,console]
+----
+pcs property show maintenance-mode
+----
+
+This will return false when the cluster is operating normally. To enable maintenance mode run:
+
+[source,console]
+----
+pcs property set maintenance-mode=true
+----
+
+You can verify by running pcs status and ensuring all resources show "(unmanaged)". To take the cluster out of maintenance mode run:
+
+[source,console]
+----
+pcs property set maintenance-mode=false
+----

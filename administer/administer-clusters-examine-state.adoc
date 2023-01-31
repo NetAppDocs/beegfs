@@ -1,0 +1,71 @@
+---
+sidebar: sidebar
+permalink: administer-clusters-examine-state.html
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, pcs
+summary: "Use pcs to view the state of the cluster."
+---
+= Examine the state of the cluster
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+Use pcs to view the state of the cluster.
+
+== Overview 
+
+Running `pcs status` from any of the cluster nodes is the easiest way to see the overall state of the cluster and the status of each resource (such as BeeGFS services and their dependencies). This section walks through what you will find in the output of the `pcs status` command.
+ 
+== Understanding the output from `pcs status`
+
+Run `pcs status` on any cluster node where the cluster services (Pacemaker and Corosync) are started. The top of the output will show you a summary of the cluster:
+
+[source,console]
+----
+[root@ictad22h01 ~]# pcs status
+Cluster name: hacluster
+Cluster Summary:
+  * Stack: corosync
+  * Current DC: ictad22h01 (version 2.0.5-9.el8_4.3-ba59be7122) - partition with quorum
+  * Last updated: Fri Jul  1 13:37:18 2022
+  * Last change:  Fri Jul  1 13:23:34 2022 by root via cibadmin on ictad22h01
+  * 6 nodes configured
+  * 235 resource instances configured
+----
+
+The section below lists nodes in the cluster:
+
+[source,console]
+----
+Node List:
+  * Node ictad22h06: standby
+  * Online: [ ictad22h01 ictad22h02 ictad22h04 ictad22h05 ]
+  * OFFLINE: [ ictad22h03 ]
+---- 
+
+This notably indicates any nodes that are in standby or offline. Nodes in standby are still participating in the cluster but marked as ineligible to run resources. Nodes that are offline indicate cluster services are not running on that node, either due to being manually stopped or because the node was rebooted/shutdown. 
+
+NOTE: When nodes first start up, cluster services will be stopped and need to be manually started to avoid accidentally failing back resources to an unhealthy node. 
+
+If nodes are in standby or offline due to a non-administrative reason (for example a failure) additional text will be displayed next to the node's state in parenthesis. For example if fencing is disabled and a resource encounters a failure you will see `Node <HOSTNAME>: standby (on-fail)`. Another possible state is `Node <HOSTNAME>: UNCLEAN (offline)`, which will briefly be seen as a node is being fenced, but will persist if fencing failed indicating the cluster cannot confirm the state of the node (this can block the resources from starting on other nodes).
+
+The next section shows a list of all resources in the cluster and their states: 
+
+[source,console]
+----
+Full List of Resources:
+  * mgmt-monitor	(ocf::eseries:beegfs-monitor):	 Started ictad22h01
+  * Resource Group: mgmt-group:
+    * mgmt-FS1	(ocf::eseries:beegfs-target):	 Started ictad22h01
+    * mgmt-IP1	(ocf::eseries:beegfs-ipaddr2):	 Started ictad22h01
+    * mgmt-IP2	(ocf::eseries:beegfs-ipaddr2):	 Started ictad22h01
+    * mgmt-service	(systemd:beegfs-mgmtd):	 Started ictad22h01
+[...]
+---- 
+
+Similar to nodes, additional text will be displayed next to the resource state in parenthesis if there are any issues with the resource. For example if Pacemaker requests a resource stop and it fails to complete within the time allocated, then Pacemaker will attempt to fence the node. If fencing is disabled or the fencing operation fails, the resource state will be `FAILED <HOSTNAME> (blocked)` and Pacemaker will be unable to start it on a different node. 
+
+It is worth noting BeeGFS HA clusters make use of a number of BeeGFS optimized custom OCF resource agents. In particular the BeeGFS monitor is responsible for triggering a failover when BeeGFS resources on a particular node are not available.

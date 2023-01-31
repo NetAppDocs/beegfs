@@ -1,0 +1,64 @@
+---
+sidebar: sidebar
+permalink: custom-architectures-inventory-map-services-to-file-nodes.html
+keywords: BeeGFS on NetApp, NetApp Custom Architectures, EF600
+summary: "Specify what file nodes can run each BeeGFS service using the inventory.yml file."
+---
+= Map BeeGFS services to file nodes
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+Specify what file nodes can run each BeeGFS service using the `inventory.yml` file.
+
+== Overview
+
+This section walks through how to create the `inventory.yml` file. This includes listing all block nodes and specifying what file nodes can run each BeeGFS service.
+
+== Steps
+
+Create the file `inventory.yml` and populate it as follows: 
+
+. From the top of the file, create the standard Ansible inventory structure: 
++
+[source,yaml]
+----
+# BeeGFS HA (High_Availability) cluster inventory.
+all:
+  children:
+----
+. Create a group containing all block nodes participating in this HA cluster: 
++
+[source,yaml]
+----
+    # Ansible group representing all block nodes: 
+    eseries_storage_systems:
+      hosts:
+        <BLOCK NODE HOSTNAME>:
+        <BLOCK NODE HOSTNAME>:
+        # Additional block nodes as needed.    
+----
+. Create a group that will contain all BeeGFS services in the cluster, and the file nodes that will run them:
++
+[source,yaml]
+----
+    # Ansible group representing all file nodes: 
+    ha_cluster:
+      children:    
+----
+. For each BeeGFS service in the cluster, define the preferred and any secondary file node(s) that should run that service:
++
+[source,yaml]
+----
+        <SERVICE>: # Ex. "mgmt", "meta_01", or "stor_01". 
+          hosts:
+            <FILE NODE HOSTNAME>:
+            <FILE NODE HOSTNAME>:
+            # Additional file nodes as needed.
+----
+
+Click link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/inventory.yml[here^] for an example of a complete inventory file.

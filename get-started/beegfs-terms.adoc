@@ -4,7 +4,6 @@ permalink: beegfs-terms.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "Terms and concepts that apply to BeeGFS on NetApp solution."
 ---
-
 = Terms and concepts
 :hardbreaks:
 :nofooter:
@@ -15,6 +14,7 @@ summary: "Terms and concepts that apply to BeeGFS on NetApp solution."
 [.lead]
 The following terms and concepts apply to the BeeGFS on NetApp solution.
 
+TIP: See the link:administer-clusters-overview.html[Administer BeeGFS clusters] section for additional details on terms and concepts specific to interacting with BeeGFS high availability (HA) clusters.
 
 [cols="25h,~",options="header"]
 |===
@@ -38,7 +38,7 @@ Storage systems.
 a|
 clients
 a|
-Server nodes.
+Nodes in the HPC cluster running applications that need to utilize the file system. Sometimes also referred to as compute or GPU nodes.
 a|
 DL
 a|
@@ -78,5 +78,8 @@ a|
 NVA
 a|
 The NetApp Verified Architecture (NVA) program provides reference configurations and sizing guidance for specific workloads and use cases. These solutions are thoroughly tested, and are designed to minimize deployment risks and to accelerate time to market.
-
+a| 
+storage network / client network
+a|
+Network used for clients to communicate to the BeeGFS file system. This is often the same network used for parallel Message Passing Interface (MPI) and other application communication between HPC cluster nodes.
 |===

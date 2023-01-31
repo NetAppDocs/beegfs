@@ -1,0 +1,71 @@
+---
+sidebar: sidebar
+permalink: administer-clusters-replace-file-nodes.html
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, replace
+summary: "Replacing a file node if the original server is faulty."
+---
+= Replace file nodes
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+Replacing a file node if the original server is faulty.
+
+== Overview 
+
+This is an overview of the steps needed to replace a file node in the cluster. These steps presume the file node failed due to a hardware issue, and was replaced with a new identical file node.
+
+== Steps:
+
+. Physically replace the file node and restore all cabling to the block node and storage network.
+
+. Reinstall the operating system on the file node including adding Red Hat subscriptions.
+
+. Configure management and BMC networking on the file node.
+
+. Update the Ansible inventory if the hostname, IP, PCIe-to-logical interface mappings, or anything else changed about the new file node. Generally this is not needed if the node was replaced with identical server hardware and you are using the original network configuration.
+.. For example if the hostname changed, create (or rename) the node's inventory file (`host_vars/<NEW_NODE>.yml``) then in the Ansible inventory file (`inventory.yml`), replace the old node's name with the new node name:
++
+[source,console]
+----
+all:
+    ...
+    children:
+    ha_cluster:
+        children:
+        mgmt:
+            hosts:
+            node_h1_new:   # Replaced "node_h1" with "node_h1_new" 
+            node_h2:
+----
+
+. From one of the other nodes in the cluster, remove the old node: `pcs cluster node remove <HOSTNAME>`.
++
+IMPORTANT: DO NOT PROCEED BEFORE RUNNING THIS STEP.
+
+. On the Ansible control node:
+.. Remove the old SSH key with:
++
+[source,console]
+----
+`ssh-keygen -R <HOSTNAME_OR_IP>`
+----
+.. Configure passwordless SSH to the replace node with:
++
+[source,console]
+----
+ssh-copy-id <USER>@<HOSTNAME_OR_IP>
+----
+
+. Rerun the Ansible playbook to configure the node and add it to the cluster:
++
+[source,console]
+----
+ansible-playbook -i <inventory>.yml <playbook>.yml
+----
+
+. At this point, run `pcs status` and verify the replaced node is now listed and running services.
