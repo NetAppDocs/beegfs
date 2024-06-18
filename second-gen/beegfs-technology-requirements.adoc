@@ -49,8 +49,8 @@ a|Each file node should meet or exceed the following configuration to achieve ex
 
 *Miscellaneous:*
 
-* Two 1TB 7.2K SATA drives (or comparable) configured in RAID 1 for the OS.
-* 10GbE OCP 3.0 adapter (or comparable) for in-band OS management.
+* Two 1TB 7.2K SATA drives (or comparable or better) configured in RAID 1 for the OS.
+* 1GbE (or better) port for in-band OS management.
 * 1GbE BMC with Redfish API for out-of-band server management.
 * Dual hot swap power supplies and performance fans.
 * Must support Mellanox optical InfiniBand cables if required to reach storage InfiniBand switches.
