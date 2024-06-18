@@ -122,20 +122,20 @@ Click link:https://github.com/netappeseries/beegfs/blob/master/getting_started/b
 
 ### Using HDR (200Gb) InfiniBand or 200Gb RoCE with NetApp EF600 block nodes:
 
-To use HDR (200Gb) InfiniBand with the EF600, a second "virtual" IP must be configured for each physical port. THis is an example of the correct way to configure an EF600 equipped with the dual port InfiniBand HDR HIC: 
+To use HDR (200Gb) InfiniBand with the EF600, a second "virtual" IP must be configured for each physical port. Below is an example of the correct way to configure an EF600 equipped with the dual port InfiniBand HDR HIC:
 
 [source,yaml]
 ----
 eseries_controller_nvme_ib_port:
   controller_a:
-    - 192.168.1.101 # Port 2a (physical)
-    - 192.168.2.101 # Port 2a (virtual)
-    - 192.168.1.100 # Port 2b (physical)
-    - 192.168.2.100 # Port 2b (virtual)
+    - 192.168.1.101   # Port 2a (virtual)
+    - 192.168.2.101   # Port 2b (virtual)
+    - 192.168.1.100   # Port 2a (physical)
+    - 192.168.2.100   # Port 2b (physical)
   controller_b:
-    - 192.168.3.101 # Port 2a (physical)
-    - 192.168.4.101 # Port 2a (virtual)
-    - 192.168.3.100 # Port 2b (physical)
-    - 192.168.4.100 # Port 2b (virtual)
+    - 192.168.3.101   # Port 2a (virtual)
+    - 192.168.4.101   # Port 2b (virtual)
+    - 192.168.3.100   # Port 2a (physical)
+    - 192.168.4.100   # Port 2b (physical)
 ----
 
