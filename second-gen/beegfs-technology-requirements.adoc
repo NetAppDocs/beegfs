@@ -31,30 +31,22 @@ a|2
 a|[[beegfs-file-nodes]]BeeGFS file nodes
 a|Each file node should meet or exceed the following configuration to achieve expected performance.
 
-*Verified File Nodes:*
+*Processors:*
 
-* *Lenovo ThinkSystem SR665 V3 Server*
-** Processors:
-*** 2x AMD EPYC 9124 16C 3.0 GHz.
-*** Configured as two NUMA zones.
-** Memory:
-*** 256GB
-*** 16x 16GB TruDDR5 4800MHz (1Rx8) RDIMM-A (prefer more smaller DIMMs over fewer larger DIMMs).
-** PCIe Expansion
-*** Four PCIe Gen 4 x16 slots
-*** Two slots per NUMA zone.
-*** Each slot should provide enough power/cooling for the host card adapter.
-* *Lenovo ThinkSystem SR665 Server*
-** Processors:
-*** 2x AMD EPYC 7343 16C 3.2 GHz.
-*** Configured as two NUMA zones. 
-** Memory:
-*** 256GB
-*** 16x 16x 16GB TruDDR4 3200MHz (2Rx8 1.2V) RDIMM-A (prefer more smaller DIMMs over fewer larger DIMMs).
-** PCIe Expansion
-*** Four PCIe Gen 4 x16 slots
-*** Two slots per NUMA zone.
-*** Each slot should provide enough power/cooling for the host card adapter.
+* 2x AMD EPYC 9124 16C 3.0 GHz.
+* Configured as two NUMA zones.
+
+*Memory:*
+
+* 256GB.
+* 16x 16GB TruDDR5 4800MHz (1Rx8) RDIMM-A (prefer more smaller DIMMs over fewer larger DIMMs).
+* Populated to maximize memory bandwidth.
+
+*PCIe Expansion:*
+
+* Four PCIe Gen5 x16 slots.
+* Two slots per NUMA zone.
+* Each slot should provide enough power/cooling for the host card adapter.
 
 *Miscellaneous:*
 
@@ -125,7 +117,7 @@ The following table lists the software requirements deployed automatically as pa
 |Pacemaker
 |2.1.4-5
 |OpenSM
-a|opensm-5.17.2 (from MLNX_OFED_LINUX-23.10-3.2.2.0-LTS)
+a|opensm-5.17.2 (from mlnx_ofed 23.10-2.2.2.0 LTS)
 
 NOTE: Only required for the direct connects to enable virtualization.
 |===
@@ -165,7 +157,7 @@ IMPORTANT: File nodes require a valid RedHat Enterprise Linux Server subscriptio
 |Linux Kernel
 |5.14.0-362.24.1.el9_3.x86_64
 |InfiniBand / RDMA Drivers
-|MLNX_OFED_LINUX-23.10-3.2.2.0-LTS
+|MLNX_OFED_LINUX-23.10-3.2.2
 a|HCA Firmware
 a|
 *ConnectX-7 HCA Firmware*
