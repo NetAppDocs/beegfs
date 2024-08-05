@@ -69,7 +69,7 @@ a|Each EF600 array requires the following configuration:
 
 |8
 |[[infiniband-adapters]]Nvidia 200Gb/s, 2-Port, Infiniband Adapters (for file nodes).
-a|Host card adapters will vary based on the server model used for the file node. Possible options include:
+a|Host card adapters will vary based on the server model used for the file node. Recommendations for verified file nodes include:
 
 * *Lenovo ThinkSystem SR665 V3 Server:*
 ** MCX755106AS-HEAT ConnectX-7 NDR200 QSFP112 2-port PCIe Gen5 x16 InfiniBand Adapter

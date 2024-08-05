@@ -44,7 +44,7 @@ The power supply configuration for production use cases should typically use red
 +
 image:../media/driveslots.png[]
 +
-. Connect the file and block nodes using thelink:beegfs-technology-requirements.html#file-node-cables[file node InfiniBand cables] to match the topology shown in the figure below.
+. Connect the file and block nodes using the link:beegfs-technology-requirements.html#file-node-cables[file node InfiniBand cables] to match the topology shown in the figure below.
 +
 [NOTE]
 File nodes using Lenovo SR665 V3 servers will follow the same topology, but each HCA shown in the graphic will be shifted down one PCIe slot number.

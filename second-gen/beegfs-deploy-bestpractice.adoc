@@ -156,7 +156,7 @@ The following table provides the range for a single subnet: 100.127.0.0/16.
 |===
 
 ==== IPoIB two subnet addressing scheme
-A two subnet addressing scheme is no longer recommended, but can still be implemented. Refer to the below for a recommended two subnet schema.
+A two subnet addressing scheme is no longer recommended, but can still be implemented. Refer to the tables below for a recommended two subnet scheme.
 
 .Subnet A: 100.127.0.0/16
 The following table provides the range for Subnet A: 100.127.0.0/16.

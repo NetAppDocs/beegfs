@@ -20,9 +20,9 @@ The BeeGFS on NetApp solution combines the BeeGFS parallel file system with NetA
 
 The BeeGFS on NetApp solution is part of the NetApp Verified Architecture (NVA) program, which provides customers with reference configurations and sizing guidance for specific workloads and use cases. NVA solutions are thoroughly tested and designed to minimize deployment risks and to accelerate time to market.
 
-== Solution Design
+== Design Overview
 
-The BeeGFS on NetApp solution is designed as a scalable building block architecture, configurable for a variety of workloads. The solution can be tailored for metadata performance to handle numerous small files, or for storage capacity for managing large file workloads. High availability is built into the design with the use of a two-tier hardware structure that allows independent failover at multiple hardware layers and ensures consistent performance, even during partial system degradations. The BeeGFS file system enables a high-performance and scalable environment across different Linux distributions, and presents clients with a single easily accessible storage namespace. Learn more in the link:beegfs-deploy-hardware.html[architecture overview].
+The BeeGFS on NetApp solution is designed as a scalable building block architecture, configurable for a variety of demanding workloads. Whether dealing with many small files, managing substantial large file operations, or a hybrid workload, the file system can be customized to meet these needs. High availability is built into the design with the use of a two-tier hardware structure that allows independent failover at multiple hardware layers and ensures consistent performance, even during partial system degradations. The BeeGFS file system enables a high-performance and scalable environment across different Linux distributions, and presents clients with a single easily accessible storage namespace. Learn more in the link:beegfs-architecture-overview.html[architecture overview].
 
 == Use cases
 The following use cases apply to the BeeGFS on NetApp solution:
