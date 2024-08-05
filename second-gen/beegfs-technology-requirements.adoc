@@ -14,13 +14,10 @@ summary: "To implement the BeeGFS on NetApp solution, make sure your environment
 
 
 [.lead]
-To implement the BeeGFS on NetApp solution, make sure your environment meets the technology requirements.
+To implement the BeeGFS on NetApp solution, ensure your environment meets the technology requirements outlined in this document.
 
 == Hardware requirements
-
-The following table lists the hardware components that are required to implement a single second-generation building block design of the BeeGFS on NetApp solution.
-
-NOTE: The hardware components used in any particular implementation of the solution might vary based on customer requirements.
+Before you begin, ensure that your hardware meets the following specifications for a single second-generation building block design of the BeeGFS on NetApp solution. The exact components for a particular deployment may vary based on customer requirements.
 
 
 [options="header" cols="10%,20%,70%"]
@@ -31,40 +28,18 @@ a|2
 a|[[beegfs-file-nodes]]BeeGFS file nodes
 a|Each file node should meet or exceed the following configuration to achieve expected performance.
 
-*Processors:*
-
-* 2x AMD EPYC 9124 16C 3.0 GHz.
-* Configured as two NUMA zones.
-
-*Memory:*
-
-* 256GB.
-* 16x 16GB TruDDR5 4800MHz (1Rx8) RDIMM-A (prefer more smaller DIMMs over fewer larger DIMMs).
-* Populated to maximize memory bandwidth.
-
-*PCIe Expansion:*
-
-* Four PCIe Gen5 x16 slots.
-* Two slots per NUMA zone.
-* Each slot should provide enough power/cooling for the host card adapter.
-
+*Processors:* 2x AMD EPYC 9124 16C 3.0 GHz (configured as two NUMA zones).
+*Memory:* 256GB (16x 16GB TruDDR5 4800MHz RDIMM-A)
+*PCIe Expansion:* Four PCIe Gen5 x16 slots (two per NUMA zone)
 *Miscellaneous:*
 
-* Two drives configured in RAID 1 for the OS (1TB 7.2K SATA or better).
-* 1GbE port for in-band OS management.
-* 1GbE BMC with Redfish API for out-of-band server management.
-* Dual hot swap power supplies and performance fans.
-
-|2
-|[[eseries-block-nodes]]E-Series block nodes (EF600 array)
-a|Each EF600 array requires the following configuration:
-
-* Memory: 256GB (128GB per controller).
-* Adapter: 2-port 200Gb/HDR (NVMe/IB).
-* Drives: Configured to match desired capacity.
+* Two drives in RAID 1 for OS (1TB 7.2K SATA or better)
+* 1GbE port for in-band OS management
+* 1GbE BMC with Redfish API for out-of-band server management
+* Dual hot swap power supplies and performance fans
 
 |8
-|[[infiniband-adapters]]Nvidia 200Gb/s, 2-Port, Infiniband Adapters (for file nodes).
+|[[infiniband-adapters]]Infiniband Host Card Adapters (for file nodes).
 a|Host card adapters will vary based on the server model used for the file node. Recommendations for verified file nodes include:
 
 * *Lenovo ThinkSystem SR665 V3 Server:*
@@ -73,76 +48,55 @@ a|Host card adapters will vary based on the server model used for the file node.
 * *Lenovo ThinkSystem SR665 Server:*
 ** MCX653106A-HDAT ConnectX-6 HDR QSFP-56 2-port PCIe Gen4 x16 InfiniBand Adapter
 
+|2
+|[[eseries-block-nodes]]E-Series block nodes (EF600 array)
+a|*Memory:* 256GB (128GB per controller).
+*Adapter:* 2-port 200Gb/HDR (NVMe/IB).
+*Drives:* Configured to match desired capacity.
 
+|1
+|Storage network switch
+a|The storage network switch must be capable of 200Gb/s InfiniBand speeds. Verified switch model options include:
 
-|8
-|[[file-node-cables]]File node InfiniBand cables
-(for file/block node direct connects)
-a|* MCP1650-H001E30 (1m Nvidia Passive Copper cable, IB HDR, up to 200Gbps, QSFP56, 30AWG).
-
-The length can be adjusted to account for longer distances between the file and block nodes if required.
-
-|Varies
-|[[switch-cables]]Switch InfiniBand cables
-(for file node/storage switch connections)
-a|Cabling requirements vary based on the switch model used to connect file nodes to the storage leaf switch. Possible options include:
-
-* *QM9700 Switch:*
-** 4x NDR to dual NDR-200 InfiniBand splitter cables. Model options include:
-*** MFA7U10-HXXX (Nvidia active fiber cable, OSFP to 2x QSFP56, 400Gb/s to 2 x 200Gb/s). Length will vary.
-*** MCP7Y60-HXXX (Nvidia passive copper cable, OSFP to 2x QSFP56, 400Gb/s to 2 x 200Gb/s). Length will vary.
-
-* *QM8700 Switch:*
-** 8x HDR InfiniBand cables. Model options include:
-*** MCP1650-HXXX (Nvidia passive copper cable, QSFP56, 200Gb/s). Length will vary.
-*** MFS1S00-HXXX (Nvidia active fiber cable, QSFP56, 200Gb/s). Length will vary.
+* *NVIDIA Quantum QM9700 InfiniBand switch*
+* *NVIDIA Quantum MQM8700 InfiniBand switch*
 
 |===
 
+=== Cabling requirements
+[options="header" cols="1,1,2,1,1"]
+|===
+| Purpose | Connection Method | Part number | Count | Length
+
+| Block node to file node connections
+| Direct
+| MCP1650-H001E30 (Nvidia Passive Copper cable, IB HDR, up to 200Gbps, QSFP56, 30AWG)
+| 8
+| 1m
+
+.4+| File node to storage network connections
+.2+| QM9700 Switch
+| MFA7U10-HXXX (Nvidia active fiber cable, OSFP to 2x QSFP56, 400Gb/s to 2 x 200Gb/s)
+| 4
+| Varies
+
+| MCP7Y60-HXXX (Nvidia passive copper cable, OSFP to 2x QSFP56, 400Gb/s to 2 x 200Gb/s)
+| 4
+| Varies
+
+.2+| QM8700 Switch
+| MCP1650-HXXX (Nvidia passive copper cable, QSFP56, 200Gb/s)
+| 8
+| Varies
+
+| MFS1S00-HXXX (Nvidia active fiber cable, QSFP56, 200Gb/s)
+| 8
+| Varies
+
+|===
 == Software requirements
 
 For predictable performance and reliability, releases of the BeeGFS on NetApp solution are tested with specific versions of the software components required to implement the solution.
-
-=== Software deployment requirements
-The following table lists the software requirements deployed automatically as part of the Ansible-based BeeGFS deployment.
-
-[options="header" cols="20%,80%"]
-|===
-|Software |Version
-
-|BeeGFS
-|7.4.4
-|Corosync
-|3.1.5-4
-|Pacemaker
-|2.1.4-5
-|OpenSM
-a|opensm-5.17.2 (from mlnx_ofed 23.10-2.2.2.0 LTS)
-
-NOTE: Only required for the direct connects to enable virtualization.
-|===
-
-
-=== Ansible control node requirements
-The BeeGFS on NetApp solution is deployed and managed from an Ansible control node. For more information, see the https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html[Ansible documentation^].
-
-The software requirements listed in the following tables are specific to the version of the NetApp BeeGFS Ansible collection listed below.
-
-[options="header" cols="20%,80%"]
-|===
-|Software |Version
-
-|Ansible
-|6.x
-When installed through pip: ansible-6.0.0 and ansible-core >= 2.13.0
-|Python
-|3.9 (or later)
-|Additional Python packages
-|Cryptography-43.0.0, netaddr-1.3.0, ipaddr-2.2.0
-|NetApp E-Series BeeGFS Ansible Collection
-|3.2.0
-|===
-
 
 === File node requirements
 
@@ -183,4 +137,42 @@ UEFI: 14.24.0013
 |N6000-880834-D08.dlp
 |Drive Firmware
 |Latest available for the drive models in use.
+|===
+
+=== Software deployment requirements
+The following table lists the software requirements deployed automatically as part of the Ansible-based BeeGFS deployment.
+
+[options="header" cols="20%,80%"]
+|===
+|Software |Version
+
+|BeeGFS
+|7.4.4
+|Corosync
+|3.1.5-4
+|Pacemaker
+|2.1.4-5
+|OpenSM
+a|opensm-5.17.2 (from mlnx_ofed 23.10-2.2.2.0 LTS)
+|===
+
+
+=== Ansible control node requirements
+The BeeGFS on NetApp solution is deployed and managed from an Ansible control node. For more information, see the https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html[Ansible documentation^].
+
+The software requirements listed in the following tables are specific to the version of the NetApp BeeGFS Ansible collection listed below.
+
+[options="header" cols="20%,80%"]
+|===
+|Software |Version
+
+|Ansible
+|6.x
+When installed through pip: ansible-6.0.0 and ansible-core >= 2.13.0
+|Python
+|3.9 (or later)
+|Additional Python packages
+|Cryptography-43.0.0, netaddr-1.3.0, ipaddr-2.2.0
+|NetApp E-Series BeeGFS Ansible Collection
+|3.2.0
 |===
