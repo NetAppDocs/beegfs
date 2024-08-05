@@ -31,17 +31,17 @@ The required configuration parameters affect how BeeGFS services are configured 
 +
 * BeeGFS Service configuration parameters
 +
-You can override the default settings for the configuration parameters as needed. For the parameters that you can adjust for your specific workloads or use cases, see the https://github.com/netappeseries/beegfs/blob/135d9a04ae96f4d202300bae870c6404b77b6865/roles/beegfs_ha_7_2/defaults/main.yml#L155[BeeGFS service configuration parameters^].
+You can override the default settings for the configuration parameters as needed. For the parameters that you can adjust for your specific workloads or use cases, see the https://github.com/NetApp/beegfs/blob/master/roles/beegfs_ha_7_4/defaults/main.yml#L237[BeeGFS service configuration parameters^].
 +
 * Volume formatting and mounting parameters are set to recommended defaults, and should only be adjusted for advanced use cases. The default values will do the following:
 
 ** Optimize initial volume formatting based on the target type (such as management, metadata, or storage), along with the RAID configuration and segment size of the underlying volume.
 ** Adjust how Pacemaker mounts each volume to ensure that changes are immediately flushed to E-series block nodes. This prevents data loss when file nodes fail with active writes in progress.
 +
-For the parameters that you can adjust for your specific workloads or use cases, see the https://github.com/netappeseries/beegfs/blob/135d9a04ae96f4d202300bae870c6404b77b6865/roles/beegfs_ha_7_2/defaults/main.yml#L258[volume formatting and mounting configuration parameters^].
+For the parameters that you can adjust for your specific workloads or use cases, see the https://github.com/NetApp/beegfs/blob/master/roles/beegfs_ha_7_4/defaults/main.yml#L279[volume formatting and mounting configuration parameters^].
 
 . *System settings in the Linux OS installed on the file nodes.*
-You can override the default Linux OS system settings when you create the Ansible inventory in step 4 of link:beegfs-deploy-beegfs-general-config.html[Create the Ansible inventory].
+You can override the default Linux OS system settings when you create the Ansible inventory in step 4 of link:beegfs-deploy-create-inventory.html[Create the Ansible inventory].
 +
 The default settings were used to validate the BeeGFS on NetApp solution, but you can change them to adjust for your specific workloads or use cases. Some examples of the Linux OS system settings that you can change include the following:
 +
@@ -64,7 +64,7 @@ You can adjust the CPU frequency governor and other CPU configurations for maxim
 
 * Read request size.
 +
-You can increase the maximum read request size for Mellanox HCAs.
+You can increase the maximum read request size for Nvidia HCAs.
 
 == Performance tuning for block nodes
 

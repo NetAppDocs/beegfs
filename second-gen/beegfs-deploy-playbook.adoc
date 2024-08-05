@@ -83,8 +83,8 @@ Currently, at least two building blocks (four file nodes) are required to deploy
       pause:
         prompt: "Are you ready to proceed with running the BeeGFS HA role? Depending on the size of the deployment and network performance between the Ansible control node and BeeGFS file and block nodes this can take awhile (10+ minutes) to complete."
     - name: Verify the BeeGFS HA cluster is properly deployed.
-      import_role:
-        name: beegfs_ha_7_2
+      ansible.builtin.import_role:
+        name: netapp_eseries.beegfs.beegfs_ha_7_4
 ....
 +
 [NOTE]

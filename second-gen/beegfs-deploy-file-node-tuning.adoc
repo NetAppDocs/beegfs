@@ -64,7 +64,7 @@ DF C-States
 a|
 Disable
 a|
-P-State 1
+P-State
 a|
 Disable
 a|
@@ -149,7 +149,7 @@ curl --request PATCH \
 "Processors_GlobalC_stateControl": "Disable",
 "Processors_SOCP_states": "P0",
 "Processors_DFC_States": "Disable",
-"Processors_P_state1": "Disable",
+"Processors_P_State": "Disable",
 "Memory_MemoryPowerDownEnable": "Disable",
 "DevicesandIOPorts_IOMMU": "Disable",
 "Power_PCIePowerBrake": "Disable",

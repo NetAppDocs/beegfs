@@ -66,7 +66,7 @@ filter_ip_ranges:
 [source,yaml]
 ----
 beegfs_targets:
-  <BLOCK_NODE>: # The name of the block node as found in the Ansible inventory. Ex: ictad22a01
+  <BLOCK_NODE>: # The name of the block node as found in the Ansible inventory. Ex: netapp_01
     eseries_storage_pool_configuration:
       - name: <NAME> # Ex: beegfs_m1_m2_m5_m6
         raid_level: <LEVEL> # One of: raid1, raid5, raid6, raidDiskPool

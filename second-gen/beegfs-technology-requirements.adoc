@@ -28,21 +28,26 @@ NOTE: The hardware components used in any particular implementation of the solut
 |Count |Hardware component |Requirements
 
 a|2
-a| BeeGFS file node.
+a|[[beegfs-file-nodes]]BeeGFS file nodes
 a|Each file node should meet or exceed the following configuration to achieve expected performance.
+
+*Verified File Nodes:*
+
+* Lenovo ThinkSystem SR665 V3 Server
+* Lenovo ThinkSystem SR665 Server
 
 *Processors:*
 
-* 2x AMD EPYC 9124 16C 200W 3.0GHz
+* 2x AMD EPYC 7343 16C 3.2 GHz.
 * Configured as two NUMA zones.
 
 *Memory:*
 
 * 256GB.
-* 16x 16GB TruDDR5 4800MHz (1Rx8) RDIMM-A (prefer more smaller DIMMs over fewer larger DIMMs).
+* 16x 16GB TruDDR4 3200MHz (2Rx8 1.2V) RDIMM-A (prefer more smaller DIMMs over fewer larger DIMMs).
 * Populated to maximize memory bandwidth.
 
-*PCIe Expansion: Four PCiE Gen5 x16 slots:*
+*PCIe Expansion: Four PCiE Gen4 x16 slots:*
 
 * Two slots per NUMA zone.
 * Each slot should provide enough power/cooling for the host card adapter.
@@ -55,7 +60,7 @@ a|Each file node should meet or exceed the following configuration to achieve ex
 * Dual hot swap power supplies and performance fans.
 
 |2
-|E-Series block node (EF600 array)
+|[[eseries-block-nodes]]E-Series block nodes (EF600 array)
 a|Each EF600 array requires the following configuration:
 
 * Memory: 256GB (128GB per controller).
@@ -63,19 +68,27 @@ a|Each EF600 array requires the following configuration:
 * Drives: Configured to match desired capacity.
 
 |8
-|Nvidia ConnectX-7 HCA (for file nodes).
-a|ConnectX-7 NDR200/HDR QSFP112 2-port PCIe Gen5 x16 InfiniBand Adapter
+|[[infiniband-adapters]]Nvidia 200Gb/s, 2-Port, Infiniband Adapters (for file nodes).
+a|Host card adapters will vary based on the server model used for the file node. Possible options include:
 
-* MCX755106AS-HEAT
+* *Lenovo ThinkSystem SR665 V3 Server:*
+** MCX755106AS-HEAT ConnectX-7 NDR200 QSFP112 2-port PCIe Gen5 x16 InfiniBand Adapter
+
+* *Lenovo ThinkSystem SR665 Server:*
+** MCX653106A-HDAT ConnectX-6 HDR QSFP-56 2-port PCIe Gen4 x16 InfiniBand Adapter
+
+
 
 |8
-|1m HDR InfiniBand cable (for file/block node direct connects).
-a|* MCP1650-H001E30 (1m Mellanox Passive Copper cable, IB HDR, up to 200Gbps, QSFP56, 30AWG).
+|[[file-node-cables]]File node InfiniBand cables
+(for file/block node direct connects)
+a|* MCP1650-H001E30 (1m Nvidia Passive Copper cable, IB HDR, up to 200Gbps, QSFP56, 30AWG).
 
 The length can be adjusted to account for longer distances between the file and block nodes if required.
 
 |Varies
-|Cabling for file node/storage switch connections
+|[[switch-cables]]Switch InfiniBand cables
+(for file node/storage switch connections)
 a|Cabling requirements vary based on the switch model used to connect file nodes to the storage leaf switch. Possible options include:
 
 * *QM9700 Switch:*
@@ -123,12 +136,12 @@ The software requirements listed in the following tables are specific to the ver
 |Software |Version
 
 |Ansible
-|6.0.0
-When installed through pip: ansible-6.0.0 and ansible-core <2.17.0 >= 2.12.0
+|6.x
+When installed through pip: ansible-6.0.0 and ansible-core >= 2.13.0
 |Python
-|3.9
+|3.9 (or later)
 |Additional Python packages
-|Cryptography-43.0.0, netaddr-0.8.0, ipaddr-2.2.0
+|Cryptography-43.0.0, netaddr-1.3.0, ipaddr-2.2.0
 |NetApp E-Series BeeGFS Ansible Collection
 |3.2.0
 |===

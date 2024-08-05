@@ -42,7 +42,8 @@ In the following figure, notice that:
 image:../media/beegfs-design-image6.png[]
 
 [NOTE]
-For storage networks with redundant switches, ports outlined in light green should connect to one switch, and ports in dark green to another switch.
+When using splitter cables to connect the storage switch to file nodes, one cable should branch out and connect to the ports outlined in light green. Another cable should branch out and connect to the ports outlined in dark green.
+Additionally, for storage networks with redundant switches, ports outlined in light green should connect to one switch, while ports in dark green should connect to another switch.
 
 The cabling configuration depicted in the figure allows each BeeGFS service to:
 
@@ -51,7 +52,7 @@ The cabling configuration depicted in the figure allows each BeeGFS service to:
 * Minimize performance effects if a file node or controller in a block node requires maintenance.
 
 .Cabling to leverage bandwidth
-To leverage the full PCIe bidirectional bandwidth, make sure one port on each InfiniBand adapter connects to the storage fabric, and the other port connects to a block node. The theoretical maximum speed of an HDR InfiniBand port is 25GBps (not accounting for signaling and other overhead). The maximum single direction bandwidth of a PCIe 4.0 x16 slot is 32GBps, creating a potential bottleneck when implementing file nodes that incorporate dual port InfiniBand adapters that can theoretically handle 50GBps of bandwidth.
+To leverage the full PCIe bidirectional bandwidth, make sure one port on each InfiniBand adapter connects to the storage fabric, and the other port connects to a block node. 
 
 The following figure shows the cabling design used to leverage the full PCIe bidirectional bandwidth.
 

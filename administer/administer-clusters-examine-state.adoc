@@ -25,13 +25,13 @@ Run `pcs status` on any cluster node where the cluster services (Pacemaker and C
 
 [source,console]
 ----
-[root@ictad22h01 ~]# pcs status
+[root@beegfs_01 ~]# pcs status
 Cluster name: hacluster
 Cluster Summary:
   * Stack: corosync
-  * Current DC: ictad22h01 (version 2.0.5-9.el8_4.3-ba59be7122) - partition with quorum
+  * Current DC: beegfs_01 (version 2.0.5-9.el8_4.3-ba59be7122) - partition with quorum
   * Last updated: Fri Jul  1 13:37:18 2022
-  * Last change:  Fri Jul  1 13:23:34 2022 by root via cibadmin on ictad22h01
+  * Last change:  Fri Jul  1 13:23:34 2022 by root via cibadmin on beegfs_01
   * 6 nodes configured
   * 235 resource instances configured
 ----
@@ -41,9 +41,9 @@ The section below lists nodes in the cluster:
 [source,console]
 ----
 Node List:
-  * Node ictad22h06: standby
-  * Online: [ ictad22h01 ictad22h02 ictad22h04 ictad22h05 ]
-  * OFFLINE: [ ictad22h03 ]
+  * Node beegfs_06: standby
+  * Online: [ beegfs_01 beegfs_02 beegfs_04 beegfs_05 ]
+  * OFFLINE: [ beegfs_03 ]
 ---- 
 
 This notably indicates any nodes that are in standby or offline. Nodes in standby are still participating in the cluster but marked as ineligible to run resources. Nodes that are offline indicate cluster services are not running on that node, either due to being manually stopped or because the node was rebooted/shutdown. 
@@ -57,12 +57,12 @@ The next section shows a list of all resources in the cluster and their states:
 [source,console]
 ----
 Full List of Resources:
-  * mgmt-monitor	(ocf::eseries:beegfs-monitor):	 Started ictad22h01
+  * mgmt-monitor	(ocf::eseries:beegfs-monitor):	 Started beegfs_01
   * Resource Group: mgmt-group:
-    * mgmt-FS1	(ocf::eseries:beegfs-target):	 Started ictad22h01
-    * mgmt-IP1	(ocf::eseries:beegfs-ipaddr2):	 Started ictad22h01
-    * mgmt-IP2	(ocf::eseries:beegfs-ipaddr2):	 Started ictad22h01
-    * mgmt-service	(systemd:beegfs-mgmtd):	 Started ictad22h01
+    * mgmt-FS1	(ocf::eseries:beegfs-target):	 Started beegfs_01
+    * mgmt-IP1	(ocf::eseries:beegfs-ipaddr2):	 Started beegfs_01
+    * mgmt-IP2	(ocf::eseries:beegfs-ipaddr2):	 Started beegfs_01
+    * mgmt-service	(systemd:beegfs-mgmtd):	 Started beegfs_01
 [...]
 ---- 
 

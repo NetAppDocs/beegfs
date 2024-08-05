@@ -20,13 +20,13 @@ When physically assembling and creating the Ansible inventory file, follow these
 
 * File node host names are sequentially numbered (h01-hN) with lower numbers at the top of the rack and higher numbers at the bottom.
 +
-For example, the naming convention `[location][row][rack]hN` looks like: `ictad22h01`.
+For example, the naming convention `[location][row][rack]hN` looks like: `beegfs_01`.
 
 * Each block node is comprised of two storage controllers, each with their own host name.
 +
 A storage array name is used to refer to the whole block storage system as part of an Ansible inventory. The storage array names should be sequentially numbered (a01 - aN), and the host names for individual controllers are derived from that naming convention.
 +
-For example, a block node named `ictad22a01` typically can have host names configured for each controller like `ictad22a01-a` and `ictad22a01-b`, but be referred to in an Ansible inventory as `ictad22a01`.
+For example, a block node named `ictad22a01` typically can have host names configured for each controller like `ictad22a01-a` and `ictad22a01-b`, but be referred to in an Ansible inventory as `netapp_01`.
 
 * File and block nodes within the same building block share the same numbering scheme and are adjacent to each other in the rack with both file nodes on top and both block nodes directly underneath them.
 +
@@ -107,9 +107,7 @@ NOTE: This addressing scheme adheres to the following rule: The third octet is a
 |192.168.8.101
 |===
 
-=== BeeGFS client-server IPoIB addressing scheme (two subnets)
-
-To allow BeeGFS clients to use two InfiniBand ports, two IPoIB subnets are required with half the BeeGFS server services configured with a preferred IP on each subnet to ensure clients use two InfiniBand ports to maximize redundancy and possible throughput to the file system.
+=== BeeGFS client-server IPoIB addressing schemes
 
 Each file node runs multiple BeeGFS server services (management, metadata, or storage). To allow each service to fail over independently to the other file node, each is configured with unique IP addresses that can float between both nodes (sometimes referred to as a logical interface or LIF).
 
@@ -123,8 +121,42 @@ In addition to the interface used for in-band OS management, additional interfac
 
 * The BeeGFS Management service is always at `xxx.yyy.101.0` or `xxx.yyy.102.0`.
 * BeeGFS Metadata services are always at `xxx.yyy.101.zzz` or `xxx.yyy.102.zzz`.
-* BeeGFS Storage services are always at `xxx.yyy.103.zzz` or `xxx.yyy.103.zzz`.
+* BeeGFS Storage services are always at `xxx.yyy.103.zzz` or `xxx.yyy.104.zzz`.
 * Addresses in the range `100.xxx.1.1` through `100.xxx.99.255` are reserved for clients.
+
+==== IPoIB single subnet addressing scheme
+This deployment guide will utilize a single subnet schema given the advantages listed in the link:beegfs-design-software-architecture.html#beegfs-network-configuration[software architecture].
+
+.Subnet: 100.127.0.0/16
+The following table provides the range for a single subnet: 100.127.0.0/16.
+|===
+|Purpose |InfiniBand port |IP address or range
+
+|BeeGFS Cluster IP
+|i1b or i4b
+|100.127.100.1 - 100.127.100.255
+.2+|BeeGFS Management
+|i1b
+|100.127.101.0
+|i2b
+|100.127.102.0
+.2+|BeeGFS Metadata
+|i1b or i3b
+|100.127.101.1 - 100.127.101.255
+|i2b or i4b
+|100.127.102.1 - 100.127.102.255
+.2+|BeeGFS Storage
+|i1b or i3b
+|100.127.103.1 - 100.127.103.255
+|i2b or i4b
+|100.127.104.1 - 100.127.104.255
+|BeeGFS Clients
+|(varies by client)
+|100.127.1.1 - 100.127.99.255
+|===
+
+==== IPoIB two subnet addressing scheme
+A two subnet addressing scheme is no longer recommended, but can still be implemented. Refer to the below for a recommended two subnet schema.
 
 .Subnet A: 100.127.0.0/16
 The following table provides the range for Subnet A: 100.127.0.0/16.

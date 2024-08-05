@@ -46,41 +46,57 @@ As a parallel file system, BeeGFS stripes its files over multiple server nodes t
 
 The four main services run on a wide range of supported Linux distributions and communicate via any TCP/IP or RDMA-capable network, including InfiniBand (IB), Omni-Path (OPA), and RDMA over Converged Ethernet (RoCE). The BeeGFS server services (management, storage, and metadata) are user space daemons, while the client is a native kernel module (patchless). All components can be installed or updated without rebooting, and you can run any combination of services on the same node.
 
+== HA architecture
+
+BeeGFS on NetApp expands the functionality of the BeeGFS enterprise edition by creating a fully integrated solution with NetApp hardware that enables a shared-disk high availability (HA) architecture.
+
+NOTE: While the BeeGFS community edition can be used free of charge, the enterprise edition requires purchasing a professional support subscription contract from a partner like NetApp. The enterprise edition allows use of several additional features including resiliency, quota enforcement, and storage pools.
+
+The following figure compares the shared-nothing and shared-disk HA architectures.
+
+image:../media/beegfs-design-image1.png[]
+
+For more information, see https://www.netapp.com/blog/high-availability-beegfs/[Announcing High Availability for BeeGFS Supported by NetApp^].
+
 == Verified nodes
 
-The BeeGFS on NetApp solution includes the following verified nodes: the NetApp EF600 storage system (block node) and the Lenovo ThinkSystem SR665 Server (file node).
+The BeeGFS on NetApp solution has verified the nodes listed below.
 
-=== Block node: EF600 storage system
+[options="header" cols="10%,20%,70%"]
+|===
+|Node |Hardware |Details
 
-The NetApp EF600 all-flash array provides consistent, near real-time access to data while supporting any number of workloads simultaneously. To enable fast, continuous feeding of data to AI and HPC applications, EF600 storage systems deliver up to two million cached read IOPS, response times of under 100 microseconds, and 42GBps sequential read bandwidth in one enclosure.
+|Block
+|NetApp EF600 Storage System
+|A high-performance, all-NVMe 2U storage array designed for demanding workloads.
 
-=== File node: Lenovo ThinkSystem SR665 Server
+.2+|File
+|Lenovo ThinkSystem SR665 V3 Server
+|A two-socket 2U server featuring PCIe 5.0, dual AMD EPYC 9124 processors.
+For more information about the Lenovo SR665 V3, see https://lenovopress.lenovo.com/lp1608-thinksystem-sr665-v3-server[Lenovo’s website^].
 
-The SR665 is a two-socket 2U server featuring PCIe 4.0. When configured to meet the requirements of this solution, it provides ample performance to run BeeGFS file services in a configuration well balanced with the availability of throughput and IOPs provided by the direct attached E-Series nodes.
-
-For more information about the Lenovo SR665, see https://lenovopress.com/lp1269-thinksystem-sr665-server[Lenovo’s website^].
+|Lenovo ThinkSystem SR665 Server
+|A two-socket 2U server featuring PCIe 4.0, dual AMD EPYC 7003 processors.
+For more information about the Lenovo SR665, see https://lenovopress.lenovo.com/lp1269-thinksystem-sr665-server[Lenovo’s website^].
+|===
 
 == Verified hardware design
 
-The solution's building blocks (shown in the following figure) uses two dual socket PCIe 4.0-capable servers for the BeeGFS file layer and two EF600 storage systems as the block layer.
+The solution's building blocks (shown in the following figure) uses the verified file node servers for the BeeGFS file layer and two EF600 storage systems as the block layer.
 
 image:../media/beegfs-design-image2-small.png[]
 
+The BeeGFS on NetApp solution runs across all building blocks in the deployment. The first building block deployed must run BeeGFS management, metadata, and storage services (known as the base building block). All subsequent building blocks can be configured through software to extend metadata and storage services, or to provide storage services exclusively. This modular approach enables scaling the file system to the needs of a workload while using the same underlying hardware platforms and building block design.
+
+Up to five building blocks can be deployed to form a standalone Linux HA cluster. This optimizes resource management with Pacemaker and maintains efficient synchronization with Corosync. One or more of these standalone BeeGFS HA clusters are combined to create a BeeGFS file system that is accessible to clients as a single storage namespace. On the hardware side, a single 42U rack can accommodate up to five building blocks, along with two 1U InfiniBand switches for the storage/data network. See the graphic below for a visual representation.
+
 [NOTE]
-Because each building block includes two BeeGFS file nodes, a minimum of two building blocks is required to establish quorum in the failover cluster. While you can configure a two-node cluster, this configuration has limits that might prevent a successful failover to occur. If you require a two-node cluster, you can incorporate a third device as a tiebreaker (however, that design is not covered in this site).
-
-Each building block delivers high availability through a two-tier hardware design that separates fault domains for the file and block layers. Each tier can independently fail over, providing increased resiliency and reducing the risk of cascading failures. Using HDR InfiniBand in conjunction with NVMeOF provides high throughput and minimal latency between file and block nodes, with full redundancy and sufficient link oversubscription to avoid the disaggregated design becoming a bottleneck, even when the system is partially degraded.
-
-The BeeGFS on NetApp solution runs across all building blocks in the deployment. The first building block deployed must run BeeGFS management, metadata, and storage services (referred to as the base building block). All subsequent building blocks are configured through software to run BeeGFS metadata and storage services, or only storage services. The availability of different configuration profiles for each building block enables scaling of file system metadata or storage capacity and performance using the same underlying hardware platforms and building block design.
-
-Up to five building blocks are combined into a standalone Linux HA cluster, ensuring a reasonable number of resources per cluster resource manager (Pacemaker), and reducing the messaging overhead required to keep cluster members in sync (Corosync). A minimum of two building blocks per cluster is recommended to allow enough members to establish quorum. One or more of these standalone BeeGFS HA clusters are combined to create a BeeGFS file system (shown in the following figure) that is accessible to clients as a single storage namespace.
+A minimum of two building blocks are required to establish quorum in the failover cluster. A two-node cluster has limitations that might prevent a successful failover from occurring. You can configure a two-node cluster by incorporating a third device as a tiebreaker; however, this documentation does not cover that design.
 
 image:../media/beegfs-design-image3.png[]
 
-Although ultimately the number of building blocks per rack depends on the power and cooling requirements for a given site, the solution was designed so that up to five building blocks can be deployed in a single 42U rack while still providing room for two 1U InfiniBand switches used for the storage/data network.  Each building block requires eight IB ports (four per switch for redundancy), so five building blocks leaves half the ports on a 40-port HDR InfiniBand switch (like the NVIDIA QM8700) available to implement a fat-tree or similar nonblocking topology. This configuration ensures that the number of storage or compute/GPU racks can be scaled up without networking bottlenecks. Optionally, an oversubscribed storage fabric can be used at the recommendation of the storage fabric vendor.
+== Ansible
 
-The following image shows an 80-node fat-tree topology.
+BeeGFS on NetApp is delivered and deployed using Ansible automation, which is hosted on GitHub and Ansible Galaxy (the BeeGFS collection is available from https://galaxy.ansible.com/netapp_eseries/beegfs[Ansible Galaxy^] and https://github.com/netappeseries/beegfs/[NetApp's E-Series GitHub^]). Although Ansible is primarily tested with the hardware used to assemble the BeeGFS building blocks, you can configure it to run on virtually any x86-based server using a supported Linux distribution.
 
-image:../media/beegfs-design-image4.png[]
-
-By using Ansible as the deployment engine to deploy BeeGFS on NetApp, administrators can maintain the entire environment using modern infrastructure as code practices. This drastically simplifies what would otherwise be a complex system, allowing administrators to define and adjust configuration all in one place, then ensure it is applied consistently regardless of how large the environment scales. The BeeGFS collection is available from https://galaxy.ansible.com/netapp_eseries/beegfs[Ansible Galaxy^] and https://github.com/netappeseries/beegfs/[NetApp's E-Series GitHub^].
+For more information, see https://www.netapp.com/blog/deploying-beegfs-eseries/[Deploying BeeGFS with E-Series Storage^].

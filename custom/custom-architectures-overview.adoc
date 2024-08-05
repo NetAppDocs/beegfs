@@ -69,7 +69,7 @@ File nodes must run RedHat 8.4 and have access to the HA repository containing r
 
 [source,bash]
 ----
-subscription-manager repo-override repo=rhel-8-for-x86_64-highavailability-rpms --add=enabled:1
+subscription-manager repo-override repo=rhel-9-for-x86_64-highavailability-rpms --add=enabled:1
 ----
 
 === BeeGFS Client Nodes

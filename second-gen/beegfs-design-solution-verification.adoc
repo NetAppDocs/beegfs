@@ -22,7 +22,7 @@ The configuration profiles include the following:
 * A BeeGFS metadata plus a storage building block.
 * A BeeGFS storage-only building block.
 
-The building blocks were attached to two Mellanox Quantum InfiniBand (MQM8700) switches. Ten BeeGFS clients were also attached to the InfiniBand switches and used to run synthetic benchmark utilities.
+The building blocks were attached to two Nvidia Quantum InfiniBand (MQM8700) switches. Ten BeeGFS clients were also attached to the InfiniBand switches and used to run synthetic benchmark utilities.
 
 The following figure shows the BeeGFS configuration used to validate the BeeGFS on NetApp solution.
 

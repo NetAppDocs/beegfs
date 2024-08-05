@@ -121,7 +121,7 @@ Click link:https://github.com/netappeseries/beegfs/blob/master/getting_started/b
 
 ### Advanced: Toggling NVIDIA ConnectX VPI Adapters between Ethernet and InfiniBand Mode
 
-NVIDIA ConnectX-Virtual Protocol Interconnect&reg; (VPI) adapters support both InfiniBand and Ethernet as the transport layer. Switching between modes is not automatically negotiated, and must be configured using the `mstconfig` tool included in `mstflint`, an open source package that is part of the link:https://docs.nvidia.com/networking/display/MFTV4133/MFT+Supported+Configurations+and+Parameters[Mellanox Firmare Tools (MFT)^]. Changing the mode of the adapters only need to be done once. This can be done manually, or included in the Ansible inventory as part of any interfaces configured using the `eseries-[ib|ib_iser|ipoib|nvme_ib|nvme_roce|roce]_interfaces:` section of the inventory, to have it checked/applied automatically. 
+NVIDIA ConnectX-Virtual Protocol Interconnect&reg; (VPI) adapters support both InfiniBand and Ethernet as the transport layer. Switching between modes is not automatically negotiated, and must be configured using the `mstconfig` tool included in `mstflint`, an open source package that is part of the link:https://docs.nvidia.com/networking/display/mftv4270/mft+supported+configurations+and+parameters[Nvidia Firmare Tools (MFT)^]. Changing the mode of the adapters only need to be done once. This can be done manually, or included in the Ansible inventory as part of any interfaces configured using the `eseries-[ib|ib_iser|ipoib|nvme_ib|nvme_roce|roce]_interfaces:` section of the inventory, to have it checked/applied automatically. 
 
 For example to change an interface current in InfiniBand mode to Ethernet so it can be used for RoCE:
 
