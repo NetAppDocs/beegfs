@@ -59,7 +59,6 @@ Stripe pattern details:
   + 201 @ stor_02_tgt_0201 [ID: 201]
   + 202 @ stor_02_tgt_0201 [ID: 201]
 ....
-+
 
 == EF600 block node configuration
 

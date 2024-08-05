@@ -161,10 +161,17 @@ IMPORTANT: File nodes require a valid RedHat Enterprise Linux Server subscriptio
 |5.14.0-362.24.1.el9_3.x86_64
 |InfiniBand / RDMA Drivers
 |MLNX_OFED_LINUX-23.10-3.2.2
-|ConnectX-7 HCA Firmware
-| FW: 28.39.1002
-PXE: 3.7.0201
+a|HCA Firmware
+a|
+*ConnectX-7 HCA Firmware*
+FW: 28.39.1002 +
+PXE: 3.7.0201 +
 UEFI: 14.32.0012
+
+*ConnectX-6 HCA Firmware*
+FW: 20.31.1014 +
+PXE: 3.6.0403 +
+UEFI: 14.24.0013
 |===
 
 === EF600 block node requirements
