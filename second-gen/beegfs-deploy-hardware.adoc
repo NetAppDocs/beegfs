@@ -44,7 +44,7 @@ The power supply configuration for production use cases should typically use red
 +
 image:../media/driveslots.png[]
 +
-. Connect the file and block nodes using the link:beegfs-technology-requirements.html#file-node-cables[file node InfiniBand cables] to match the topology shown in the figure below.
+. Connect the block and file nodes using the link:beegfs-technology-requirements.html#block-file-cables[1m InfiniBand HDR 200Gb direct attach copper cables], so that they match the topology shown in the figure below.
 +
 [NOTE]
 File nodes using Lenovo SR665 V3 servers will follow the same topology, but each HCA shown in the graphic will be shifted down one PCIe slot number.
@@ -54,7 +54,7 @@ image:../media/directattachcable.png[]
 [NOTE]
 The nodes across multiple building blocks are never directly connected. Each building block should be treated as a standalone unit and all communication between building blocks occurs through network switches.
 +
-. Connect the remaining InfiniBand ports on the file node to the storage network's InfiniBand switch using the link:beegfs-technology-requirements.html#switch-cables[switch InfiniBand cables].
+. Connect the remaining InfiniBand ports on the file node to the storage network's InfiniBand switch using the link:beegfs-technology-requirements.html#file-switch-cables[2m InfiniBand cables] specific to your InfiniBand storage switch.
 +
 When using splitter cables to connect the storage switch to file nodes, one cable should branch out from the switch and connect to the ports outlined in light green. Another splitter cable should branch out from the switch and connect to the ports outlined in dark green.
 +

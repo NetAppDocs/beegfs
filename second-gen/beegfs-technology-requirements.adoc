@@ -59,18 +59,18 @@ a|*Memory:* 256GB (128GB per controller).
 *Drives:* Configured to match desired capacity.
 
 |8
-|[[infiniband-adapters]]Infiniband Host Card Adapters (for file nodes).
+|[[infiniband-adapters]]InfiniBand host card adapters (for file nodes).
 a|Host card adapters will vary based on the server model used for the file node. Recommendations for verified file nodes include:
 
 * *Lenovo ThinkSystem SR665 V3 Server:*
-** MCX755106AS-HEAT ConnectX-7 NDR200 QSFP112 2-port PCIe Gen5 x16 InfiniBand Adapter
+** MCX755106AS-HEAT ConnectX-7, NDR200, QSFP112, 2-port, PCIe Gen5 x16, InfiniBand Adapter
 
 * *Lenovo ThinkSystem SR665 Server:*
-** MCX653106A-HDAT ConnectX-6 HDR QSFP-56 2-port PCIe Gen4 x16 InfiniBand Adapter
+** MCX653106A-HDAT ConnectX-6, HDR, QSFP-56, 2-port, PCIe Gen4 x16, InfiniBand Adapter
 
 |1
 |Storage network switch
-a|The storage network switch must be capable of 200Gb/s InfiniBand speeds. Verified switch model options include:
+a|The storage network switch must be capable of 200Gb/s InfiniBand speeds. Recommended switch models include:
 
 * *NVIDIA Quantum QM9700 InfiniBand switch*
 * *NVIDIA Quantum MQM8700 InfiniBand switch*
@@ -78,7 +78,7 @@ a|The storage network switch must be capable of 200Gb/s InfiniBand speeds. Verif
 |===
 
 === Cabling requirements
-*Connections directly from the block nodes to the file nodes.*
+[block-file-cables]*Connections directly from the block nodes to the file nodes.*
 
 [options="header" cols="10%,70%,20%"]
 |===
@@ -89,9 +89,9 @@ a|The storage network switch must be capable of 200Gb/s InfiniBand speeds. Verif
 | 1m
 |===
 
-*Connections from file nodes to the storage network switch.*
+[file-switch-cables]*Connections from file nodes to the storage network switch.*
 Select one option from the table below according to your InfiniBand storage switch. +
-Lengths will vary according to customer environment.
+The recommended cable length is 2m, but may vary according to customer environment.
 
 [options="header" cols="20%,10%,15%,55%"]
 |===
@@ -99,23 +99,23 @@ Lengths will vary according to customer environment.
 
 | NVIDIA QM9700
 | 4
-| Active fiber
-| MFA7U10-HXXX (Nvidia Active Fiber cable, OSFP to 2x QSFP56, 400Gb/s to 2 x 200Gb/s)
+| Active Fiber
+| MFA7U10-H002 (Nvidia Active Fiber cable, InfiniBand 400Gb/s to 2x 200Gb/s, OSFP to 2x QSFP56)
 
 | NVIDIA QM9700
 | 4
-| Passive copper
-| MCP7Y60-HXXX (Nvidia Passive Copper cable, OSFP to 2x QSFP56, 400Gb/s to 2 x 200Gb/s)
+| Passive Copper
+| MCP7Y60-H002 (Nvidia Passive Copper cable, InfiniBand 400Gb/s to 2x 200Gb/s, OSFP to 2x QSFP56)
 
 | NVIDIA MQM8700
 | 8
-| Active fiber
-| MFS1S00-HXXX (Nvidia Active Fiber cable, QSFP56, 200Gb/s)
+| Active Fiber
+| MFS1S00-H003E (Nvidia Active Fiber cable, InfiniBand 200Gb/s, QSFP56)
 
 | NVIDIA MQM8700
 | 8
-| Passive copper
-| MCP1650-HXXX (Nvidia Passive Copper cable, QSFP56, 200Gb/s)
+| Passive Copper
+| MCP1650-H002E26 (Nvidia Passive Copper cable, InfiniBand 200Gb/s, QSFP56)
 |===
 
 == Software requirements
