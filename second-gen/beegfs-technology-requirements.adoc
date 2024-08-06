@@ -26,9 +26,9 @@ Before you begin, ensure that your hardware meets the following specifications f
 
 a|2
 a|[[beegfs-file-nodes]]BeeGFS file nodes
-a|Each file node should meet or exceed the specifications of the listed verified file nodes to achieve expected performance.
+a|Each file node should meet or exceed the specifications of the recommended file nodes to achieve expected performance.
 
-*Verified file node options:*
+*Recommended file node options:*
 
 * *Lenovo ThinkSystem SR665 V3*
 ** *Processors:* 2x AMD EPYC 9124 16C 3.0 GHz (configured as two NUMA zones).
