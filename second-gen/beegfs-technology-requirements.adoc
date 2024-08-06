@@ -22,21 +22,41 @@ Before you begin, ensure that your hardware meets the following specifications f
 
 [options="header" cols="10%,20%,70%"]
 |===
-|Count |Hardware component |Requirements
+|Quantity |Hardware component |Requirements
 
 a|2
 a|[[beegfs-file-nodes]]BeeGFS file nodes
-a|Each file node should meet or exceed the following configuration to achieve expected performance.
+a|Each file node should meet or exceed the specifications of the listed verified file nodes to achieve expected performance.
 
-*Processors:* 2x AMD EPYC 9124 16C 3.0 GHz (configured as two NUMA zones).
-*Memory:* 256GB (16x 16GB TruDDR5 4800MHz RDIMM-A)
-*PCIe Expansion:* Four PCIe Gen5 x16 slots (two per NUMA zone)
-*Miscellaneous:*
+*Verified file node options:*
 
-* Two drives in RAID 1 for OS (1TB 7.2K SATA or better)
-* 1GbE port for in-band OS management
-* 1GbE BMC with Redfish API for out-of-band server management
-* Dual hot swap power supplies and performance fans
+* *Lenovo ThinkSystem SR665 V3*
+** *Processors:* 2x AMD EPYC 9124 16C 3.0 GHz (configured as two NUMA zones).
+** *Memory:* 256GB (16x 16GB TruDDR5 4800MHz RDIMM-A)
+** *PCIe Expansion:* Four PCIe Gen5 x16 slots (two per NUMA zone)
+** *Miscellaneous:*
+
+*** Two drives in RAID 1 for OS (1TB 7.2K SATA or better)
+*** 1GbE port for in-band OS management
+*** 1GbE BMC with Redfish API for out-of-band server management
+*** Dual hot swap power supplies and performance fans
+
+* *Lenovo ThinkSystem SR665*
+** *Processors:* 2x AMD EPYC 7343 16C 3.2 GHz (configured as two NUMA zones).
+** *Memory:* 256GB (16x 16GB TruDDR4 3200MHz RDIMM-A)
+** *PCIe Expansion:* Four PCIe Gen4 x16 slots (two per NUMA zone)
+** *Miscellaneous:*
+
+*** Two drives in RAID 1 for OS (1TB 7.2K SATA or better)
+*** 1GbE port for in-band OS management
+*** 1GbE BMC with Redfish API for out-of-band server management
+*** Dual hot swap power supplies and performance fans
+
+|2
+|[[eseries-block-nodes]]E-Series block nodes (EF600 array)
+a|*Memory:* 256GB (128GB per controller).
+*Adapter:* 2-port 200Gb/HDR (NVMe/IB).
+*Drives:* Configured to match desired capacity.
 
 |8
 |[[infiniband-adapters]]Infiniband Host Card Adapters (for file nodes).
@@ -48,12 +68,6 @@ a|Host card adapters will vary based on the server model used for the file node.
 * *Lenovo ThinkSystem SR665 Server:*
 ** MCX653106A-HDAT ConnectX-6 HDR QSFP-56 2-port PCIe Gen4 x16 InfiniBand Adapter
 
-|2
-|[[eseries-block-nodes]]E-Series block nodes (EF600 array)
-a|*Memory:* 256GB (128GB per controller).
-*Adapter:* 2-port 200Gb/HDR (NVMe/IB).
-*Drives:* Configured to match desired capacity.
-
 |1
 |Storage network switch
 a|The storage network switch must be capable of 200Gb/s InfiniBand speeds. Verified switch model options include:
@@ -64,36 +78,46 @@ a|The storage network switch must be capable of 200Gb/s InfiniBand speeds. Verif
 |===
 
 === Cabling requirements
-[options="header" cols="1,1,2,1,1"]
-|===
-| Purpose | Connection Method | Part number | Count | Length
+*Connections directly from the block nodes to the file nodes.*
 
-| Block node to file node connections
-| Direct
-| MCP1650-H001E30 (Nvidia Passive Copper cable, IB HDR, up to 200Gbps, QSFP56, 30AWG)
+[options="header" cols="10%,70%,20%"]
+|===
+| Quantity | Part Number | Length
+
 | 8
+| MCP1650-H001E30 (Nvidia Passive Copper cable, QSFP56, 200Gbps)
 | 1m
-
-.4+| File node to storage network connections
-.2+| QM9700 Switch
-| MFA7U10-HXXX (Nvidia active fiber cable, OSFP to 2x QSFP56, 400Gb/s to 2 x 200Gb/s)
-| 4
-| Varies
-
-| MCP7Y60-HXXX (Nvidia passive copper cable, OSFP to 2x QSFP56, 400Gb/s to 2 x 200Gb/s)
-| 4
-| Varies
-
-.2+| QM8700 Switch
-| MCP1650-HXXX (Nvidia passive copper cable, QSFP56, 200Gb/s)
-| 8
-| Varies
-
-| MFS1S00-HXXX (Nvidia active fiber cable, QSFP56, 200Gb/s)
-| 8
-| Varies
-
 |===
+
+*Connections from file nodes to the storage network switch.*
+Select one option from the table below according to your InfiniBand storage switch. +
+Lengths will vary according to customer environment.
+
+[options="header" cols="20%,10%,15%,55%"]
+|===
+| Switch model | Quantity | Cable Type | Part Number
+
+| NVIDIA QM9700
+| 4
+| Active fiber
+| MFA7U10-HXXX (Nvidia Active Fiber cable, OSFP to 2x QSFP56, 400Gb/s to 2 x 200Gb/s)
+
+| NVIDIA QM9700
+| 4
+| Passive copper
+| MCP7Y60-HXXX (Nvidia Passive Copper cable, OSFP to 2x QSFP56, 400Gb/s to 2 x 200Gb/s)
+
+| NVIDIA MQM8700
+| 8
+| Active fiber
+| MFS1S00-HXXX (Nvidia Active Fiber cable, QSFP56, 200Gb/s)
+
+| NVIDIA MQM8700
+| 8
+| Passive copper
+| MCP1650-HXXX (Nvidia Passive Copper cable, QSFP56, 200Gb/s)
+|===
+
 == Software requirements
 
 For predictable performance and reliability, releases of the BeeGFS on NetApp solution are tested with specific versions of the software components required to implement the solution.
@@ -111,7 +135,7 @@ IMPORTANT: File nodes require a valid RedHat Enterprise Linux Server subscriptio
 |Linux Kernel
 |5.14.0-362.24.1.el9_3.x86_64
 |InfiniBand / RDMA Drivers
-|MLNX_OFED_LINUX-23.10-3.2.2
+|MLNX_OFED_LINUX-23.10-3.2.2.0-LTS
 a|HCA Firmware
 a|
 *ConnectX-7 HCA Firmware*
@@ -153,9 +177,8 @@ The following table lists the software requirements deployed automatically as pa
 |Pacemaker
 |2.1.4-5
 |OpenSM
-a|opensm-5.17.2 (from mlnx_ofed 23.10-2.2.2.0 LTS)
+a|opensm-5.17.2 (from MLNX_OFED_LINUX-23.10-3.2.2.0-LTS)
 |===
-
 
 === Ansible control node requirements
 The BeeGFS on NetApp solution is deployed and managed from an Ansible control node. For more information, see the https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html[Ansible documentation^].
