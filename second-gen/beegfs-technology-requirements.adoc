@@ -85,7 +85,7 @@ a|The storage network switch must be capable of 200Gb/s InfiniBand speeds. Recom
 | Quantity | Part Number | Length
 
 | 8
-| MCP1650-H001E30 (NVIDIA Passive Copper cable, QSFP56, 200Gbps)
+| MCP1650-H001E30 (NVIDIA Passive Copper cable, QSFP56, 200Gb/s)
 | 1m
 |===
 
