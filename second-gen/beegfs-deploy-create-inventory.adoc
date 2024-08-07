@@ -251,7 +251,7 @@ beegfs_ha_enable_performance_tuning: True
 +
 For a comprehensive list of the available tuning parameters that you can adjust, see the Performance Tuning Defaults section of the BeeGFS HA role in https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_4/defaults/main.yml[E-Series BeeGFS GitHub site^]. The default values can be overridden for all nodes in the cluster in this file or the `host_vars` file for an individual node.
 
-. To allow full 200Gb/HDR connectivity between block and file nodes, use the Open Subnet Manager (OpenSM) package from the Nvidia Open Fabrics Enterprise Distribution (MLNX_OFED). The MLNX_OFED version in listed the link:beegfs-technology-requirements.html#file-node-requirements[file node requirements] comes bundled with the recommended OpenSM packages. Although deployment using Ansible is supported, you must first install the MLNX_OFED driver on all file nodes.
+. To allow full 200Gb/HDR connectivity between block and file nodes, use the Open Subnet Manager (OpenSM) package from the NVIDIA Open Fabrics Enterprise Distribution (MLNX_OFED). The MLNX_OFED version in listed the link:beegfs-technology-requirements.html#file-node-requirements[file node requirements] comes bundled with the recommended OpenSM packages. Although deployment using Ansible is supported, you must first install the MLNX_OFED driver on all file nodes.
 +
 .. Populate the following parameters in `group_vars/ha_cluster.yml` (adjust packages as needed):
 +

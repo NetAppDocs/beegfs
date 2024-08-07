@@ -72,8 +72,8 @@ a|Host card adapters will vary based on the server model used for the file node.
 |Storage network switch
 a|The storage network switch must be capable of 200Gb/s InfiniBand speeds. Recommended switch models include:
 
-* *NVIDIA Quantum QM9700 InfiniBand switch*
-* *NVIDIA Quantum MQM8700 InfiniBand switch*
+* *NVIDIA QM9700 Quantum 2 NDR InfiniBand switch*
+* *NVIDIA MQM8700 Quantum HDR InfiniBand switch*
 
 |===
 
@@ -85,7 +85,7 @@ a|The storage network switch must be capable of 200Gb/s InfiniBand speeds. Recom
 | Quantity | Part Number | Length
 
 | 8
-| MCP1650-H001E30 (Nvidia Passive Copper cable, QSFP56, 200Gbps)
+| MCP1650-H001E30 (NVIDIA Passive Copper cable, QSFP56, 200Gbps)
 | 1m
 |===
 
@@ -100,22 +100,22 @@ The recommended cable length is 2m; however, this may vary based on the customer
 | NVIDIA QM9700
 | 4
 | Active Fiber
-| MFA7U10-H002 (Nvidia Active Fiber cable, InfiniBand 400Gb/s to 2x 200Gb/s, OSFP to 2x QSFP56)
+| MFA7U10-H002 (NVIDIA Active Fiber cable, InfiniBand 400Gb/s to 2x 200Gb/s, OSFP to 2x QSFP56)
 
 | NVIDIA QM9700
 | 4
 | Passive Copper
-| MCP7Y60-H002 (Nvidia Passive Copper cable, InfiniBand 400Gb/s to 2x 200Gb/s, OSFP to 2x QSFP56)
+| MCP7Y60-H002 (NVIDIA Passive Copper cable, InfiniBand 400Gb/s to 2x 200Gb/s, OSFP to 2x QSFP56)
 
 | NVIDIA MQM8700
 | 8
 | Active Fiber
-| MFS1S00-H003E (Nvidia Active Fiber cable, InfiniBand 200Gb/s, QSFP56)
+| MFS1S00-H003E (NVIDIA Active Fiber cable, InfiniBand 200Gb/s, QSFP56)
 
 | NVIDIA MQM8700
 | 8
 | Passive Copper
-| MCP1650-H002E26 (Nvidia Passive Copper cable, InfiniBand 200Gb/s, QSFP56)
+| MCP1650-H002E26 (NVIDIA Passive Copper cable, InfiniBand 200Gb/s, QSFP56)
 |===
 
 == Software requirements

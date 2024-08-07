@@ -220,9 +220,9 @@ To use HDR (200Gb) InfiniBand with the EF600 the subnet manager must support vir
 
 If block and file nodes are directly connected using InfiniBand, an instance of `opensm` must be configured on each file node for each interface directly connected to a block node. This is done by specifying `configure: true` when link:custom-architectures-inventory-configure-file-nodes.html[configuring file node storage interfaces^]. 
 
-Currently the inbox version of `opensm` shipped with supported Linux distributions does not support virtualization. Instead it is required you install and configure version of `opensm` from the Nvidia OpenFabrics Enterprise Distribution (OFED). Although deployment using Ansible is still supported, a few additional steps are required: 
+Currently the inbox version of `opensm` shipped with supported Linux distributions does not support virtualization. Instead it is required you install and configure version of `opensm` from the NVIDIA OpenFabrics Enterprise Distribution (OFED). Although deployment using Ansible is still supported, a few additional steps are required: 
 
-. Using curl or your desired tool, download the packages for the version of OpenSM listed in the link:beegfs-technology-requirements.html[technology requirements^] section from Nvidia’s website to the `<INVENTORY>/packages/` directory. For example:
+. Using curl or your desired tool, download the packages for the version of OpenSM listed in the link:beegfs-technology-requirements.html[technology requirements^] section from NVIDIA’s website to the `<INVENTORY>/packages/` directory. For example:
 +
 [source,bash]
 ----

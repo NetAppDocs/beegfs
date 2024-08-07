@@ -64,7 +64,7 @@ You can adjust the CPU frequency governor and other CPU configurations for maxim
 
 * Read request size.
 +
-You can increase the maximum read request size for Nvidia HCAs.
+You can increase the maximum read request size for NVIDIA HCAs.
 
 == Performance tuning for block nodes
 
