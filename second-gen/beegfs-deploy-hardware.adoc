@@ -46,9 +46,6 @@ image:../media/driveslots.png[]
 +
 . Connect the block and file nodes using the link:beegfs-technology-requirements.html#block-file-cables[1m InfiniBand HDR 200Gb direct attach copper cables], so that they match the topology shown in the figure below.
 +
-[NOTE]
-File nodes using Lenovo SR665 servers will follow the same topology, but each HCA shown in the graphic will be shifted up one PCIe slot number.
-+
 image:../media/directattachcable-sr665v3.png[]
 +
 [NOTE]
