@@ -91,7 +91,7 @@ The BeeGFS on NetApp solution runs across all building blocks in the deployment.
 Up to five building blocks can be deployed to form a standalone Linux HA cluster. This optimizes resource management with Pacemaker and maintains efficient synchronization with Corosync. One or more of these standalone BeeGFS HA clusters are combined to create a BeeGFS file system that is accessible to clients as a single storage namespace. On the hardware side, a single 42U rack can accommodate up to five building blocks, along with two 1U InfiniBand switches for the storage/data network. See the graphic below for a visual representation.
 
 [NOTE]
-A minimum of two building blocks are required to establish quorum in the failover cluster. A two-node cluster has limitations that might prevent a successful failover from occurring. You can configure a two-node cluster by incorporating a third device as a tiebreaker; however, this documentation does not cover that design.
+A minimum of two building blocks are required to establish quorum in the failover cluster. A two-node cluster has limitations that might prevent a successful failover from occurring. You can configure a two-node cluster by incorporating a third device as a tiebreaker; however, this documentation does not describe that design.
 
 image:../media/beegfs-design-image3.png[]
 
