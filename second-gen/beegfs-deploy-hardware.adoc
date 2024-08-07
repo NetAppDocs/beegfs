@@ -29,9 +29,9 @@ The following steps are identical for each building block in the cluster, regard
 +
 . Configure each BeeGFS block node with a dual-port 200Gb Host Interface Card (HIC) and install the HIC in each of its two storage controllers.
 +
-Rack the building blocks so the two BeeGFS file nodes are above the BeeGFS block nodes. The following figure shows the correct hardware configuration for the BeeGFS building block using Lenovo ThinkSystem SR665 servers as the file nodes (rear view).
+Rack the building blocks so the two BeeGFS file nodes are above the BeeGFS block nodes. The following figure shows the correct hardware configuration for the BeeGFS building block using Lenovo ThinkSystem SR665 V3 servers as the file nodes (rear view).
 +
-image:../media/buildingblock.png[]
+image:../media/buildingblock-sr665v3.png[]
 +
 [NOTE]
 The power supply configuration for production use cases should typically use redundant PSUs.
@@ -47,9 +47,9 @@ image:../media/driveslots.png[]
 . Connect the block and file nodes using the link:beegfs-technology-requirements.html#block-file-cables[1m InfiniBand HDR 200Gb direct attach copper cables], so that they match the topology shown in the figure below.
 +
 [NOTE]
-File nodes using Lenovo SR665 V3 servers will follow the same topology, but each HCA shown in the graphic will be shifted down one PCIe slot number.
+File nodes using Lenovo SR665 servers will follow the same topology, but each HCA shown in the graphic will be shifted up one PCIe slot number.
 +
-image:../media/directattachcable.png[]
+image:../media/directattachcable-sr665v3.png[]
 +
 [NOTE]
 The nodes across multiple building blocks are never directly connected. Each building block should be treated as a standalone unit and all communication between building blocks occurs through network switches.
