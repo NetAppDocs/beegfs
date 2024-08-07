@@ -65,11 +65,11 @@ It is also recommend you setup passwordless SSH from the control node to all Bee
 
 === BeeGFS File Nodes
 
-File nodes must run RedHat 8.4 and have access to the HA repository containing required packages (pacemaker, corosync, fence-agents-all, resource-agents). For example the following command can be executed to enable the appropriate repository on RedHat 8: 
+File nodes must run RedHat 9.3 and have access to the HA repository containing required packages (pacemaker, corosync, fence-agents-all, resource-agents). For example the following command can be executed to enable the appropriate repository on RedHat 9: 
 
 [source,bash]
 ----
-subscription-manager repo-override repo=rhel-8-for-x86_64-highavailability-rpms --add=enabled:1
+subscription-manager repo-override repo=rhel-9-for-x86_64-highavailability-rpms --add=enabled:1
 ----
 
 === BeeGFS Client Nodes

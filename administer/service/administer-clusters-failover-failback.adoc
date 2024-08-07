@@ -84,24 +84,24 @@ pcs resource relocate run
 
 If you want to permanently change the preferred file node for an individual BeeGFS service, adjust the Ansible inventory so the preferred node is listed first and rerun the Ansible playbook. 
 
-For example in this sample `inventory.yml` file, ictad22h01 is the preferred file node to run the BeeGFS management service: 
+For example in this sample `inventory.yml` file, beegfs_01 is the preferred file node to run the BeeGFS management service: 
 
 [source,yaml]
 ----
         mgmt:
           hosts:
-            ictad22h01:
-            ictad22h02:
+            beegfs_01:
+            beegfs_02:
 ----
 
-Reversing the order would cause the management services to be preferred on ictad22h02: 
+Reversing the order would cause the management services to be preferred on beegfs_02: 
 
 [source,yaml]
 ----
         mgmt:
           hosts:
-            ictad22h02:
-            ictad22h01:
+            beegfs_02:
+            beegfs_01:
 ----
 
 ==== Temporarily move a BeeGFS service to an alternate file node
@@ -116,7 +116,7 @@ If for some reason you do need to move an individual service to a different file
 pcs resource move <SERVICE>-monitor <HOSTNAME>
 ----
 
-WARNING: Do not specify individual resources or the resource group. Always specify the name of the monitor for the BeeGFS service you wish to relocate. For example to move the BeeGFS management service to ictad22h02 run: `pcs resource move mgmt-monitor ictad22h02`. This process can be repeated to move one or more services away from their preferred nodes. Verify using `pcs status` the services were relocated/started on the new node. 
+WARNING: Do not specify individual resources or the resource group. Always specify the name of the monitor for the BeeGFS service you wish to relocate. For example to move the BeeGFS management service to beegfs_02 run: `pcs resource move mgmt-monitor beegfs_02`. This process can be repeated to move one or more services away from their preferred nodes. Verify using `pcs status` the services were relocated/started on the new node. 
 
 To move a BeeGFS service back to its preferred node first clear the temporary resource constraints (repeating this step
 as needed for multiple services):

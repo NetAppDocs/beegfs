@@ -19,7 +19,7 @@ While most software configuration tasks are automated using the NetApp-provided 
 
 . Configure networking on the baseboard management controller (BMC) of each server.
 +
-To learn how to configure networking for the validated Lenovo SR665 file nodes, see the https://thinksystem.lenovofiles.com/help/index.jsp?topic=%2F7D2W%2Fset_the_network_connection.html[Lenovo ThinkSystem Documentation^].
+To learn how to configure networking for the validated Lenovo SR665 V3 file nodes, see the https://pubs.lenovo.com/sr665-v3/[Lenovo ThinkSystem Documentation^].
 +
 [NOTE]
 A  baseboard management controller (BMC), sometimes referred to as a service processor, is the generic name for the out-of-band management capability built into various server platforms that can provide remote access even if the operating system is not installed or accessible. Vendors typically market this functionality with their own branding. For example, on the Lenovo SR665, the BMC is referred to as the _Lenovo XClarity Controller (XCC)_.
@@ -30,24 +30,24 @@ You configure the system settings using the UEFI setup (formerly known as the BI
 +
 To learn how to configure the system settings for the validated Lenovo SR665 file nodes, see link:beegfs-deploy-file-node-tuning.html[Tune system settings for performance].
 
-. Install Red Hat 8.4 and configure the host name and network port used to manage the operating system including SSH connectivity from the Ansible control node.
+. Install Red Hat 9.3 and configure the host name and network port used to manage the operating system including SSH connectivity from the Ansible control node.
 +
 Do not configure IPs on any of the InfiniBand ports at this time.
 +
 [NOTE]
 While not strictly required, subsequent sections presume that host names are sequentially numbered (such as h1-hN) and refer to tasks that should be completed on odd versus even numbered hosts.
 
-. Use RedHat Subscription Manager to register and subscribe the system to allow installation of the required packages from the official Red Hat repositories and to limit updates to the supported version of Red Hat: `subscription-manager release --set=8.4`. For instructions, see https://access.redhat.com/solutions/253273[How to register and subscribe a RHEL system^] and  https://access.redhat.com/solutions/2761031[How to limit updates^].
+. Use RedHat Subscription Manager to register and subscribe the system to allow installation of the required packages from the official Red Hat repositories and to limit updates to the supported version of Red Hat: `subscription-manager release --set=9.3`. For instructions, see https://access.redhat.com/solutions/253273[How to register and subscribe a RHEL system^] and  https://access.redhat.com/solutions/2761031[How to limit updates^].
 
 . Enable the Red Hat repository containing the packages required for high availability.
 +
 ....
-subscription-manager repo-override --repo=rhel-8-for-x86_64-highavailability-rpms --add=enabled:1
+subscription-manager repo-override --repo=rhel-9-for-x86_64-highavailability-rpms --add=enabled:1
 ....
 
-. Update all ConnectX-6 HCA firmware to the version recommended in link:beegfs-technology-requirements.html[Technology requirements].
+. Update all HCA firmware to the version recommended in link:beegfs-technology-requirements.html[Technology requirements].
 +
-This update can be done by downloading and running a version of the mlxup tool that bundles the recommended firmware. You can download this tool from https://network.nvidia.com/support/firmware/mlxup-mft/[mlxup - Update and Query Utility^] (link:https://docs.nvidia.com/networking/display/MLXUPFWUTILITY/mlxup+-+Firmware+Utility+User+Guide[user guide^]).
+This update can be done by downloading and running a version of the mlxup tool that bundles the recommended firmware. You can download this tool from https://network.nvidia.com/support/firmware/mlxup-mft/[mlxup - Update and Query Utility^] (link:https://docs.nvidia.com/networking/display/mlxupfwutility[user guide^]).
 
 == Set up block nodes
 Set up the EF600 block nodes by configuring the management port on each controller.

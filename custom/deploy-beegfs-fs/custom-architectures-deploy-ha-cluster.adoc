@@ -103,7 +103,7 @@ Create the file `playbook.yml` and populate it as follows:
   tasks:
     - name: Verify the BeeGFS HA cluster is properly deployed.
       import_role:
-        name: beegfs_ha_7_3 # Alternatively specify: beegfs_ha_7_2. 
+        name: beegfs_ha_7_4 # Alternatively specify: beegfs_ha_7_3. 
 ----
 NOTE: A BeeGFS HA role is maintained for each supported major.minor version of BeeGFS. This allows users to choose when they want to upgrade major/minor versions. Currently either BeeGFS 7.3.x (`beegfs_7_3`) or BeeGFS 7.2.x (`beegfs_7_2`) are supported. By default both roles will deploy the latest BeeGFS patch version at the time of release, though users can opt to override this and deploy the latest patch if desired. Refer to the latest link:https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_common/docs/upgrade.md[upgrade guide^] for more details. 
 

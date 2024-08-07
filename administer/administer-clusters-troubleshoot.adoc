@@ -44,10 +44,10 @@ If the failover was triggered by the BeeGFS monitor you should see an error (if 
 ----
 journalctl --since "<YYYY-MM-DD HH:MM:SS>" | grep -i unexpected
 [...]
-Jul 01 15:51:03 ictad22h01 pacemaker-schedulerd[9246]:  warning: Unexpected result (error: BeeGFS service is not active!) was recorded for monitor of meta_08-monitor on ictad22h02 at Jul  1 15:51:03 2022
+Jul 01 15:51:03 beegfs_01 pacemaker-schedulerd[9246]:  warning: Unexpected result (error: BeeGFS service is not active!) was recorded for monitor of meta_08-monitor on beegfs_02 at Jul  1 15:51:03 2022
 ----
 
-In this instance BeeGFS service meta_08 stopped for some reason. To continue troubleshooting we should boot ictad22h02 and review logs for the service at `/var/log/beegfs-meta-meta_08_tgt_0801.log`. For example, the BeeGFS service could have encountered an application error due to an internal issue or problem with the node.
+In this instance BeeGFS service meta_08 stopped for some reason. To continue troubleshooting we should boot beegfs_02 and review logs for the service at `/var/log/beegfs-meta-meta_08_tgt_0801.log`. For example, the BeeGFS service could have encountered an application error due to an internal issue or problem with the node.
 
 TIP: Unlike the logs from Pacemaker, logs for BeeGFS services are not distributed to all nodes in the cluster. To investigate those types of failures, the logs from the original node where the failure occurred are required.
 
@@ -78,8 +78,8 @@ In the event the node suffered some catastrophic hardware failure (e.g., the sys
 ----
 journalctl --since "<YYYY-MM-DD HH:MM:SS>" | grep -i <HOSTNAME>
 [...]
-Jul 01 16:18:01 ictad22h01 pacemaker-attrd[9245]:  notice: Node ictad22h02 state is now lost
-Jul 01 16:18:01 ictad22h01 pacemaker-controld[9247]:  warning: Stonith/shutdown of node ictad22h02 was not expected
+Jul 01 16:18:01 beegfs_01 pacemaker-attrd[9245]:  notice: Node beegfs_02 state is now lost
+Jul 01 16:18:01 beegfs_01 pacemaker-controld[9247]:  warning: Stonith/shutdown of node beegfs_02 was not expected
 ----
 
 ===== Step 3: Verify Pacemaker was able to fence the node
@@ -88,18 +88,18 @@ In all scenarios you should see Pacemaker attempt to fence the node to verify it
 
 [source,console]
 ----
-Jul 01 16:18:02 ictad22h01 pacemaker-schedulerd[9246]:  warning: Cluster node ictad22h02 will be fenced: peer is no longer part of the cluster
-Jul 01 16:18:02 ictad22h01 pacemaker-schedulerd[9246]:  warning: Node ictad22h02 is unclean
-Jul 01 16:18:02 ictad22h01 pacemaker-schedulerd[9246]:  warning: Scheduling Node ictad22h02 for STONITH
+Jul 01 16:18:02 beegfs_01 pacemaker-schedulerd[9246]:  warning: Cluster node beegfs_02 will be fenced: peer is no longer part of the cluster
+Jul 01 16:18:02 beegfs_01 pacemaker-schedulerd[9246]:  warning: Node beegfs_02 is unclean
+Jul 01 16:18:02 beegfs_01 pacemaker-schedulerd[9246]:  warning: Scheduling Node beegfs_02 for STONITH
 ----
 
 If the fencing action completes successfully you will see messages like:
 
 [source,console]
 ----
-Jul 01 16:18:14 ictad22h01 pacemaker-fenced[9243]:  notice: Operation 'off' [2214070] (call 27 from pacemaker-controld.9247) for host 'ictad22h02' with device 'fence_redfish_2' returned: 0 (OK)
-Jul 01 16:18:14 ictad22h01 pacemaker-fenced[9243]:  notice: Operation 'off' targeting ictad22h02 on ictad22h01 for pacemaker-controld.9247@ictad22h01.786df3a1: OK
-Jul 01 16:18:14 ictad22h01 pacemaker-controld[9247]:  notice: Peer ictad22h02 was terminated (off) by ictad22h01 on behalf of pacemaker-controld.9247: OK
+Jul 01 16:18:14 beegfs_01 pacemaker-fenced[9243]:  notice: Operation 'off' [2214070] (call 27 from pacemaker-controld.9247) for host 'beegfs_02' with device 'fence_redfish_2' returned: 0 (OK)
+Jul 01 16:18:14 beegfs_01 pacemaker-fenced[9243]:  notice: Operation 'off' targeting beegfs_02 on beegfs_01 for pacemaker-controld.9247@beegfs_01.786df3a1: OK
+Jul 01 16:18:14 beegfs_01 pacemaker-controld[9247]:  notice: Peer beegfs_02 was terminated (off) by beegfs_01 on behalf of pacemaker-controld.9247: OK
 ----
 
 If the fencing action failed for some reason, then the BeeGFS services will be unable to restart on another node to avoid risking data corruption. That would be an issue to investigate separately, if for example the fencing device (PDU or BMC) was inaccessible or misconfigured.
@@ -118,7 +118,7 @@ Some fencing agents are more reliable than others, and each will implement their
 
 [source,console]
 ----
-  * fence_redfish_2_monitor_60000 on ictad22h01 'not running' (7): call=2248, status='complete', exitreason='', last-rc-change='2022-07-26 08:12:59 -05:00', queued=0ms, exec=0ms
+  * fence_redfish_2_monitor_60000 on beegfs_01 'not running' (7): call=2248, status='complete', exitreason='', last-rc-change='2022-07-26 08:12:59 -05:00', queued=0ms, exec=0ms
 ----
 
 A fencing agent reporting failed resource actions on a particular node is not expected to trigger a failover of the BeeGFS services running on that node. It should simply be automatically restarted on the same or a different node.

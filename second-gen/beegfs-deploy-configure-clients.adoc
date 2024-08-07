@@ -28,13 +28,13 @@ ansible_host: <MANAGEMENT_IP>
 # OPTIONAL: If you want to use the NetApp E-Series Host Collection’s IPoIB role to configure InfiniBand interfaces for clients to connect to BeeGFS file systems:
 eseries_ipoib_interfaces:
   - name: <INTERFACE>
-    address: <IP>/<SUBNET_MASK> # Example: 100.127.1. 1/16
-  - name: <INTERFACE>0
+    address: <IP>/<SUBNET_MASK> # Example: 100.127.1.1/16
+  - name: <INTERFACE>
     address: <IP>/<SUBNET_MASK>
 ....
 +
 [NOTE]
-Currently, two InfiniBand interfaces must be configured on each client, one in each of the two storage IPoIB subnets. If using the example subnets and recommended ranges for each BeeGFS service listed here, clients should have one interface configured in the range of `100.127.1. 0` to `100.127.99.255` and the other in `100.128.1. 0` to `100.128. 99.255`.
+If deploying with a two subnet addressing scheme, two InfiniBand interfaces must be configured on each client, one in each of the two storage IPoIB subnets. If using the example subnets and recommended ranges for each BeeGFS service listed here, clients should have one interface configured in the range of `100.127.1.0` to `100.127.99.255` and the other in `100.128.1.0` to `100.128.99.255`.
 
 . Create a new file `client_inventory.yml`, and then populate the following parameters at the top:
 +
@@ -57,18 +57,18 @@ Do not store passwords in plain text. Instead, use the Ansible Vault (see the An
     # Ansible group representing all BeeGFS clients:
     beegfs_clients:
       hosts:
-        ictad21h01:
-        ictad21h02:
-        ictad21h03:
-        ictad21h04:
-        ictad21h05:
-        ictad21h06:
-        ictad21h07:
-        ictad21h08:
-        ictad21h09:
-        ictad21h10:
+        beegfs_01:
+        beegfs_02:
+        beegfs_03:
+        beegfs_04:
+        beegfs_05:
+        beegfs_06:
+        beegfs_07:
+        beegfs_08:
+        beegfs_09:
+        beegfs_10:
       vars:
-        # OPTION 1: If you’re using the Mellanox OFED drivers and they are already installed:
+        # OPTION 1: If you’re using the NVIDIA OFED drivers and they are already installed:
         eseries_ib_skip: True # Skip installing inbox drivers when using the IPoIB role.
         beegfs_client_ofed_enable: True
         beegfs_client_ofed_include_path: "/usr/src/ofa_kernel/default/include"
@@ -80,7 +80,7 @@ Do not store passwords in plain text. Instead, use the Ansible Vault (see the An
 ....
 +
 [NOTE]
-When using the Mellanox OFED drivers, make sure that `beegfs_client_ofed_include_path` points to the correct "header include path" for your Linux installation. For more information, see the BeeGFS documentation for https://doc.beegfs.io/latest/advanced_topics/rdma_support.html[RDMA support^].
+When using the NVIDIA OFED drivers, make sure that `beegfs_client_ofed_include_path` points to the correct "header include path" for your Linux installation. For more information, see the BeeGFS documentation for https://doc.beegfs.io/latest/advanced_topics/rdma_support.html[RDMA support^].
 
 . In the `client_inventory.yml` file, list the BeeGFS file systems you want mounted at the bottom of any previously defined `vars`.
 +

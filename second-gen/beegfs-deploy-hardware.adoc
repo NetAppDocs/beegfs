@@ -16,19 +16,22 @@ summary: "Each building block consists of two validated x86 file nodes directly 
 Each building block consists of two validated x86 file nodes directly connected to two block nodes using HDR (200Gb) InfiniBand cables.
 
 [NOTE]
-Because each building block includes two BeeGFS file nodes, a minimum of two building blocks is required to establish quorum in the failover cluster. While it is possible to configure a two-node cluster, there are limitations to this configuration that can prevent a successful failover to occur in some scenarios.  If a two-node cluster is required,  it is also possible to incorporate a third device as a tiebreaker,  though that is not covered in this deployment procedure.
+A minimum of two building blocks are required to establish quorum in the failover cluster. A two-node cluster has limitations that might prevent a successful failover from occurring. You can configure a two-node cluster by incorporating a third device as a tiebreaker; however, this documentation does not describe that design.
 
-Unless otherwise noted, the following steps are identical for each building block in the cluster regardless of whether it is used to run BeeGFS metadata and storage services or storage services only.
+The following steps are identical for each building block in the cluster, regardless of whether it is used to run both BeeGFS metadata and storage services, or just storage services, unless it is otherwise noted.
 
 .Steps
 
-. Configure each BeeGFS file node with four PCIe 4.0 ConnectX-6 dual port Host Channel Adapters (HCAs) in InfiniBand mode and install them in PCIe slots 2, 3, 5, and 6.
-
+. Set up each BeeGFS file node with four Host Channel Adapters (HCAs) using the models specified in the link:beegfs-technology-requirements.html[Technical requirements]. Insert the HCAs into the PCIe slots of your file node according to the specifications below:
++
+* *Lenovo ThinkSystem SR665 V3 Server:* Use PCIe slots 1, 2, 4, and 5.
+* *Lenovo ThinkSystem SR665 Server:* Use PCIe slots 2, 3, 5, and 6.
++
 . Configure each BeeGFS block node with a dual-port 200Gb Host Interface Card (HIC) and install the HIC in each of its two storage controllers.
 +
-Rack the building blocks so the two BeeGFS file nodes are above the BeeGFS block nodes. The following figure shows the correct hardware configuration for the BeeGFS building block (rear view).
+Rack the building blocks so the two BeeGFS file nodes are above the BeeGFS block nodes. The following figure shows the correct hardware configuration for the BeeGFS building block using Lenovo ThinkSystem SR665 V3 servers as the file nodes (rear view).
 +
-image:../media/buildingblock.png[]
+image:../media/buildingblock-sr665v3.png[]
 +
 [NOTE]
 The power supply configuration for production use cases should typically use redundant PSUs.
@@ -41,16 +44,18 @@ The power supply configuration for production use cases should typically use red
 +
 image:../media/driveslots.png[]
 +
-. To cable the file and block nodes, use 1m InfiniBand HDR 200Gb direct attach copper cables, so that they match the topology shown in the figure below.
+. Connect the block and file nodes using the link:beegfs-technology-requirements.html#block-file-cables[1m InfiniBand HDR 200Gb direct attach copper cables], so that they match the topology shown in the following figure.
 +
-image:../media/directattachcable.png[]
+image:../media/directattachcable-sr665v3.png[]
 +
 [NOTE]
 The nodes across multiple building blocks are never directly connected. Each building block should be treated as a standalone unit and all communication between building blocks occurs through network switches.
 +
-. Use 2m (or the appropriate length) InfiniBand HDR 200Gb direct attach copper cables to cable the remaining InfiniBand ports on each file node to the InfiniBand switches that will be used for the storage network.
+. Connect the remaining InfiniBand ports on the file node to the storage network's InfiniBand switch using the link:beegfs-technology-requirements.html#file-switch-cables[2m InfiniBand cables] specific to your InfiniBand storage switch.
 +
-If there are redundant InfiniBand switches in use, cable the ports highlighted in light green in the following figure to different switches.
+When using splitter cables to connect the storage switch to file nodes, one cable should branch out from the switch and connect to the ports outlined in light green. Another splitter cable should branch out from the switch and connect to the ports outlined in dark green.
++
+Additionally, for storage networks with redundant switches, ports outlined in light green should connect to one switch, while ports in dark green should connect to another switch.
 +
 image:../media/networkcable.png[]
 +

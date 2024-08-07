@@ -31,9 +31,11 @@ Each version of the BeeGFS collection is tested with specific versions of BeeGFS
 |===
 | Original Version | Upgrade Version | Multirail | Details                                                            
 | 7.2.6            | 7.3.2           | Yes       | Upgrading beegfs collection from v3.0.1 to v3.1.0, multirail added
-| 7.2.6            | 7.2.8           | No        | Upgrading beegfs collection from v3.0.1 to v3.1.0                  
-| 7.2.8            | 7.3.1           | Yes       | Upgrade using beegfs collection v3.1.0, multirail added            
-| 7.3.1            | 7.3.2           | Yes       | Upgrade using beegfs collection v3.1.0                             
+| 7.2.6            | 7.2.8           | No        | Upgrading beegfs collection from v3.0.1 to v3.1.0
+| 7.2.8            | 7.3.1           | Yes       | Upgrade using beegfs collection v3.1.0, multirail added
+| 7.3.1            | 7.3.2           | Yes       | Upgrade using beegfs collection v3.1.0
+| 7.3.2            | 7.4.1           | Yes       | Upgrade using beegfs collection v3.2.0
+| 7.4.1            | 7.4.2           | Yes       | Upgrade using beegfs collection v3.2.0
 |===
 
 == BeeGFS Upgrade Steps
@@ -64,7 +66,7 @@ Make any required or desired updates to your cluster's Ansible inventory files. 
 
 === Step 3: Update Ansible Playbook (when updating major or minor versions only)
 
-If you are moving between major or minor versions, in the `playbook.yml` file used to deploy and maintain the cluster, update the name of the `beegfs_ha_<VERSION>` role to reflect the desired version. For example, if you wanted to deploy BeeGFS 7.3 this would be `beegfs_ha_7_3`:
+If you are moving between major or minor versions, in the `playbook.yml` file used to deploy and maintain the cluster, update the name of the `beegfs_ha_<VERSION>` role to reflect the desired version. For example, if you wanted to deploy BeeGFS 7.4 this would be `beegfs_ha_7_4`:
 
 [source,yaml]
 ----
@@ -76,7 +78,7 @@ If you are moving between major or minor versions, in the `playbook.yml` file us
   tasks:
     - name: Ensure BeeGFS HA cluster is setup.
       ansible.builtin.import_role:  # import_role is required for tag availability.
-        name: beegfs_ha_7_3
+        name: beegfs_ha_7_4
 ----
 
 For more details on the contents of this playbook file see the link:custom-architectures-deploy-ha-cluster.html[Deploy the BeeGFS HA cluster^] section.

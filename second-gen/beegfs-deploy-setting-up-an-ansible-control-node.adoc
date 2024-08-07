@@ -15,20 +15,20 @@ summary: "To set up an Ansible control node, identify a virtual or physical mach
 [.lead]
 To set up an Ansible control node, you must identify a virtual or physical machine with network access to the management ports of all file and block nodes that can be used to configure the solution.
 
-The following steps were tested on CentOS 8.4. For steps specific to your preferred Linux distribution, see the https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html[Ansible documentation^].
+The following steps were tested on Ubuntu 22.04. For steps specific to your preferred Linux distribution, see the https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html[Ansible documentation^].
 
-. Install Python 3.9 and ensure that the correct version of `pip` is installed.
+. Install Python 3.10 and ensure that the correct version of `pip` is installed.
 +
 ....
-sudo dnf install python3.9 -y
-sudo dnf install python39-pip
-sudo dnf install sshpass
+sudo apt install python3.10 -y
+sudo apt install python3-pip
+sudo apt install sshpass
 ....
 
-. Create symbolic links, ensuring that the Python 3.9 binary is used whenever `python3` or `python` is called.
+. Create symbolic links, ensuring that the Python 3.10 binary is used whenever `python3` or `python` is called.
 +
 ....
-sudo ln -sf /usr/bin/python3.9 /usr/bin/python3
+sudo ln -sf /usr/bin/python3.10 /usr/bin/python3
 sudo ln -sf /usr/bin/python3 /usr/bin/python
 ....
 
@@ -45,21 +45,21 @@ To ensure that you are installing a supported version of Ansible and all require
 +
 ....
 ansible --version
-ansible [core 2.11.6]
+ansible [core 2.17.2]
   config file = None
   configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-  ansible python module location = /usr/local/lib/python3.9/site-packages/ansible
+  ansible python module location = /usr/local/lib/python3.10/dist-packages/ansible
   ansible collection location = /root/.ansible/collections:/usr/share/ansible/collections
   executable location = /usr/local/bin/ansible
-  python version = 3.9.2 (default, Mar 10 2021, 17:29:56) [GCC 8.4.1 20200928 (Red Hat 8.4.1-1)]
-  jinja version = 3.0.2
+  python version = 3.10.12 (main, Jul 29 2024, 16:56:48) [GCC 11.4.0] (/usr/bin/python3)
+  jinja version = 3.1.4
   libyaml = True
 ....
 
 . Store the Ansible inventories used to describe the BeeGFS deployment in source control systems such as Git or BitBucket, and then install Git to interact with those systems.
 +
 ....
-sudo dnf install git -y
+sudo apt install git -y
 ....
 
 . Set up passwordless SSH. This is the easiest way to allow Ansible to access the remote BeeGFS file nodes from the Ansible control node.
@@ -75,5 +75,5 @@ Do *not* set up passwordless SSH to the block nodes. This is neither supported n
 This installation includes additional Ansible dependencies, such as the NetApp SANtricity software and host collections.
 +
 ....
-ansible-galaxy collection install netapp_eseries.beegfs:==3.0.1
+ansible-galaxy collection install netapp_eseries.beegfs:==3.2.0
 ....
