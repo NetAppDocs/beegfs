@@ -19,9 +19,7 @@ To define the configuration for file and block nodes, you create an Ansible inve
 Define the configuration that applies to all building blocks, regardless of which configuration profile you may apply to them individually.
 
 .Before you begin
-* Use a source control system like BitBucket or Git to store the contents of the directory containing the Ansible inventory and playbook files.
-
-* Create a `.gitignore` file that specifies the files that Git should ignore. This helps avoid storing large files in Git.
+* Choose a subnet addressing scheme for your deployment. Due to the benefits listed in the link:beegfs-design-software-architecture.html#beegfs-network-configuration[software architecture], it is recommended to use a single subnet addressing scheme.
 
 .Steps
 . On your Ansible control node, identify a directory that you want to use to store the Ansible inventory and playbook files.
@@ -49,7 +47,7 @@ eseries_ipoib_interfaces:  # Used to configure BeeGFS cluster IP addresses.
   - name: i1b
     address: 100.127.100. <NUMBER_FROM_HOSTNAME>/16
   - name: i4b
-    address: 100.128.100. <NUMBER_FROM_HOSTNAME>/16
+    address: 100.127.100. <NUMBER_FROM_HOSTNAME>/16
 beegfs_ha_cluster_node_ips:
   - <MANAGEMENT_IP>
   - <i1b_BEEGFS_CLUSTER_IP>
@@ -158,10 +156,13 @@ The shared configuration for file nodes is defined in a group called `ha_cluster
 ansible_ssh_user: root
 ansible_become_password: <PASSWORD>
 eseries_ipoib_default_hook_templates:
-  - 99-multihoming.j2 # This is required when configuring additional static IPs (for example cluster IPs) when multiple IB ports are in the same IPoIB subnet.
+  - 99-multihoming.j2   # This is required for single subnet deployments, where static IPs containing multiple IB ports are in the same IPoIB subnet. i.e: cluster IPs, multirail, single subnet, etc.
 # If the following options are specified, then Ansible will automatically reboot nodes when necessary for changes to take effect:
 eseries_common_allow_host_reboot: true
-eseries_common_reboot_test_command: "systemctl --state=active,exited | grep eseries_nvme_ib.service"
+eseries_common_reboot_test_command: "! systemctl status eseries_nvme_ib.service || systemctl --state=exited | grep eseries_nvme_ib.service"
+eseries_ib_opensm_options:
+  virt_enabled: "2"
+  virt_max_ports_in_process: "0"
 ....
 +
 [NOTE]
@@ -201,7 +202,7 @@ beegfs_ha_alert_verbosity: 3
 [NOTE]
 While seemingly redundant, `beegfs_ha_mgmtd_floating_ip` is important when you scale the BeeGFS file system beyond a single HA cluster. Subsequent HA clusters are deployed without an additional BeeGFS management service and point at the management service provided by the first cluster.
 +
-. Configure a fencing agent. (For more details, see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters[Configure fencing in a Red Hat High Availability cluster^].) The following output shows examples for configuring common fencing agents. Choose one of these options.
+. Configure a fencing agent. (For more details, see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters[Configure fencing in a Red Hat High Availability cluster^].) The following output shows examples for configuring common fencing agents. Choose one of these options.
 +
 For this step, be aware that:
 
@@ -232,7 +233,7 @@ beegfs_ha_fencing_agents:
     - pcmk_host_list: <HOSTNAME>
       ip: <BMC_IP>
       <<: *redfish
-# For details on configuring other fencing agents see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters.
+# For details on configuring other fencing agents see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters.
 ....
 
 . Enable recommended performance tuning in the Linux OS.
@@ -248,46 +249,17 @@ beegfs_ha_enable_performance_tuning: True
 +
 . (Optional) You can adjust the performance tuning parameters in the Linux OS as needed.
 +
-For a comprehensive list of the available tuning parameters that you can adjust, see the Performance Tuning Defaults section of the BeeGFS HA role in https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_2/defaults/main.yml[E-Series BeeGFS GitHub site^]. The default values can be overridden for all nodes in the cluster in this file or the `host_vars` file for an individual node.
+For a comprehensive list of the available tuning parameters that you can adjust, see the Performance Tuning Defaults section of the BeeGFS HA role in https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_4/defaults/main.yml[E-Series BeeGFS GitHub site^]. The default values can be overridden for all nodes in the cluster in this file or the `host_vars` file for an individual node.
 
-. To allow full 200Gb/HDR connectivity between block and file nodes, use the Open Subnet Manager (OpenSM) package from the Mellanox Open Fabrics Enterprise Distribution (MLNX_OFED). (The inbox `opensm` package does not support the necessary virtualization functionality.) Although deployment using Ansible is supported, you must first download the desired packages to the Ansible control node used to run the BeeGFS role.
-+
-.. Using `curl` or your desired tool, download the packages for the version of OpenSM listed in the technology requirements section from Mellanox’s website to the `packages/` directory. For example:
-+
-....
-curl -o packages/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm https://linux.mellanox.com/public/repo/mlnx_ofed/5.4-1.0.3.0/rhel8.4/x86_64/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
-
-curl -o packages/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm https://linux.mellanox.com/public/repo/mlnx_ofed/5.4-1.0.3.0/rhel8.4/x86_64/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
-....
+. To allow full 200Gb/HDR connectivity between block and file nodes, use the Open Subnet Manager (OpenSM) package from the NVIDIA Open Fabrics Enterprise Distribution (MLNX_OFED). The MLNX_OFED version in listed the link:beegfs-technology-requirements.html#file-node-requirements[file node requirements] comes bundled with the recommended OpenSM packages. Although deployment using Ansible is supported, you must first install the MLNX_OFED driver on all file nodes.
 +
 .. Populate the following parameters in `group_vars/ha_cluster.yml` (adjust packages as needed):
 +
 ....
 ### OpenSM package and configuration information
-eseries_ib_opensm_allow_upgrades: true
-eseries_ib_opensm_skip_package_validation: true
-eseries_ib_opensm_rhel_packages: []
-eseries_ib_opensm_custom_packages:
-  install:
-    - files:
-        add:
-          "packages/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm": "/tmp/"
-          "packages/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm": "/tmp/"
-    - packages:
-        add:
-          - /tmp/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
-          - /tmp/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
-  uninstall:
-    - packages:
-        remove:
-          - opensm
-          - opensm-libs
-      files:
-        remove:
-          - /tmp/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
-          - /tmp/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
 eseries_ib_opensm_options:
   virt_enabled: "2"
+  virt_max_ports_in_process: "0"
 ....
 
 . Configure the `udev` rule to ensure consistent mapping of logical InfiniBand port identifiers to underlying PCIe devices.
@@ -298,7 +270,18 @@ Use the following values for verified file nodes:
 +
 ....
 ### Ensure Consistent Logical IB Port Numbering
-# OPTION 1: Lenovo SR665 PCIe address-to-logical IB port mapping:
+# OPTION 1: Lenovo SR665 V3 PCIe address-to-logical IB port mapping:
+eseries_ipoib_udev_rules:
+  "0000:01:00.0": i1a
+  "0000:01:00.1": i1b
+  "0000:41:00.0": i2a
+  "0000:41:00.1": i2b
+  "0000:81:00.0": i3a
+  "0000:81:00.1": i3b
+  "0000:a1:00.0": i4a
+  "0000:a1:00.1": i4b
+
+# OPTION 2: Lenovo SR665 PCIe address-to-logical IB port mapping:
 eseries_ipoib_udev_rules:
   "0000:41:00.0": i1a
   "0000:41:00.1": i1b
@@ -308,8 +291,6 @@ eseries_ipoib_udev_rules:
   "0000:a1:00.1": i3b
   "0000:81:00.0": i4a
   "0000:81:00.1": i4b
-
-# Note: At this time no other x86 servers have been qualified. Configuration for future qualified file nodes will be added here.
 ....
 
 . (Optional) Update the metadata target selection algorithm.
@@ -346,11 +327,11 @@ Download the corresponding files from the https://mysupport.netapp.com/site/prod
 +
 ....
 # Firmware, NVSRAM, and Drive Firmware (modify the filenames as needed):
-eseries_firmware_firmware: "packages/RCB_11.70.2_6000_61b1131d.dlp"
-eseries_firmware_nvsram: "packages/N6000-872834-D06.dlp"
+eseries_firmware_firmware: "packages/RCB_11.80GA_6000_64cc0ee3.dlp"
+eseries_firmware_nvsram: "packages/N6000-880834-D08.dlp"
 ....
 +
-. Download and install the latest drive firmware available for the drives installed in your block nodes from the https://mysupport.netapp.com/NOW/download/tools/diskfw_eseries/[NetApp Support site^]. You can either upgrade them manually or include them in the `packages/` directory of the Ansible control node, and then populate the following parameters in `eseries_storage_systems.yml` to upgrade using Ansible:
+. Download and install the latest drive firmware available for the drives installed in your block nodes from the https://mysupport.netapp.com/site/downloads/firmware/e-series-disk-firmware[NetApp Support site^]. You can either upgrade them manually or include them in the `packages/` directory of the Ansible control node, and then populate the following parameters in `eseries_storage_systems.yml` to upgrade using Ansible:
 +
 ....
 eseries_drive_firmware_firmware_list:

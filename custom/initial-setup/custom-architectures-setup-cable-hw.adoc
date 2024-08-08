@@ -31,7 +31,7 @@ When planning the installation it is important all equipment in each building bl
 
 Example of a single building block: 
 
-image:../media/buildingblock.png["example building block"]
+image:../media/buildingblock-sr665v3.png["example building block"]
 
 Example of a large BeeGFS installation where there are multiple building blocks in each HA cluster, and multiple HA clusters in the file system:
 

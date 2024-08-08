@@ -39,7 +39,7 @@ Use RedHat Subscription Manager to register and subscribe the system to allow in
 Enable the Red Hat repository containing the packages required for high availability:
 
 ....
-subscription-manager repo-override --repo=rhel-8-for-x86_64-highavailability-rpms --add=enabled:1
+subscription-manager repo-override --repo=rhel-9-for-x86_64-highavailability-rpms --add=enabled:1
 ....
 
 === Configure Management Network
