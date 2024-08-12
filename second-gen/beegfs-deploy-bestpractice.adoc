@@ -16,7 +16,7 @@ summary: "Follow the best practice guidelines when deploying the BeeGFS on NetAp
 Follow the best practice guidelines when deploying the BeeGFS on NetApp solution.
 
 == Standard conventions
-When physically assembling and creating the Ansible inventory file, follow these standard conventions (for more information, see link:second-gen/beegfs-deploy-create-inventory.html[Create the Ansible inventory]).
+When physically assembling and creating the Ansible inventory file, follow these standard conventions (for more information, see link:beegfs-deploy-create-inventory.html[Create the Ansible inventory]).
 
 * File node host names are sequentially numbered (h01-hN) with lower numbers at the top of the rack and higher numbers at the bottom.
 +
@@ -125,7 +125,7 @@ In addition to the interface used for in-band OS management, additional interfac
 * Addresses in the range `100.xxx.1.1` through `100.xxx.99.255` are reserved for clients.
 
 ==== IPoIB single subnet addressing scheme
-This deployment guide will utilize a single subnet schema given the advantages listed in the link:second-gen/beegfs-design-software-architecture.html#beegfs-network-configuration[software architecture].
+This deployment guide will utilize a single subnet schema given the advantages listed in the link:beegfs-design-software-architecture.html#beegfs-network-configuration[software architecture].
 
 .Subnet: 100.127.0.0/16
 The following table provides the range for a single subnet: 100.127.0.0/16.

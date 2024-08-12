@@ -27,11 +27,11 @@ NOTE: If BMC based fencing using Redfish is desired, ensure Redfish is enabled a
 
 === Tune System Settings
 
-Using the system setup (BIOS/UEFI) interface, ensure settings are set to maximize performance. The exact settings and optimal values will vary based on the server model in use. Guidance is provided for link:second-gen/beegfs-deploy-file-node-tuning.html[verified file node models^], otherwise refer to the server vendor's documentation and best practices based on your model.
+Using the system setup (BIOS/UEFI) interface, ensure settings are set to maximize performance. The exact settings and optimal values will vary based on the server model in use. Guidance is provided for link:../second-gen/beegfs-deploy-file-node-tuning.html[verified file node models^], otherwise refer to the server vendor's documentation and best practices based on your model.
 
 === Install an Operating System
 
-Install a supported operating system based on the file node requirements listed link:second-gen/beegfs-technology-requirements.html#file-node-requirements[here^]. Refer to any additional steps below based on your Linux distribution.
+Install a supported operating system based on the file node requirements listed link:../second-gen/beegfs-technology-requirements.html#file-node-requirements[here^]. Refer to any additional steps below based on your Linux distribution.
 
 ==== RedHat
 Use RedHat Subscription Manager to register and subscribe the system to allow installation of the required packages from the official Red Hat repositories and to limit updates to the supported version of Red Hat: `subscription-manager release --set=<MAJOR_VERSION>.<MINOR_VERSION>`. For instructions, see https://access.redhat.com/solutions/253273[How to register and subscribe a RHEL system^] and  https://access.redhat.com/solutions/2761031[How to limit updates^].
@@ -50,7 +50,7 @@ NOTE: Ensure SSH is enabled and all management interfaces are accessible from th
 
 === Update HCA and HBA Firmware
 
-Ensure all HBAs and HCAs are running supported firmware versions listed on the link:https://imt.netapp.com/matrix/[NetApp Interoperability Matrix^] and upgrade if necessary. Additional recommendations for NVIDIA ConnectX adapters can be found link:second-gen/beegfs-technology-requirements.html#file-node-requirements[here^].
+Ensure all HBAs and HCAs are running supported firmware versions listed on the link:https://imt.netapp.com/matrix/[NetApp Interoperability Matrix^] and upgrade if necessary. Additional recommendations for NVIDIA ConnectX adapters can be found link:../second-gen/beegfs-technology-requirements.html#file-node-requirements[here^].
 
 == Block Nodes
 

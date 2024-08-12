@@ -28,7 +28,7 @@ If for any reason you need to stop the entire BeeGFS cluster and shutdown all se
 pcs cluster stop --all
 ----
 
-It is also possible to stop the cluster on individual nodes (which will automatically failover services to another node), though it is recommended to first put the node in standby (see the link:administer/clusters-failover-failback.html[failover^] section):
+It is also possible to stop the cluster on individual nodes (which will automatically failover services to another node), though it is recommended to first put the node in standby (see the link:clusters-failover-failback.html[failover^] section):
 
 [source,console]
 ----

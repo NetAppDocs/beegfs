@@ -17,12 +17,12 @@ Specific equipment, cabling, and configurations are required to support the BeeG
 
 Learn more:
 
-* link:second-gen/beegfs-design-hardware-architecture.html[Hardware configuration]
-* link:second-gen/beegfs-design-software-architecture.html[Software configuration]
-* link:second-gen/beegfs-design-solution-verification.html[Design verification]
-* link:second-gen/beegfs-design-solution-sizing-guidelines.html[Sizing guidelines]
-* link:second-gen/beegfs-design-performance-tuning.html[Performance tuning]
+* link:beegfs-design-hardware-architecture.html[Hardware configuration]
+* link:beegfs-design-software-architecture.html[Software configuration]
+* link:beegfs-design-solution-verification.html[Design verification]
+* link:beegfs-design-solution-sizing-guidelines.html[Sizing guidelines]
+* link:beegfs-design-performance-tuning.html[Performance tuning]
 
 Derivative architectures with variations in design and performance:
 
-* link:second-gen/beegfs-design-high-capacity-building-block.html[High Capacity Building Block]
+* link:beegfs-design-high-capacity-building-block.html[High Capacity Building Block]

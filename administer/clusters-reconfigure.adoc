@@ -17,7 +17,7 @@ Use Ansible to reconfigure the cluster.
 
 == Overview 
 
-Generally reconfiguring any aspect of the BeeGFS HA cluster should be done by updating your Ansible inventory and re-running the `ansible-playbook` command. This includes updating alerts, changing the permanent fencing configuration, or adjusting BeeGFS service configuration. These are adjusted using the `group_vars/ha_cluster.yml` file and a full list of options can be found in the link:custom/architectures-inventory-common-file-node-configuration.html[Specify Common File Node Configuration^] section. 
+Generally reconfiguring any aspect of the BeeGFS HA cluster should be done by updating your Ansible inventory and re-running the `ansible-playbook` command. This includes updating alerts, changing the permanent fencing configuration, or adjusting BeeGFS service configuration. These are adjusted using the `group_vars/ha_cluster.yml` file and a full list of options can be found in the link:../custom/architectures-inventory-common-file-node-configuration.html[Specify Common File Node Configuration^] section. 
 
 See below for additional details on select configuration options that administrators should be aware of when performing maintenance or servicing the cluster.
 

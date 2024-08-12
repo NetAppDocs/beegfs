@@ -58,4 +58,4 @@ The following figure shows the cabling design used to leverage the full PCIe bid
 
 image:../media/beegfs-design-image7.png[HCA bidirectional bandwidth]
 
-For each BeeGFS service, use the same adapter to connect the preferred port used for client traffic with the path to the block nodes controller that is the primary owner of that services volumes. For more information, see link:second-gen/beegfs-design-software-architecture.html[Software configuration].
+For each BeeGFS service, use the same adapter to connect the preferred port used for client traffic with the path to the block nodes controller that is the primary owner of that services volumes. For more information, see link:beegfs-design-software-architecture.html[Software configuration].

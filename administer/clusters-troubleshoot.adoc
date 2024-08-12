@@ -106,7 +106,7 @@ If the fencing action failed for some reason, then the BeeGFS services will be u
 
 === Address Failed Resource Actions (found at the bottom of pcs status)
 
-If a resource required to run a BeeGFS service fails, a failover will be triggered by the BeeGFS monitor. If this occurs there will likely be no "Failed Resource Actions" listed at the bottom of `pcs status` and you should refer to the steps on how to link:administer/clusters-failover-failback.html[failback after an unplanned failover^].
+If a resource required to run a BeeGFS service fails, a failover will be triggered by the BeeGFS monitor. If this occurs there will likely be no "Failed Resource Actions" listed at the bottom of `pcs status` and you should refer to the steps on how to link:clusters-failover-failback.html[failback after an unplanned failover^].
 
 Otherwise there should generally only be two scenarios where you will see "Failed Resource Actions".
 

@@ -25,7 +25,7 @@ Before you begin, ensure that your hardware meets the following specifications f
 |Quantity |Hardware component |Requirements
 
 a|2
-a|[[beegfs-file-nodes]]BeeGFS file nodes
+a|BeeGFS file nodes
 a|Each file node should meet or exceed the specifications of the recommended file nodes to achieve expected performance.
 
 *Recommended file node options:*
@@ -53,13 +53,13 @@ a|Each file node should meet or exceed the specifications of the recommended fil
 *** Dual hot swap power supplies and performance fans
 
 |2
-|[[eseries-block-nodes]]E-Series block nodes (EF600 array)
+|E-Series block nodes (EF600 array)
 a|*Memory:* 256GB (128GB per controller).
 *Adapter:* 2-port 200Gb/HDR (NVMe/IB).
 *Drives:* Configured to match desired metadata and storage capacity.
 
 |8
-|[[infiniband-adapters]]InfiniBand host card adapters (for file nodes).
+|InfiniBand host card adapters (for file nodes).
 a|Host card adapters will vary based on the server model used for the file node. Recommendations for verified file nodes include:
 
 * *Lenovo ThinkSystem SR665 V3 Server:*

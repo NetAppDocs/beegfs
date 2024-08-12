@@ -54,7 +54,7 @@ pcs resource relocate run
 
 ==== Failback (after an unplanned failover)
 
-If a node experience a hardware or other fault, the HA cluster should automatically react and move its services to a healthy node, providing time for administrators take corrective action. Before proceeding reference the link:administer/clusters-troubleshoot.html[troubleshooting^] section to determine the cause of the failover and resolve any outstanding issues. Once the node is powered back on and healthy you can proceed with failback.
+If a node experience a hardware or other fault, the HA cluster should automatically react and move its services to a healthy node, providing time for administrators take corrective action. Before proceeding reference the link:clusters-troubleshoot.html[troubleshooting^] section to determine the cause of the failover and resolve any outstanding issues. Once the node is powered back on and healthy you can proceed with failback.
 
 When a node boots following an unplanned (or planned) reboot, cluster services are not set to start automatically, so you will first need to bring the node online with: 
 

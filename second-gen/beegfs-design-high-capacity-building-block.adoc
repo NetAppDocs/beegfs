@@ -21,7 +21,7 @@ Hardware and software configuration for the high capacity building block is stan
 
 Customers deploying a high capacity building block design are likely to use only the base building block style configuration consisting of BeeGFS management, metadata, and storage services for each node. For cost efficiency, high capacity storage nodes should provision metadata volumes on the NVMe drives in the EF300 controller enclosure and should provision storage volumes to the NL-SAS drives in the expansion trays. 
 
-image:high-capacity-rack-diagram.png[]
+../media/high-capacity-rack-diagram.png[]
 
 == Sizing guidelines
 

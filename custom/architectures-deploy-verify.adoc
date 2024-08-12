@@ -47,6 +47,6 @@ pcs status # Verify the file node is back online and no failures are reported.
 pcs resource relocate run # Move all services back to their preferred nodes.
 pcs status # Verify services have moved back to the preferred node. 
 ----
-. Use performance benchmarking tools such as IOR and MDTest to verify the file system performance meets expectations. Examples of common tests and parameters used with BeeGFS can be found in the link:second-gen/beegfs-design-solution-verification.html[Design Verification^] section of the BeeGFS on NetApp Verified Architecture.
+. Use performance benchmarking tools such as IOR and MDTest to verify the file system performance meets expectations. Examples of common tests and parameters used with BeeGFS can be found in the link:../second-gen/beegfs-design-solution-verification.html[Design Verification^] section of the BeeGFS on NetApp Verified Architecture.
 
 Additional tests should be performed based on the acceptance criteria defined for a particular site/installation.

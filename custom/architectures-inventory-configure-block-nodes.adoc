@@ -26,7 +26,7 @@ This section walks through populating a `host_vars/<BLOCK_NODE_HOSTNAME>.yml` fi
 
 == Steps
 
-Referencing the IP addressing scheme defined in the link:custom/architectures-plan-file-system.html[Plan the File System^] section, for each block node in the cluster create a file `host_vars/<BLOCK_NODE_HOSTNAME>/yml` and populate it as follows:
+Referencing the IP addressing scheme defined in the link:architectures-plan-file-system.html[Plan the File System^] section, for each block node in the cluster create a file `host_vars/<BLOCK_NODE_HOSTNAME>/yml` and populate it as follows:
 
 . At the top specify the system name and the HTTPS URL for one of the controllers:
 +

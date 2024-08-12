@@ -20,7 +20,7 @@ You deploy the BeeGFS on NetApp solution using Ansible, which is a popular IT au
 
 Ansible allows companies such as NetApp to expand on built-in functionality using collections on Ansible Galaxy (see https://galaxy.ansible.com/netapp_eseries/santricity[NetApp E-Series BeeGFS collection^]). Collections include modules that perform some specific function or task (like create an E-Series volume) and include roles that can call multiple modules and other roles. This automated approach reduces the time needed to deploy the BeeGFS file system and the underlying HA cluster. In addition, it simplifies adding building blocks to expand the existing file systems.
 
-For additional details, see link:second-gen/beegfs-deploy-learn-ansible.html[Learn about the Ansible inventory].
+For additional details, see link:beegfs-deploy-learn-ansible.html[Learn about the Ansible inventory].
 
 [NOTE]
 Because numerous steps are involved in deploying the BeeGFS on NetApp solution, NetApp does not support manually deploying the solution.
@@ -40,20 +40,20 @@ Deployment involves the following high-level tasks:
 .Hardware deployment
 . Physically assemble each building block.
 . Rack and cable hardware.
-For detailed procedures, see link:second-gen/beegfs-deploy-hardware.html[Deploy hardware].
+For detailed procedures, see link:beegfs-deploy-hardware.html[Deploy hardware].
 
 .Software deployment
-. link:second-gen/beegfs-deploy-setup-nodes.html[Set up file and block nodes].
+. link:beegfs-deploy-setup-nodes.html[Set up file and block nodes].
 * Configure BMC IPs on file nodes
 * Install a supported operating system and configure management networking on file nodes
 * Configure management IPs on block nodes
 
-. link:second-gen/beegfs-deploy-setting-up-an-ansible-control-node.html[Set up an Ansible control node].
-. link:second-gen/beegfs-deploy-file-node-tuning.html[Tune system settings for performance].
-. link:second-gen/beegfs-deploy-create-inventory.html[Create the Ansible inventory].
-. link:second-gen/beegfs-deploy-define-inventory.html[Define Ansible inventory for BeeGFS building blocks].
-. link:second-gen/beegfs-deploy-playbook.html[Deploy BeeGFS using Ansible].
-. link:second-gen/beegfs-deploy-configure-clients.html[Configure BeeGFS clients].
+. link:beegfs-deploy-setting-up-an-ansible-control-node.html[Set up an Ansible control node].
+. link:beegfs-deploy-file-node-tuning.html[Tune system settings for performance].
+. link:beegfs-deploy-create-inventory.html[Create the Ansible inventory].
+. link:beegfs-deploy-define-inventory.html[Define Ansible inventory for BeeGFS building blocks].
+. link:beegfs-deploy-playbook.html[Deploy BeeGFS using Ansible].
+. link:beegfs-deploy-configure-clients.html[Configure BeeGFS clients].
 
 
 [NOTE]
@@ -64,4 +64,4 @@ The deploy procedures includes several examples where text needs to be copied to
 
 Derivative architectures with variations in deployment recommendations:
 
-* link:second-gen/beegfs-design-high-capacity-building-block.html[High Capacity Building Block]
+* link:beegfs-design-high-capacity-building-block.html[High Capacity Building Block]

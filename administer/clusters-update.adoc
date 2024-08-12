@@ -62,7 +62,7 @@ See link:https://docs.ansible.com/ansible/latest/collections_guide/collections_i
 
 === Step 2: Update Ansible Inventory
 
-Make any required or desired updates to your cluster's Ansible inventory files. See the link:administer/clusters-update.html#version-upgrade-notes[Version Upgrade Notes] section below for details about your specific upgrade requirements. See the link:custom/architectures-overview.html[Use Custom Architectures^] section for general information on configuring your BeeGFS HA inventory.
+Make any required or desired updates to your cluster's Ansible inventory files. See the link:clusters-update.html#version-upgrade-notes[Version Upgrade Notes] section below for details about your specific upgrade requirements. See the link:../custom/architectures-overview.html[Use Custom Architectures^] section for general information on configuring your BeeGFS HA inventory.
 
 === Step 3: Update Ansible Playbook (when updating major or minor versions only)
 
@@ -81,7 +81,7 @@ If you are moving between major or minor versions, in the `playbook.yml` file us
         name: beegfs_ha_7_4
 ----
 
-For more details on the contents of this playbook file see the link:custom/architectures-deploy-ha-cluster.html[Deploy the BeeGFS HA cluster^] section.
+For more details on the contents of this playbook file see the link:../custom/architectures-deploy-ha-cluster.html[Deploy the BeeGFS HA cluster^] section.
 
 === Step 4: Run the BeeGFS Upgrade
 
@@ -115,4 +115,4 @@ By default the `beegfs_ha*` roles will generate and distribute this file, also a
 
 WARNING: If the `beegfs_client` role was not used to configure clients, this file will need to be manually distributed to each client and the `connAuthFile` configuration in the `beegfs-client.conf` file set to use it. When upgrading from a previous version of BeeGFS where connection based authentication was not enabled, clients will loose access unless connection based authentication is disabled as part of the upgrade by setting `beegfs_ha_conn_auth_enabled: false` in `group_vars/ha_cluster.yml` (not recommended).
 
-For additional details and alternate configuration options see the step to configure connection authentication in the link:custom/architectures-inventory-common-file-node-configuration.html[Specify Common File Node Configuration^] section. 
+For additional details and alternate configuration options see the step to configure connection authentication in the link:../custom/architectures-inventory-common-file-node-configuration.html[Specify Common File Node Configuration^] section. 

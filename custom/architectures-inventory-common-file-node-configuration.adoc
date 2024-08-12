@@ -83,7 +83,7 @@ beegfs_ha_cluster_username: hacluster              # BeeGFS HA cluster username.
 beegfs_ha_cluster_password: hapassword             # BeeGFS HA cluster username's password.
 beegfs_ha_cluster_password_sha512_salt: randomSalt # BeeGFS HA cluster username's password salt.
 ----
-. Based on the link:custom/architectures-plan-file-system.html[Plan the File System^] section specify the BeeGFS management IP for this file system: 
+. Based on the link:architectures-plan-file-system.html[Plan the File System^] section specify the BeeGFS management IP for this file system: 
 +
 [source,yaml]
 ----
@@ -218,11 +218,11 @@ Click link:https://github.com/netappeseries/beegfs/blob/master/getting_started/b
 
 To use HDR (200Gb) InfiniBand with the EF600 the subnet manager must support virtualization. If file and block nodes are connected using a switch, this will need to be enabled on the subnet manager manager for the overall fabric.
 
-If block and file nodes are directly connected using InfiniBand, an instance of `opensm` must be configured on each file node for each interface directly connected to a block node. This is done by specifying `configure: true` when link:custom/architectures-inventory-configure-file-nodes.html[configuring file node storage interfaces^]. 
+If block and file nodes are directly connected using InfiniBand, an instance of `opensm` must be configured on each file node for each interface directly connected to a block node. This is done by specifying `configure: true` when link:architectures-inventory-configure-file-nodes.html[configuring file node storage interfaces^]. 
 
 Currently the inbox version of `opensm` shipped with supported Linux distributions does not support virtualization. Instead it is required you install and configure version of `opensm` from the NVIDIA OpenFabrics Enterprise Distribution (OFED). Although deployment using Ansible is still supported, a few additional steps are required: 
 
-. Using curl or your desired tool, download the packages for the version of OpenSM listed in the link:second-gen/beegfs-technology-requirements.html[technology requirements^] section from NVIDIA’s website to the `<INVENTORY>/packages/` directory. For example:
+. Using curl or your desired tool, download the packages for the version of OpenSM listed in the link:../second-gen/beegfs-technology-requirements.html[technology requirements^] section from NVIDIA’s website to the `<INVENTORY>/packages/` directory. For example:
 +
 [source,bash]
 ----

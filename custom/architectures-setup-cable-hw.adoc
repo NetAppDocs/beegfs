@@ -39,15 +39,15 @@ image:../media/beegfs-design-image3-small.png["Example BeeGFS deployment"]
 
 == Cable File and Block Nodes
 
-Typically you will direct-connect the HIC ports of the E-Series block nodes to the designated host channel adapter (for InfiniBand protocols) or host bus adapter (for fibre channel and other protocols) ports of the file nodes. The exact way to establish these connections will depend on the desired file system architecture, here is an example link:second-gen/beegfs-design-hardware-architecture.html[based on the second-generation BeeGFS on NetApp verified architecture^]:  
+Typically you will direct-connect the HIC ports of the E-Series block nodes to the designated host channel adapter (for InfiniBand protocols) or host bus adapter (for fibre channel and other protocols) ports of the file nodes. The exact way to establish these connections will depend on the desired file system architecture, here is an example link:../second-gen/beegfs-design-hardware-architecture.html[based on the second-generation BeeGFS on NetApp verified architecture^]:  
 
-image:./directattachcable.png["example BeeGFS file to block node cabling"]
+image:../media/directattachcable.png["example BeeGFS file to block node cabling"]
 
 == Cable File Nodes to the Client Network
 
 Each file node will have some number of InfiniBand or Ethernet ports designated for BeeGFS client traffic. Depending on the architecture each file node will have one or more connections to a high performance client/storage network, potentially to multiple switches for redundancy and increased bandwidth. Here is an example of client cabling using redundant network switches, where ports highlighted in dark green versus light green are connected to separate switches:
 
-image:./networkcable.png["example BeeGFS client cabling"]
+image:../media/networkcable.png["example BeeGFS client cabling"]
 
 == Connect Management Networking and Power
 

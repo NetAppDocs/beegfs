@@ -21,7 +21,7 @@ This section is intended for cluster administrators that need to manage BeeGFS H
 
 == Key Concepts
 
-While some of these concepts are introduced on the main link:get-started/beegfs-terms.html[terms and concepts] page, it is helpful to reintroduce them in the context of a BeeGFS HA cluster:
+While some of these concepts are introduced on the main link:../get-started/beegfs-terms.html[terms and concepts] page, it is helpful to reintroduce them in the context of a BeeGFS HA cluster:
 
 **Cluster Node:** A server running Pacemaker and Corosync services and participating in the HA cluster.
 
@@ -51,6 +51,6 @@ While some of these concepts are introduced on the main link:get-started/beegfs-
 
 **HA pair:** Two file nodes that can access the same set of block nodes are sometimes referred to as an HA pair. This is a common term used throughout NetApp to refer to two storage controllers or nodes that can "take over" for each other. 
 
-**Maintenance Mode:** Disables all resource monitoring and prevents Pacemaker from moving or otherwise managing resources in the cluster (also see the section on link:administer/clusters-maintenance-mode.html[maintenance mode^]).
+**Maintenance Mode:** Disables all resource monitoring and prevents Pacemaker from moving or otherwise managing resources in the cluster (also see the section on link:clusters-maintenance-mode.html[maintenance mode^]).
 
 **HA cluster:** One or more file nodes running BeeGFS services that can failover between multiple nodes in the cluster to create a highly available BeeGFS file system. Often file nodes are configured into HA pairs that are able to run a subset of the BeeGFS services in the cluster.

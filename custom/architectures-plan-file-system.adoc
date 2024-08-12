@@ -79,4 +79,4 @@ NOTE: If the file and block nodes in each building block are directly connected 
 |<A OR B>
 |===
 
-For more details on standard conventions, best practices, and filled out example worksheets refer to the link:second-gen/beegfs-deploy-bestpractice.html[best practices^] and link:second-gen/beegfs-deploy-define-inventory.html[define BeeGFS building blocks^] sections of the BeeGFS on NetApp Verified Architecture.
+For more details on standard conventions, best practices, and filled out example worksheets refer to the link:../second-gen/beegfs-deploy-bestpractice.html[best practices^] and link:../second-gen/beegfs-deploy-define-inventory.html[define BeeGFS building blocks^] sections of the BeeGFS on NetApp Verified Architecture.

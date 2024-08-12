@@ -15,13 +15,13 @@ summary: "The BeeGFS on NetApp solution combines the BeeGFS parallel file system
 [.lead]
 Use any NetApp E/EF-Series storage systems as BeeGFS block nodes and x86 servers as BeeGFS file nodes when deploying BeeGFS high availability clusters using Ansible.
 
-TIP: Definitions for terminology used throughout this section can be found on the link:get-started/beegfs-terms.html[terms and concepts] page.
+TIP: Definitions for terminology used throughout this section can be found on the link:../get-started/beegfs-terms.html[terms and concepts] page.
 
 == Introduction
 
-While link:second-gen/beegfs-solution-overview.html[NetApp verified architectures] provide predefined reference configurations and sizing guidance, some customers and partners may prefer to design custom architectures better suited to particular requirements or hardware preferences. One of the primary benefits of choosing BeeGFS on NetApp is the ability to deploy BeeGFS shared-disk HA clusters using Ansible, simplifying cluster management and improving reliability with NetApp authored HA components. The deployment of custom BeeGFS architectures on NetApp is still done using Ansible, maintaining an appliance-like approach on a flexible range of hardware. 
+While link:../second-gen/beegfs-solution-overview.html[NetApp verified architectures] provide predefined reference configurations and sizing guidance, some customers and partners may prefer to design custom architectures better suited to particular requirements or hardware preferences. One of the primary benefits of choosing BeeGFS on NetApp is the ability to deploy BeeGFS shared-disk HA clusters using Ansible, simplifying cluster management and improving reliability with NetApp authored HA components. The deployment of custom BeeGFS architectures on NetApp is still done using Ansible, maintaining an appliance-like approach on a flexible range of hardware. 
 
-This section outlines the general steps needed to deploy BeeGFS file systems on NetApp hardware and use of Ansible to configure BeeGFS file systems. For details on best practices surrounding the design of BeeGFS file systems and optimized examples please refer to the link:second-gen/beegfs-solution-overview.html[NetApp verified architectures] section.
+This section outlines the general steps needed to deploy BeeGFS file systems on NetApp hardware and use of Ansible to configure BeeGFS file systems. For details on best practices surrounding the design of BeeGFS file systems and optimized examples please refer to the link:../second-gen/beegfs-solution-overview.html[NetApp verified architectures] section.
 
 == Deployment Overview 
 
