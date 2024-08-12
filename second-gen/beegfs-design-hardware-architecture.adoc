@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-design-hardware-architecture.html
+permalink: second-gen/beegfs-design-hardware-architecture.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "The hardware configuration for BeeGFS on NetApp includes file nodes and network cabling."
 ---
@@ -24,7 +24,7 @@ InfiniBand adapters must be populated in the appropriate PCI risers or slots, so
 
 The following figure shows the file node NUMA configuration.
 
-image:../media/beegfs-design-image5-small.png[]
+image:../media/beegfs-design-image5-small.png[NUMA configuration]
 
 The BeeGFS processes are pinned to a particular NUMA zone to ensure that the interfaces used are in the same zone. This configuration avoids the need for remote access over the inter-socket connection. The inter-socket connection is sometimes known as the QPI or GMI2 link; even in modern processor architectures, they can be a bottleneck when using high-speed networking like HDR InfiniBand.
 
@@ -39,7 +39,7 @@ In the following figure, notice that:
 * Ports in NUMA node 0 always connect to the first block node.
 * Ports in NUMA node 1 connect to the second block node.
 
-image:../media/beegfs-design-image6.png[]
+image:../media/beegfs-design-image6.png[Network cabling]
 
 [NOTE]
 When using splitter cables to connect the storage switch to file nodes, one cable should branch out and connect to the ports outlined in light green. Another cable should branch out and connect to the ports outlined in dark green.
@@ -56,6 +56,6 @@ To leverage the full PCIe bidirectional bandwidth, make sure one port on each In
 
 The following figure shows the cabling design used to leverage the full PCIe bidirectional bandwidth.
 
-image:../media/beegfs-design-image7.png[]
+image:../media/beegfs-design-image7.png[HCA bidirectional bandwidth]
 
-For each BeeGFS service, use the same adapter to connect the preferred port used for client traffic with the path to the block nodes controller that is the primary owner of that services volumes. For more information, see link:beegfs-design-software-architecture.html[Software configuration].
+For each BeeGFS service, use the same adapter to connect the preferred port used for client traffic with the path to the block nodes controller that is the primary owner of that services volumes. For more information, see link:second-gen/beegfs-design-software-architecture.html[Software configuration].

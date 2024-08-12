@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-define-inventory.html
+permalink: second-gen/beegfs-deploy-define-inventory.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "After defining the general Ansible inventory structure, define the configuration for each building block in the BeeGFS file system."
 ---
@@ -273,7 +273,7 @@ beegfs_targets:
 ....
 +
 [NOTE]
- For the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
+ For the correct size to use, see link:second-gen/beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
@@ -446,7 +446,7 @@ beegfs_targets:
 ....
 +
 [NOTE]
-For the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
+For the correct size to use, see link:second-gen/beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
@@ -545,7 +545,7 @@ beegfs_targets:
 ....
 +
 [NOTE]
- For the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages]..
+ For the correct size to use, see link:second-gen/beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages]..
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
@@ -689,7 +689,7 @@ beegfs_targets:
 ....
 +
 [NOTE]
- For  the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
+ For  the correct size to use, see link:second-gen/beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller

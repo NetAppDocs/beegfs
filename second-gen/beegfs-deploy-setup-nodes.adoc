@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-setup-nodes.html
+permalink: second-gen/beegfs-deploy-setup-nodes.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "Configure networking on the baseboard management controller (BMC) of each server and configure the management port on each controller."
 ---
@@ -28,7 +28,7 @@ A  baseboard management controller (BMC), sometimes referred to as a service pro
 +
 You configure the system settings using the UEFI setup (formerly known as the BIOS) or by using the Redfish APIs provided by many BMCs. The system settings vary based on the server model used as a file node.
 +
-To learn how to configure the system settings for the validated Lenovo SR665 file nodes, see link:beegfs-deploy-file-node-tuning.html[Tune system settings for performance].
+To learn how to configure the system settings for the validated Lenovo SR665 file nodes, see link:second-gen/beegfs-deploy-file-node-tuning.html[Tune system settings for performance].
 
 . Install Red Hat 9.3 and configure the host name and network port used to manage the operating system including SSH connectivity from the Ansible control node.
 +
@@ -45,7 +45,7 @@ While not strictly required, subsequent sections presume that host names are seq
 subscription-manager repo-override --repo=rhel-9-for-x86_64-highavailability-rpms --add=enabled:1
 ....
 
-. Update all HCA firmware to the version recommended in link:beegfs-technology-requirements.html[Technology requirements].
+. Update all HCA firmware to the version recommended in link:second-gen/beegfs-technology-requirements.html[Technology requirements].
 +
 This update can be done by downloading and running a version of the mlxup tool that bundles the recommended firmware. You can download this tool from https://network.nvidia.com/support/firmware/mlxup-mft/[mlxup - Update and Query Utility^] (link:https://docs.nvidia.com/networking/display/mlxupfwutility[user guide^]).
 

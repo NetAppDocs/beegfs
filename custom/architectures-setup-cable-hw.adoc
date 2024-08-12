@@ -1,0 +1,56 @@
+---
+sidebar: sidebar
+permalink: custom/architectures-setup-cable-hw.html
+keywords: BeeGFS on NetApp, NetApp Custom Architectures, EF600
+summary: "Steps needed to install and cable hardware used to run BeeGFS on NetApp."
+---
+= Install and Cable Hardware
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+Steps needed to install and cable hardware used to run BeeGFS on NetApp.
+
+== Plan the Installation
+
+Each BeeGFS file system will consist of some number of file nodes running BeeGFS services using backend storage provided by some number of block nodes. The file nodes are configured into one or more high availability clusters to provide fault tolerance for BeeGFS services. Each block node is a already an active/active HA pair. The minimum number of supported file nodes in each HA cluster is three, and the maximum number of supported file nodes in each cluster is ten. BeeGFS file systems can scale beyond ten node by deploying multiple independent HA clusters that work together to provide a single file system namespace.
+
+Commonly each HA cluster is deployed as a series of "building blocks" where some number of file nodes (x86 servers) are directly connected to some number of block nodes (typically E-Series storage systems). This configuration creates an asymmetrical cluster, where BeeGFS services are only able to run on certain file nodes that have access to the backend block storage used for the BeeGFS targets. The balance of file-to-block nodes in each building block and the storage protocol in use for the direct-connects depend on the requirements of a particular installation.
+
+An alternative HA cluster architecture uses a storage fabric (also known as a storage area network or SAN) between the file and block nodes to establish a symmetrical cluster. This allows BeeGFS services to run on any file node in a particular HA cluster. As generally symmetrical clusters are not as cost effective due to the extra SAN hardware, this documentation presumes use of an asymmetrical cluster deployed as a series of one or more building blocks. 
+
+CAUTION: Ensure the desired file system architecture for a particular BeeGFS deployment is well understood before proceeding with the installation.
+
+== Rack Hardware
+
+When planning the installation it is important all equipment in each building block is racked in adjacent rack units. Best practice is for file nodes to be racked immediately above block nodes in each building block. Follow the documentation for the model(s) of file and link:https://docs.netapp.com/us-en/e-series/getting-started/getup-run-concept.html[block^] nodes you are using as you install rails and hardware into the rack.
+
+Example of a single building block: 
+
+image:../media/buildingblock-sr665v3.png["Example building block"]
+
+Example of a large BeeGFS installation where there are multiple building blocks in each HA cluster, and multiple HA clusters in the file system:
+
+image:../media/beegfs-design-image3-small.png["Example BeeGFS deployment"]
+
+== Cable File and Block Nodes
+
+Typically you will direct-connect the HIC ports of the E-Series block nodes to the designated host channel adapter (for InfiniBand protocols) or host bus adapter (for fibre channel and other protocols) ports of the file nodes. The exact way to establish these connections will depend on the desired file system architecture, here is an example link:second-gen/beegfs-design-hardware-architecture.html[based on the second-generation BeeGFS on NetApp verified architecture^]:  
+
+image:./directattachcable.png["example BeeGFS file to block node cabling"]
+
+== Cable File Nodes to the Client Network
+
+Each file node will have some number of InfiniBand or Ethernet ports designated for BeeGFS client traffic. Depending on the architecture each file node will have one or more connections to a high performance client/storage network, potentially to multiple switches for redundancy and increased bandwidth. Here is an example of client cabling using redundant network switches, where ports highlighted in dark green versus light green are connected to separate switches:
+
+image:./networkcable.png["example BeeGFS client cabling"]
+
+== Connect Management Networking and Power
+
+Establish any network connections needed for in-band and out-of-band network.
+
+Connect all power supplies ensuring each file and block node has connections to multiple power distribution units for redundancy (if available). 

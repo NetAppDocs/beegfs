@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-architecture-overview.html
+permalink: second-gen/beegfs-architecture-overview.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "The BeeGFS on NetApp solution includes architectural design considerations used to determine the specific equipment, cabling, and configurations required to support validated workloads."
 ---
@@ -40,7 +40,7 @@ The BeeGFS file system includes the following main services:
 
 The following figure shows BeeGFS solution components and relationships used with NetApp E-Series systems.
 
-image:../media/beegfs-components.png[]
+image:../media/beegfs-components.png["BeeGFS Components"]
 
 As a parallel file system, BeeGFS stripes its files over multiple server nodes to maximize read/write performance and scalability. The server nodes work together to deliver a single file system that can be simultaneously mounted and accessed by other server nodes, commonly known as _clients_. These clients can see and consume the distributed file system similarly to a local file system such as NTFS, XFS, or ext4.
 
@@ -54,7 +54,7 @@ NOTE: While the BeeGFS community edition can be used free of charge, the enterpr
 
 The following figure compares the shared-nothing and shared-disk HA architectures.
 
-image:../media/beegfs-design-image1.png[]
+image:../media/beegfs-design-image1.png[HA architecture comparison]
 
 For more information, see https://www.netapp.com/blog/high-availability-beegfs/[Announcing High Availability for BeeGFS Supported by NetApp^].
 
@@ -84,7 +84,7 @@ For more information about the Lenovo SR665, see https://lenovopress.lenovo.com/
 
 The solution's building blocks (shown in the following figure) uses the verified file node servers for the BeeGFS file layer and two EF600 storage systems as the block layer.
 
-image:../media/beegfs-design-image2-small.png[]
+image:../media/beegfs-design-image2-small.png[Building block]
 
 The BeeGFS on NetApp solution runs across all building blocks in the deployment. The first building block deployed must run BeeGFS management, metadata, and storage services (known as the base building block). All subsequent building blocks can be configured through software to extend metadata and storage services, or to provide storage services exclusively. This modular approach enables scaling the file system to the needs of a workload while using the same underlying hardware platforms and building block design.
 
@@ -93,7 +93,7 @@ Up to five building blocks can be deployed to form a standalone Linux HA cluster
 [NOTE]
 A minimum of two building blocks are required to establish quorum in the failover cluster. A two-node cluster has limitations that might prevent a successful failover from occurring. You can configure a two-node cluster by incorporating a third device as a tiebreaker; however, this documentation does not describe that design.
 
-image:../media/beegfs-design-image3.png[]
+image:../media/beegfs-design-image3.png[BeeGFS HA cluster scaling]
 
 == Ansible
 

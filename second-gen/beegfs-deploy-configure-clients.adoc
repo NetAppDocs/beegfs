@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-configure-clients.html
+permalink: second-gen/beegfs-deploy-configure-clients.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600.
 summary: "Install and configure the BeeGFS client on any hosts that need access to the BeeGFS file system, such as compute or GPU nodes. For this task, you can use Ansible and the BeeGFS collection."
 ---

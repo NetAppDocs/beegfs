@@ -1,0 +1,223 @@
+---
+sidebar: sidebar
+permalink: administer/clusters-troubleshoot.html
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, troubleshooting
+summary: "Troubleshooting a BeeGFS HA cluster."
+---
+= Troubleshoot
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+Troubleshooting a BeeGFS HA cluster.
+
+== Overview
+
+This section walks through how to investigate and troubleshoot various failures and other scenarios that may arise when operating a BeeGFS HA cluster.
+
+== Troubleshooting Guides
+
+=== Investigating Unexpected Failovers
+
+When a node is unexpectedly fenced and its services moved to another node, the first step should be to see if the cluster indicates any resource failures at the bottom of `pcs status`. Typically nothing will be present if fencing completed successfully and the resources were restarted on another node.
+
+Generally the next step will be to search through the systemd logs using `journalctl` on any one of the remaining file nodes (Pacemaker logs are synchronized on all nodes). If you know the time when the failure occurred you can start the search just before the failure occurred (generally at least ten minutes prior is recommended):
+
+[source,console]
+----
+journalctl --since "<YYYY-MM-DD HH:MM:SS>"
+----
+
+The following sections show common text you can grep for in the logs to further narrow down the investigation.
+
+==== Steps to Investigate/Resolve
+
+===== Step 1: Check if the BeeGFS monitor detected a failure:
+
+If the failover was triggered by the BeeGFS monitor you should see an error (if not proceed to the next step).
+
+[source,console]
+----
+journalctl --since "<YYYY-MM-DD HH:MM:SS>" | grep -i unexpected
+[...]
+Jul 01 15:51:03 beegfs_01 pacemaker-schedulerd[9246]:  warning: Unexpected result (error: BeeGFS service is not active!) was recorded for monitor of meta_08-monitor on beegfs_02 at Jul  1 15:51:03 2022
+----
+
+In this instance BeeGFS service meta_08 stopped for some reason. To continue troubleshooting we should boot beegfs_02 and review logs for the service at `/var/log/beegfs-meta-meta_08_tgt_0801.log`. For example, the BeeGFS service could have encountered an application error due to an internal issue or problem with the node.
+
+TIP: Unlike the logs from Pacemaker, logs for BeeGFS services are not distributed to all nodes in the cluster. To investigate those types of failures, the logs from the original node where the failure occurred are required.
+
+Possible issues that could be reported by the monitor include: 
+
+* Target(s) are not accessible!
+** Description: Indicates the block volumes were not accessible. 
+** Troubleshooting: 
+*** If the service also failed to start on the alternate file node, confirm the block node is healthy. 
+*** Check for any physical issues that would prevent access to the block nodes from this file node, for example faulty InfiniBand adapters or cables.
+* Network is not reachable!
+** Description: None of the adapters used by clients to connect to this BeeGFS service were online. 
+** Troubleshooting:
+*** If multiple/all file nodes were impacted, check if there was a fault on the network used to connect the BeeGFS clients and file system. 
+*** Check for any physical issues that would prevent access to the clients from this file node, for example faulty
+      InfiniBand adapters or cables.
+* BeeGFS service is not active!
+** Description: A BeeGFS service stopped unexpectedly. 
+** Troubleshooting: 
+*** On the file node that reported the error, check the logs for the impacted BeeGFS service to see if it reported a crash. If this happened, open a case with NetApp support so the crash can be investigated.
+*** If there are no errors reported in the BeeGFS log, check the journal logs to see if systemd logged a reason the service was stopped. In some scenarios the BeeGFS service may not have have been given a chance to log any messages before the process was terminated (for example if someone ran `kill -9 <PID>`).
+
+===== Step 2: Check if the node left the cluster unexpectedly
+
+In the event the node suffered some catastrophic hardware failure (e.g., the system board died) or there was a kernel panic or similar software issue, the BeeGFS monitor will not report an error. Instead look for the hostname and you should see messages from Pacemaker indicating the node was lost unexpectedly:
+
+[source,console]
+----
+journalctl --since "<YYYY-MM-DD HH:MM:SS>" | grep -i <HOSTNAME>
+[...]
+Jul 01 16:18:01 beegfs_01 pacemaker-attrd[9245]:  notice: Node beegfs_02 state is now lost
+Jul 01 16:18:01 beegfs_01 pacemaker-controld[9247]:  warning: Stonith/shutdown of node beegfs_02 was not expected
+----
+
+===== Step 3: Verify Pacemaker was able to fence the node
+
+In all scenarios you should see Pacemaker attempt to fence the node to verify it is actually offline (exact messages may vary by cause of the fencing):
+
+[source,console]
+----
+Jul 01 16:18:02 beegfs_01 pacemaker-schedulerd[9246]:  warning: Cluster node beegfs_02 will be fenced: peer is no longer part of the cluster
+Jul 01 16:18:02 beegfs_01 pacemaker-schedulerd[9246]:  warning: Node beegfs_02 is unclean
+Jul 01 16:18:02 beegfs_01 pacemaker-schedulerd[9246]:  warning: Scheduling Node beegfs_02 for STONITH
+----
+
+If the fencing action completes successfully you will see messages like:
+
+[source,console]
+----
+Jul 01 16:18:14 beegfs_01 pacemaker-fenced[9243]:  notice: Operation 'off' [2214070] (call 27 from pacemaker-controld.9247) for host 'beegfs_02' with device 'fence_redfish_2' returned: 0 (OK)
+Jul 01 16:18:14 beegfs_01 pacemaker-fenced[9243]:  notice: Operation 'off' targeting beegfs_02 on beegfs_01 for pacemaker-controld.9247@beegfs_01.786df3a1: OK
+Jul 01 16:18:14 beegfs_01 pacemaker-controld[9247]:  notice: Peer beegfs_02 was terminated (off) by beegfs_01 on behalf of pacemaker-controld.9247: OK
+----
+
+If the fencing action failed for some reason, then the BeeGFS services will be unable to restart on another node to avoid risking data corruption. That would be an issue to investigate separately, if for example the fencing device (PDU or BMC) was inaccessible or misconfigured.
+
+=== Address Failed Resource Actions (found at the bottom of pcs status)
+
+If a resource required to run a BeeGFS service fails, a failover will be triggered by the BeeGFS monitor. If this occurs there will likely be no "Failed Resource Actions" listed at the bottom of `pcs status` and you should refer to the steps on how to link:administer/clusters-failover-failback.html[failback after an unplanned failover^].
+
+Otherwise there should generally only be two scenarios where you will see "Failed Resource Actions".
+
+==== Steps to Investigate/Resolve
+
+===== Scenario 1: A temporary or permanent issue was detected with a fencing agent and it was restarted or moved to another node.
+
+Some fencing agents are more reliable than others, and each will implement their own method of monitoring to ensure the fencing device is ready. In particular the Redfish fencing agent has been seen to report failed resource actions like the following even though it will still show started:
+
+[source,console]
+----
+  * fence_redfish_2_monitor_60000 on beegfs_01 'not running' (7): call=2248, status='complete', exitreason='', last-rc-change='2022-07-26 08:12:59 -05:00', queued=0ms, exec=0ms
+----
+
+A fencing agent reporting failed resource actions on a particular node is not expected to trigger a failover of the BeeGFS services running on that node. It should simply be automatically restarted on the same or a different node.
+
+Steps to resolve:
+
+. If the fencing agent consistently refuses to run on all or a subset of nodes, check if those nodes are able to connect to the fencing agent, and verify the fencing agent is configured correctly in the Ansible inventory.
+.. For example if a Redfish (BMC) fencing agent is running on the same node as it is responsible for fencing, and the OS management and BMC IPs are on the same physical interface, some network switch configurations will not allow communication between the two interfaces (to prevent network loops). By default the HA cluster will attempt to avoid placing fencing agents on the node they are responsible for fencing, but this can happen in some scenarios/configurations.
+. Once all issues are resolved (or if the issue appeared to be ephemeral), run `pcs resource cleanup` to reset the failed resource actions.
+
+===== Scenario 2: The BeeGFS monitor detected an issue and triggered a failover, but for some reason resources could not start on a secondary node.
+
+Provided fencing is enabled and the resource wasn't blocked from stopping on the original node (see the troubleshooting section for "standby (on-fail)"), the most likely reasons include problems starting the resource on a secondary node because:
+
+* The secondary node was already offline.
+* A physical or logical configuration issue prevented the secondary from accessing the block volumes used as BeeGFS targets.
+
+Steps to resolve:
+
+. For each entry in the failed resource actions:
+.. Confirm the failed resource action was a start operation.
+.. Based on the resource indicated and the node specified in the failed resource actions:
+... Look for and correct any external issues that would prevent the node from starting the specified resource. For example if BeeGFS IP address (floating IP) failed to start, verify at least one of the required interfaces is connected/online and cabled to the right network switch. If a BeeGFS target (block device / E-Series volume) is failed, verify the physical connections to the backend block node(s) are connected as expected, and verify the block nodes are healthy.
+.. If there are no obvious external issues and you desire a root cause for this incident, it is suggested you open a case with NetApp support to investigate before proceeding as the following steps may make root cause analysis (RCA) challenging/impossible.
+. After resolving any external issues:
+.. Comment out any non-functional nodes from the Ansible inventory.yml file and rerun the full Ansible playbook to ensure all logical configuration is setup correctly on the secondary node(s).
+... Note: Don't forget to uncomment these nodes and rerun the playbook once the nodes are healthy and you are ready to failback.
+.. Alternatively you can attempt to manually recover the cluster:
+... Place any offline nodes back online using: `pcs cluster start <HOSTNAME>`
+... Clear all failed resource actions using: `pcs resource cleanup`
+... Run pcs status and verify all services start as expected.
+... If needed run `pcs resource relocate run` to move resources back to their preferred node (if it is available).
+
+
+== Common Issues
+
+=== BeeGFS services don't failover or failback when requested
+
+*Likely issue:* The `pcs resource relocate` run command was executed, but never finished successfully.
+
+*How to check:* Run `pcs constraint --full` and check for any location constraints with an ID of `pcs-relocate-<RESOURCE>`.
+
+*How to resolve:* Run `pcs resource relocate clear` then rerun `pcs constraint --full` to verify the extra constraints are removed.
+
+=== One node in pcs status shows "standby (on-fail)" when fencing is disabled
+
+*Likely issue:* Pacemaker was unable to successfully confirm all resources were stopped on the node that failed.
+
+*How to resolve:*
+
+. Run `pcs status` and check for any resources that aren't "started" or show errors at the bottom of the output and resolve any issues.
+. To bring the node back online run `pcs resource cleanup --node=<HOSTNAME>`.
+
+=== After an unexpected failover, resources show "started (on-fail)" in pcs status when fencing is enabled
+
+*Likely issue:* A problem occurred that triggered a failover, but Pacemaker was unable to verify the node was fenced. This could happen because fencing was misconfigured or there was an issue with the fencing agent (example: the PDU was disconnected from the network).
+
+*How to resolve:*
+
+. Verify the node is actually powered off.
++
+IMPORTANT: If the node you specify is not actually off, but running cluster services or resources, data corruption/cluster failure WILL occur.
+. Manually confirm fencing with: `pcs stonith confirm <NODE>`
+
+At this point services should finish failing over and be restarted on another healthy node.
+
+== Common Troubleshooting Tasks
+
+=== Restart individual BeeGFS services
+
+Normally if a BeeGFS service needs to be restarted (say to facilitate a configuration change) this should be done by updating the Ansible inventory and rerunning the playbook. In some scenarios it may be desirable to restart individual services to facilitate faster troubleshooting, for example to change the logging level without needing to wait for the entire playbook to run.
+
+IMPORTANT: Unless any manual changes are also added to the Ansible inventory, they will be reverted the next time the Ansible playbook runs.
+
+==== Option 1: Systemd controlled restart
+
+If there is a risk the BeeGFS service won't properly restart with the new configuration, first place the cluster in maintenance mode to prevent the BeeGFS monitor from detecting the service is stopped and triggering an unwanted failover:
+
+[source,console]
+----
+pcs property set maintenance-mode=true
+----
+
+If needed make any changes to the services configuration at `/mnt/<SERVICE_ID>/*_config/beegfs-*.conf` (example: `/mnt/meta_01_tgt_0101/metadata_config/beegfs-meta.conf`) then use systemd to restart it:
+
+[source,console]
+----
+systemctl restart beegfs-*@<SERVICE_ID>.service
+----
+
+Example: `systemctl restart beegfs-meta@meta_01_tgt_0101.service`
+
+==== Option 2: Pacemaker controlled restart
+
+If you aren't concerned the new configuration could cause the service to stop unexpectedly (for example simply changing the logging level), or you're in a maintenance window and not concerned about downtime you can simply restart the BeeGFS monitor for the service you want to restart:
+
+[source,console]
+----
+pcs resource restart <SERVICE>-monitor
+----
+
+For example to restart the BeeGFS management service: `pcs resource restart mgmt-monitor`

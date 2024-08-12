@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-create-inventory.html
+permalink: second-gen/beegfs-deploy-create-inventory.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "To define the configuration for file and block nodes, you create an Ansible inventory that represents the BeeGFS file system you want to deploy."
 ---
@@ -19,7 +19,7 @@ To define the configuration for file and block nodes, you create an Ansible inve
 Define the configuration that applies to all building blocks, regardless of which configuration profile you may apply to them individually.
 
 .Before you begin
-* Choose a subnet addressing scheme for your deployment. Due to the benefits listed in the link:beegfs-design-software-architecture.html#beegfs-network-configuration[software architecture], it is recommended to use a single subnet addressing scheme.
+* Choose a subnet addressing scheme for your deployment. Due to the benefits listed in the link:second-gen/beegfs-design-software-architecture.html#beegfs-network-configuration[software architecture], it is recommended to use a single subnet addressing scheme.
 
 .Steps
 . On your Ansible control node, identify a directory that you want to use to store the Ansible inventory and playbook files.
@@ -251,7 +251,7 @@ beegfs_ha_enable_performance_tuning: True
 +
 For a comprehensive list of the available tuning parameters that you can adjust, see the Performance Tuning Defaults section of the BeeGFS HA role in https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_4/defaults/main.yml[E-Series BeeGFS GitHub site^]. The default values can be overridden for all nodes in the cluster in this file or the `host_vars` file for an individual node.
 
-. To allow full 200Gb/HDR connectivity between block and file nodes, use the Open Subnet Manager (OpenSM) package from the NVIDIA Open Fabrics Enterprise Distribution (MLNX_OFED). The MLNX_OFED version in listed the link:beegfs-technology-requirements.html#file-node-requirements[file node requirements] comes bundled with the recommended OpenSM packages. Although deployment using Ansible is supported, you must first install the MLNX_OFED driver on all file nodes.
+. To allow full 200Gb/HDR connectivity between block and file nodes, use the Open Subnet Manager (OpenSM) package from the NVIDIA Open Fabrics Enterprise Distribution (MLNX_OFED). The MLNX_OFED version in listed the link:second-gen/beegfs-technology-requirements.html#file-node-requirements[file node requirements] comes bundled with the recommended OpenSM packages. Although deployment using Ansible is supported, you must first install the MLNX_OFED driver on all file nodes.
 +
 .. Populate the following parameters in `group_vars/ha_cluster.yml` (adjust packages as needed):
 +
@@ -321,7 +321,7 @@ eseries_validate_certs: false
 [NOTE]
 Listing any passwords in plaintext is not recommended. Use Ansible vault or provide the `eseries_system_password` when running Ansible using `--extra-vars`.
 +
-. To ensure optimal performance, install the versions listed for block nodes in link:beegfs-technology-requirements.html[Technical requirements].
+. To ensure optimal performance, install the versions listed for block nodes in link:second-gen/beegfs-technology-requirements.html[Technical requirements].
 +
 Download the corresponding files from the https://mysupport.netapp.com/site/products/all/details/eseries-santricityos/downloads-tab[NetApp Support site^]. You can either upgrade them manually or include them in the `packages/` directory of the Ansible control node, and then populate the following parameters in `eseries_storage_systems.yml` to upgrade using Ansible:
 +

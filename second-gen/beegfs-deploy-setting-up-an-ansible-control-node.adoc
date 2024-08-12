@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-setting-up-an-ansible-control-node.html
+permalink: second-gen/beegfs-deploy-setting-up-an-ansible-control-node.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "To set up an Ansible control node, identify a virtual or physical machine with network access to the management ports of all file and block nodes that can be used to configure the solution."
 ---
@@ -39,7 +39,7 @@ python3 -m pip install ansible cryptography netaddr
 ....
 +
 [NOTE]
-To ensure that you are installing a supported version of Ansible and all required Python packages, refer to the BeeGFS collection's Readme file. Supported versions are also noted in link:beegfs-technology-requirements.html[Technical requirements].
+To ensure that you are installing a supported version of Ansible and all required Python packages, refer to the BeeGFS collection's Readme file. Supported versions are also noted in link:second-gen/beegfs-technology-requirements.html[Technical requirements].
 
 . Verify that the correct versions of Ansible and Python are installed.
 +
@@ -70,7 +70,7 @@ sudo apt install git -y
 +
 Do *not* set up passwordless SSH to the block nodes. This is neither supported nor required.
 
-. Use Ansible Galaxy to install the version of the BeeGFS collection listed in link:beegfs-technology-requirements.html[Technical requirements].
+. Use Ansible Galaxy to install the version of the BeeGFS collection listed in link:second-gen/beegfs-technology-requirements.html[Technical requirements].
 +
 This installation includes additional Ansible dependencies, such as the NetApp SANtricity software and host collections.
 +

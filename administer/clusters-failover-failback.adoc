@@ -1,0 +1,136 @@
+---
+sidebar: sidebar
+permalink: administer/clusters-failover-failback.html
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, failover, failback, recovery
+summary: "Moving BeeGFS services between cluster nodes."
+---
+= Failover and failback services
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+Moving BeeGFS services between cluster nodes.
+
+== Overview 
+
+BeeGFS services can failover between nodes in the cluster to ensure clients are able to continue accessing the file system if a node experiences a fault, or you need to perform planned maintenance. This section describes various ways administrators can heal the cluster after recovering from a failure, or manually move services between nodes.
+
+== Steps 
+
+=== Failover and Failback
+
+==== Failover (Planned)
+Generally when you need to bring a single file node offline for maintenance you'll want to move (or drain) all BeeGFS services from that node. This can be accomplished by first putting the node in standby: 
+
+`pcs node standby <HOSTNAME>`
+
+After verifying using `pcs status` all resources have been restarted on the alternate file node, you can shutdown or make other changes to the node as needed. 
+
+==== Failback (after a planned failover)
+When you are ready to restore BeeGFS services to the preferred node first run `pcs status` and verify in the "Node List"the status is standby. If the node was rebooted it will show offline until you bring the cluster services online: 
+
+[source,console]
+----
+pcs cluster start <HOSTNAME>
+----
+
+Once the node is online bring it out of standby with: 
+
+[source,console]
+----
+pcs cluster node unstandby <HOSTNAME>
+----
+
+Lastly relocate all BeeGFS services back to their preferred nodes with: 
+
+[source,console]
+----
+pcs resource relocate run
+----
+
+==== Failback (after an unplanned failover)
+
+If a node experience a hardware or other fault, the HA cluster should automatically react and move its services to a healthy node, providing time for administrators take corrective action. Before proceeding reference the link:administer/clusters-troubleshoot.html[troubleshooting^] section to determine the cause of the failover and resolve any outstanding issues. Once the node is powered back on and healthy you can proceed with failback.
+
+When a node boots following an unplanned (or planned) reboot, cluster services are not set to start automatically, so you will first need to bring the node online with: 
+
+[source,console]
+----
+pcs cluster start <HOSTNAME>
+----
+
+Next cleanup any resource failures and reset the node's fencing history: 
+
+[source,console]
+----
+pcs resource cleanup node=<HOSTNAME>
+pcs stonith history cleanup <HOSTNAME> 
+----
+
+Verify in `pcs status` the node is online and healthy. By default BeeGFS services will not automatically failback to avoid accidentally moving resources back to an unhealthy node. When you are ready return all resources in the cluster back to their preferred nodes with: 
+
+[source,console]
+----
+pcs resource relocate run
+----
+
+=== Moving individual BeeGFS services to alternate file nodes
+
+==== Permanently move a BeeGFS service to a new file node
+
+If you want to permanently change the preferred file node for an individual BeeGFS service, adjust the Ansible inventory so the preferred node is listed first and rerun the Ansible playbook. 
+
+For example in this sample `inventory.yml` file, beegfs_01 is the preferred file node to run the BeeGFS management service: 
+
+[source,yaml]
+----
+        mgmt:
+          hosts:
+            beegfs_01:
+            beegfs_02:
+----
+
+Reversing the order would cause the management services to be preferred on beegfs_02: 
+
+[source,yaml]
+----
+        mgmt:
+          hosts:
+            beegfs_02:
+            beegfs_01:
+----
+
+==== Temporarily move a BeeGFS service to an alternate file node
+
+Generally if a node is undergoing maintenance you will want to use the [failover and failback
+steps](#failover-and-failback) to move all services away from that node. 
+
+If for some reason you do need to move an individual service to a different file node run: 
+
+[source,console]
+----
+pcs resource move <SERVICE>-monitor <HOSTNAME>
+----
+
+WARNING: Do not specify individual resources or the resource group. Always specify the name of the monitor for the BeeGFS service you wish to relocate. For example to move the BeeGFS management service to beegfs_02 run: `pcs resource move mgmt-monitor beegfs_02`. This process can be repeated to move one or more services away from their preferred nodes. Verify using `pcs status` the services were relocated/started on the new node. 
+
+To move a BeeGFS service back to its preferred node first clear the temporary resource constraints (repeating this step
+as needed for multiple services):
+
+[source,yaml]
+----
+pcs resource clear <SERVICE>-monitor
+----
+
+Then when ready to actually move service(s) back to their preferred node(s) run: 
+
+[source,yaml]
+----
+pcs resource relocate run
+----
+
+Note this command will relocate any services that no longer have temporary resource constraints not located on their preferred nodes. 

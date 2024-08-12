@@ -1,0 +1,140 @@
+---
+sidebar: sidebar
+permalink: custom/architectures-inventory-configure-file-nodes.html 
+keywords: BeeGFS on NetApp, NetApp Custom Architectures, EF600
+summary: "Specify configuration for individual file nodes using host variables (host_vars)."
+---
+= Configure Individual File Nodes
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+Specify configuration for individual file nodes using host variables (host_vars).
+
+== Overview
+
+This section walks through populating a `host_vars/<FILE_NODE_HOSTNAME>.yml` file for each file node in the cluster. These files should only contain configuration unique to a particular file node. This commonly includes: 
+
+* Defining the IP or hostname Ansible should use to connect to the node. 
+* Configuring additional interfaces and cluster IPs used for HA cluster services (Pacemaker and Corosync) to communicate to other file nodes. By default these services use the same network as the management interface, but additional interfaces should be available for redundancy. Common practice is to define additional IPs on the storage network, avoiding the need for an additional cluster or management network.
+** The performance of any networks used for cluster communication is not critical for file system performance. With the default cluster configuration generally at least a 1Gb/s network will provide sufficient performance for cluster operations such as synchronizing node states and coordinating cluster resource state changes. Slow/busy networks may cause resource state changes to take longer than usual, and in extreme cases could result in nodes being evicted from the cluster if they cannot send heartbeats in a reasonable time frame. 
+* Configuring interfaces used for connecting to block nodes over the desired protocol (for example: iSCSI/iSER, NVMe/IB, NVMe/RoCE, FCP, etc.)
+
+== Steps 
+
+Referencing the IP addressing scheme defined in the link:custom/architectures-plan-file-system.html[Plan the File System] section, for each file node in the cluster create a file `host_vars/<FILE_NODE_HOSTNAME>/yml` and populate it as follows:
+
+. At the top specify the IP or hostname Ansible should use to SSH to the node and manage it:
++
+[source,yaml]
+----
+ansible_host: "<MANAGEMENT_IP>" 
+----
+. Configure additional IPs that can be used for cluster traffic:
+.. If the network type is link:https://github.com/netappeseries/host/tree/release-1.2.0/roles/ipoib[InfiniBand (using IPoIB)^]: 
++
+[source,yaml]
+----
+eseries_ipoib_interfaces:
+- name: <INTERFACE>  # Example: ib0 or i1b
+  address: <IP/SUBNET> # Example: 100.127.100.1/16
+- name: <INTERFACE>  # Additional interfaces as needed.
+  address: <IP/SUBNET>
+----
+.. If the network type is link:https://github.com/netappeseries/host/tree/release-1.2.0/roles/roce[RDMA over Converged Ethernet (RoCE)^]: 
++
+[source,yaml]
+----
+eseries_roce_interfaces:
+- name: <INTERFACE>  # Example: eth0.
+  address: <IP/SUBNET> # Example: 100.127.100.1/16
+- name: <INTERFACE>  # Additional interfaces as needed.
+  address: <IP/SUBNET>
+----
+.. If the network type is link:https://github.com/netappeseries/host/tree/release-1.2.0/roles/ip[Ethernet (TCP only, no RDMA)^]: 
++
+[source,yaml]
+----
+eseries_ip_interfaces:
+- name: <INTERFACE>  # Example: eth0.
+  address: <IP/SUBNET> # Example: 100.127.100.1/16
+- name: <INTERFACE>  # Additional interfaces as needed.
+  address: <IP/SUBNET>
+----
+. Indicate what IPs should be used for cluster traffic, with preferred IPs listed higher:
++
+[source,yaml]
+----
+beegfs_ha_cluster_node_ips:
+- <MANAGEMENT_IP> # Including the management IP is typically but not required.
+- <IP_ADDRESS>    # Ex: 100.127.100.1
+- <IP_ADDRESS>    # Additional IPs as needed. 
+----
+NOTE: IPs configured in step two will not be used as cluster IPs unless they are included in the `beegfs_ha_cluster_node_ips` list. This allows you to configure additional IPs/interfaces using Ansible that can be used for other purposes if desired.
+
++
+. If the file node needs to communicate to block nodes over an IP-based protocol, IPs will need to be configured on the appropriate interface, and any packages required for that protocol installed/configured. 
+.. If using link:https://github.com/netappeseries/host/blob/master/roles/iscsi/README.md[iSCSI^]:
++
+[source,yaml]
+----
+eseries_iscsi_interfaces:
+- name: <INTERFACE>  # Example: eth0.
+  address: <IP/SUBNET> # Example: 100.127.100.1/16
+----
+.. If using link:https://github.com/netappeseries/host/blob/master/roles/ib_iser/README.md[iSER^]:
++
+[source,yaml]
+----
+eseries_ib_iser_interfaces:
+- name: <INTERFACE>  # Example: ib0.
+  address: <IP/SUBNET> # Example: 100.127.100.1/16
+  configure: true # If the file node is directly connected to the block node set to true to setup OpenSM.  
+----
+.. If using link:https://github.com/netappeseries/host/blob/master/roles/nvme_ib/README.md[NVMe/IB^]:
++
+[source,yaml]
+----
+eseries_nvme_ib_interfaces:
+- name: <INTERFACE>  # Example: ib0.
+  address: <IP/SUBNET> # Example: 100.127.100.1/16
+  configure: true # If the file node is directly connected to the block node set to true to setup OpenSM.
+----
+.. If using link:https://github.com/netappeseries/host/blob/master/roles/nvme_roce/README.md[NVMe/RoCE^]:
++
+[source,yaml]
+----
+eseries_nvme_roce_interfaces:
+- name: <INTERFACE>  # Example: eth0.
+  address: <IP/SUBNET> # Example: 100.127.100.1/16
+----
+.. Other Protocols:
+... If using link:https://github.com/netappeseries/host/blob/master/roles/nvme_fc/README.md[NVMe/FC^], configuring individual interfaces is not required. The BeeGFS cluster deployment will automatically detect the protocol and install/configure requirements as needed. If you are using a fabric to connect file and block nodes, ensure switches are properly zoned following NetApp and your switch vendor's best practices.
+... Use of FCP or SAS do not require installing or configuring additional software. If using FCP, ensure switches are properly zoned following link:https://docs.netapp.com/us-en/e-series/config-linux/fc-configure-switches-task.html[NetApp^] and your switch vendor's best practices.
+... Use of IB SRP is not recommended at this time. Use NVMe/IB or iSER depending on what your E-Series block nodes support.
+
+Click link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/host_vars/ictad22h01.yml[here^] for an example of a complete inventory file representing a single file node.
+
+### Advanced: Toggling NVIDIA ConnectX VPI Adapters between Ethernet and InfiniBand Mode
+
+NVIDIA ConnectX-Virtual Protocol Interconnect&reg; (VPI) adapters support both InfiniBand and Ethernet as the transport layer. Switching between modes is not automatically negotiated, and must be configured using the `mstconfig` tool included in `mstflint`, an open source package that is part of the link:https://docs.nvidia.com/networking/display/mftv4270/mft+supported+configurations+and+parameters[NVIDIA Firmare Tools (MFT)^]. Changing the mode of the adapters only need to be done once. This can be done manually, or included in the Ansible inventory as part of any interfaces configured using the `eseries-[ib|ib_iser|ipoib|nvme_ib|nvme_roce|roce]_interfaces:` section of the inventory, to have it checked/applied automatically. 
+
+For example to change an interface current in InfiniBand mode to Ethernet so it can be used for RoCE:
+
+. For each interface you want to configure specify `mstconfig` as a mapping (or dictionary) that specifies `LINK_TYPE_P<N>` where `<N>` is determined by the HCA's port number for the interface. The `<N>` value can be determined by running `grep PCI_SLOT_NAME /sys/class/net/<INTERFACE_NAME>/device/uevent` and adding 1 to the last number from the PCI slot name and converting to decimal. 
+.. For example given `PCI_SLOT_NAME=0000:2f:00.2` (2 + 1 -> HCA port 3) -> `LINK_TYPE_P3: eth`:
++
+[source,yaml]
+----
+eseries_roce_interfaces:
+- name: <INTERFACE>
+  address: <IP/SUBNET>
+  mstconfig:
+    LINK_TYPE_P3: eth
+----
+
+For additional details refer to the link:https://github.com/netappeseries/host[NetApp E-Series Host collection's documentation^] for the interface type/protocol you are using.

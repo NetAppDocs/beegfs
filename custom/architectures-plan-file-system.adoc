@@ -1,0 +1,82 @@
+---
+sidebar: sidebar
+permalink: custom/architectures-plan-file-system.html
+keywords: BeeGFS on NetApp, NetApp Custom Architectures, EF600
+summary: "Plan the file system deployment before building out the Ansible inventory."
+---
+= Plan the File System
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+Plan the file system deployment before building out the Ansible inventory.
+
+== Overview
+
+Before deploying the file system, you should define what IP addresses, ports, and other configuration will be required by all file nodes, block nodes, and BeeGFS services running in the cluster. While the exact configuration will vary based on the architecture of the cluster, this section defines best practices and steps to follow that are generally applicable.
+
+== Steps 
+
+. If you are using an IP based storage protocol (such as iSER, iSCSI, NVMe/IB, or NVMe/RoCE) to connect file nodes to block nodes, fill out the following worksheet for each building block. Each direct connect in a single building block should have a unique subnet, and there should be no overlap with subnets used for client-server connectivity.
++
+|===
+|File node |IB port |IP address |Block node |IB port |Physical IP |Virtual IP (for EF600 with HDR IB only)
+| <HOSTNAME>
+| <PORT>
+| <IP/SUBNET>
+| <HOSTNAME>
+| <PORT>
+| <IP/SUBNET>
+| <IP/SUBNET>
+|===
++
+NOTE: If the file and block nodes in each building block are directly connected you can often reuse the same IPs/scheme for multiple building blocks. 
++
+. Regardless if you are using InfiniBand or RDMA over Converged Ethernet (RoCE) for the storage network, fill out the following worksheet to determine the IP ranges that will be used for HA cluster services, BeeGFS file services, and clients to communicate: 
++
+|===
+|Purpose |InfiniBand port |IP address or range
+
+|BeeGFS Cluster IP(s)
+|<INTERFACE(s)>
+|<RANGE>
+|BeeGFS Management
+|<INTERFACE(s)>
+|<IP(s)>
+|BeeGFS Metadata
+|<INTERFACE(s)>
+|<RANGE>
+|BeeGFS Storage
+|<INTERFACE(s)>
+|<RANGE>
+|BeeGFS Clients
+|<INTERFACE(s)>
+|<RANGE>
+|===
+.. If you are using a single IP subnet only one worksheet is needed, otherwise also fill out a worksheet for the second subnet.
+. Based on the above, for each building block in the cluster, fill out the following worksheet defining what BeeGFS services it will run. For each service specify the preferred/secondary file node(s), network port, floating IP(s), NUMA zone assignment (if required), and what block node(s) will be used for its targets. Refer to the following guidelines when filling out the worksheet:
+.. Specify BeeGFS services as either `mgmt.yml`, `meta_<ID>.yml`, or `storage_<ID>.yml` where ID represents a unique number across all BeeGFS services of that type in this file system. This convention will simplify referring back to this worksheet in subsequent sections while creating files to configure each service.
+.. Ports for BeeGFS services only need to be unique across a particular building block. Ensure services with the same port number cannot ever run on the same file node to avoid port conflicts.
+.. If necessary services can use volumes from more than one block node and/or storage pool (and not all volumes need to be owned by the same controller). Multiple services can also share the same block node and/or storage pool configuration (individual volumes will be defined in a later section).
++
+|===
+|BeeGFS service (file name)| File Nodes |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
+
+|<SERVICE TYPE>_<ID>.yml
+| <PREFERRED FILE NODE>
+<SECONDARY FILE NODE(s)>
+|<PORT>
+|<INTERFACE>:<IP/SUBNET>
+<INTERFACE>:<IP/SUBNET>
+|<NUMA NODE/ZONE>
+|<BLOCK NODE>
+
+|<STORAGE POOL/VOLUME GROUP>
+|<A OR B>
+|===
+
+For more details on standard conventions, best practices, and filled out example worksheets refer to the link:second-gen/beegfs-deploy-bestpractice.html[best practices^] and link:second-gen/beegfs-deploy-define-inventory.html[define BeeGFS building blocks^] sections of the BeeGFS on NetApp Verified Architecture.

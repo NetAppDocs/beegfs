@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-design-high-capacity-building-block.html
+permalink: second-gen/beegfs-design-high-capacity-building-block.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600, EF300, HDD, Expansion
 summary: "The design variations for a high capacity building block."
 ---

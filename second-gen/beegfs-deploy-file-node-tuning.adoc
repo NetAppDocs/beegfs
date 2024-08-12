@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-file-node-tuning.html
+permalink: second-gen/beegfs-deploy-file-node-tuning.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "To maximize performance, we recommended configuring the system settings on the server model you use as your file nodes."
 ---

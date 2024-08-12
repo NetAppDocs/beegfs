@@ -1,0 +1,141 @@
+---
+sidebar: sidebar
+permalink: custom/architectures-inventory-configure-block-nodes.html
+keywords: BeeGFS on NetApp, NetApp Custom Architectures, EF600
+summary: "Specify configuration for individual block nodes using host variables (host_vars)."
+---
+= Configure Individual Block Nodes
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ./media/
+
+
+[.lead]
+Specify configuration for individual block nodes using host variables (host_vars).
+
+== Overview
+
+This section walks through populating a `host_vars/<BLOCK_NODE_HOSTNAME>.yml` file for each block node in the cluster. These files should only contain configuration unique to a particular block node. This commonly includes:
+
+* The system name (as displayed in System Manager).
+* The HTTPS URL for one of the controllers (used to manage the system using its REST API). 
+* What storage protocol file nodes use to connect to this block node.
+* Configuring host interface card (HIC) ports, such as IP addresses (if needed).
+
+== Steps
+
+Referencing the IP addressing scheme defined in the link:custom/architectures-plan-file-system.html[Plan the File System^] section, for each block node in the cluster create a file `host_vars/<BLOCK_NODE_HOSTNAME>/yml` and populate it as follows:
+
+. At the top specify the system name and the HTTPS URL for one of the controllers:
++
+[source,yaml]
+----
+eseries_system_name: <SYSTEM_NAME>
+eseries_system_api_url: https://<MANAGEMENT_HOSTNAME_OR_IP>:8443/devmgr/v2/
+----
+. Select the link:https://github.com/netappeseries/santricity/tree/release-1.3.1/roles/nar_santricity_host#role-variables[protocol^] file nodes will use to connect to this block node: 
+.. Supported Protocols: `auto`, `iscsi`, `fc`, `sas`, `ib_srp`, `ib_iser`, `nvme_ib`, `nvme_fc`, `nvme_roce`.
++
+[source,yaml]
+----
+eseries_initiator_protocol: <PROTOCOL>
+----
+. Depending on the protocol in use, the HIC ports may require additional configuration. When needed, HIC port configuration should be defined so the top entry in the configuration for each controller corresponds with with the physical left-most port on each controller, and the bottom port the right-most port. All ports require valid configuration even if they are not currently in use.
++
+IMPORTANT: Also see the section below if you are using HDR (200Gb) InfiniBand or 200Gb RoCE with EF600 block nodes.
+
+.. For iSCSI:
++
+[source,yaml]
+----
+eseries_controller_iscsi_port:
+  controller_a:         # Ordered list of controller A channel definition.
+    - state:            # Whether the port should be enabled. Choices: enabled, disabled
+      config_method:    # Port configuration method Choices: static, dhcp
+      address:          # Port IPv4 address
+      gateway:          # Port IPv4 gateway
+      subnet_mask:      # Port IPv4 subnet_mask
+      mtu:              # Port IPv4 mtu
+    - (...)             # Additional ports as needed.
+  controller_b:         # Ordered list of controller B channel definition.
+    - (...)             # Same as controller A but for controller B
+
+# Alternatively the following common port configuration can be defined for all ports and omitted above:
+eseries_controller_iscsi_port_state: enabled         # Generally specifies whether a controller port definition should be applied Choices: enabled, disabled
+eseries_controller_iscsi_port_config_method: dhcp    # General port configuration method definition for both controllers. Choices: static, dhcp
+eseries_controller_iscsi_port_gateway:               # General port IPv4 gateway for both controllers.
+eseries_controller_iscsi_port_subnet_mask:           # General port IPv4 subnet mask for both controllers.
+eseries_controller_iscsi_port_mtu: 9000              # General port maximum transfer units (MTU) for both controllers. Any value greater than 1500 (bytes).
+
+----
+.. For iSER: 
++
+[source,yaml]
+----
+eseries_controller_ib_iser_port:
+  controller_a:    # Ordered list of controller A channel address definition.
+    -              # Port IPv4 address for channel 1
+    - (...)        # So on and so forth
+  controller_b:    # Ordered list of controller B channel address definition.
+----
+.. For NVMe/IB:
++
+[source,yaml]
+----
+eseries_controller_nvme_ib_port:
+  controller_a:    # Ordered list of controller A channel address definition.
+    -              # Port IPv4 address for channel 1
+    - (...)        # So on and so forth
+  controller_b:    # Ordered list of controller B channel address definition.
+----
+.. For NVMe/RoCE: 
++
+[source,yaml]
+----
+eseries_controller_nvme_roce_port:
+  controller_a:         # Ordered list of controller A channel definition.
+    - state:            # Whether the port should be enabled.
+      config_method:    # Port configuration method Choices: static, dhcp
+      address:          # Port IPv4 address
+      subnet_mask:      # Port IPv4 subnet_mask
+      gateway:          # Port IPv4 gateway
+      mtu:              # Port IPv4 mtu
+      speed:            # Port IPv4 speed
+  controller_b:         # Ordered list of controller B channel definition.
+    - (...)             # Same as controller A but for controller B
+
+# Alternatively the following common port configuration can be defined for all ports and omitted above:
+eseries_controller_nvme_roce_port_state: enabled         # Generally specifies whether a controller port definition should be applied Choices: enabled, disabled
+eseries_controller_nvme_roce_port_config_method: dhcp    # General port configuration method definition for both controllers. Choices: static, dhcp
+eseries_controller_nvme_roce_port_gateway:               # General port IPv4 gateway for both controllers.
+eseries_controller_nvme_roce_port_subnet_mask:           # General port IPv4 subnet mask for both controllers.
+eseries_controller_nvme_roce_port_mtu: 4200              # General port maximum transfer units (MTU). Any value greater than 1500 (bytes).
+eseries_controller_nvme_roce_port_speed: auto            # General interface speed. Value must be a supported speed or auto for automatically negotiating the speed with the port.
+----
+.. FC and SAS protocols do not require additional configuration. SRP is not correctly recommended.
+
+For additional options to configure HIC ports and host protocols including the ability to configure iSCSI CHAP refer to the link:https://github.com/netappeseries/santricity/tree/release-1.3.1/roles/nar_santricity_host#role-variables[documentation^] included with the SANtricity collection. Note when deploying BeeGFS the storage pool, volume configuration, and other aspects of provisioning storage will be configured elsewhere, and should not be defined in this file.
+
+Click link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/host_vars/ictad22a01.yml[here^] for an example of a complete inventory file representing a single block node.
+
+### Using HDR (200Gb) InfiniBand or 200Gb RoCE with NetApp EF600 block nodes:
+
+To use HDR (200Gb) InfiniBand with the EF600, a second "virtual" IP must be configured for each physical port. Below is an example of the correct way to configure an EF600 equipped with the dual port InfiniBand HDR HIC:
+
+[source,yaml]
+----
+eseries_controller_nvme_ib_port:
+  controller_a:
+    - 192.168.1.101   # Port 2a (virtual)
+    - 192.168.2.101   # Port 2b (virtual)
+    - 192.168.1.100   # Port 2a (physical)
+    - 192.168.2.100   # Port 2b (physical)
+  controller_b:
+    - 192.168.3.101   # Port 2a (virtual)
+    - 192.168.4.101   # Port 2b (virtual)
+    - 192.168.3.100   # Port 2a (physical)
+    - 192.168.4.100   # Port 2b (physical)
+----
+
