@@ -41,7 +41,7 @@ image:../media/beegfs-design-image3-small.png["Example BeeGFS deployment"]
 
 Typically you will direct-connect the HIC ports of the E-Series block nodes to the designated host channel adapter (for InfiniBand protocols) or host bus adapter (for fibre channel and other protocols) ports of the file nodes. The exact way to establish these connections will depend on the desired file system architecture, here is an example link:../second-gen/beegfs-design-hardware-architecture.html[based on the second-generation BeeGFS on NetApp verified architecture^]:  
 
-image:../media/directattachcable.png["example BeeGFS file to block node cabling"]
+image:../media/buildingblock-sr665v3.png["example BeeGFS file to block node cabling"]
 
 == Cable File Nodes to the Client Network
 

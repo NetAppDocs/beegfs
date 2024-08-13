@@ -78,7 +78,8 @@ a|The storage network switch must be capable of 200Gb/s InfiniBand speeds. Recom
 |===
 
 === Cabling requirements
-[id=block-file-cables]*Direct connections from block nodes to file nodes.*
+[id=block-file-cables]
+*Direct connections from block nodes to file nodes.*
 
 [options="header" cols="10%,70%,20%"]
 |===
@@ -89,7 +90,8 @@ a|The storage network switch must be capable of 200Gb/s InfiniBand speeds. Recom
 | 1m
 |===
 
-[id=file-switch-cables]*Connections from file nodes to the storage network switch.*
+[id=file-switch-cables]
+*Connections from file nodes to the storage network switch.*
 Select the appropriate cable option from the table below according to your InfiniBand storage switch. +
 The recommended cable length is 2m; however, this may vary based on the customer's environment.
 
