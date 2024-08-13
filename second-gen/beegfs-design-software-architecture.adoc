@@ -39,9 +39,9 @@ BeeGFS implements multi-rail support to allow the use of multiple IB interfaces 
 This documentation provides instructions for single IPoIB subnet configurations. Dual IPoIB subnet configurations are supported but do not provide the same advantages as single subnet configurations.
 +
 The following figure shows the balancing of traffic across multiple BeeGFS client interfaces.
-+
-image:../media/beegfs-design-image8.png[Interface traffic balancing]
-+
+
+image:../media/beegfs-design-image8.png["Interface traffic balancing"]
+
 Because each file in BeeGFS is typically striped across multiple storage services, the multi-rail configuration allows the client to achieve more throughput than is possible with a single InfiniBand port. For example, the following code sample shows a common file-striping configuration that allows the client to balance traffic across both interfaces:
 +
 ....
@@ -68,11 +68,11 @@ Multipathing software on the file nodes determines the active and optimized path
 
 The following diagram shows the controller layout in EF600 block nodes.
 
-image:../media/beegfs-design-image9.png[EF600 array]
+image:../media/beegfs-design-image9.png["EF600 array"]
 
 To facilitate the shared-disk HA solution, volumes are mapped to both file nodes so that they can take over for each other as needed. The following diagram shows an example of how the BeeGFS service and preferred volume ownership is configured for maximum performance. The interface to the left of each BeeGFS service indicates the preferred interface that the clients and other services use to contact it.
 
-image:../media/beegfs-design-image10.png[BeeGFS service volume ownership]
+image:../media/beegfs-design-image10.png["BeeGFS service volume ownership"]
 
 In the previous example, clients and server services prefer to communicate with storage service 1 using interface i1b. Storage service 1 uses interface i1a as the preferred path to communicate with its volumes (storage_tgt_101, 102) on controller A of the first block node. This configuration makes use of the full bidirectional PCIe bandwidth available to the InfiniBand adapter and achieves better performance from a dual-port HDR InfiniBand adapter than would otherwise be possible with PCIe 4.0.
 
@@ -107,7 +107,7 @@ For each BeeGFS resource group, Pacemaker runs a custom BeeGFS monitoring resour
 
 The following figure shows the Pacemaker-controlled BeeGFS services and dependencies.
 
-image:../media/beegfs-design-image11.png[Pacemaker-controller services]
+image:../media/beegfs-design-image11.png["Pacemaker-controller services"]
 
 [NOTE]
 So that multiple BeeGFS services of the same type are started on the same node, Pacemaker is configured to start BeeGFS services using the Multi Mode configuration method. For more information, see the https://doc.beegfs.io/latest/advanced_topics/multimode.html[BeeGFS documentation on Multi Mode^].
