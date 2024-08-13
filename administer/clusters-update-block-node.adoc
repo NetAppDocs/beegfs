@@ -1,0 +1,19 @@
+---
+sidebar: sidebar
+permalink: administer/clusters-update-block-node.html
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, update, upgrade, SANtricityOS, firmware, drive
+summary: "Steps to upgrade the HA cluster's block node components."
+---
+= Update block node components
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ../media/
+
+
+[.lead]
+Follow these steps to update the HA cluster's block node components, including SANtricityOS, NVSRAM, and drive firmware.
+
+== Overview 
+

@@ -1,10 +1,10 @@
 ---
 sidebar: sidebar
-permalink: administer/clusters-update.html
+permalink: administer/clusters-update-beegfs.html
 keywords: BeeGFS on NetApp, HA, Cluster, Administration, update, upgrade
 summary: "Use Ansible to update BeeGFS and the HA cluster."
 ---
-= Update the HA cluster and BeeGFS
+= Update BeeGFS version
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -13,11 +13,11 @@ summary: "Use Ansible to update BeeGFS and the HA cluster."
 
 
 [.lead]
-Use Ansible to update BeeGFS and the HA cluster.
+Follow these steps to update the HA cluster's BeeGFS verion using Ansible.
 
 == Overview 
 
-BeeGFS is versioned following a `major.minor.patch` versioning scheme and BeeGFS HA Ansible roles are provided for each supported BeeGFS `major.minor` version (for example `beegfs_ha_7_2` and `beegfs_ha_7_3`). Each of the HA roles is pinned to the latest BeeGFS patch version at the time the Ansible collection was released. 
+BeeGFS follows a `major.minor.patch` versioning scheme. BeeGFS HA Ansible roles are provided for each supported `major.minor` version (e.g., `beegfs_ha_7_2` and `beegfs_ha_7_3`). Each HA role is pinned to the latest BeeGFS patch version available at the time of the Ansible collection's release.
 
 Ansible should be used for all BeeGFS upgrades, including moving between major, minor, and patch versions of BeeGFS. To update BeeGFS you will first need to update the BeeGFS Ansible collection, which will also pull in the latest fixes and enhancements to the deployment/management automation and underlying HA cluster. Even after updating to the latest version of the collection, BeeGFS will not be upgraded until `ansible-playbook` is ran with the `-e "beegfs_ha_force_upgrade=true"` set.
 

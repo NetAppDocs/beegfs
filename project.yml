@@ -131,12 +131,14 @@ sidebar:
           url: /administer/clusters-ansible-pcs.html
         - title: Examine the state of the cluster
           url: /administer/clusters-examine-state.html
-        - title: Reconfigure and update
+        - title: Reconfigure the HA cluster and BeeGFS
+          url: /administer/clusters-reconfigure.html
+        - title: Update HA cluster components
           entries:
-            - title: Reconfigure the HA cluster and BeeGFS
-              url: /administer/clusters-reconfigure.html
-            - title: Update the HA cluster and BeeGFS
-              url: /administer/clusters-update.html
+            - title: Update BeeGFS version
+              url: /administer/clusters-update-beegfs.html
+            - title: Update HA cluster block node firmware
+              url: /administer/clusters-update-block-node.html
         - title: Service and maintain
           entries:
             - title: Failover and failback services
