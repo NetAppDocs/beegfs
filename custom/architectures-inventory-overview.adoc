@@ -21,7 +21,7 @@ It is recommended to follow standard Ansible practices for organizing your link:
 
 The Ansible inventory for a single BeeGFS HA cluster is organized as follows:
 
-image:../media/ansible-inventory-overview.png["Ansible Inventory Overview"]
+image:ansible-inventory-overview.png["Ansible Inventory Overview"]
 
 NOTE: Since a single BeeGFS file system can span multiple HA clusters, it is possible for large installations to have multiple Ansible inventories. Generally it is not recommend to try and define multiple HA clusters as a single Ansible inventory to avoid issues.
 

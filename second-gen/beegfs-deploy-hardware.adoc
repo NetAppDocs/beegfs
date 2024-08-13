@@ -31,7 +31,7 @@ The following steps are identical for each building block in the cluster, regard
 +
 Rack the building blocks so the two BeeGFS file nodes are above the BeeGFS block nodes. The following figure shows the correct hardware configuration for the BeeGFS building block using Lenovo ThinkSystem SR665 V3 servers as the file nodes (rear view).
 +
-image:../media/buildingblock-sr665v3.png["Building block"]
+image:buildingblock-sr665v3.png["Building block"]
 +
 [NOTE]
 The power supply configuration for production use cases should typically use redundant PSUs.
@@ -42,11 +42,11 @@ The power supply configuration for production use cases should typically use red
 +
 .. For all building block configurations, if a drive enclosure is not fully populated, make sure that an equal number of drives are populated in slots 0–11 and 12–23 for optimal performance.
 +
-image:../media/driveslots.png["EF600 drive slots"]
+image:driveslots.png["EF600 drive slots"]
 +
 . Connect the block and file nodes using the link:beegfs-technology-requirements.html#block-file-cables[1m InfiniBand HDR 200Gb direct attach copper cables], so that they match the topology shown in the following figure.
 +
-image:../media/directattachcable-sr665v3.png["SR665V3 direct attach cabling"]
+image:directattachcable-sr665v3.png["SR665V3 direct attach cabling"]
 +
 [NOTE]
 The nodes across multiple building blocks are never directly connected. Each building block should be treated as a standalone unit and all communication between building blocks occurs through network switches.
@@ -57,7 +57,7 @@ When using splitter cables to connect the storage switch to file nodes, one cabl
 +
 Additionally, for storage networks with redundant switches, ports outlined in light green should connect to one switch, while ports in dark green should connect to another switch.
 +
-image:../media/networkcable-sr665v3.png["Storage network cabling"]
+image:networkcable-sr665v3.png["Storage network cabling"]
 +
 . As needed, assemble additional building blocks following the same cabling guidelines.
 +
