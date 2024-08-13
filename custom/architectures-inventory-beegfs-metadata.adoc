@@ -9,7 +9,7 @@ summary: "BeeGFS services are configured using group variables (group_vars)."
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

@@ -10,7 +10,7 @@ summary: "After defining the general Ansible inventory structure, define the con
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 [.lead]
 After defining the general Ansible inventory structure, define the configuration for each building block in the BeeGFS file system.

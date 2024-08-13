@@ -9,7 +9,7 @@ summary: "Use Ansible to update BeeGFS and the HA cluster."
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

@@ -9,7 +9,7 @@ summary: "Steps needed to install and cable hardware used to run BeeGFS on NetAp
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

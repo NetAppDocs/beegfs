@@ -9,7 +9,7 @@ summary: "Prevent the HA cluster from accidentally reacting to intended changes 
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

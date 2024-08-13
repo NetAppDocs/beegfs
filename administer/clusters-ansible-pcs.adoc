@@ -9,7 +9,7 @@ summary: "When should you use Ansible versus the pcs command line tool to manage
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

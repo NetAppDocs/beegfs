@@ -10,7 +10,7 @@ summary: "The BeeGFS solution includes recommendations for performance tuning th
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

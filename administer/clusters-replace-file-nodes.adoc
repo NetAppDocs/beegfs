@@ -9,7 +9,7 @@ summary: "Replacing a file node if the original server is faulty."
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

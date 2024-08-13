@@ -10,7 +10,7 @@ summary: "The BeeGFS solution includes recommendations for performance and capac
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

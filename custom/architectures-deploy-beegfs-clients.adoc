@@ -9,7 +9,7 @@ summary: "Optionally, Ansible can be used to configure BeeGFS clients and mount 
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

@@ -9,7 +9,7 @@ summary: "Manual steps required to set up file and block nodes before running An
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

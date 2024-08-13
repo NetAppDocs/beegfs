@@ -10,7 +10,7 @@ summary: "The software configuration for BeeGFS on NetApp includes BeeGFS networ
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

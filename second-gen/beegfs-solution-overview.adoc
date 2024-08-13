@@ -10,7 +10,7 @@ summary: "The BeeGFS on NetApp solution combines the BeeGFS parallel file system
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

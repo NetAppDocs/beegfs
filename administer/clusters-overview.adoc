@@ -9,7 +9,7 @@ summary: "Learn how to administer BeeGFS HA clusters after they have been deploy
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

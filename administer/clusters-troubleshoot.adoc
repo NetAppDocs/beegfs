@@ -9,7 +9,7 @@ summary: "Troubleshooting a BeeGFS HA cluster."
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

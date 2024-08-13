@@ -9,7 +9,7 @@ summary: "Deploying and managing BeeGFS HA clusters using Ansible."
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

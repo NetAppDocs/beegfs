@@ -9,7 +9,7 @@ summary: "Terms and concepts that apply to BeeGFS on NetApp solution."
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 [.lead]
 The following terms and concepts apply to the BeeGFS on NetApp solution.

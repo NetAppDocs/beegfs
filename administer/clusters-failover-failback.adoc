@@ -9,7 +9,7 @@ summary: "Moving BeeGFS services between cluster nodes."
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

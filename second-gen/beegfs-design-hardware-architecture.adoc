@@ -10,7 +10,7 @@ summary: "The hardware configuration for BeeGFS on NetApp includes file nodes an
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

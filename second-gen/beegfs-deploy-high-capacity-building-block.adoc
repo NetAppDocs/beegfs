@@ -10,7 +10,7 @@ summary: "The deployment variations for a high capacity building block."
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

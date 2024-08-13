@@ -9,7 +9,7 @@ summary: "Add or remove building blocks from the cluster."
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

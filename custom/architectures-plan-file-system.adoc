@@ -9,7 +9,7 @@ summary: "Plan the file system deployment before building out the Ansible invent
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

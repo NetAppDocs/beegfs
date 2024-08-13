@@ -9,7 +9,7 @@ summary: "Specify common block node configuration using group variables (group_v
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

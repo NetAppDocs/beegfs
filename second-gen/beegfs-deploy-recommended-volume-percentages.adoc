@@ -10,7 +10,7 @@ summary: "When following the standard four volumes per storage pool configuratio
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 [.lead]
 When following the standard four volumes per storage pool configuration for second generation building blocks, refer to the following table.

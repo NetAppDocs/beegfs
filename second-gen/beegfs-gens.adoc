@@ -10,7 +10,7 @@ summary: "The BeeGFS on NetApp solution is currently in its second generational 
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

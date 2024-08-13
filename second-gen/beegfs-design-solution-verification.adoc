@@ -10,7 +10,7 @@ summary: "The second-generation design for the BeeGFS on NetApp solution was ver
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]
@@ -26,7 +26,7 @@ The building blocks were attached to two NVIDIA Quantum InfiniBand (MQM8700) swi
 
 The following figure shows the BeeGFS configuration used to validate the BeeGFS on NetApp solution.
 
-../media/beegfs-design-image12.png[BeeGFS validation configuration]
+image:beegfs-design-image12.png[BeeGFS validation configuration]
 
 == BeeGFS file striping
 

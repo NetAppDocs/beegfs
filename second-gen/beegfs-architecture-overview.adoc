@@ -10,7 +10,7 @@ summary: "The BeeGFS on NetApp solution includes architectural design considerat
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

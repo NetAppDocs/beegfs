@@ -9,7 +9,7 @@ summary: "Gracefully stopping and starting the HA cluster."
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

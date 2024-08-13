@@ -10,7 +10,7 @@ summary: "To implement the BeeGFS on NetApp solution, make sure your environment
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

@@ -9,7 +9,7 @@ summary: "Specify common file node configuration using group variables (group_va
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

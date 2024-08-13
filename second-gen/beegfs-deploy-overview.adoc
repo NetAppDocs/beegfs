@@ -10,7 +10,7 @@ summary: "You can deploy BeeGFS on NetApp to validated file and block nodes usin
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 [.lead]
 You can deploy BeeGFS on NetApp to validated file and block nodes using the second generation of NetApp’s BeeGFS building block design.

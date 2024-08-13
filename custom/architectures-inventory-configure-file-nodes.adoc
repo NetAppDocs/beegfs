@@ -9,7 +9,7 @@ summary: "Specify configuration for individual file nodes using host variables (
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

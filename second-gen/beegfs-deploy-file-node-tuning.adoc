@@ -10,7 +10,7 @@ summary: "To maximize performance, we recommended configuring the system setting
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

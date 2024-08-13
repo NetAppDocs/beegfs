@@ -9,7 +9,7 @@ summary: "Use pcs to view the state of the cluster."
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

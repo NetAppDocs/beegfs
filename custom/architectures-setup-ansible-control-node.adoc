@@ -9,7 +9,7 @@ summary: "Set up an Ansible control node to deploy and manage the file system."
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]

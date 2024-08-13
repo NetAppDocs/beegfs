@@ -9,7 +9,7 @@ summary: "Verify the file system deployment before placing the system in product
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]
