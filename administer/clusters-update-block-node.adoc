@@ -23,7 +23,7 @@ IMPORTANT: While the block node components can be upgraded while the HA cluster 
 
 == Block node upgrade steps
 
-The following steps outline how to update the block node's firmware using the `Netapp_Eseries.Santricity` Ansible collection. Before proceeding, review the link:https://docs.netapp.com/us-en/e-series/upgrade-santricity/overview-upgrade-consider-task.html[Upgrade considerations] for updating E-Series systems.
+The following steps outline how to update the block node's firmware using the `Netapp_Eseries.Santricity` Ansible collection. Before proceeding, review the link:https://docs.netapp.com/us-en/e-series/upgrade-santricity/overview-upgrade-consider-task.html[Upgrade considerations^] for updating E-Series systems.
 
 NOTE: Upgrade to SANtricity OS 11.80 or later releases is only possible from 11.70.5P1. The storage array must first be upgraded to 11.70.5P1.
 
@@ -76,9 +76,9 @@ See link:https://docs.ansible.com/ansible/latest/collections_guide/collections_i
         name: nar_santricity_management
 ....
 
-. Prior to executing upgrades, ensure the cluster is in an optimal state with each BeeGFS service located on its preferred node. See the link:cluster-examine-state.html[Examine the state of the cluster] section for more information.
+. Prior to executing upgrades, ensure the cluster is in an optimal state with each BeeGFS service located on its preferred node. See the link:cluster-examine-state.html[Examine the state of the cluster^] section for more information.
 
-. Place the cluster in maintenance mode. See the link:clusters-maintenance-mode.html[Place the cluster in maintenance mode] section for more information.
+. Place the cluster in maintenance mode. See the link:clusters-maintenance-mode.html[Place the cluster in maintenance mode^] section for more information.
 
 . To start the upgrades, execute the following command from your Ansible control node:
 +
