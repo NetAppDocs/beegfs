@@ -137,7 +137,7 @@ sidebar:
           entries:
             - title: Update BeeGFS version
               url: /administer/clusters-update-beegfs.html
-            - title: Update HA cluster block node firmware
+            - title: Update block node components
               url: /administer/clusters-update-block-node.html
         - title: Service and maintain
           entries:

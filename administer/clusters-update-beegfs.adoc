@@ -13,7 +13,7 @@ summary: "Use Ansible to update BeeGFS and the HA cluster."
 
 
 [.lead]
-Follow these steps to update the HA cluster's BeeGFS verion using Ansible.
+Follow these steps to update the HA cluster's BeeGFS version using Ansible.
 
 == Overview 
 
@@ -23,7 +23,7 @@ Ansible should be used for all BeeGFS upgrades, including moving between major, 
 
 NOTE: For more information on BeeGFS versions see the link:https://doc.beegfs.io/latest/advanced_topics/upgrade.html[BeeGFS Upgrade documentation^].
 
-== Tested Upgrade Paths
+== Tested upgrade paths
 
 Each version of the BeeGFS collection is tested with specific versions of BeeGFS to ensure interoperability between all components. Testing is also performed to ensure upgrades can be performed from the BeeGFS version(s) supported by the last version of the collection, to those supported in the latest release.
 
@@ -38,11 +38,11 @@ Each version of the BeeGFS collection is tested with specific versions of BeeGFS
 | 7.4.1            | 7.4.2           | Yes       | Upgrade using beegfs collection v3.2.0
 |===
 
-== BeeGFS Upgrade Steps
+== BeeGFS upgrade steps
 
-The follow sections provide the steps to update the BeeGFS Ansible collection and BeeGFS itself. Pay special attention to any extra step(s) for updating BeeGFS major or minor versions.
+The following sections provide steps to update the BeeGFS Ansible collection and BeeGFS itself. Pay special attention to any extra step(s) for updating BeeGFS major or minor versions.
 
-=== Step 1: Upgrade BeeGFS Collection
+=== Step 1: Upgrade BeeGFS collection
 
 For collection upgrades with access to link:https://galaxy.ansible.com/netapp_eseries/beegfs[Ansible Galaxy^], run the following command: 
 
@@ -60,11 +60,11 @@ ansible-galaxy collection install netapp_eseries-beegfs-<VERSION>.tar.gz --upgra
 
 See link:https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html[Installing Collections^] for more information.
 
-=== Step 2: Update Ansible Inventory
+=== Step 2: Update Ansible inventory
 
-Make any required or desired updates to your cluster's Ansible inventory files. See the link:clusters-update.html#version-upgrade-notes[Version Upgrade Notes] section below for details about your specific upgrade requirements. See the link:../custom/architectures-overview.html[Use Custom Architectures^] section for general information on configuring your BeeGFS HA inventory.
+Make any required or desired updates to your cluster's Ansible inventory files. See the link:clusters-update-beegfs.html#version-upgrade-notes[Version Upgrade Notes] section below for details about your specific upgrade requirements. See the link:../custom/architectures-inventory-overview.html[Ansible Inventory Overview^] section for general information on configuring your BeeGFS HA inventory.
 
-=== Step 3: Update Ansible Playbook (when updating major or minor versions only)
+=== Step 3: Update Ansible playbook (when updating major or minor versions only)
 
 If you are moving between major or minor versions, in the `playbook.yml` file used to deploy and maintain the cluster, update the name of the `beegfs_ha_<VERSION>` role to reflect the desired version. For example, if you wanted to deploy BeeGFS 7.4 this would be `beegfs_ha_7_4`:
 
@@ -83,7 +83,7 @@ If you are moving between major or minor versions, in the `playbook.yml` file us
 
 For more details on the contents of this playbook file see the link:../custom/architectures-deploy-ha-cluster.html[Deploy the BeeGFS HA cluster^] section.
 
-=== Step 4: Run the BeeGFS Upgrade
+=== Step 4: Run the BeeGFS upgrade
 
 To apply the BeeGFS update:
 
@@ -101,13 +101,13 @@ Behind the scenes the BeeGFS HA role will handle:
 ** Place it into standby and failover its services to the secondary node.
 ** Upgrade BeeGFS packages.
 ** Fallback back services.
-* Move the cluster out of maintenance mode. 
+* Move the cluster out of maintenance mode.
 
-== Version Upgrade Notes
+== Version upgrade notes
 
 === Upgrading from BeeGFS version 7.2.6 or 7.3.0
 
-==== Changes to Connection Based Authentication
+==== Changes to connection based authentication
 
 BeeGFS versions released after 7.3.1 will no longer allow services to start without either specifying a `connAuthFile` or setting `connDisableAuthentication=true` in the service's configuration file. It is highly recommended to enable connection based authentication security. See link:https://doc.beegfs.io/7.3.2/advanced_topics/authentication.html#connectionbasedauth[BeeGFS Connection Based Authentication^] for more information.
 
