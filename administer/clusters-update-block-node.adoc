@@ -51,10 +51,9 @@ See link:https://docs.ansible.com/ansible/latest/collections_guide/collections_i
 * *Drive Firmware:* Navigate to the link:https://mysupport.netapp.com/site/downloads/firmware/e-series-disk-firmware[E-Series disk firmware site^] and download the latest firmware for each of your block node's drive models.
 .. Store the SANtricity OS, NVSRAM, and drive firmware files in your Ansible control node's `<inventory_directory>/packages` directory.
 
-
 . If necessary, update your cluster's Ansible inventory files to include all block nodes requiring updates. For guidance, see the link:../custom/architectures-inventory-overview.html[Ansible Inventory Overview^] section.
 
-. Ensure the cluster is in an optimal state and each BeeGFS service is on its preferred node. Refer to link:cluster-examine-state.html[Examine the state of the cluster^] for details.
+. Ensure the cluster is in an optimal state and each BeeGFS service is on its preferred node. Refer to link:clusters-examine-state.html[Examine the state of the cluster^] for details.
 
 . Place the cluster in maintenance mode following the instructions in link:clusters-maintenance-mode.html[Place the cluster in maintenance mode^].
 
@@ -87,4 +86,4 @@ ansible-playbook -i inventory.yml update_block_node_playbook.yml
 
 . After the playbook completes, verify each block node is in an optimal state.
 
-. Move the cluster out of maintenance mode and validate the cluster is in an optimal state.
+. Move the cluster out of maintenance mode and validate the cluster is in an optimal state and each BeeGFS service is on its preferred node.
