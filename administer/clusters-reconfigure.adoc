@@ -1,0 +1,53 @@
+---
+sidebar: sidebar
+permalink: administer/clusters-reconfigure.html
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, Ansible, pcs
+summary: "Use Ansible to reconfigure the cluster."
+---
+= Reconfigure the HA cluster and BeeGFS
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ../media/
+
+
+[.lead]
+Use Ansible to reconfigure the cluster.
+
+== Overview 
+
+Generally reconfiguring any aspect of the BeeGFS HA cluster should be done by updating your Ansible inventory and re-running the `ansible-playbook` command. This includes updating alerts, changing the permanent fencing configuration, or adjusting BeeGFS service configuration. These are adjusted using the `group_vars/ha_cluster.yml` file and a full list of options can be found in the link:../custom/architectures-inventory-common-file-node-configuration.html[Specify Common File Node Configuration^] section. 
+
+See below for additional details on select configuration options that administrators should be aware of when performing maintenance or servicing the cluster.
+
+== How to Disable and Enable Fencing
+
+Fencing is enabled/required by default when setting up the cluster. In some instances it may be desirable to temporarily disable fencing to ensure nodes aren't accidentally shutdown when performing certain maintenance operations (such as upgrading the operating system). While this can be disabled manually, there are tradeoffs administrators should be aware off.
+
+=== OPTION 1: Disable fencing using Ansible (recommended).
+
+When fencing is disabled using Ansible, the on-fail action of the BeeGFS monitor is changed from "fence" to "standby". This means if the BeeGFS monitor detects a failure it will attempt to place the node in standby and failover all BeeGFS services. Outside active troubleshooting/testing this is typically more desirable than option 2. The disadvantage is if a resource fails to stop on the original node it will be blocked from starting elsewhere (which is why fencing is typically required for production clusters).
+
+. In your Ansible inventory at `groups_vars/ha_cluster.yml` add the following configuration:
++
+[source,console]
+----
+beegfs_ha_cluster_crm_config_options:
+    stonith-enabled: False
+----
+. Rerun the Ansible playbook to apply the changes to the cluster. 
+
+=== OPTION 2: Disable fencing manually.
+
+In some instances you may want to temporarily disable fencing without rerunning Ansible, perhaps to facilitate troubleshooting or testing of the cluster. 
+
+WARNING: In this configuration if the BeeGFS monitor detects a failure, the cluster will attempt to stop the corresponding resource group. It will NOT trigger a full failover or attempt to restart or move the impacted resource group to another host. To recover, address any issues then run `pcs resource cleanup` or manually place the node in standby. 
+
+Steps: 
+
+. To determine if fencing (stonith) is globally enabled or disabled run: `pcs property show stonith-enabled`
+. To disable fencing run: `pcs property set stonith-enabled=false`
+. To enable fencing run: `pcs property set stonith-enabled=true`
+
+Note: This setting will be overridden the next time you run the Ansible playbook. 

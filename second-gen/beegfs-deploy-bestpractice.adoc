@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-bestpractice.html
+permalink: second-gen/beegfs-deploy-bestpractice.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "Follow the best practice guidelines when deploying the BeeGFS on NetApp solution."
 ---
@@ -10,7 +10,7 @@ summary: "Follow the best practice guidelines when deploying the BeeGFS on NetAp
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 [.lead]
 Follow the best practice guidelines when deploying the BeeGFS on NetApp solution.

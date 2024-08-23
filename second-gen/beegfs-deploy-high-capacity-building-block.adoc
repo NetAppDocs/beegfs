@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-high-capacity-building-block.html
+permalink: second-gen/beegfs-deploy-high-capacity-building-block.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600, EF300, HDD, Expansion
 summary: "The deployment variations for a high capacity building block."
 ---
@@ -10,13 +10,13 @@ summary: "The deployment variations for a high capacity building block."
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]
 The standard BeeGFS solution deployment guide outlines procedures and recommendations for high performance workload requirements. Customers looking to meet high capacity requirements should observe the variations in deployment and recommendations outlined here.
 
-image:high-capacity-rack-diagram.png[]
+image:high-capacity-rack-diagram.png["High capacity rack diagram"]
 
 == Controllers
 For high capacity building blocks EF600 controllers should be replaced with EF300 controllers, each with a Cascade HIC installed for SAS expansion. Each block node will have a minimal number of NVMe SSDs populated in the array enclosure for BeeGFS metadata storage and will be attached to expansion shelves populated with NL-SAS HDDs for BeeGFS storage volumes. 
@@ -26,7 +26,7 @@ File node to Block node configuration remains the same.
 == Drive placement
 A minimum of 4 NVMe SSD's are required in each block node for BeeGFS metadata storage. These drives should be placed in the outermost slots of the enclosure.
 
-image:high-capacity-drive-slots-diagram.png[]
+image:high-capacity-drive-slots-diagram.png["High capacity drive slot diagram"]
 
 == Expansion trays
 The high capacity building block can be sized with 1-7, 60 drive expansion trays per storage array.

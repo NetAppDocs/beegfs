@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-design-overview.html
+permalink: second-gen/beegfs-design-overview.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "Specific equipment, cabling, and configurations are required to support the BeeGFS on NetApp solution, which combines the BeeGFS parallel file system with the NetApp EF600 storage systems."
 ---
@@ -10,7 +10,7 @@ summary: "Specific equipment, cabling, and configurations are required to suppor
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 [.lead]
 Specific equipment, cabling, and configurations are required to support the BeeGFS on NetApp solution, which combines the BeeGFS parallel file system with the NetApp EF600 storage systems.

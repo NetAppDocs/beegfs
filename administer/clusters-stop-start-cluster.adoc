@@ -1,0 +1,54 @@
+---
+sidebar: sidebar
+permalink: administer/clusters-stop-start-cluster.html
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, stop, start
+summary: "Gracefully stopping and starting the HA cluster."
+---
+= Stop and start the cluster
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ../media/
+
+
+[.lead]
+Gracefully stopping and starting the HA cluster.
+
+== Overview
+
+This section describes how to gracefully shutdown and restart the BeeGFS cluster. Example scenarios where this may be required include electrical maintenance or migrating between datacenters or racks.
+
+== Steps
+
+If for any reason you need to stop the entire BeeGFS cluster and shutdown all services run:
+
+[source,console]
+----
+pcs cluster stop --all
+----
+
+It is also possible to stop the cluster on individual nodes (which will automatically failover services to another node), though it is recommended to first put the node in standby (see the link:clusters-failover-failback.html[failover^] section):
+
+[source,console]
+----
+pcs cluster stop <HOSTNAME>
+----
+
+To start cluster services and resources on all nodes run:
+
+[source,console]
+----
+pcs cluster start --all
+----
+
+Or start services on a specific node with: 
+
+[source,console]
+----
+pcs cluster start <HOSTNAME>
+----
+
+At this point run `pcs status` and verify the cluster and BeeGFS services start on all nodes, and services are running on the nodes you expect. 
+
+TIP: Depending on the size of the cluster it can take sometime (seconds to minutes) for the entire cluster to stop, or show started in `pcs status`. If `pcs cluster <COMMAND>` hangs for more than five minutes, before running "Ctrl+C" to cancel the command, login to each node of the cluster and use `pcs status` to see if cluster services (Corosync/Pacemaker) are still running on that node. From any node where the cluster is still active you can check what resources are blocking the cluster. Manually address the issue and the command should either complete or can be rerun to stop any remaining services. 

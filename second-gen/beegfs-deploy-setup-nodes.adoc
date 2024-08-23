@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-setup-nodes.html
+permalink: second-gen/beegfs-deploy-setup-nodes.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "Configure networking on the baseboard management controller (BMC) of each server and configure the management port on each controller."
 ---
@@ -10,7 +10,7 @@ summary: "Configure networking on the baseboard management controller (BMC) of e
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 [.lead]
 While most software configuration tasks are automated using the NetApp-provided Ansible collections, you must configure networking on the baseboard management controller (BMC) of each server and configure the management port on each controller.
