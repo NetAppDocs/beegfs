@@ -1,0 +1,52 @@
+---
+sidebar: sidebar
+permalink: custom/architectures-deploy-verify.html
+keywords: BeeGFS on NetApp, NetApp Custom Architectures, EF600
+summary: "Verify the file system deployment before placing the system in production."
+---
+= Verify the BeeGFS deployment
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ../media/
+
+
+[.lead]
+Verify the file system deployment before placing the system in production.
+
+== Overview
+
+Before you place the BeeGFS file system in production, perform a few verification checks. 
+
+=== Steps
+
+. Login to any client and run the following to ensure all expected nodes are present/reachable, and there are no inconsistencies or other issues reported: 
++
+[source,bash]
+----
+beegfs-fsck --checkfs
+----
+. Shutdown the entire cluster, then restart it. From any file node run the following: 
++
+[source,bash]
+----
+pcs cluster stop --all # Stop the cluster on all file nodes.
+pcs cluster start --all  # Start the cluster on all file nodes. 
+pcs status # Verify all nodes and services are started and no failures are reported (the command may need to be reran a few times to allow time for all services to start). 
+----
+. Place each node in standby and verify BeeGFS services are able to failover to secondary node(s). To do this login to any of the file nodes and run the following: 
++
+[source,bash]
+----
+pcs status # Verify the cluster is healthy at the start.
+pcs node standby <FILE NODE HOSTNAME> # Place the node under test in standby.
+pcs status # Verify services are started on a secondary node and no failures are reported.
+pcs node unstandby <FILE NODE HOSTNAME> # Take the node under test out of standby.
+pcs status # Verify the file node is back online and no failures are reported.
+pcs resource relocate run # Move all services back to their preferred nodes.
+pcs status # Verify services have moved back to the preferred node. 
+----
+. Use performance benchmarking tools such as IOR and MDTest to verify the file system performance meets expectations. Examples of common tests and parameters used with BeeGFS can be found in the link:../second-gen/beegfs-design-solution-verification.html[Design Verification^] section of the BeeGFS on NetApp Verified Architecture.
+
+Additional tests should be performed based on the acceptance criteria defined for a particular site/installation.

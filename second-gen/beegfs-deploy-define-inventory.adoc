@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-define-inventory.html
+permalink: second-gen/beegfs-deploy-define-inventory.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "After defining the general Ansible inventory structure, define the configuration for each building block in the BeeGFS file system."
 ---
@@ -10,7 +10,7 @@ summary: "After defining the general Ansible inventory structure, define the con
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 [.lead]
 After defining the general Ansible inventory structure, define the configuration for each building block in the BeeGFS file system.

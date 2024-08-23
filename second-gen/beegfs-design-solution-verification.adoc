@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-design-solution-verification.html
+permalink: second-gen/beegfs-design-solution-verification.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "The second-generation design for the BeeGFS on NetApp solution was verified using three building block configuration profiles."
 ---
@@ -10,7 +10,7 @@ summary: "The second-generation design for the BeeGFS on NetApp solution was ver
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [.lead]
@@ -26,7 +26,7 @@ The building blocks were attached to two NVIDIA Quantum InfiniBand (MQM8700) swi
 
 The following figure shows the BeeGFS configuration used to validate the BeeGFS on NetApp solution.
 
-image:beegfs-design-image12.png[]
+image:beegfs-design-image12.png[BeeGFS validation configuration]
 
 == BeeGFS file striping
 
@@ -52,22 +52,22 @@ mpirun --allow-run-as-root --mca btl tcp -np 48 -map-by node -hostfile 10xnodes 
 .One BeeGFS base (management, metadata, and storage) building block
 The following figure shows the IOR test results with a single BeeGFS base (management, metadata, and storage) building block.
 
-image:beegfs-design-image13.png[]
+image:beegfs-design-image13.png["Single BeeGFS base building block IOR results"]
 
 .BeeGFS metadata + storage building block
 The following figure shows the IOR test results with a single BeeGFS metadata + storage building block.
 
-image:beegfs-design-image14.png[]
+image:beegfs-design-image14.png["Single BeeGFS metadata and storage building blocks IOR results"]
 
 .BeeGFS storage-only building block
 The following figure shows the IOR test results with a single BeeGFS storage-only building block.
 
-image:beegfs-design-image15.png[]
+image:beegfs-design-image15.png["Single BeeGFS storage IOR results"]
 
 .Three BeeGFS building blocks
 The following figure shows the IOR test results with three BeeGFS building blocks.
 
-image:beegfs-design-image16.png[]
+image:beegfs-design-image16.png["Three BeeGFS building blocks IOR results"]
 
 As expected, the performance difference between the base building block and the subsequent metadata + storage building block is negligible. Comparing the metadata + storage building block and a storage-only building block shows a slight increase in read performance due to the additional drives used as storage targets. However, there is no significant difference in write performance. To achieve higher performance, you can add multiple building blocks together to scale performance in a linear fashion.
 
@@ -81,7 +81,7 @@ The native caching mode uses the Linux kernel page-cache on the client, allowing
 
 The following diagram shows the IOR test results with three BeeGFS building blocks and a single client.
 
-image:beegfs-design-image17.png[]
+image:beegfs-design-image17.png["Three BeeGFS building blocks with single client IOR results"]
 
 [NOTE]
 BeeGFS striping for these tests was set to a 1MB chunksize with eight targets per file.
@@ -103,12 +103,12 @@ Metadata performance was measured first with one then two metadata + storage bui
 .One BeeGFS metadata + storage building block
 The following diagram shows the MDTest results with one BeeGFS metadata + storage building blocks.
 
-image:beegfs-design-image18.png[]
+image:beegfs-design-image18.png["Single BeeGFS metadata and storage building blocks MDTest results"]
 
 .Two BeeGFS metadata + storage building blocks
 The following diagram shows the MDTest results with two BeeGFS metadata + storage building blocks.
 
-image:beegfs-design-image19.png[]
+image:beegfs-design-image19.png["Two BeeGFS metadata and storage building blocks MDTest results"]
 
 == Functional validation
 

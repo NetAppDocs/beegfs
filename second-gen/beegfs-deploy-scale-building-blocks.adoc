@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-scale-building-blocks.html
+permalink: second-gen/beegfs-deploy-scale-building-blocks.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "Configure Pacemaker and Corosync to scale beyond five building blocks."
 ---
@@ -10,7 +10,7 @@ summary: "Configure Pacemaker and Corosync to scale beyond five building blocks.
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 [.lead]
 You can configure Pacemaker and Corosync to scale beyond five building blocks (10 file nodes). However, there are drawbacks to larger clusters, and eventually Pacemaker and Corosync do impose a maximum of 32 nodes.

@@ -7,9 +7,9 @@ indexpage:
      - title: Get started
        links:
          - title: Solution overview
-           url: /beegfs-solution-overview.html
+           url: /second-gen/beegfs-solution-overview.html
          - title: Architecture overview
-           url: /beegfs-architecture-overview.html
+           url: /second-gen/beegfs-architecture-overview.html
          - title: Blog - Learn about BeeGFS and E-Series
            url: https://www.netapp.com/blog/solution-support-for-beegfs-and-e-series/
          - title: Blog - BeeGFS for beginners

@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-deploy-playbook.html
+permalink: second-gen/beegfs-deploy-playbook.html
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600
 summary: "Deploying and managing the configuration involves running one or more playbooks that contain the tasks Ansible needs to execute and bring the overall system to the desired state."
 ---
@@ -10,7 +10,7 @@ summary: "Deploying and managing the configuration involves running one or more 
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 [.lead]
 Deploying and managing the configuration involves running one or more playbooks that contain the tasks Ansible needs to execute and bring the overall system to the desired state.
@@ -101,6 +101,6 @@ ansible-playbook -i inventory.yml playbook.yml --forks 20
 ....
 +
 [NOTE]
-Especially for larger deployments, overriding the default number of forks (5) using the `forks` parameter is recommended to increase the number of hosts that Ansible configures in parallel. (For more information, see  https://www.ansible.com/blog/ansible-performance-tuning[Ansible Performance Tuning^] and https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html[Controlling playbook execution^].) The maximum value setting depends on the processing power available on the Ansible control node. The above example of 20 was run on a virtual Ansible control node with 4 CPUs (Intel(R) Xeon(R) Gold 6146 CPU @ 3.20GHz).
+Especially for larger deployments, overriding the default number of forks (5) using the `forks` parameter is recommended to increase the number of hosts that Ansible configures in parallel. (For more information, see https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html[Controlling playbook execution^].) The maximum value setting depends on the processing power available on the Ansible control node. The above example of 20 was run on a virtual Ansible control node with 4 CPUs (Intel(R) Xeon(R) Gold 6146 CPU @ 3.20GHz).
 +
 Depending on the size of the deployment and network performance between the Ansible control node and BeeGFS file and block nodes, deployment time might vary.
