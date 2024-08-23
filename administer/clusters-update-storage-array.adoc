@@ -1,10 +1,10 @@
 ---
 sidebar: sidebar
-permalink: administer/clusters-update-block-node.html
+permalink: administer/clusters-update-storage-array.html
 keywords: BeeGFS on NetApp, HA, Cluster, Administration, update, upgrade, SANtricityOS, firmware, drive
-summary: "Steps to upgrade the HA cluster's E-Series storage arrays."
+summary: "Steps to upgrade the HA cluster's E-Series storage array."
 ---
-= Update block node components
+= Upgrade E-Series storage array
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -13,11 +13,11 @@ summary: "Steps to upgrade the HA cluster's E-Series storage arrays."
 
 
 [.lead]
-Follow these steps to upgrade the HA cluster's E-Series storage arrays.
+Follow these steps to upgrade the HA cluster's E-Series storage arrays (block nodes).
 
 == Overview 
 
-Keeping your HA cluster's NetApp E-Series storage arrays (block nodes) up-to-date with the latest firmware ensures optimal performance and improved security. Firmware updates for the storage array are applied using SANtricity OS, NVSRAM, and drive firmware files.
+Keeping your HA cluster's NetApp E-Series storage arrays up-to-date with the latest firmware ensures optimal performance and improved security. Firmware updates for the storage array are applied using SANtricity OS, NVSRAM, and drive firmware files.
 
 IMPORTANT: While the storage arrays can be upgraded with the HA cluster online, it is recommended to place the cluster into maintenance mode for all upgrades.
 
@@ -53,13 +53,11 @@ See link:https://docs.ansible.com/ansible/latest/collections_guide/collections_i
 
 . If necessary, update your cluster's Ansible inventory files to include all storage arrays (block nodes) requiring updates. For guidance, see the link:../custom/architectures-inventory-overview.html[Ansible Inventory Overview^] section.
 
-. Ensure the cluster is in an optimal state and each BeeGFS service is on its preferred node. Refer to link:clusters-examine-state.html[Examine the state of the cluster^] for details.
-
 . Ensure the cluster is in an optimal state with each BeeGFS service is on its preferred node. Refer to link:clusters-examine-state.html[Examine the state of the cluster^] for details.
 
 . Place the cluster in maintenance mode following the instructions in link:clusters-maintenance-mode.html[Place the cluster in maintenance mode^].
 
-. Create a new Ansible playbook `update_block_node_playbook.yml` with the following content:
+. Create a new Ansible playbook named `update_block_node_playbook.yml`. Populate the playbook with the following content, replacing the Santricity OS, NVSRAM, and drive firmware versions to your desired upgrade path:
 +
 ....
 - hosts: eseries_storage_systems

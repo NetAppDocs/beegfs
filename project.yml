@@ -137,8 +137,8 @@ sidebar:
           entries:
             - title: Update BeeGFS version
               url: /administer/clusters-update-beegfs.html
-            - title: Update block node components
-              url: /administer/clusters-update-block-node.html
+            - title: Upgrade E-Series storage array
+              url: /administer/clusters-update-storage-array.html
         - title: Service and maintain
           entries:
             - title: Failover and failback services
