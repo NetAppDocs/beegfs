@@ -42,7 +42,7 @@ Once the node is online bring it out of standby with:
 
 [source,console]
 ----
-pcs cluster node unstandby <HOSTNAME>
+pcs node unstandby <HOSTNAME>
 ----
 
 Lastly relocate all BeeGFS services back to their preferred nodes with: 
