@@ -20,11 +20,11 @@ Both the first and second generation include a base architecture that incorporat
 
 * Double the performance and capacity while adding only 2U of rack space
 * High availability (HA) based on a shared-disk, two-tier hardware design
-* Architecture designed for NVIDIA DGX SuperPOD A100, H100 and H200 systems, which was previously validated on a dedicated acceptance cluster at NVIDIA. Read more about NVIDIA DGX SuperPOD with NetApp in the link:https://docs.netapp.com/us-en/netapp-solutions/ai/ai-dgx-superpod.html[design guide].
+* Architecture designed for NVIDIA DGX SuperPOD A100, H100, H200, and B200 systems, which was previously validated on a dedicated acceptance cluster at NVIDIA. Read more about NVIDIA DGX SuperPOD with NetApp in the link:https://docs.netapp.com/us-en/netapp-solutions/ai/ai-dgx-superpod.html[design guide].
 
 == Second generational design
 
-The second generation of BeeGFS on NetApp is optimized to meet the performance requirements of demanding workloads including high-performance computing (HPC), machine learning (ML), deep learning (DL), and other artificial intelligence (AI) techniques. By incorporating a shared-disk high-availability (HA) architecture, this design ensures data durability and availability, making it ideal for enterprises and other organizations that cannot afford downtime or data loss. The second generation design includes components such as PCIe gen5 servers and support for NVIDIA® Quantum™ QM9700 400Gb/s InfiniBand switches. This solution has not only been verified by NetApp but has also passed external qualification as a storage option for the NVIDIA DGX™ A100 SuperPOD, with extended certification for DGX SuperPOD H100 and H200 systems.
+The second generation of BeeGFS on NetApp is optimized to meet the performance requirements of demanding workloads including high-performance computing (HPC), machine learning (ML), deep learning (DL), and other artificial intelligence (AI) techniques. By incorporating a shared-disk high-availability (HA) architecture, this design ensures data durability and availability, making it ideal for enterprises and other organizations that cannot afford downtime or data loss. The second generation design includes components such as PCIe gen5 servers and support for NVIDIA® Quantum™ QM9700 400Gb/s InfiniBand switches. This solution has not only been verified by NetApp but has also passed external qualification as a storage option for the NVIDIA DGX™ A100 SuperPOD, with extended certification for DGX SuperPOD H100, H200, and B200 systems.
 
 == First generational design
 
