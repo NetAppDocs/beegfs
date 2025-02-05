@@ -2,7 +2,7 @@
 sidebar: sidebar
 permalink: administer/clusters-update-storage-array.html
 keywords: BeeGFS on NetApp, HA, Cluster, Administration, update, upgrade, SANtricityOS, firmware, drive
-summary: "Steps to upgrade the HA cluster's E-Series storage array."
+summary: "Steps to upgrade the HA cluster's E-Series storage arrays."
 ---
 = Upgrade E-Series storage array
 :hardbreaks:
