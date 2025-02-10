@@ -27,7 +27,7 @@ The BeeGFS on NetApp solution is designed as a scalable building block architect
 == Use cases
 The following use cases apply to the BeeGFS on NetApp solution:
 
-* NVIDIA DGX SuperPOD systems featuring DGX’s with A100, H100, H200 and B200 GPU’s.
+* NVIDIA DGX SuperPOD systems featuring DGX’s with A100, H100, H200, and B200 GPU’s.
 * Artificial Intelligence (AI) including machine learning (ML), deep learning (DL), large-scale natural language processing (NLP), and natural language understanding (NLU). For more information, see https://www.netapp.com/blog/beefs-for-ai-fact-vs-fiction/[BeeGFS for AI: Fact versus fiction^].
 * High-performance computing (HPC) including applications accelerated by MPI (message passing interface) and other distributed computing techniques. For more information, see https://www.netapp.com/blog/beegfs-for-ai-ml-dl/[Why BeeGFS goes beyond HPC^].
 * Application workloads characterized by:

@@ -34,6 +34,39 @@ Unless otherwise noted, all files and directories created in this step and follo
 +
 `packages`
 
+. Create a subdirectory for cluster passwords and secure the file by encrypting it with Ansible Vault (see https://docs.ansible.com/ansible/latest/user_guide/vault.html[Encrypting content with Ansible Vault^]):
++
+.. Create the subdirectory `group_vars/all`.
+.. In the `group_vars/all` directory, create a passwords file labeled `passwords.yml`.
+.. Populate the `passwords.yml file` with the following, replacing all username and password parameters according to your configuration:
++
+....
+# Credentials for storage system's admin password
+eseries_password: <PASSWORD>
+
+# Credentials for BeeGFS file nodes
+ssh_ha_user: <USERNAME>
+ssh_ha_become_pass: <PASSWORD>
+
+# Credentials for HA cluster
+ha_cluster_username: <USERNAME>
+ha_cluster_password: <PASSWORD>
+ha_cluster_password_sha512_salt: randomSalt
+
+# Credentials for fencing agents
+# OPTION 1: If using APC Power Distribution Units (PDUs) for fencing:
+# Credentials for APC PDUs.
+apc_username: <USERNAME>
+apc_password: <PASSWORD>
+
+# OPTION 2: If using the Redfish APIs provided by the Lenovo XCC (and other BMCs) for fencing:
+# Credentials for XCC/BMC of BeeGFS file nodes
+bmc_username: <USERNAME>
+bmc_password: <PASSWORD>
+....
++
+.. Run `ansible-vault encrypt passwords.yml` and set a vault password when prompted.
+
 == Step 2: Define configuration for individual file and block nodes
 Define the configuration that applies to individual file nodes and individual building block nodes.
 
@@ -153,8 +186,8 @@ The shared configuration for file nodes is defined in a group called `ha_cluster
 ### ha_cluster Ansible group inventory file.
 # Place all default/common variables for BeeGFS HA cluster resources below.
 ### Cluster node defaults
-ansible_ssh_user: root
-ansible_become_password: <PASSWORD>
+ansible_ssh_user: {{ ssh_ha_user }}
+ansible_become_password: {{ ssh_ha_become_pass }}
 eseries_ipoib_default_hook_templates:
   - 99-multihoming.j2   # This is required for single subnet deployments, where static IPs containing multiple IB ports are in the same IPoIB subnet. i.e: cluster IPs, multirail, single subnet, etc.
 # If the following options are specified, then Ansible will automatically reboot nodes when necessary for changes to take effect:
@@ -166,7 +199,7 @@ eseries_ib_opensm_options:
 ....
 +
 [NOTE]
-Particularly for production environments, do not store passwords in plain text. Instead, use the Ansible Vault  (see https://docs.ansible.com/ansible/latest/user_guide/vault.html[Encrypting content with Ansible Vault^]) or the `--ask-become-pass` option when running the playbook. If the `ansible_ssh_user` is already `root`, then you can optionally omit the `ansible_become_password`.
+If the `ansible_ssh_user` is already `root`, then you can optionally omit the `ansible_become_password` and specify the `--ask-become-pass` option when running the playbook.
 
 . Optionally, configure a name for the high-availability (HA) cluster and specify a user for intra-cluster communication.
 +
@@ -181,9 +214,9 @@ eseries_beegfs_ha_disable_selinux: True
 eseries_selinux_state: disabled
 # The following variables should be adjusted depending on the desired configuration:
 beegfs_ha_cluster_name: hacluster                  # BeeGFS HA cluster name.
-beegfs_ha_cluster_username: hacluster              # BeeGFS HA cluster username.
-beegfs_ha_cluster_password: hapassword             # BeeGFS HA cluster username's password.
-beegfs_ha_cluster_password_sha512_salt: randomSalt # BeeGFS HA cluster username's password salt.
+beegfs_ha_cluster_username: "{{ ha_cluster_username }}" # Parameter for BeeGFS HA cluster username in the passwords file.
+beegfs_ha_cluster_password: "{{ ha_cluster_password }}" # Parameter for BeeGFS HA cluster username's password in the passwords file.
+beegfs_ha_cluster_password_sha512_salt: "{{ ha_cluster_password_sha512_salt }}" # Parameter for BeeGFS HA cluster username's password salt in the passwords file.
 beegfs_ha_mgmtd_floating_ip: 100.127.101.0         # BeeGFS management service IP address.
 # Email Alerts Configuration
 beegfs_ha_enable_alerts: True
@@ -217,14 +250,14 @@ For this step, be aware that:
 beegfs_ha_fencing_agents:
  fence_apc:
    - ipaddr: <PDU_IP_ADDRESS>
-     login: <PDU_USERNAME>
-     passwd: <PDU_PASSWORD>
+     login: "{{ apc_username }}" # Parameter for APC PDU username in the passwords file.
+     passwd: "{{ apc_password }}" # Parameter for APC PDU password in the passwords file.
      pcmk_host_map: "<HOSTNAME>:<PDU_PORT>,<PDU_PORT>;<HOSTNAME>:<PDU_PORT>,<PDU_PORT>"
 # OPTION 2: To enable fencing using the Redfish APIs provided by the Lenovo XCC (and other BMCs):
 redfish: &redfish
-  username: <BMC_USERNAME>
-  password: <BMC_PASSWORD>
-  ssl_insecure: 1 # If a valid SSL certificate is not available specify “1”.
+  username: "{{ bmc_username }}" # Parameter for XCC/BMC username in the passwords file.
+  password: "{{ bmc_password }}" # Parameter for XCC/BMC password in the passwords file.
+    ssl_insecure: 1 # If a valid SSL certificate is not available specify “1”.
 beegfs_ha_fencing_agents:
   fence_redfish:
     - pcmk_host_list: <HOSTNAME>
@@ -314,12 +347,9 @@ The shared configuration for block nodes is defined in a group called `eseries_s
 ### eseries_storage_systems Ansible group inventory file.
 # Place all default/common variables for NetApp E-Series Storage Systems here:
 ansible_connection: local
-eseries_system_password: <PASSWORD>
+eseries_system_password: {{ eseries_password }} # Parameter for E-Series storage array password in the passwords file.
 eseries_validate_certs: false
 ....
-+
-[NOTE]
-Listing any passwords in plaintext is not recommended. Use Ansible vault or provide the `eseries_system_password` when running Ansible using `--extra-vars`.
 +
 . To ensure optimal performance, install the versions listed for block nodes in link:beegfs-technology-requirements.html[Technical requirements].
 +
