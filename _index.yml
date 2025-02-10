@@ -25,6 +25,8 @@ indexpage:
            url: https://doc.beegfs.io/
          - title: TR-4915 - Data movement with E-Series and BeeGFS for AI
            url: https://www.netapp.com/pdf.html?item=/media/65882-tr-4915.pdf
+         - title: NVA-1174 - BeeGFS on NetApp EF-Series with NVIDIA DGX SuperPOD Systems
+           url: /media/pdf/nva-1174-deploy.pdf
 
      - title: Tools & support
        links:
