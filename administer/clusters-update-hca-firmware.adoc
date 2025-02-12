@@ -4,7 +4,7 @@ permalink: administer/clusters-update-hca-firmware.html
 keywords: BeeGFS on NetApp, HA, Cluster, Administration, Update, Upgrade, HCA, ConnectX, Firmware, Card, Adapter
 summary: "Steps to update the file node's ConnectX-7 adapter firmware."
 ---
-= Update File Node Adapter Firmware
+= Update file node adapter firmware
 :hardbreaks:
 :nofooter:
 :icons: font
