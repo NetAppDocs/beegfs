@@ -34,7 +34,7 @@ To check if the cluster is in maintenance mode run:
 pcs property config
 ----
 
-The `maintenance-mode` property will return `false` when the cluster is operating normally. To enable maintenance mode run:
+The `maintenance-mode` property will not appear if the cluster is operating normally. If the cluster is currently in maintenance mode, the property will report as `true`. To enable maintenance mode run:
 
 [source,console]
 ----
