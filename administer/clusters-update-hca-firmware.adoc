@@ -149,14 +149,14 @@ TIP: Depending on cluster size, it may take seconds or minutes for BeeGFS servic
 +
 [source,console]
 ----
-pcs cluster start `<HOSTNAME>`
+pcs cluster start <HOSTNAME>
 ----
 
 . Bring the node out of standby:
 +
 [source,console]
 ----
-pcs node unstandby `<HOSTNAME>`
+pcs node unstandby <HOSTNAME>
 ----
 +
 . Take the cluster out of maintenance mode.
