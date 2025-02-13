@@ -19,21 +19,22 @@ Follow these steps to update the file node's ConnectX-7 adapters to the latest f
 
 Updating the ConnectX-7 adapter firmware may be required to support a new MLNX_OFED driver, enable new features, or fix bugs. You can update the firmware on each file node using NVIDIA's `mlxfwmanager` or `flint` utilities. Choose the appropriate update method according to your cluster's size.
 
-* *Rolling update:*
+===Rolling update===
+
 Recommended for any HA cluster with more than two nodes. This process involves updating adapter firmware one file node at a time, allowing the HA cluster to keep servicing requests, though it is recommended to avoid servicing I/O during this time.
 
-* *Single building block update:*
+===Single building block update===
+
 Recommended for HA clusters with only two nodes. It is similar to a rolling update but includes additional steps to prevent service downtime when a node reboots.
 
 NOTE: Before performing firmware updates, ensure you have valid backup of your BeeGFS filesystem, confirm the cluster is healthy, and verify a compatible MLNX_OFED driver is installed.
 
-=== Firmware update tools
+== Firmware update tools
 
 There are multiple tools available to update a node's adapter firmware. Below are a couple methods to update the firmware image for NVIDIA adapters. Each utility comes bundled with NVIDIA's mlnx_ofed driver.
 
-* *Online firmware update:*
+===Online firmware update===
 If the cluster has internet access, use the `mlxfwmanager` tool to query and update the firmware on all NVIDIA adapters:
- To perform this update method, run:
 +
 [source,console]
 ----
@@ -42,7 +43,7 @@ mlxfwmanager
 +
 NOTE: For Lenovo ConnectX-7 adapters, use the `mlxfwmanager_LES` tool available on NVIDIA’s link:https://network.nvidia.com/support/firmware/lenovo-intelligent-cluster/[OEM firmware^] page.
 
-* *Offline firmware update:* 
+===Offline firmware update===
 If the cluster does not have internet access, use the `flint` tool to manually update firmware. First, download the adapter's firmware image from NVIDIA's support site and store it on the file node. Then, update the adapter using flint:
 +
 . List the node's adapters and their corresponding PCI address:
@@ -80,7 +81,7 @@ Verify no services are reporting as `Started` on the node in standby.
 +
 TIP: Depending on cluster size, it may take seconds or minutes for BeeGFS services to move to the sister node. If a BeeGFS service fails to start on the sister node, refer to the link:clusters-troubleshoot.html[Troubleshooting Guides^].
 
-. Once resources are fully drained, update the adapter firmware using one of the <<Firmware update methods,recommended firmware methods>>.
+. Once resources are fully drained, update the adapter firmware using one of the <<Firmware update tools,firmware update tools>>.
 
 . Reboot the node after the firmware update completes.
 
@@ -141,7 +142,7 @@ pcs status
 +
 TIP: Depending on cluster size, it may take seconds or minutes for BeeGFS services to report as `Started` on the sister node. If a BeeGFS service fails to start, refer to the link:clusters-troubleshoot.html[Troubleshooting Guides^].
 
-. Once resources are fully drained, update the adapter firmware using one of the <<Firmware update methods,recommended firmware methods>>.
+. Once resources are fully drained, update the adapter firmware using one of the <<Firmware update tools,firmware update tools>>.
 +
 . Reboot the node after the firmware update completes.
 +
