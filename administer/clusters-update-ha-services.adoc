@@ -4,7 +4,7 @@ permalink: administer/clusters-update-ha-services.html
 keywords: Cluster, Administration, Update, Upgrade, Pacemaker, Corosync
 summary: "Steps to upgrade Pacemaker and Corosync in an HA cluster."
 ---
-= Upgrade Pacemaker in an HA cluster
+= Update file node adapter firmware
 :hardbreaks:
 :nofooter:
 :icons: font
