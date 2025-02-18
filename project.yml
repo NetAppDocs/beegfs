@@ -137,6 +137,8 @@ sidebar:
           entries:
             - title: Update BeeGFS version
               url: /administer/clusters-update-beegfs.html
+            - title: Upgrade Pacemaker and Corosync packages
+              url: /administer/clusters-update-ha-services.html
             - title: Update file node adapter firmware
               url: /administer/clusters-update-hca-firmware.html
             - title: Upgrade E-Series storage array

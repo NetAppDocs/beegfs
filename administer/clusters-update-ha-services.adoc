@@ -2,9 +2,9 @@
 sidebar: sidebar
 permalink: administer/clusters-update-ha-services.html
 keywords: Cluster, Administration, Update, Upgrade, Pacemaker, Corosync
-summary: "Steps to upgrade Pacemaker and Corosync in an HA cluster."
+summary: "Steps to upgrade Pacemaker and Corosync packages in an HA cluster."
 ---
-= Update file node adapter firmware
+= Upgrade Pacemaker and Corosync packages
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -13,17 +13,17 @@ summary: "Steps to upgrade Pacemaker and Corosync in an HA cluster."
 
 
 [.lead]
-Follow these steps to upgrade Pacemaker and Corosync on cluster nodes.
+Follow these steps to upgrade Pacemaker and Corosync packages on HA cluster nodes.
 
 == Overview
 
-Upgrading Pacemaker and Corosync is crucial to ensure the cluster benefits from new features, security patches, and performance improvements. Choose the appropriate upgrade procedure according to your Pacemaker release versions.
+Upgrading Pacemaker and Corosync ensures the cluster benefits from new features, security patches, and performance improvements. The Pacemaker and Corosync upgrade procedure will vary depending on your Pacemaker release versions. Refer to ClusterLabs' link:https://clusterlabs.org/projects/pacemaker/doc/2.1/Pacemaker_Administration/html/upgrading.html[Upgrading a Pacemaker Cluster] to determine which upgrade approach to pursue.
 
-Before performing the Pacemaker and Corosync upgrades, verify the following:
+Prior to performing the Pacemaker and Corosync upgrades, verify the following:
 
 * You have a valid backup of your cluster configuration and data.
 * The cluster is in a healthy state, with all resources and services running normally.
-* You have verified compatibility of your Corosync versions. If the major Pacemaker version is changing, a rolling upgrade may not be possible. Refer to ClusterLabs' link:https://projects.clusterlabs.org/w/projects/pacemaker/pacemaker_release_calendar/[Release Calendar^] to figure out whether the CRM feature set and/or Pacemaker Remote protocol version changed between Pacemaker release versions in your rolling upgrade.
+* Your Pacemaker and messaging layer (Corosync) versions are compatible. Refer to ClusterLabs' link:https://projects.clusterlabs.org/w/projects/pacemaker/pacemaker_release_calendar/[Release Calendar^] to determine if the CRM feature set and/or Pacemaker Remote protocol version changed between Pacemaker release versions in your rolling upgrade.
 
 === Complete cluster shutdown
 This approach is necessary if the Pacemaker and Corosync versions do not support a mixed configuration. Perform these steps to take the entire cluster offline, upgrade all nodes, then bring the cluster back up with minimal risk of running a “mixed” version cluster.
