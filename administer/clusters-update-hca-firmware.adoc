@@ -27,7 +27,7 @@ Recommended for any HA cluster with more than two nodes. This process involves u
 
 Recommended for HA clusters with only two nodes. It is similar to a rolling update but includes additional steps to prevent service downtime when a node reboots.
 
-NOTE: Before performing firmware updates, ensure you have valid backup of your BeeGFS filesystem, confirm the cluster is healthy, and verify a compatible MLNX_OFED driver is installed.
+IMPORTANT: Before performing firmware updates, ensure you have valid backup of your BeeGFS filesystem, confirm the cluster is healthy, and verify a compatible MLNX_OFED driver is installed.
 
 == Firmware update tools
 
