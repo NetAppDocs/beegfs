@@ -135,9 +135,9 @@ PXE: 3.7.0500 +
 UEFI: 14.35.0015
 
 *ConnectX-6 HCA Firmware*
-FW: 20.41.1000 +
-PXE: 3.7.0400 +
-UEFI: 14.34.0012
+FW: 20.43.1014 +
+PXE: 3.7.0500 +
+UEFI: 14.36.0016
 |===
 
 === EF600 block node requirements

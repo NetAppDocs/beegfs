@@ -61,14 +61,12 @@ dnf update pacemaker-<version>
 dnf update corosync-<version>
 ----
 +
-. Verify the configuration on the first upgraded node using the crm_verify tool:
+. If the `pcs` package was updated, reauthenticate each node with the cluster:
 +
 [source,console]
 ----
-crm_verify -L -V
+pcs host auth <HOSTNAME>
 ----
-+
-This command ensures that the cluster configuration is valid with the new package versions.
 
 . After upgrading all nodes, start the cluster software on each node:
 +
@@ -77,9 +75,11 @@ This command ensures that the cluster configuration is valid with the new packag
 pcs cluster start --all
 ----
 
+. Repeat these steps for each node until all are upgraded to the desired Pacemaker and Corosync versions. Confirm from `pcs status` that the cluster is healthy and the 'Current DC' reports the correct Pacemaker version.
+
 === Rolling Upgrade
 
-This method involves removing each node from the cluster, upgrading it, and then reintroducing it into the cluster until all nodes run the new version. This approach keeps the cluster operational, which is ideal for larger HA clusters, but carries the risk of running mixed versions during the process.
+This method involves removing each node from the cluster, upgrading it, and then reintroducing it into the cluster until all nodes run the new version. This approach keeps the cluster operational, which is ideal for larger HA clusters, but carries the risk of running mixed versions during the process. This approach should be avoided in a two node cluster.
 
 . Confirm that the cluster is in an optimal state, with each BeeGFS service running on its preferred node. Refer to link:clusters-examine-state.html[Examine the state of the cluster^] for details.
 
@@ -109,7 +109,7 @@ pcs cluster stop <HOSTNAME>
 +
 . Upgrade the Pacemaker and Corosync packages on the node:
 +
-NOTE: The package manager commands will vary by operating system. The examples below are for RHEL 9:
+NOTE: The package manager commands will vary by operating system. The examples below are for RHEL:
 +
 [source,console]
 ----
@@ -121,18 +121,25 @@ dnf update pacemaker-<version>
 dnf update corosync-<version>
 ----
 +
-. Verify the configuration with the crm_verify tool on the first upgraded node:
+. If the `pcs` package was updated, reauthenticate the node with the cluster:
 +
 [source,console]
 ----
-crm_verify -L -V
+pcs host auth <HOSTNAME>
 ----
-+
+
 . Start the Pacemaker cluster services on the node:
 +
 [source,console]
 ----
 pcs cluster start <HOSTNAME>
+----
++
+. Verify the configuration with the crm_verify tool on the first upgraded node:
++
+[source,console]
+----
+crm_verify -L -V
 ----
 +
 . Bring the node out of standby:
@@ -148,14 +155,9 @@ pcs node unstandby <HOSTNAME>
 ----
 pcs resource relocate run
 ----
-+
+
 . Repeat these steps for each node until all are upgraded to the desired Pacemaker and Corosync versions.
 
-When the package upgrades are complete, confirm that the cluster is healthy:
-
-[source,console]
-----
-pcs status
-----
+When the package upgrades are complete, confirm from `pcs status` that the cluster is healthy and the 'Current DC' reports the correct Pacemaker version.
 
 NOTE: If any upgraded node is unable to rejoin the cluster or if resources fail to start, check the cluster logs and consult the Pacemaker release notes or user guides for known upgrade issues.

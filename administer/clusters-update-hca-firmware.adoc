@@ -44,20 +44,10 @@ NOTE: For Lenovo ConnectX-7 adapters, use the `mlxfwmanager_LES` tool available 
 
 *Offline firmware update*
 
-If the cluster does not have internet access, use the `flint` tool to manually update firmware. First, download the adapter's firmware image from NVIDIA's support site and store it on the file node. Then, update the adapter using flint:
-
-. List the node's adapters and their corresponding PCI address:
-+
+If the cluster does not have internet access, first download the adapter's firmware image from NVIDIA's support site and store it on the file node. Then, update the adapter using mlxfwmanager:
 [source,console]
 ----
-mst status
-----
-
-. For each adapter targeted for update, run:
-+
-[source,console]
-----
-flint -d <adapter_pci_address> -i </path/to/firmware.bin> b
+ mlxfwmanager -i <path/to/firmware.bin> -u
 ----
 
 == Rolling update procedure
