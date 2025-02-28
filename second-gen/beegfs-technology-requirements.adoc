@@ -147,9 +147,9 @@ UEFI: 14.36.0016
 |Software |Version
 
 |SANtricity OS
-|11.80.0
+|11.90R1
 |NVSRAM
-|N6000-880834-D08.dlp
+|N6000-890834-D02.dlp
 |Drive Firmware
 |Latest available for the drive models in use.
 |===
