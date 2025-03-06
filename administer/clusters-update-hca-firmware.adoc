@@ -17,32 +17,25 @@ Follow these steps to update the file node's ConnectX-7 adapters to the latest f
 
 == Overview
 
-Updating the ConnectX-7 adapter firmware may be required to support a new MLNX_OFED driver, enable new features, or fix bugs.This guide will use NVIDIA's `mlxfwmanager` utility for adapter updates due to ease of use and efficiency when updating multiple adapters at once. Choose the appropriate update approach below according to your cluster's size.
+Updating the ConnectX-7 adapter firmware may be required to support a new MLNX_OFED driver, enable new features, or fix bugs. This guide will use NVIDIA's `mlxfwmanager` utility for adapter updates due to its ease of use and efficiency.
 
-[IMPORTANT]
-====
-Before performing firmware updates, verify that:
+== Upgrade considerations
+
+This guide covers two approaches to updating ConnectX-7 adapter firmware: a rolling update and a two-node cluster update. Choose the appropriate update approach according to your cluster's size. Before performing firmware updates, verify that:
 
 * A supported MLNX_OFED driver is installed, refer to the link:../second-gen/beegfs-technology-requirements.html[technology requirements^].
 * Valid backups exist for your BeeGFS filesystem and Pacemaker cluster configuration.
 * The cluster is in a healthy state.
-====
 
-*Rolling update*
-
-Recommended for any HA cluster with more than two nodes. This approach involves updating adapter firmware one file node at a time, allowing the HA cluster to keep servicing requests, though it is recommended to avoid servicing I/O during this time.
-
-*Single building block update*
-
-Recommended for HA clusters with only two nodes. This approach is similar to a rolling update but includes additional steps to prevent service downtime when one node's cluster services are stopped.
-
-== Firmware update setup
+== Firmware update preparation
 
 It is recommended to use NVIDIA's `mlxfwmanager` utility to update a node's adapter firmware, which is bundled with NVIDIA's MLNX_OFED driver. Prior to starting the updates, download the adapter's firmware image from link:https://network.nvidia.com/support/firmware/firmware-downloads/[NVIDIA's support site^] and store it on each file node.
 
-NOTE: For Lenovo ConnectX-7 adapters, use the `mlxfwmanager_LES` tool available on NVIDIA’s link:https://network.nvidia.com/support/firmware/lenovo-intelligent-cluster/[OEM firmware^] page.
+NOTE: For Lenovo ConnectX-7 adapters, use the `mlxfwmanager_LES` tool, which is available on NVIDIA’s link:https://network.nvidia.com/support/firmware/lenovo-intelligent-cluster/[OEM firmware^] page.
 
-== Rolling update procedure
+== Rolling update approach
+
+This approach is recommended for any HA cluster with more than two nodes. This approach involves updating adapter firmware on one file node at a time, allowing the HA cluster to keep servicing requests, though it is recommended to avoid servicing I/O during this time.
 
 . Confirm that the cluster is in an optimal state, with each BeeGFS service running on its preferred node. Refer to link:clusters-examine-state.html[Examine the state of the cluster^] for details.
 
@@ -61,7 +54,7 @@ pcs status
 ----
 Verify no services are reporting as `Started` on the node in standby.
 +
-TIP: Depending on cluster size, it may take seconds or minutes for BeeGFS services to move to the sister node. If a BeeGFS service fails to start on the sister node, refer to the link:clusters-troubleshoot.html[Troubleshooting Guides^].
+NOTE: Depending on cluster size, it may take seconds or minutes for BeeGFS services to move to the sister node. If a BeeGFS service fails to start on the sister node, refer to the link:clusters-troubleshoot.html[Troubleshooting Guides^].
 
 . Update the adapter firmware using `mlxfwmanager`. Note the `PCI Device Name` for each adapter receiving firmware updates.
 +
@@ -95,7 +88,7 @@ mlxfwreset -d <pci_device_name> reset -y
 systemctl start opensm
 ----
 
-. Verify all adapters are at the desired firmware version:
+. Run `ibstat` and verify all adapters running at the desired firmware version:
 +
 [source,console]
 ----
@@ -123,9 +116,11 @@ pcs node unstandby <HOSTNAME>
 pcs resource relocate run
 ----
 
-Repeat these steps for each file node in the cluster until all adapters are updated.
+Repeat these steps for each file node in the cluster until all adapters have been updated.
 
-== Single building block update procedure
+== Two node cluster update approach
+
+This approach is recommended for HA clusters with only two nodes. This approach is similar to a rolling update but includes additional steps to prevent service downtime when one node's cluster services are stopped.
 
 . Confirm that the cluster is in an optimal state, with each BeeGFS service running on its preferred node. Refer to link:clusters-examine-state.html[Examine the state of the cluster^] for details.
 +
@@ -213,4 +208,4 @@ pcs property set maintenance-mode=false
 pcs resource relocate run
 ----
 
-Repeat these steps for each file node in the cluster until all adapters are updated.
+Repeat these steps for each file node in the cluster until all adapters have been updated.
