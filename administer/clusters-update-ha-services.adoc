@@ -19,18 +19,13 @@ Follow these steps to upgrade Pacemaker and Corosync packages in an HA cluster.
 
 Upgrading Pacemaker and Corosync ensures the cluster benefits from new features, security patches, and performance improvements.
 
-[IMPORTANT]
-====
-Prior to upgrading Pacemaker and Corosync packages, verify that:
+== Upgrade approach
+
+There are two recommended approaches to upgrading a cluster: a rolling upgrade or a complete cluster shutdown. Each approach has its own advantages and disadvantages. Your upgrade procedure may vary depending on your Pacemaker release version. Refer to ClusterLabs' link:https://clusterlabs.org/projects/pacemaker/doc/3.0/Pacemaker_Administration/html/upgrading.html[Upgrading a Pacemaker Cluster^] documentation to determine which approach to use. Prior to following an upgrade approach, verify that:
 
 * The new Pacemaker and Corosync packages are supported within the NetApp BeeGFS solution.
 * Valid backups exist for your BeeGFS filesystem and Pacemaker cluster configuration.
 * The cluster is in a healthy state.
-====
-
-== Upgrade approach
-
-There are two recommended approaches to upgrading a cluster: a rolling upgrade or a complete cluster shutdown. Each approach has its own advantages and disadvantages. Your upgrade procedure may vary depending on your Pacemaker release version. Refer to ClusterLabs' link:https://clusterlabs.org/projects/pacemaker/doc/3.0/Pacemaker_Administration/html/upgrading.html[Upgrading a Pacemaker Cluster^] documentation to determine which approach to use.
 
 === Rolling upgrade
 
