@@ -88,7 +88,7 @@ mlxfwreset -d <pci_device_name> reset -y
 systemctl start opensm
 ----
 
-. Run `ibstat` and verify all adapters running at the desired firmware version:
+. Run `ibstat` and verify all adapters are running at the desired firmware version:
 +
 [source,console]
 ----
@@ -178,6 +178,13 @@ mlxfwreset -d <pci_device_name> reset -y
 [source,console]
 ----
 systemctl start opensm
+----
+
+. Run `ibstat` and verify all adapters are running at the desired firmware version:
++
+[source,console]
+----
+ibstat
 ----
 
 . Start Pacemaker cluster services on the node:
