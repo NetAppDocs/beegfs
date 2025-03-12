@@ -59,7 +59,7 @@ pcs cluster stop <HOSTNAME>
 
 . Upgrade the Pacemaker, Corosync, and pcs packages on the node:
 +
-NOTE: Package manager commands will vary by operating system. The following examples are for systems using 'dnf'.
+NOTE: Package manager commands will vary by operating system. The following commands are for systems running RHEL 8 and onward.
 +
 [source,console]
 ----
@@ -76,18 +76,18 @@ dnf update corosync-<version>
 dnf update pcs-<version>
 ----
 
-. If the `pcs` package was updated, reauthenticate the node with the cluster:
-+
-[source,console]
-----
-pcs host auth <HOSTNAME>
-----
-
 . Start Pacemaker cluster services on the node:
 +
 [source,console]
 ----
 pcs cluster start <HOSTNAME>
+----
+
+. If the `pcs` package was updated, reauthenticate the node with the cluster:
++
+[source,console]
+----
+pcs host auth <HOSTNAME>
 ----
 
 . Verify the Pacemaker configuration is still valid with the `crm_verify` tool.
@@ -136,7 +136,7 @@ pcs cluster stop --all
 
 . Once cluster services have shut down on all nodes, upgrade the Pacemaker, Corosync, and pcs packages on each node according to your requirements.
 +
-NOTE: Package manager commands will vary by operating system. The following examples are for systems using 'dnf'.
+NOTE: Package manager commands will vary by operating system. The following commands are for systems running RHEL 8 and onward.
 +
 [source,console]
 ----
@@ -153,18 +153,18 @@ dnf update corosync-<version>
 dnf update pcs-<version>
 ----
 
-. If the `pcs` package was updated, reauthenticate each node with the cluster:
-+
-[source,console]
-----
-pcs host auth <HOSTNAME>
-----
-
 . After upgrading all nodes, start the cluster software on all nodes:
 +
 [source,console]
 ----
 pcs cluster start --all
+----
+
+. If the `pcs` package was updated, reauthenticate each node in the cluster:
++
+[source,console]
+----
+pcs host auth <HOSTNAME>
 ----
 
 . Finally, run `pcs status` and verify the cluster is healthy and the `Current DC` reports the correct Pacemaker version.
