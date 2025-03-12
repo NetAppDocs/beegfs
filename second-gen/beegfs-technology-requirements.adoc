@@ -41,17 +41,6 @@ a|Each file node should meet or exceed the specifications of the recommended fil
 *** 1GbE BMC with Redfish API for out-of-band server management
 *** Dual hot swap power supplies and performance fans
 
-* *Lenovo ThinkSystem SR665*
-** *Processors:* 2x AMD EPYC 7343 16C 3.2 GHz (configured as two NUMA zones).
-** *Memory:* 256GB (16x 16GB TruDDR4 3200MHz RDIMM-A)
-** *PCIe Expansion:* Four PCIe Gen4 x16 slots (two per NUMA zone)
-** *Miscellaneous:*
-
-*** Two drives in RAID 1 for OS (1TB 7.2K SATA or better)
-*** 1GbE port for in-band OS management
-*** 1GbE BMC with Redfish API for out-of-band server management
-*** Dual hot swap power supplies and performance fans
-
 |2
 |E-Series block nodes (EF600 array)
 a|*Memory:* 256GB (128GB per controller).
@@ -64,9 +53,6 @@ a|Host card adapters will vary based on the server model used for the file node.
 
 * *Lenovo ThinkSystem SR665 V3 Server:*
 ** MCX755106AS-HEAT ConnectX-7, NDR200, QSFP112, 2-port, PCIe Gen5 x16, InfiniBand Adapter
-
-* *Lenovo ThinkSystem SR665 Server:*
-** MCX653106A-HDAT ConnectX-6, HDR, QSFP-56, 2-port, PCIe Gen4 x16, InfiniBand Adapter
 
 |1
 |Storage network switch
@@ -98,28 +84,30 @@ a|The storage network switch must be capable of 200Gb/s InfiniBand speeds. Recom
 Select the appropriate cable option from the following table according to your InfiniBand storage switch. +
 The recommended cable length is 2m; however, this may vary based on the customer's environment.
 
-[options="header" cols="20%,10%,15%,55%"]
+[options="header",cols="20%,15%,10%,55%"]
 |===
-| Switch model | Quantity | Cable Type | Part Number
+| Switch model | Cable Type   | Quantity   | Part Number
 
-| NVIDIA QM9700
-| 4
-| Active Fiber
-| MFA7U10-H002 (NVIDIA Active Fiber cable, InfiniBand 400Gb/s to 2x 200Gb/s, OSFP to 2x QSFP56)
-
-| NVIDIA QM9700
-| 4
-| Passive Copper
-| MCP7Y60-H002 (NVIDIA Passive Copper cable, InfiniBand 400Gb/s to 2x 200Gb/s, OSFP to 2x QSFP56)
-
-| NVIDIA MQM8700
+.4+| NVIDIA QM9700
+.3+| Active Fiber (including transceivers)
+| 2
+| MMA4Z00-NS (multimode, IB/ETH, 800Gb/s 2x400Gb/s Twin-port OSFP)
+| 4 
+| MFP7E20-Nxxx (multimode, 4-channel-to-two 2-channel splitter fiber cable)
 | 8
+| MMA1Z00-NS400 (multimode, IB/ETH, 400Gb/s Single-port QSFP-112)
+
+| Passive Copper
+| 2
+| MCP7Y40-N002 (NVIDIA passive copper splitter cable, InfiniBand 800Gb/s to 4x 200Gb/s, OSFP to 4x QSFP112)
+
+.2+| NVIDIA MQM8700
 | Active Fiber
+| 8
 | MFS1S00-H003E (NVIDIA Active Fiber cable, InfiniBand 200Gb/s, QSFP56)
 
-| NVIDIA MQM8700
-| 8
 | Passive Copper
+| 8
 | MCP1650-H002E26 (NVIDIA Passive Copper cable, InfiniBand 200Gb/s, QSFP56)
 |===
 
@@ -140,21 +128,17 @@ IMPORTANT: File nodes require a valid RedHat Enterprise Linux Server subscriptio
 
 |Linux Kernel
 |5.14.0-362.24.1.el9_3.x86_64
-
-|InfiniBand / RDMA Drivers
-|MLNX_OFED_LINUX-23.10-3.2.2.0-LTS
-
-|HCA firmware
+a|HCA Firmware
 a|
-*ConnectX-7 HCA firmware* +
-FW: 28.39.1002 +
-PXE: 3.7.0201 +
-UEFI: 14.32.0012
+*ConnectX-7 HCA Firmware*
+FW: 28.42.1000 +
+PXE: 3.7.0500 +
+UEFI: 14.35.0015
 
-*ConnectX-6 HCA firmware* +
-FW: 20.31.1014 +
-PXE: 3.6.0403 +
-UEFI: 14.24.0013
+*ConnectX-6 HCA Firmware*
+FW: 20.43.1014 +
+PXE: 3.7.0500 +
+UEFI: 14.36.0016
 |===
 
 === EF600 block node requirements
@@ -164,9 +148,9 @@ UEFI: 14.24.0013
 |Software |Version
 
 |SANtricity OS
-|11.80.0
+|11.90R1
 |NVSRAM
-|N6000-880834-D08.dlp
+|N6000-890834-D02.dlp
 |Drive Firmware
 |Latest available for the drive models in use.
 |===
@@ -181,11 +165,13 @@ The following table lists the software requirements deployed automatically as pa
 |BeeGFS
 |7.4.4
 |Corosync
-|3.1.5-4
+|3.1.7-1
 |Pacemaker
-|2.1.4-5
-|OpenSM
-a|opensm-5.17.2 (from MLNX_OFED_LINUX-23.10-3.2.2.0-LTS)
+|2.1.6-10
+|Fence Agents (redfish/apc)
+|4.10.0-55
+|InfiniBand / RDMA Drivers
+|MLNX_OFED_LINUX-23.10-3.2.2.0-LTS
 |===
 
 === Ansible control node requirements

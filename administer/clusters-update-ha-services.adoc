@@ -1,0 +1,172 @@
+---
+sidebar: sidebar
+permalink: administer/clusters-update-ha-services.html
+keywords: Cluster, Administration, Update, Upgrade, Pacemaker, Corosync
+summary: "Steps to upgrade Pacemaker and Corosync packages in an HA cluster."
+---
+= Upgrade Pacemaker and Corosync packages in an HA cluster
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ../media/
+
+
+[.lead]
+Follow these steps to upgrade Pacemaker and Corosync packages in an HA cluster.
+
+== Overview
+
+Upgrading Pacemaker and Corosync ensures the cluster benefits from new features, security patches, and performance improvements.
+
+== Upgrade approach
+
+There are two recommended approaches to upgrading a cluster: a rolling upgrade or a complete cluster shutdown. Each approach has its own advantages and disadvantages. Your upgrade procedure may vary depending on your Pacemaker release version. Refer to ClusterLabs' link:https://clusterlabs.org/projects/pacemaker/doc/3.0/Pacemaker_Administration/html/upgrading.html[Upgrading a Pacemaker Cluster^] documentation to determine which approach to use. Prior to following an upgrade approach, verify that:
+
+* The new Pacemaker and Corosync packages are supported within the NetApp BeeGFS solution.
+* Valid backups exist for your BeeGFS filesystem and Pacemaker cluster configuration.
+* The cluster is in a healthy state.
+
+=== Rolling upgrade
+
+This method involves removing each node from the cluster, upgrading it, and then reintroducing it into the cluster until all nodes run the new version. This approach keeps the cluster operational, which is ideal for larger HA clusters, but carries the risk of running mixed versions during the process. This approach should be avoided in a two node cluster.
+
+. Confirm that the cluster is in an optimal state, with each BeeGFS service running on its preferred node. Refer to link:clusters-examine-state.html[Examine the state of the cluster^] for details.
+
+. For the node to be upgraded, place it into standby mode to drain (or move) all BeeGFS services:
++
+[source,console]
+----
+pcs node standby <HOSTNAME>
+----
++
+. Verify that the node's services have drained by running:
++
+[source,console]
+----
+pcs status
+----
+Ensure no services are reported as `Started` on the node in standby.
++
+NOTE: Depending on your cluster size, it may take seconds or minutes for services to move to the sister node. If a BeeGFS service fails to start on the sister node, refer to the link:clusters-troubleshoot.html[Troubleshooting Guides^].
+
+. Shut down the cluster on the node:
++
+[source,console]
+----
+pcs cluster stop <HOSTNAME>
+----
+
+. Upgrade the Pacemaker, Corosync, and pcs packages on the node:
++
+NOTE: Package manager commands will vary by operating system. The following commands are for systems running RHEL 8 and onward.
++
+[source,console]
+----
+dnf update pacemaker-<version>
+----
++
+[source,console]
+----
+dnf update corosync-<version>
+----
++
+[source,console]
+----
+dnf update pcs-<version>
+----
+
+. Start Pacemaker cluster services on the node:
++
+[source,console]
+----
+pcs cluster start <HOSTNAME>
+----
+
+. If the `pcs` package was updated, reauthenticate the node with the cluster:
++
+[source,console]
+----
+pcs host auth <HOSTNAME>
+----
+
+. Verify the Pacemaker configuration is still valid with the `crm_verify` tool.
++
+NOTE: This only needs to be verified once during the cluster upgrade.
++
+[source,console]
+----
+crm_verify -L -V
+----
+
+. Bring the node out of standby:
++
+[source,console]
+----
+pcs node unstandby <HOSTNAME>
+----
+
+. Relocate all BeeGFS services back to their preferred node:
++
+[source,console]
+----
+pcs resource relocate run
+----
+
+. Repeat the previous steps for each node in the cluster until all nodes are running the desired Pacemaker, Corosync, and pcs versions.
+
+. Finally, run `pcs status` and verify the cluster is healthy and the `Current DC` reports the desired Pacemaker version.
++
+NOTE: If the `Current DC` reports 'mixed-version', then a node in the cluster is still running with the previous Pacemaker version and needs to be upgraded. If any upgraded node is unable to rejoin the cluster or if resources fail to start, check the cluster logs and consult the Pacemaker release notes or user guides for known upgrade issues.
+
+=== Complete cluster shutdown
+
+In this approach, all cluster nodes and resources are shut down, the nodes are upgraded, and then the cluster is restarted. This approach is necessary if the Pacemaker and Corosync versions do not support a mixed-version configuration.
+
+. Confirm that the cluster is in an optimal state, with each BeeGFS service running on its preferred node. Refer to link:clusters-examine-state.html[Examine the state of the cluster^] for details.
+
+. Shut down the cluster software (Pacemaker and Corosync) on all nodes.
++
+NOTE: Depending on the cluster size, it may take seconds or minutes for the entire cluster to stop.
++
+[source,console]
+----
+pcs cluster stop --all
+----
+
+. Once cluster services have shut down on all nodes, upgrade the Pacemaker, Corosync, and pcs packages on each node according to your requirements.
++
+NOTE: Package manager commands will vary by operating system. The following commands are for systems running RHEL 8 and onward.
++
+[source,console]
+----
+dnf update pacemaker-<version>
+----
++
+[source,console]
+----
+dnf update corosync-<version>
+----
++
+[source,console]
+----
+dnf update pcs-<version>
+----
+
+. After upgrading all nodes, start the cluster software on all nodes:
++
+[source,console]
+----
+pcs cluster start --all
+----
+
+. If the `pcs` package was updated, reauthenticate each node in the cluster:
++
+[source,console]
+----
+pcs host auth <HOSTNAME>
+----
+
+. Finally, run `pcs status` and verify the cluster is healthy and the `Current DC` reports the correct Pacemaker version.
++
+NOTE: If the `Current DC` reports 'mixed-version', then a node in the cluster is still running with the previous Pacemaker version and needs to be upgraded.
