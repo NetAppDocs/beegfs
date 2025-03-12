@@ -56,12 +56,14 @@ Verify no services are reporting as `Started` on the node in standby.
 +
 NOTE: Depending on cluster size, it may take seconds or minutes for BeeGFS services to move to the sister node. If a BeeGFS service fails to start on the sister node, refer to the link:clusters-troubleshoot.html[Troubleshooting Guides^].
 
-. Update the adapter firmware using `mlxfwmanager`. Note the `PCI Device Name` for each adapter receiving firmware updates.
+. Update the adapter firmware using `mlxfwmanager`.
 +
 [source,console]
 ----
  mlxfwmanager -i <path/to/firmware.bin> -u
 ----
++
+Note the `PCI Device Name` for each adapter receiving firmware updates.
 
 . Reset each adapter using the `mlxfwreset` utility to apply the new firmware.
 +
@@ -148,12 +150,14 @@ TIP: Depending on cluster size, it may take seconds or minutes for BeeGFS servic
 pcs property set maintenance-mode=true
 ----
 +
-. Update the adapter firmware using `mlxfwmanager`. Note the `PCI Device Name` for each adapter receiving firmware updates.
+. Update the adapter firmware using `mlxfwmanager`.
 +
 [source,console]
 ----
  mlxfwmanager -i <path/to/firmware.bin> -u
 ----
++
+Note the `PCI Device Name` for each adapter receiving firmware updates.
 
 . Reset each adapter using the `mlxfwreset` utility to apply the new firmware.
 +
