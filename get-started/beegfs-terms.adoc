@@ -24,6 +24,10 @@ AI
 a|
 Artificial Intelligence.
 a|
+Ansible Control Node
+a|
+A physical or virtual machine used to run Ansible CLI.
+a|
 Ansible Inventory
 a|
 Directory structure containing YAML files that are used to describe the desired BeeGFS HA cluster.
@@ -32,11 +36,11 @@ BMC
 a|
 Baseboard management controller. Sometimes referred to as a service processor.
 a|
-block nodes
+Block nodes
 a|
-Storage systems.
+E-Series storage systems.
 a|
-clients
+Clients
 a|
 Nodes in the HPC cluster running applications that need to utilize the file system. Sometimes also referred to as compute or GPU nodes.
 a|
