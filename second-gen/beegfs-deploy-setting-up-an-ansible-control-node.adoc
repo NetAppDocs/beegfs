@@ -13,7 +13,7 @@ summary: "To set up an Ansible control node, identify a virtual or physical mach
 :imagesdir: ../media/
 
 [.lead]
-To set up an Ansible control node, you must designate a virtual or physical machine with network access to the management ports of all file and block nodes designated for deploying the BeeGFS filesystem and HA cluster.
+To set up an Ansible control node, you must designate a virtual or physical machine with network access to all file and block nodes deployed for the BeeGFS on NetApp solution.
 
 The following steps were tested on Ubuntu 22.04. For steps specific to your preferred Linux distribution, see the https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html[Ansible documentation^].
 
@@ -28,14 +28,14 @@ sudo apt-get install python3 python3-pip python3-setuptools python3.10-venv
 +
 [source,console]
 ----
-python3 -m venv /root/pyenv
+python3 -m venv ~/pyenv
 ----
 
 . Activate the virtual environment.
 +
 [source,console]
 ----
-source /root/pyenv/bin/activate
+source ~/pyenv/bin/activate
 ----
 
 . Install the required Python packages within the activated virtual environment.
@@ -46,7 +46,7 @@ pip install ansible netaddr cryptography passlib
 ----
 +
 [NOTE]
-To ensure that you are installing a supported version of Ansible and all required Python packages, refer to the link:beegfs-technology-requirements.html[Technical requirements].
+To ensure you are installing a supported version of Ansible and all required Python packages, refer to the link:beegfs-technology-requirements.html[Technical requirements].
 
 . Install the BeeGFS collection using Ansible Galaxy.
 +
@@ -55,26 +55,35 @@ To ensure that you are installing a supported version of Ansible and all require
 ansible-galaxy collection install netapp_eseries.beegfs
 ----
 
-. Verify that the correct versions of Ansible and Python are installed.
+. Verify the correct versions of Ansible and Python are installed by running `ansible --version`.
 +
 ....
-ansible --version
-ansible [core 2.17.2]
+ansible [core 2.17.9]
   config file = None
   configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-  ansible python module location = /usr/local/lib/python3.10/dist-packages/ansible
+  ansible python module location = /root/pyenv/lib/python3.10/site-packages/ansible
   ansible collection location = /root/.ansible/collections:/usr/share/ansible/collections
-  executable location = /usr/local/bin/ansible
-  python version = 3.10.12 (main, Jul 29 2024, 16:56:48) [GCC 11.4.0] (/usr/bin/python3)
-  jinja version = 3.1.4
+  executable location = /root/pyenv/bin/ansible
+  python version = 3.10.12 (main, Feb  4 2025, 14:57:36) [GCC 11.4.0] (/root/pyenv/bin/python3)
+  jinja version = 3.1.5
   libyaml = True
 ....
 
 . Set up passwordless SSH to allow Ansible to access the remote BeeGFS file nodes from the Ansible control node.
 
-.. On the Ansible control node, if needed, generate a pair of public keys using `ssh-keygen`.
+.. On the Ansible control node, if needed, generate a pair of public keys.
+ +
+[source,console]
+----
+ssh-keygen
+----
 
-.. Set up passwordless SSH to each of the file nodes using `ssh-copy-id <ip_or_hostname>`.
+.. Set up passwordless SSH to each of the file nodes.
 +
-[IMPORTANT]]
+[source,console]
+----
+ssh-copy-id <ip_or_hostname>
+----
++
+[IMPORTANT]
 Do *not* set up passwordless SSH to the block nodes. This is neither supported nor required.
