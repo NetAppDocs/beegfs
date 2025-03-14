@@ -72,7 +72,7 @@ ansible [core 2.17.9]
 . Set up passwordless SSH to allow Ansible to access the remote BeeGFS file nodes from the Ansible control node.
 
 .. On the Ansible control node, if needed, generate a pair of public keys.
- +
++
 [source,console]
 ----
 ssh-keygen
