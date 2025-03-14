@@ -111,9 +111,9 @@ The recommended cable length is 2m; however, this may vary based on the customer
 | MCP1650-H002E26 (NVIDIA Passive Copper cable, InfiniBand 200Gb/s, QSFP56)
 |===
 
-== Software requirements
+== Software and firmware requirements
 
-For predictable performance and reliability, releases of the BeeGFS on NetApp solution are tested with specific versions of the software components required to implement the solution.
+To ensure predictable performance and reliability, releases of the BeeGFS on NetApp solution are tested with specific versions of software and firmware components. These versions are required for implementation of the solution.
 
 === File node requirements
 
@@ -121,10 +121,11 @@ For predictable performance and reliability, releases of the BeeGFS on NetApp so
 |===
 |Software |Version
 
-a|RedHat Enterprise Linux
-a|RedHat 9.3 Server Physical with High Availability (2 socket).
+|RedHat Enterprise Linux
+|RedHat 9.3 Server Physical with High Availability (2 socket).
 
 IMPORTANT: File nodes require a valid RedHat Enterprise Linux Server subscription and the Red Hat Enterprise Linux High Availability Add-On.
+
 |Linux Kernel
 |5.14.0-362.24.1.el9_3.x86_64
 a|HCA Firmware
@@ -183,10 +184,11 @@ The software requirements listed in the following tables are specific to the ver
 |Software |Version
 
 |Ansible
-|6.x
-When installed through pip: ansible-6.0.0 and ansible-core >= 2.13.0
+|10.x
+|Ansible-core
+|>= 2.13.0
 |Python
-|3.9 (or later)
+|3.10
 |Additional Python packages
 |Cryptography-43.0.0, netaddr-1.3.0, ipaddr-2.2.0
 |NetApp E-Series BeeGFS Ansible Collection
