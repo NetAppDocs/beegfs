@@ -15,7 +15,7 @@ summary: "To set up an Ansible control node, identify a virtual or physical mach
 [.lead]
 To set up an Ansible control node, you must designate a virtual or physical machine with network access to all file and block nodes deployed for the BeeGFS on NetApp solution.
 
-Review the link:beegfs-technology-requirements.html#ansible-control-node-requirements[Technical requirements] for a list of the currently recommended packages. The following steps were tested on Ubuntu 22.04. For steps specific to your preferred Linux distribution, see the https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html[Ansible documentation^].
+Review the link:beegfs-technology-requirements.html#ansible-control-node-requirements[Technical requirements] for a list of recommended package versions. The following steps were tested on Ubuntu 22.04. For steps specific to your preferred Linux distribution, see the https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html[Ansible documentation^].
 
 . From your Ansible control node, install the following Python and Python Virtual Environment packages.
 +
@@ -52,7 +52,7 @@ pip install ansible netaddr cryptography passlib
 ansible-galaxy collection install netapp_eseries.beegfs
 ----
 
-. Verify the installed versions of Ansible, Python, and the BeeGFS collection match the requirements specified in the link:beegfs-technology-requirements.html#ansible-control-node-requirements[Technical requirements].
+. Verify the installed versions of Ansible, Python, and the BeeGFS collection match the link:beegfs-technology-requirements.html#ansible-control-node-requirements[Technical requirements].
 +
 [source,console]
 ----
