@@ -13,12 +13,12 @@ summary: "Before you begin deployment, make sure you understand how to use Ansib
 :imagesdir: ../media/
 
 [.lead]
-Before you begin deployment, make sure you understand how to use Ansible to configure and deploy the BeeGFS on NetApp solution using the second generation BeeGFS building block design.
+Before beginning a deployment, familiarize yourself with how Ansible is configured and used to deploy the BeeGFS on NetApp solution.
 
-The Ansible inventory defines the configuration for file and block nodes and represents the BeeGFS file system you want to deploy. The inventory includes hosts, groups, and variables describing the desired BeeGFS file system. Sample inventories can be downloaded from https://github.com/netappeseries/beegfs/tree/master/getting_started/[NetApp E-Series BeeGFS GitHub^].
+The Ansible inventory is a directory structure listing the file and block nodes for the BeeGFS file system to be deployed across. It includes hosts, groups, and variables describing the desired BeeGFS file system. The Ansible inventory needs to be stored on the Ansible control node, which is any machine with access to the file and block nodes used to run the Ansible playbook. Sample inventories can be downloaded from the https://github.com/netappeseries/beegfs/tree/master/getting_started/[NetApp E-Series BeeGFS GitHub^].
 
 == Ansible modules and roles
-To apply the configuration described by the Ansible inventory, use the various Ansible modules and roles provided in the NetApp E-Series Ansible collection, in particular the BeeGFS HA 7.4 role (available from the https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_4[NetApp E-Series BeeGFS GitHub^]) that deploys the end-to-end solution.
+To apply the configuration described by the Ansible inventory, use the various Ansible modules and roles provided in the NetApp E-Series Ansible collection (available from the https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_4[NetApp E-Series BeeGFS GitHub^]) that deploy the end-to-end solution.
 
 Each role in the NetApp E-Series Ansible collection is a complete end-to-end deployment of the BeeGFS on NetApp solution. The roles use the NetApp E-Series SANtricity, Host, and BeeGFS collections that allow you to configure the BeeGFS file system with HA (High Availability). You can then provision and map storage, and ensure the cluster storage is ready for use.
 
@@ -28,11 +28,11 @@ While in-depth documentation is provided with the roles, the deployment procedur
   Although the deployment steps attempt to provide enough detail so that prior experience with Ansible is not a prerequisite, you should have some familiarity with Ansible and related terminology.
 
 == Inventory layout for a BeeGFS HA cluster
-Use the Ansible inventory structure to define a BeeGFS HA cluster.
+Define a BeeGFS HA cluster using the Ansible inventory structure.
 
-Anyone with previous Ansible experience should be aware that the BeeGFS HA role implements a custom method of discovering which variables (or facts) apply to each host. This is required to simplify building an Ansible inventory that describes resources that can run on multiple servers.
+Anyone with previous Ansible experience should be aware that the BeeGFS HA role implements a custom method for discovering which variables (or facts) apply to each host. This design simplifies structuring the Ansible inventory to describe resources that can run on multiple servers.
 
-An Ansible inventory typically consists of the files in `host_vars` and `group_vars`, and an `inventory.yml` file that assigns hosts to specific groups (and potentially groups to other groups).
+An Ansible inventory typically consists of the files in `host_vars` and `group_vars`, along with an `inventory.yml` file that assigns hosts to specific groups (and potentially groups to other groups).
 
 [NOTE]
 Don’t create any files with the content in this subsection, which is intended as an example only.
@@ -88,7 +88,7 @@ beegfs_targets:
             owning_controller: A
 ....
 
-This layout allows the BeeGFS service, network, and storage configuration for each resource to be defined in a single place. Behind the scenes, the BeeGFS role aggregates the necessary configuration for each file and block node based on this inventory structure. For more information, see this blog post: https://www.netapp.com/blog/accelerate-deployment-of-ha-for-beegfs-with-ansible/[NetApp accelerates deployment of HA for BeeGFS with Ansible^].
+This layout allows the BeeGFS service, network, and storage configuration for each resource to be defined in a single place. Behind the scenes, the BeeGFS role aggregates the necessary configuration for each file and block node based on this inventory structure.
 
 [NOTE]
 The BeeGFS numerical and string node ID for each service is automatically configured based on the group name. Thus,  in addition to the general Ansible requirement for group names to be unique, groups representing a BeeGFS service must end in a number that is unique for the type of BeeGFS service the group represents. For example,  meta_01 and stor_01 are allowed, but metadata_01 and meta_01 are not.

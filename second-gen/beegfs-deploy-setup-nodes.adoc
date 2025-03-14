@@ -45,20 +45,18 @@ While not strictly required, subsequent sections presume that host names are seq
 subscription-manager repo-override --repo=rhel-9-for-x86_64-highavailability-rpms --add=enabled:1
 ....
 
-. Update all HCA firmware to the version recommended in link:beegfs-technology-requirements.html[Technology requirements].
-+
-This update can be done by downloading and running a version of the mlxup tool that bundles the recommended firmware. You can download this tool from https://network.nvidia.com/support/firmware/mlxup-mft/[mlxup - Update and Query Utility^] (link:https://docs.nvidia.com/networking/display/mlxupfwutility[user guide^]).
+. Update all HCA firmware to the version recommended in link:beegfs-technology-requirements.html[Technology requirements] using the link:..administer/clusters-update-hca-firmware.html[Update file node adapter firmware^] guide.
 
 == Set up block nodes
 Set up the EF600 block nodes by configuring the management port on each controller.
 
 . Configure the management port on each EF600 controller.
 +
-For instructions on configuring ports, go to the https://docs.netapp.com/us-en/e-series/maintenance-ef600/hpp-overview-supertask-concept.html[E-Series Documentation Center^].
+For instructions on configuring ports, go to the https://docs.netapp.com/us-en/e-series/install-hw-ef600/complete-setup-task.html#step-2-connect-and-configure-the-management-connection[E-Series Documentation Center^].
 
 . Optionally, set the storage array name for each system.
 +
-Setting a name can make it easier to refer to each system in subsequent sections. For instructions on setting the array name,  go to the https://docs.netapp.com/us-en/e-series/maintenance-ef600/hpp-overview-supertask-concept.html[E-Series Documentation Center^].
+Setting a name can make it easier to refer to each system in subsequent sections. For instructions on setting the array name,  go to the https://docs.netapp.com/us-en/e-series-santricity/sm-interface/setup-wizard-overview.html#first-time-setup[E-Series Documentation Center^].
 
 [NOTE]
 While not strictly required, subsequent topics presume storage array names are sequentially numbered (such as c1 - cN) and refer to the steps that should be completed on odd versus even numbered systems.
