@@ -28,16 +28,16 @@ A  baseboard management controller (BMC), sometimes referred to as a service pro
 +
 You configure the system settings using the UEFI setup (formerly known as the BIOS) or by using the Redfish APIs provided by many BMCs. The system settings vary based on the server model used as a file node.
 +
-To learn how to configure the system settings for the validated Lenovo SR665 file nodes, see link:beegfs-deploy-file-node-tuning.html[Tune system settings for performance].
+To learn how to configure the system settings for the validated Lenovo SR665 V3 file nodes, see link:beegfs-deploy-file-node-tuning.html[Tune system settings for performance].
 
-. Install Red Hat 9.3 and configure the host name and network port used to manage the operating system including SSH connectivity from the Ansible control node.
+. Install Red Hat Enterprise Linux (RHEL) 9.4 and configure the host name and network port used to manage the operating system including SSH connectivity from the Ansible control node.
 +
 Do not configure IPs on any of the InfiniBand ports at this time.
 +
 [NOTE]
 While not strictly required, subsequent sections presume that host names are sequentially numbered (such as h1-hN) and refer to tasks that should be completed on odd versus even numbered hosts.
 
-. Use RedHat Subscription Manager to register and subscribe the system to allow installation of the required packages from the official Red Hat repositories and to limit updates to the supported version of Red Hat: `subscription-manager release --set=9.3`. For instructions, see https://access.redhat.com/solutions/253273[How to register and subscribe a RHEL system^] and  https://access.redhat.com/solutions/2761031[How to limit updates^].
+. Use Red Hat Subscription Manager to register and subscribe the system to allow installation of the required packages from the official Red Hat repositories and to limit updates to the supported version of Red Hat: `subscription-manager release --set=9.4`. For instructions, see https://access.redhat.com/solutions/253273[How to register and subscribe a RHEL system^] and  https://access.redhat.com/solutions/2761031[How to limit updates^].
 
 . Enable the Red Hat repository containing the packages required for high availability.
 +

@@ -24,7 +24,7 @@ Review the link:beegfs-technology-requirements.html#ansible-control-node-require
 sudo apt-get install python3 python3-pip python3-setuptools python3.10-venv
 ----
 
-. Create a Python virtual environment
+. Create a Python virtual environment.
 +
 [source,console]
 ----
