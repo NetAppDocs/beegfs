@@ -79,8 +79,7 @@ Based on the configuration profiles applied to a particular BeeGFS building bloc
 * For BeeGFS storage only building block:
 ** 2x 10+2 RAID 6 volume groups for BeeGFS storage services
 
-[NOTE]
-As BeeGFS needs significantly less storage space for management and metadata versus storage, one option is to use smaller drives for the RAID 10 volume groups. Smaller drives should be populated in the outermost drive slots. For more information, see the  link:beegfs-deploy-overview.html[deployment instructions].
+NOTE: As BeeGFS needs significantly less storage space for management and metadata versus storage, one option is to use smaller drives for the RAID 10 volume groups. Smaller drives should be populated in the outermost drive slots. For more information, see the  link:beegfs-deploy-overview.html[deployment instructions].
 
 These are all configured by the Ansible-based deployment, along with several other settings generally recommended to optimize performance/behavior including:
 

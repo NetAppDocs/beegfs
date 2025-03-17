@@ -76,5 +76,5 @@ ssh-keygen
 ssh-copy-id <ip_or_hostname>
 ----
 
-[IMPORTANT]
+[CAUTION]
 Do *not* set up passwordless SSH to the block nodes. This is neither supported nor required.

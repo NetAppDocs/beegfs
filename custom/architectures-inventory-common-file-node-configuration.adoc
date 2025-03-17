@@ -169,7 +169,7 @@ eseries_ipoib_udev_rules:
 eseries_ip_udev_rules:
   "<PCIe ADDRESS>": <NAME> # Ex: 0000:01:00.0: e1a
 ----
-IMPORTANT: To avoid conflicts when interfaces are renamed (preventing them from being renamed), you should not use any potential default names such as eth0, ens9f0, ib0, or ibs4f0. A common naming convention is to use 'e' or 'i' for Ethernet or InfiniBand, followed by the PCIe slot number, and a letter to indicate the the port. For example the second port of an InfiniBand adapter installed in slot 3 would be: i3b. 
+CAUTION: To avoid conflicts when interfaces are renamed (preventing them from being renamed), you should not use any potential default names such as eth0, ens9f0, ib0, or ibs4f0. A common naming convention is to use 'e' or 'i' for Ethernet or InfiniBand, followed by the PCIe slot number, and a letter to indicate the the port. For example the second port of an InfiniBand adapter installed in slot 3 would be: i3b. 
 +
 NOTE: If you are using a verified file node model, click link:https://docs.netapp.com/us-en/beegfs/beegfs-deploy-create-inventory.html#step-4-define-configuration-that-should-apply-to-all-file-nodes[here^] example PCIe address-to-logical port mappings.
 

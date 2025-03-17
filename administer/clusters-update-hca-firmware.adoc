@@ -31,7 +31,7 @@ This guide covers two approaches to updating ConnectX-7 adapter firmware: a roll
 
 It is recommended to use NVIDIA's `mlxfwmanager` utility to update a node's adapter firmware, which is bundled with NVIDIA's MLNX_OFED driver. Prior to starting the updates, download the adapter's firmware image from link:https://network.nvidia.com/support/firmware/firmware-downloads/[NVIDIA's support site^] and store it on each file node.
 
-NOTE: For Lenovo ConnectX-7 adapters, use the `mlxfwmanager_LES` tool, which is available on NVIDIA’s link:https://network.nvidia.com/support/firmware/lenovo-intelligent-cluster/[OEM firmware^] page.
+TIP: For Lenovo ConnectX-7 adapters, use the `mlxfwmanager_LES` tool, which is available on NVIDIA’s link:https://network.nvidia.com/support/firmware/lenovo-intelligent-cluster/[OEM firmware^] page.
 
 == Rolling update approach
 
