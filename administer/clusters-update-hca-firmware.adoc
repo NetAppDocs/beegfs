@@ -90,6 +90,19 @@ mlxfwreset -d <pci_device_name> reset -y
 systemctl start opensm
 ----
 
+.. Restart the `eseries_nvme_ib.service`.
++
+[source,console]
+----
+systemctl restart eseries_nvme_ib.service
+----
+
+.. Verify the E-Series storage array's volumes are present.
+[source,console]
+----
+multipath -ll
+----
+
 . Run `ibstat` and verify all adapters are running at the desired firmware version:
 +
 [source,console]
