@@ -21,8 +21,6 @@ sidebar:
           entries:
             - title: Solution overview
               url: /second-gen/beegfs-solution-overview.html
-            - title: Design generations
-              url: /second-gen/beegfs-gens.html
             - title: Architecture overview
               url: /second-gen/beegfs-architecture-overview.html
             - title: Technical requirements

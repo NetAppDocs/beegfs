@@ -1,0 +1,48 @@
+---
+sidebar: sidebar
+permalink: second-gen/beegfs-design-architectures.html
+keywords: BeeGFS on NetApp, NetApp Architectures, Building Block, Designs, Topology 
+summary: "Explore the various architectures available on the BeeGFS on NetApp solution."
+---
+
+= Design generations
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ../media/
+
+
+[.lead]
+The BeeGFS on NetApp solution offers a variety of architectures designed to suite your workload. Each architecture is designed for various use cases for HPC storage, while all offering 
+
+* High availability (HA) featuring a shared-disk architecture ensuring data durability and availability.
+* A scalable architecture to easily grow your storage to match your needs.
+* Deployment and management using Ansible for simplicity and consistency at scale.
+
+== 2x2 Standard Building Block
+A balanced, general-purpose BeeGFS solution with two servers and two NetApp EF600 arrays, suitable for a wide range of workloads.
+
+=== Configuration
+[cols="1,3"]
+|===
+| Servers
+| 2 Lenovo ThinkSystem SR665 V3
+
+| Storage Arrays
+| 2 NetApp EF600
+
+|Drive form factor
+| TLC NVMe SSD
+
+| Network Topology
+| InfiniBand or RoCE
+
+|Use Cases
+|Mixed workloads, including both small and large files, research computing, engineering simulations
+|===
+
+* Architecture designed for NVIDIA DGX SuperPOD A100, H100, H200, and B200 systems, which was previously validated on a dedicated acceptance cluster at NVIDIA. Read more about NVIDIA DGX SuperPOD with NetApp in the link:https://docs.netapp.com/us-en/netapp-solutions/ai/ai-dgx-superpod.html[design guide].
+
+
+The original BeeGFS on NetApp building block design ensures data durability and availability, making it ideal for enterprises and other organizations that cannot afford downtime or data loss. The second generation design includes components such as PCIe gen5 servers and support for NVIDIA® Quantum-2™ QM9700 400Gb/s InfiniBand switches. This solution has not only been verified by NetApp but has also passed external qualification as a storage option for the NVIDIA DGX™ A100 SuperPOD, with extended certification for DGX SuperPOD H100, and H200 systems.
