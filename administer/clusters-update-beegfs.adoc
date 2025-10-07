@@ -21,7 +21,7 @@ BeeGFS follows a `major.minor.patch` versioning scheme. BeeGFS HA Ansible roles 
 
 Ansible should be used for all BeeGFS upgrades, including moving between major, minor, and patch versions of BeeGFS. To update BeeGFS you will first need to update the BeeGFS Ansible collection, which will also pull in the latest fixes and enhancements to the deployment/management automation and underlying HA cluster. Even after updating to the latest version of the collection, BeeGFS will not be upgraded until `ansible-playbook` is ran with the `-e "beegfs_ha_force_upgrade=true"` set.
 
-NOTE: For more information on BeeGFS versions see the link:https://doc.beegfs.io/latest/advanced_topics/upgrade.html[BeeGFS Upgrade documentation^].
+TIP: For more information on BeeGFS versions see the link:https://doc.beegfs.io/latest/advanced_topics/upgrade.html[BeeGFS Upgrade documentation^].
 
 == Tested upgrade paths
 
