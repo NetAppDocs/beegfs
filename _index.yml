@@ -10,12 +10,6 @@ indexpage:
            url: /second-gen/beegfs-solution-overview.html
          - title: Architecture overview
            url: /second-gen/beegfs-architecture-overview.html
-         - title: Blog - Learn about BeeGFS and E-Series
-           url: https://www.netapp.com/blog/solution-support-for-beegfs-and-e-series/
-         - title: Blog - BeeGFS for beginners
-           url: https://www.netapp.com/blog/beegfs-for-beginners/
-         - title: Blog - HA for BeeGFS
-           url: https://www.netapp.com/blog/high-availability-beegfs/
 
      - title: Additional docs
        links:
@@ -36,5 +30,3 @@ indexpage:
            url: http://mysupport.netapp.com/matrix/
          - title: NetApp Knowledge Base
            url: https://kb.netapp.com/
-         - title: Active IQ (login required)
-           url: https://activeiq.netapp.com/?source=aiqnsspage

@@ -129,9 +129,9 @@ To ensure predictable performance and reliability, releases of the BeeGFS on Net
 a|HCA Firmware
 a|
 *ConnectX-7 HCA Firmware*
-FW: 28.43.1014 +
+FW: 28.45.1200 +
 PXE: 3.7.0500 +
-UEFI: 14.36.0016
+UEFI: 14.38.0016
 
 *ConnectX-6 HCA Firmware*
 FW: 20.43.2566 +
@@ -146,7 +146,7 @@ UEFI: 14.37.0013
 |Software |Version
 
 |SANtricity OS
-|11.90R1
+|11.90R3
 |NVSRAM
 |N6000-890834-D02.dlp
 |Drive Firmware
