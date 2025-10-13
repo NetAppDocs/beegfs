@@ -1,0 +1,63 @@
+---
+sidebar: sidebar
+permalink: beegfs-features/beegfs-features-csi-driver-deploy.html
+keywords: BeeGFS Features, CSI, Driver
+summary: "Deployment of the BeeGFS CSI Driver."
+---
+= Deployment of the BeeGFS CSI Driver
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ../media/
+
+
+[.lead]
+Instructions for deploying the BeeGFS CSI Driver.
+
+
+== Overview 
+
+The BeeGFS CSI Driver enables Kubernetes clusters to dynamically provision and manage BeeGFS volumes, integrating BeeGFS storage with containerized workloads.
+
+ 
+
+== Deployment Steps
+
+=== Prepare for Deployment
+
+Before deploying the BeeGFS CSI Driver, ensure that you have completed all pre-requisites outlined in the previous section. This includes verifying your Kubernetes setup, validating the BeeGFS client and services, and preparing any air-gapped nodes if necessary.
+
+. Offline Access: 
+If you only have offline access, download the BeeGFS-CSI driver repo from your internal server: 
++
+`//10.113.13.35/home/shubhanb/beegfs-csi-driver`
+
+. Online Access - GithubRepo:
+If you have online web access and you are on a machine with kubectl and access to the Kubernetes cluster where you want to deploy the BeeGFS CSI driver, clone this repository:
+git clone https://github.com/ThinkParQ/beegfs-csi-driver.git.
+
+
+=== Deploy the CSI Driver
+
+To deploy the BeeGFS CSI Driver, apply the necessary Kubernetes manifests. This can typically be done using the following command:
+
+[.command-window]
+----
+kubectl apply -f deploy/k8s/overlays/default
+----
+
+Expected Output:
+
+image:CSI_KB_04.png["Screenshot showing successful deployment of the BeeGFS CSI Driver"]
+
+Once the deployment is complete, you can verify the status of the CSI Driver pods:
+
+[.command-window]
+----
+kubectl get pods -n kube-system
+----
+
+Expected Output:
+
+image:CSI_KB_05.png["Screenshot showing BeeGFS CSI Driver pods running"]

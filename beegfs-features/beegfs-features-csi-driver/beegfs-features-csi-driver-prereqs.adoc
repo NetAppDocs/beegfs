@@ -1,0 +1,61 @@
+---
+sidebar: sidebar
+permalink: beegfs-features/beegfs-features-csi-driver-prereqs.html
+keywords: BeeGFS Features, CSI, Driver
+summary: "Pre-requisites to configuration of the BeeGFS CSI Driver."
+---
+= Pre-requisites to configuration of the BeeGFS CSI Driver
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ../../media/
+
+
+[.lead]
+Before deploying and configuring the BeeGFS CSI Driver, ensure you have a running Kubernetes cluster, access to a BeeGFS storage system, and the necessary permissions to install cluster-wide resources.
+
+== Pre-Requisites Overview
+To successfully deploy the BeeGFS CSI Driver, ensure the following pre-requisites are met:
+
+1. A running Kubernetes cluster.
+2. Access to a BeeGFS storage system.
+3. Necessary permissions to install cluster-wide resources.
+
+== Steps
+
+=== Verify Kubernetes Setup
+
+Run the following command to check the status of pods in your Kubernetes cluster:
+
+[.command-window]
+----
+kubectl get pods
+----
+
+.Expected Output:
+
+image:CSI-KB-01.png["Screenshot showing no resources found in Kubernetes pods list"]
+
+If no pods are running, you will see an empty list. If pods are present, they should be listed without errors.
+
+=== Validate BeeGFS Client and Services
+
+Check that BeeGFS services are running correctly (NOTE: This CSI Driver can work with both beegfs-dkms-client as well as beegfs-client which need to be pre-installed on each Kubernetes node: link:https://doc.beegfs.io/latest/advanced_topics/client_dkms.html[Installation steps^]):
+
+[.command-window]
+----
+beegfs-check-servers
+----
+
+.Expected Output:
+
+image:CSI_KB_02.png["Status of BeeGFS services showing all services running"]
+
+=== Prepare Air-Gapped Kubernetes Nodes for Deployment 
+
+For deploying BeeGFS CSI driver in environments where Kubernetes nodes do not have internet access, you must either ensure all necessary images (see deploy/k8s/overlays/default for a complete list) are available on all nodes or ensure they can be pulled from some internal registry. 
+
+Overlays Default Image List can be found in these yaml files: 
+
+image:CSI_KB_03.png["List of images used by the BeeGFS CSI Driver in YAML format"]

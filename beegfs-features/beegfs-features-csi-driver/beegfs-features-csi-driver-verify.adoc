@@ -1,0 +1,102 @@
+---
+sidebar: sidebar
+permalink: beegfs-features/beegfs-features-csi-driver-verify.html
+keywords: BeeGFS Features, CSI, Driver
+summary: "Verification of the BeeGFS CSI Driver Deployment."
+---
+= Verification of the BeeGFS CSI Driver Deployment
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ../media/
+
+
+[.lead]
+Instructions for verifying the BeeGFS CSI Driver deployment.
+
+
+== Overview 
+
+The BeeGFS CSI Driver enables Kubernetes clusters to dynamically provision and manage BeeGFS volumes, integrating BeeGFS storage with containerized workloads.
+
+
+== Verification Steps
+
+=== 1. Verify CSI Driver Deployment
+
+To verify the deployment of the BeeGFS CSI Driver, you can check the status of the CSI Driver pods and ensure they are running correctly.
+
+Check the status of all resources in the BeeGFS-CSI namespace:
+
+[.command-window]
+----
+kubectl get all -n beegfs-csi
+----
+
+Expected Output:
+
+image:CSI_KB_05.png["Screenshot showing BeeGFS CSI Driver pods running"]
+
+=== 2. Inspect Controller Pod 
+
+(Describe the controller pod for more details and error checking):
+
+[.command-window]
+----
+kubectl describe pod csi-beegfs-controller-0 -n beegfs-csi
+----
+
+Expected Output:
+
+image:CSI_KB_06.png["Screenshot showing logs of the BeeGFS CSI Driver pod"]
+
+=== 3. Deploy Example Application
+
+From the project directory, deploy the example application files, which include a StorageClass, PVC, and a pod using the BeeGFS CSI driver. 
+
+Before deploying: 
+[.indented]
+====
+
+* Get the IP of the BeeGFS management node:
+[.command-window]
+----
+kubectl get all -n beegfs-csi
+----
+
+.Expected Output:
+image:CSI_KB_07.png["Screenshot showing reachable servers"]
+
+* Update the management node IP in /examples/k8s/dyn/dyn-sc.yaml. 
+
+* Update the value for volDirBasePath. Set the value to an unique value such as k8s cluster name to prevent multiple k8s clusters from dynamically provisioning volumes at the same BeeGFS path.
+
+.Expected Output:
+image:CSI_KB_08.png["Screenshot showing voldirbasepath"]
+====
+
+=== 4. Deploy
+
+[.command-window]
+----
+kubectl apply -f examples/k8s/dyn
+----
+
+.Expected Output:
+image:CSI_KB_09.png["Screenshot showing example application created"]
+
+=== 5. Verify StorageClass 
+
+Check that the StorageClass was created successfully: 
+
+[.command-window]
+----
+kubectl get sc -n beegfs-csi
+----
+
+Expected Output:
+image:CSI_KB_10.png["Screenshot showing storage class created"]
+
+
+
