@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-features/csi-driver-verify.html
+permalink: beegfs-features/beegfs-csi-driver/csi-driver-verify.html
 keywords: BeeGFS Features, CSI, Driver
 summary: "Verification of the BeeGFS CSI Driver Deployment."
 ---
