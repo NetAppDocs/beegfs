@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-features/beegfs-features-csi-driver-tshoot.html
+permalink: beegfs-features/csi-driver-tshoot.html
 keywords: BeeGFS Features, CSI, Driver
 summary: "Troubleshooting the BeeGFS CSI Driver Deployment."
 ---
@@ -15,10 +15,6 @@ summary: "Troubleshooting the BeeGFS CSI Driver Deployment."
 [.lead]
 Guidance for troubleshooting issues with the BeeGFS CSI Driver deployment.
 
-
-== Overview 
-
-If you encounter errors with the BeeGFS CSI Driver, review the following areas. The BeeGFS CSI Driver allows Kubernetes clusters to dynamically provision and manage BeeGFS volumes, enabling seamless integration of BeeGFS storage with containerized workloads.
 
 === Kubernetes setup - Common Error Scenarios 
 
