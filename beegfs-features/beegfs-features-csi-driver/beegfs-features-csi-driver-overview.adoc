@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-features/csi-driver.html
+permalink: beegfs-features/beegfs-csi-driver/csi-driver-overview.html
 keywords: BeeGFS Features, CSI, Driver
 summary: "Overview and configuration of the BeeGFS CSI Driver."
 ---
