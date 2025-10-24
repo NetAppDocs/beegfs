@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: beegfs-features/beegfs-features-csi-driver.html
+permalink: beegfs-features/csi-driver.html
 keywords: BeeGFS Features, CSI, Driver
 summary: "Overview and configuration of the BeeGFS CSI Driver."
 ---
@@ -13,12 +13,8 @@ summary: "Overview and configuration of the BeeGFS CSI Driver."
 
 
 [.lead]
-Instructions for deploying and configuring the BeeGFS CSI Driver.
+The BeeGFS CSI Driver enables Kubernetes clusters to dynamically provision and manage BeeGFS volumes, integrating BeeGFS storage with containerized workloads.
 
-
-== Overview 
-
- The BeeGFS CSI Driver enables Kubernetes clusters to dynamically provision and manage BeeGFS volumes, integrating BeeGFS storage with containerized workloads.
 
 === Summary
 
