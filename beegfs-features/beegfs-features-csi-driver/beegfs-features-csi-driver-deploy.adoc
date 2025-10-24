@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: /beegfs-features/beegfs-csi-driver/csi-driver-deploy.html
+permalink: beegfs-features/beegfs-csi-driver/csi-driver-deploy.html
 keywords: BeeGFS Features, CSI, Driver
 summary: "Deployment of the BeeGFS CSI Driver."
 ---
