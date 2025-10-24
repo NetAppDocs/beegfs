@@ -40,7 +40,7 @@ git clone https://github.com/ThinkParQ/beegfs-csi-driver.git.
 
 To deploy the BeeGFS CSI Driver, apply the necessary Kubernetes manifests. This can typically be done using the following command:
 
-[.command-window]
+[source,console]
 ----
 kubectl apply -f deploy/k8s/overlays/default
 ----
