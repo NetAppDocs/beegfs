@@ -126,15 +126,15 @@ sidebar:
         - title: BeeGFS CSI Driver
           entries:
             - title: CSI Driver Overview
-              url: beegfs-features/beegfs-csi-driver/csi-driver-overview.html
+              url: /beegfs-features/beegfs-csi-driver/csi-driver-overview.html
             - title: CSI Driver Prerequisites
-              url: beegfs-features/beegfs-csi-driver/csi-driver-prereqs.html
+              url: /beegfs-features/beegfs-csi-driver/csi-driver-prereqs.html
             - title: CSI Driver Deployment
-              url: beegfs-features/beegfs-csi-driver/csi-driver-deploy.html
+              url: /beegfs-features/beegfs-csi-driver/csi-driver-deploy.html
             - title: CSI Driver Veriification
-              url: beegfs-features/beegfs-csi-driver/csi-driver-verify.html
+              url: /beegfs-features/beegfs-csi-driver/csi-driver-verify.html
             - title: CSI Driver Troubleshooting
-              url: beegfs-features/beegfs-csi-driver/csi-driver-tshoot.html     
+              url: /beegfs-features/beegfs-csi-driver/csi-driver-tshoot.html     
     - title: Administer BeeGFS Clusters
       entries:
         - title: Overview, key concepts, and terminology
