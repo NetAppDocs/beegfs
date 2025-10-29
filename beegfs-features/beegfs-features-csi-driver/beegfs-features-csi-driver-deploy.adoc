@@ -35,10 +35,22 @@ If you only have offline access, download the BeeGFS-CSI driver repo from your i
 If you have online web access and you are on a machine with kubectl and access to the Kubernetes cluster where you want to deploy the BeeGFS CSI driver, clone this repository:
 git clone https://github.com/ThinkParQ/beegfs-csi-driver.git.
 
+When we deploy the pods, it would automatically download the images from image-hub and spin the required services. You need not set them up beforehand. 
 
-=== Deploy the CSI Driver
+=== Deploy the BeeGFS CSI Driver
 
-To deploy the BeeGFS CSI Driver, apply the necessary Kubernetes manifests. This can typically be done using the following command:
+Go to the repository directory and verify that all required files are available. If the necessary settings are already configured in beegfs-client.conf, you can proceed with the default configuration to deploy the CSI driver, as it will function out-of-the-box. If not, adjust the settings in the overlay to specify the desired values. 
+
+[source,shell]
+----
+root@node01:/home/shubhanb# nano deploy/k8s/overlays/default/
+
+csi-beegfs-config.yaml      csi-beegfs-connauth.yaml      kustomization.yaml      namespace.yaml      patches/
+----
+
+NOTE: The CSI driver requires the configuration file to be located at /etc/beegfs/beegfs-client.conf and to have that exact name. If your configuration file has a different name, create a symbolic link named beegfs-client.conf pointing to your existing file. 
+
+== Deploy the default overlays:
 
 [source,console]
 ----
@@ -47,15 +59,22 @@ kubectl apply -f deploy/k8s/overlays/default
 
 Expected Output:
 
-image:CSI_KB_04.png["Screenshot showing successful deployment of the BeeGFS CSI Driver"]
-
-Once the deployment is complete, you can verify the status of the CSI Driver pods:
-
-[.command-window]
+[source,shell]
 ----
-kubectl get pods -n kube-system
+root@node01:/home/user_id/beegfs-csi-driver# kubectl apply -k deploy/k8s/overlays/my-overlay 
+# Warning: 'bases' is deprecated. Please use 'resources' instead. Run 'kustomize edit fix' to update your Kustomization automatically. 
+# Warning: 'patchesStrategicMerge' is deprecated. Please use 'patches' instead. Run 'kustomize edit fix' to update your Kustomization automatically. 
+# Warning: 'bases' is deprecated. Please use 'resources' instead. Run 'kustomize edit fix' to update your Kustomization automatically. 
+namespace/beegfs-csi created 
+serviceaccount/csi-beegfs-controller-sa created 
+serviceaccount/csi-beegfs-node-sa created 
+role.rbac.authorization.k8s.io/csi-beegfs-privileged-scc-role created 
+clusterrole.rbac.authorization.k8s.io/csi-beegfs-provisioner-role created 
+rolebinding.rbac.authorization.k8s.io/csi-beegfs-privileged-scc-binding created 
+clusterrolebinding.rbac.authorization.k8s.io/csi-beegfs-provisioner-binding created 
+configmap/csi-beegfs-config-kkc8fg68fh created 
+secret/csi-beegfs-connauth-b8kbm2mmm2 created 
+statefulset.apps/csi-beegfs-controller created 
+daemonset.apps/csi-beegfs-node created 
+csidriver.storage.k8s.io/beegfs.csi.netapp.com created 
 ----
-
-Expected Output:
-
-image:CSI_KB_05.png["Screenshot showing BeeGFS CSI Driver pods running"]
