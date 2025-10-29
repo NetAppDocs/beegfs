@@ -206,6 +206,7 @@ spec:
 patches/image-pull-policy.yaml 
 ---- 
  NOTE: Since Kubernetes is referring to containerd for getting its images, we are referencing images loaded in containerd. If Kubernetes is configured to load images from Docker, then the images would be used from docker daemon. In either case, the image-pull-policy yaml file is going to remain the same. 
+
 [.indented] 
 
 ====
