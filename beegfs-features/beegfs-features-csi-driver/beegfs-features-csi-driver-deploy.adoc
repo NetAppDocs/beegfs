@@ -20,15 +20,11 @@ Instructions for deploying the BeeGFS CSI Driver.
 
 The BeeGFS CSI Driver enables Kubernetes clusters to dynamically provision and manage BeeGFS volumes, integrating BeeGFS storage with containerized workloads.
 
- 
-
-== Deployment Steps
-
 === Prepare for Deployment
 
 Before deploying the BeeGFS CSI Driver, ensure that you have completed all pre-requisites outlined in the previous section. This includes verifying your Kubernetes setup, validating the BeeGFS client and services, and preparing any air-gapped nodes if necessary.
 
-== Offline Access: 
+== Deployment - Offline Access: 
 If you only have offline access, download the BeeGFS-CSI driver repo from your internal server. 
 
 . Retrieve Images for Offline Deployment 
@@ -44,49 +40,38 @@ The PS team can provide the path of the location to download the container image
 Please follow the below mentioned steps for doing the offline deployment of CSI Driver: 
 [.indented]
 ====
-1. Save the “beegfs-csi-driver" folder downloaded from Git to the directory:
+. Save the “beegfs-csi-driver" folder downloaded from Git to the directory:
 [source,shell]
 ----
   /home/<User>/beegfs-csi-driver  
 ----
-2. Save the images downloaded from the location provided by the PS team in the directory: 
+[start=2]
+. Save the images downloaded from the location provided by the PS team in the directory: 
 [source,shell]
 ----
   /home/<User>/beegfs-csi-images  
 ----
 Since this Kubernetes setup depends on containerd for image management, these images which are saved as .tar files need to be uploaded to containerd 
-3. Navigate to the directory where the images are saved (/home/<User>/beegfs-csi-images). 
-4. Run the following commands to load the images: 
+[start=3]
+. Navigate to the directory where the images are saved (/home/<User>/beegfs-csi-images). 
+. Run the following commands to load the images: 
+[source,shell]
+----
 # Loading these docker images saved in local directory to containerd: 
-[source,shell]
-----
 ctr -n k8s.io images import beegfs-csi-driver_v1.7.0.tar 
-----
-[source,shell]
-----
 ctr -n k8s.io images import csi-provisioner_v3.5.0.tar
-----
-[source,shell]
-----
 ctr -n k8s.io images import csi-resizer_v1.11.1.tar
-----
-[source,shell]
-----
 ctr -n k8s.io images import livenessprobe_v2.10.0.tar
-----
-[source,shell]
-----
 ctr -n k8s.io images import csi-node-driver-registrar_v2.8.0.tar
-----
-
-5. Run the following command to check if the images are loaded in containerd: 
+[start=5]
+. Run the following command to check if the images are loaded in containerd: 
 [source,shell]
 ----
 crictl images 
 ----
 OPTIONAL: Visit section 4.5 to get details regarding how to download and save images locally. 
-
-6. Navigate to the “beegfs-csi-driver" folder which is downloaded from git 
+[start=6]
+. Navigate to the “beegfs-csi-driver" folder which is downloaded from git 
 [source,shell]
 ----
 cd /home/<User>/beegfs-csi-driver 
@@ -96,9 +81,9 @@ The default overlay configurations are intended for online deployment. Because w
 ----
 cp -r deploy/k8s/overlays/default deploy/k8s/overlays/my-overlay 
 ----
-
-7. Open the `deploy/k8s/overlays/my-overlay/kustomization.yaml` file to uncomment the image section and add the changes.  
-8. Uncomment The `images` section and add the following information: (digest can remain commented): 
+[start=7]
+. Open the `deploy/k8s/overlays/my-overlay/kustomization.yaml` file to uncomment the image section and add the changes.  
+. Uncomment The `images` section and add the following information: (digest can remain commented): 
 [source,shell]
 ----
 images: 
@@ -133,6 +118,7 @@ images:
 
     newTag: v2.8.0 
 ----
+[start=9]
 9. After updating the images, we need to ensure that Kubernetes is forced to use the images configured locally in `containerd` and not from the web. The default image-pull policy is “Always” which refers to “always pull the latest docker images”. This needs to be changed to “Never”. To do this, we need to add a file in `deploy/k8s/overlays/my-overlay/` folder. The file should be named: `image-pull-policy.yaml`. This is the content of the yaml file: 
 [source,shell]
 ---- 
