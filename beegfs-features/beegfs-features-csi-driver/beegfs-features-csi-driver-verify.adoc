@@ -143,7 +143,7 @@ storageclass.storage.k8s.io/csi-beegfs-dyn-sc created
 
 === 5. Verify StorageClass 
 
-== Check that the StorageClass was created successfully: 
+==== Check that the StorageClass was created successfully: 
 
 [source,console]
 ----
@@ -157,6 +157,14 @@ root@node01:/home/user_id/beegfs-csi-driver# kubectl get sc
 NAME                PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE 
 csi-beegfs-dyn-sc   beegfs.csi.org.com   Delete          Immediate           true                   17s 
 ----
-== Verify the drive is mounted correctly: 
 
+==== Verify the drive is mounted correctly: 
+Check that the drive configured in examples/k8s/dyn/dyn-sc.yaml is showing under /mnt/beegfs. 
+In this case the mount-drive was named as “user_id_k8s”, which is showing up the screenshot as shown below:
+[source,shell]
+----
+root@node01:/# ls -ltr /mnt/beegfs/ 
+total 1 
+drwxrwxrwx 4 root root 2 Oct 15 10:16 user_k8s 
+----
 
