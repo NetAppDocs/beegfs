@@ -63,20 +63,24 @@ ctr -n k8s.io images import csi-provisioner_v3.5.0.tar
 ctr -n k8s.io images import csi-resizer_v1.11.1.tar
 ctr -n k8s.io images import livenessprobe_v2.10.0.tar
 ctr -n k8s.io images import csi-node-driver-registrar_v2.8.0.tar
+----
 [start=5]
 . Run the following command to check if the images are loaded in containerd: 
 [source,shell]
 ----
 crictl images 
 ----
+
 OPTIONAL: Visit section 4.5 to get details regarding how to download and save images locally. 
+
 [start=6]
 . Navigate to the “beegfs-csi-driver" folder which is downloaded from git 
 [source,shell]
 ----
 cd /home/<User>/beegfs-csi-driver 
 ----
-The default overlay configurations are intended for online deployment. Because we are performing offline deployment, we cannot use these default overlay configurations. Copy the “default” folder to something like “my-overlay”:  
+The default overlay configurations are intended for online deployment. Because we are performing offline deployment, we cannot use these default overlay configurations. Copy the “default” folder to something like “my-overlay”:
+
 [source,shell]
 ----
 cp -r deploy/k8s/overlays/default deploy/k8s/overlays/my-overlay 
@@ -86,112 +90,69 @@ cp -r deploy/k8s/overlays/default deploy/k8s/overlays/my-overlay
 . Uncomment The `images` section and add the following information: (digest can remain commented): 
 [source,shell]
 ----
-images: 
-
   - name: ghcr.io/thinkparq/beegfs-csi-driver 
-
     newTag: v1.7.0 
-
     # digest: sha256:eb7ff01259e6770d0103f219e11b7ff334c9d9102a29ea0af95a3c0d7aec1ae3 
-
   - name: k8s.gcr.io/sig-storage/csi-provisioner 
-
     newName: registry.k8s.io/sig-storage/csi-provisioner 
-
     newTag: v3.5.0 
-
   - name: k8s.gcr.io/sig-storage/csi-resizer 
-
     newName: registry.k8s.io/sig-storage/csi-resizer 
-
     newTag: v1.11.1 
-
   - name: k8s.gcr.io/sig-storage/livenessprobe 
-
     newName: registry.k8s.io/sig-storage/livenessprobe 
-
     newTag: v2.10.0 
-
   - name: k8s.gcr.io/sig-storage/csi-node-driver-registrar 
-
     newName: registry.k8s.io/sig-storage/csi-node-driver-registrar 
-
     newTag: v2.8.0 
 ----
-[start=9]
-9. After updating the images, we need to ensure that Kubernetes is forced to use the images configured locally in `containerd` and not from the web. The default image-pull policy is “Always” which refers to “always pull the latest docker images”. This needs to be changed to “Never”. To do this, we need to add a file in `deploy/k8s/overlays/my-overlay/` folder. The file should be named: `image-pull-policy.yaml`. This is the content of the yaml file: 
+[start=8]
+. After updating the images, we need to ensure that Kubernetes is forced to use the images configured locally in `containerd` and not from the web. The default image-pull policy is “Always” which refers to “always pull the latest docker images”. This needs to be changed to “Never”. To do this, we need to add a file in `deploy/k8s/overlays/my-overlay/` folder. The file should be named: `image-pull-policy.yaml`. This is the content of the yaml file:
+
 [source,shell]
 ---- 
 # Patch for controller 
-
 kind: StatefulSet 
-
 apiVersion: apps/v1 
-
 metadata: 
-
   name: csi-beegfs-controller 
-
 spec: 
-
   template: 
-
     spec: 
-
       containers: 
-
         - name: beegfs 
-
           imagePullPolicy: Never 
-
         - name: csi-provisioner 
-
           imagePullPolicy: Never 
-
         - name: csi-resizer 
-
           imagePullPolicy: Never 
-
- 
-
-# Patch for node 
-
+  # Patch for node 
 --- 
 
+[source,shell]
+----
 kind: DaemonSet 
-
 apiVersion: apps/v1 
-
 metadata: 
-
   name: csi-beegfs-node 
-
 spec: 
-
   template: 
-
     spec: 
-
       containers: 
-
         - name: beegfs 
-
           imagePullPolicy: Never 
-
         - name: node-driver-registrar 
-
           imagePullPolicy: Never 
-
         - name: liveness-probe 
-
           imagePullPolicy: Never 
 ----
+[start=9]
 . Refer the  yaml file for “image-pull-policy" in the “kustomization.yaml” file in `patchesStrategicMerge` section. Add a new entry for the path of the new yaml file: 
 [source,shell]
 ---- 
 patches/image-pull-policy.yaml 
 ---- 
- NOTE: Since Kubernetes is referring to containerd for getting its images, we are referencing images loaded in containerd. If Kubernetes is configured to load images from Docker, then the images would be used from docker daemon. In either case, the image-pull-policy yaml file is going to remain the same. 
+NOTE: Since Kubernetes is referring to containerd for getting its images, we are referencing images loaded in containerd. If Kubernetes is configured to load images from Docker, then the images would be used from docker daemon. In either case, the image-pull-policy yaml file is going to remain the same. 
 
 ====
 
