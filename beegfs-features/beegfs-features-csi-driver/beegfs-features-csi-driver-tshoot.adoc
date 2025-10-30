@@ -20,12 +20,26 @@ Guidance for troubleshooting issues with the BeeGFS CSI Driver deployment.
 
 Error example when trying to get all the currently running pods on the node: 
 
-[.command-window]   
+[source,console]   
 ----
 kubectl get pods
 ----
 .Example of Erroneous Output: 
-image:CSI_KB_12.png["Screenshot showing error retrieving Kubernetes pods"]
+[source,shell]
+----
+root@node@1:~# kubectl get pods 
+E0829 14:30:28.644318 5617 memcache.go:265)] "Unhandled Error" err="couldn't get current server API group list: Get \"https://XX.YYY.ZZ.CC:644 
+3: connect: connection refused" 
+E0829 14:30:28.645853 5617 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://XX.YYY.ZZ.CC:644 
+3: connect: connection refused" 
+E0829 14:30:28.647177 5617 memcache.go:265) "Unhandled Error" err="couldn't get current server API group list: Get \"https://XX.YYY.ZZ.CC:644 
+3: connect: connection refuse: 
+E0829 14:30:28.648571 5617 memcache.go:265) "Unhandled Error" err="couldn't get current server API group list: Get \"https://XX.YYY.ZZ.CC:644 
+3: connect: connection refused" 
+E0829 14:30:28.650161 5617 memcache.go:265) "Unhandled Error" err="couldn't get current server API group list: Get \"https://XX.YYY.ZZ.CC:644 
+3: connect: connection refused" 
+ The connection to the server XX.YYY.ZZ.CC:6443 was refused - did you specify the right host or port? 
+----
 
 There are several areas of investigation for fixing most of the issues like these. We can look at the areas in this order: 
 [.indented]
