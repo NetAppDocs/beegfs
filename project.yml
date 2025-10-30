@@ -131,7 +131,7 @@ sidebar:
               url: /beegfs-features/beegfs-csi-driver/csi-driver-prereqs.html
             - title: CSI Driver Deployment
               url: /beegfs-features/beegfs-csi-driver/csi-driver-deploy.html
-            - title: CSI Driver Veriification
+            - title: CSI Driver Verification
               url: /beegfs-features/beegfs-csi-driver/csi-driver-verify.html
             - title: CSI Driver Troubleshooting
               url: /beegfs-features/beegfs-csi-driver/csi-driver-tshoot.html     
