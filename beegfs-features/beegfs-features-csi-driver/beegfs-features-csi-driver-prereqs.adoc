@@ -28,13 +28,13 @@ To successfully deploy the BeeGFS CSI Driver, ensure the following pre-requisite
 
 Run the following command to check the status of pods in your Kubernetes cluster:
 
-[.source,bash]
+[source,console]
 ----
 kubectl get pods
 ----
 
 .Expected Output:
-[.command-window]
+[source,shell]
 root@node@1:/etc/cni/net.d# kubectl get pods 
 No resources found in default namespace. 
 ----
@@ -44,13 +44,13 @@ If no pods are running, you will see an empty list. If pods are present, they sh
 
 Check that BeeGFS services are running correctly (NOTE: This CSI Driver can work with both beegfs-dkms-client as well as beegfs-client which need to be pre-installed on each Kubernetes node: link:https://doc.beegfs.io/latest/advanced_topics/client_dkms.html[Installation steps^]):
 
-[.source,bash]
+[source,console]
 ----
 beegfs-check-servers
 ----
 
 .Expected Output:
-[.command-window]
+[source,shell]
 root@node01:/home/user_id/beegfs-csi-driver# beegfs-check-servers 
 Management 
 ========== 
