@@ -29,27 +29,47 @@ To verify the deployment of the BeeGFS CSI Driver, you can check the status of t
 
 Check the status of all resources in the BeeGFS-CSI namespace:
 
-[.command-window]
+[source,console]
 ----
 kubectl get all -n beegfs-csi
 ----
 
 Expected Output:
-
-image:CSI_KB_05.png["Screenshot showing BeeGFS CSI Driver pods running"]
+[source,shell]
+----
+NAME                          READY    STATUS      RESTARTS    AGE  
+pod/csi-beegfs-controller-0   3/3      Running     0           5d11h
+pod/csi-beegfs-node-8f917     3/3      Running     0           5d11h
+----
 
 === 2. Inspect Controller Pod 
 
-(Describe the controller pod for more details and error checking):
+(Describes the controller pod for more details and error checking):
 
-[.command-window]
+[source,console]
 ----
 kubectl describe pod csi-beegfs-controller-0 -n beegfs-csi
 ----
 
 Expected Output:
+[source,shell]
+----
+Events: 
 
-image:CSI_KB_06.png["Screenshot showing logs of the BeeGFS CSI Driver pod"]
+  Type     Reason     Age                  From               Message 
+  ----     ------     ----                 ----               ------- 
+  Normal   Scheduled  117s                 default-scheduler  Successfully assigned beegfs-csi/csi-beegfs-controller-0 to node01 
+  Normal   Pulled     117s                 kubelet            Container image "registry.k8s.io/sig-storage/csi-provisioner:v3.5.0" already present on machine 
+  Normal   Created    117s                 kubelet            Created container: csi-provisioner 
+  Normal   Started    117s                 kubelet            Started container csi-provisioner 
+  Normal   Started    101s (x3 over 117s)  kubelet            Started container beegfs 
+  Normal   Pulled     86s (x2 over 117s)   kubelet            Container image "registry.k8s.io/sig-storage/csi-resizer:v1.11.1" already present on machine 
+  Normal   Created    86s (x2 over 117s)   kubelet            Created container: csi-resizer 
+  Normal   Started    86s (x2 over 117s)   kubelet            Started container csi-resizer 
+  Warning  BackOff    85s (x5 over 115s)   kubelet            Back-off restarting failed container beegfs in pod csi-beegfs-controller-0_beegfs-csi(47016fd3-3a2a-41ed-bc4c-5a716c377b1e) 
+  Normal   Pulled     73s (x4 over 117s)   kubelet            Container image "ghcr.io/thinkparq/beegfs-csi-driver:v1.7.0" already present on machine 
+  Normal   Created    73s (x4 over 117s)   kubelet            Created container: beegfs 
+----
 
 === 3. Deploy Example Application
 
@@ -60,43 +80,83 @@ Before deploying:
 ====
 
 * Get the IP of the BeeGFS management node:
-[.command-window]
+[source,console]
 ----
-kubectl get all -n beegfs-csi
+beegfs-check-servers
 ----
 
 .Expected Output:
-image:CSI_KB_07.png["Screenshot showing reachable servers"]
+[source,shell]
+----
+root@node01:/home/user_id/beegfs-csi-driver# beegfs-check-servers 
+Management 
+========== 
+mgmt [ID: 1]: reachable at XXX.X.AB.1:8008 (protocol: TCP) 
+----
 
 * Update the management node IP in /examples/k8s/dyn/dyn-sc.yaml. 
 
 * Update the value for volDirBasePath. Set the value to an unique value such as k8s cluster name to prevent multiple k8s clusters from dynamically provisioning volumes at the same BeeGFS path.
 
 .Expected Output:
-image:CSI_KB_08.png["Screenshot showing voldirbasepath"]
+[source,shell]
+----
+Copyright 2021 NetApp, Inc. All Rights Reserved. 
+#Licensed under the Apache License, Version 2.0. 
+apiVersion: storage.k8s.io/v1 
+kind: StorageClass 
+metadata: 
+  name: csi-beegfs-dyn-sc 
+provisioner: beegfs.csi.netapp.com 
+parameters: 
+  # Replace "localhost" with the IP address or hostname of the BeeGFS management daemon. sysMgmtdHost: 192.1.18.1 
+  #Replace "name" with a unique k8s cluster name to prevent multiple k8s clusters from dynamically provisioning volumes at the same BeeGFS path. volDirBasePath: user_id_k8s 
+  # Optionally configure the default stripePattern parameters. All Storage Class values must be strings. Quotes are 
+  # required on integers. 
+  # stripePattern/storagePoolID: "1" 
+  # stripePattern/chunkSize: 512k 
+  # stripePattern/numTargets: "4" 
+  # permissions/uid: "1000" 
+  # permissions/gid: "1000" 
+  # permissions/mode: "0644" 
+reclaimPolicy: Delete 
+volumeBindingMode: Immediate 
+a1lowVolumeExpansion: true 
+----
 ====
 
 === 4. Deploy
 
-[.command-window]
+[source,console]
 ----
 kubectl apply -f examples/k8s/dyn
 ----
 
 .Expected Output:
-image:CSI_KB_09.png["Screenshot showing example application created"]
+[source,shell]
+----
+root@node01:/home/user_id/beegfs-csi-driver# kubectl apply -f examples/k8s/dyn 
+pod/csi-beegfs-dyn-app created 
+persistentvolumeclaim/csi-beegfs-dyn-pvc created 
+storageclass.storage.k8s.io/csi-beegfs-dyn-sc created 
+----
 
 === 5. Verify StorageClass 
 
-Check that the StorageClass was created successfully: 
+== Check that the StorageClass was created successfully: 
 
-[.command-window]
+[source,console]
 ----
-kubectl get sc -n beegfs-csi
+kubectl get sc
 ----
 
 Expected Output:
-image:CSI_KB_10.png["Screenshot showing storage class created"]
-
+[source,shell]
+----
+root@node01:/home/user_id/beegfs-csi-driver# kubectl get sc  
+NAME                PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE 
+csi-beegfs-dyn-sc   beegfs.csi.org.com   Delete          Immediate           true                   17s 
+----
+== Verify the drive is mounted correctly: 
 
 
