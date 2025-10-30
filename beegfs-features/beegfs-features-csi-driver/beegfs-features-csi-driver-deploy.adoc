@@ -15,14 +15,10 @@ summary: "Deployment of the BeeGFS CSI Driver."
 [.lead]
 Instructions for deploying the BeeGFS CSI Driver.
 
-
-== Overview 
-
-The BeeGFS CSI Driver enables Kubernetes clusters to dynamically provision and manage BeeGFS volumes, integrating BeeGFS storage with containerized workloads.
-
 === Prepare for Deployment
 
-Before deploying the BeeGFS CSI Driver, ensure that you have completed all pre-requisites outlined in the previous section. This includes verifying your Kubernetes setup, validating the BeeGFS client and services, and preparing any air-gapped nodes if necessary.
+Before deploying the BeeGFS CSI Driver, ensure that you have completed all pre-requisites outlined in the section 'CSI Driver Prerequisites'. 
+This includes verifying your Kubernetes setup, validating the BeeGFS client and services, and preparing any air-gapped nodes if necessary.
 
 == Deployment - Offline Access: 
 If you only have offline access, download the BeeGFS-CSI driver repo from your internal server. 
