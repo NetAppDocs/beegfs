@@ -71,7 +71,7 @@ crictl images
 ----
 
  
-*Optional:* Visit 'CSI Driver Troubleshooting' section to get details regarding how to download and save images locally.
+*Optional: * Visit 'CSI Driver Troubleshooting' section to get details regarding how to download and save images locally.
 
 
 [start=6]
