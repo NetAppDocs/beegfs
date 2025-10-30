@@ -70,7 +70,10 @@ ctr -n k8s.io images import csi-node-driver-registrar_v2.8.0.tar
 crictl images 
 ----
 
-OPTIONAL: Visit section 4.5 to get details regarding how to download and save images locally. 
+[OPTIONAL] 
+----
+Visit 'CSI Driver Troubleshooting' section to get details regarding how to download and save images locally.
+----
 
 [start=6]
 . Navigate to the “beegfs-csi-driver" folder which is downloaded from git 
