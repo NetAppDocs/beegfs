@@ -38,8 +38,7 @@ git clone https://github.com/ThinkParQ/beegfs-csi-driver.git
 The PS team can provide the path of the location to download the container images. 
 
 Please follow the below mentioned steps for doing the offline deployment of CSI Driver: 
-[.indented]
-====
+
 . Save the “beegfs-csi-driver" folder downloaded from Git to the directory:
 [source,shell]
 ----
@@ -146,6 +145,7 @@ spec:
         - name: liveness-probe 
           imagePullPolicy: Never 
 ----
+
 [start=9]
 . Refer the  yaml file for “image-pull-policy" in the “kustomization.yaml” file in `patchesStrategicMerge` section. Add a new entry for the path of the new yaml file: 
 [source,shell]
@@ -153,8 +153,6 @@ spec:
 patches/image-pull-policy.yaml 
 ---- 
 NOTE: Since Kubernetes is referring to containerd for getting its images, we are referencing images loaded in containerd. If Kubernetes is configured to load images from Docker, then the images would be used from docker daemon. In either case, the image-pull-policy yaml file is going to remain the same. 
-
-====
 
 == Online Access - GithubRepo:
 If you have online web access and you are on a machine with kubectl and access to the Kubernetes cluster where you want to deploy the BeeGFS CSI driver, clone this repository:
