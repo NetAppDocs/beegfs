@@ -105,7 +105,7 @@ cp -r deploy/k8s/overlays/default deploy/k8s/overlays/my-overlay
     newName: registry.k8s.io/sig-storage/csi-node-driver-registrar 
     newTag: v2.8.0 
 ----
-[start=8]
+[start=9]
 . After updating the images, we need to ensure that Kubernetes is forced to use the images configured locally in `containerd` and not from the web. The default image-pull policy is “Always” which refers to “always pull the latest docker images”. This needs to be changed to “Never”. To do this, we need to add a file in `deploy/k8s/overlays/my-overlay/` folder. The file should be named: `image-pull-policy.yaml`. This is the content of the yaml file:
 
 [source,shell]
@@ -126,7 +126,7 @@ spec:
         - name: csi-resizer 
           imagePullPolicy: Never 
   # Patch for node 
---- 
+----
 
 [source,shell]
 ----
@@ -146,7 +146,7 @@ spec:
           imagePullPolicy: Never 
 ----
 
-[start=9]
+[start=10]
 . Refer the  yaml file for “image-pull-policy" in the “kustomization.yaml” file in `patchesStrategicMerge` section. Add a new entry for the path of the new yaml file: 
 [source,shell]
 ---- 
