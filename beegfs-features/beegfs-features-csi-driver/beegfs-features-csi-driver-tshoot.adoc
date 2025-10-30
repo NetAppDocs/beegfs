@@ -45,15 +45,20 @@ There are several areas of investigation for fixing most of the issues like thes
 [.indented]
 ====
 
-*Error in containerd*
+1. *Error in containerd*
 
-1. Check the status of the containerd daemon: 
-[.command-window] 
+.. Check the status of the containerd daemon: 
+[source,console]
+----
 systemctl status containerd
+----
 .Expected Output:
+[source,shell]
+----
 image:CSI_KB_13.png["Screenshot showing containerd service active and running"]
+----
 
-2. If the daemon is not running, restart it:
+.. If the daemon is not running, restart it:
 [.command-window] 
 systemctl restart containerd
 .Expected Output:
