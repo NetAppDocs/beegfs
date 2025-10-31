@@ -44,9 +44,7 @@ E0829 14:30:28.650161 5617 memcache.go:265) "Unhandled Error" err="couldn't get 
 There are several areas of investigation for fixing most of the issues like these. We can look at the areas in this order: 
 [.indented]
 ====
-
 1. *Error in containerd*
-
 .. Check the status of the containerd daemon: 
 [source,console]
 ----
@@ -57,7 +55,7 @@ systemctl status containerd
 ----
 image:CSI_KB_13.png["Screenshot showing containerd service active and running"]
 ----
-
+[Start,ii]
 .. If the daemon is not running, restart it:
 [.command-window] 
 systemctl restart containerd
