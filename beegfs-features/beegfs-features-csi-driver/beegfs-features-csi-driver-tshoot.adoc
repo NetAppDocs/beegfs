@@ -45,22 +45,47 @@ There are several areas of investigation for fixing most of the issues like thes
 [.indented]
 ====
 1. *Error in containerd*
-.. Check the status of the containerd daemon: 
+
+Check the status of the containerd daemon: 
 [source,console]
 ----
 systemctl status containerd
 ----
-.Expected Output:
+Expected Output:
 [source,shell]
 ----
-image:CSI_KB_13.png["Screenshot showing containerd service active and running"]
+root@node01:/home/user_id/beegfs-csi-driver# systemctl status containerd 
+o containerd.service - containerd container runtime 
+     Loaded: loaded (/lib/systemd/system/containerd.service; enabled; vendor preset: enabled) 
+     Active: inactive (dead) 
+     Docs: https://containerd.io 
 ----
-[Start,ii]
-.. If the daemon is not running, restart it:
-[.command-window] 
+If the daemon is not running, restart it:
+[source,console]
+----
 systemctl restart containerd
-.Expected Output:
-image:CSI_KB_14.png["Screenshot showing containerd service active and running"]
+----
+Expected Output:
+[source,shell]
+----
+root@node01:/home/user_id/beegfs-csi-driver# systemctl status containerd 
+o containerd.service - containerd container runtime 
+     Loaded: loaded (/lib/systemd/system/containerd.service; enabled; vendor preset: enabled) 
+     Active: inactive (dead) 
+     Docs: https://containerd.io 
+root@node01:/home/user_id/beegfs-csi-driver# systemctl start containerd  
+root@node01:/home/user_id/beegfs-csi-driver# systemctl status containerd 
+● containerd.service - containerd container runtime 
+     Loaded: loaded (/lib/systemd/system/containerd.service; enabled; vendor preset: enabled) 
+     Active: active (running) since Mon 2025-10-13 11:55:05 CDT; 2s ago 
+     Docs: https://containerd.io 
+     Process: 2144996 ExecStartPre=/sbin/modprobe overlay (code=exited, status=0/SUCCESS) 
+     Main PID: 2144997 (containerd) 
+     Tasks: 382 
+     Memory: 1.0G 
+     CGroup: /system.slice/containerd.service 
+----
+====
 
 [.indented]
 ====
