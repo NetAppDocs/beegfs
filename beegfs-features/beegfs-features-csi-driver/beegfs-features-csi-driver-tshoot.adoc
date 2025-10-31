@@ -96,32 +96,57 @@ root@node01:/home/user_id/beegfs-csi-driver# systemctl status containerd
 
 2. *Error in kubelet*
 
-1. Check the status of the kubelet service: 
-[.command-window]
+Check the status of the kubelet service: 
+[source,console]
+----
 systemctl status kubelet
-.Expected Output:
+----
+Expected Output:
+[source,shell]
+----
 image:CSI_KB_15.png["Screenshot showing kubelet service active and running"]
-
-2. If the service is not running, restart it:
-[.command-window]
+----
+If the service is not running, restart it:
+[source,console]
+----
 systemctl restart kubelet
-.Expected Output:
+----
+Expected Output:
+[source,shell]
+----
 image:CSI_KB_16.png["Screenshot showing kubelet service active and running"]
-
+----
 If issue persists, check the syslog for errors:
-[.command-window]
+[source,console]
+----
 tail -f /var/log/syslog | grep kubelet   
-
+----
 *Swap Issue*
 If you see errors related to "swap", disable swap and restart kubelet(NOTE: For the below command for `swapoff`, I suggest typing it and not copying it from here. You might face errors if the hyphen changes from a standard ASCII hyphen-minus (-) to a Unicode en dash (–)): 
-[.command-window]
+[source,console]
+----
 swapoff -a
-[.command-window]
+----
+[source,console]
+----
 systemctl restart kubelet
-
-.Expected Output:
-image:CSI_KB_17.png["Screenshot showing kubelet service active and running"]
-
+----
+Expected Output:
+[source,shell]
+----
+root@node01:/home/user_id/beegfs-csi-driver# systemctl status kubelet 
+● kubelet.service - kubelet: The Kubernetes Node Agent 
+    Loaded: loaded (/lib/systemd/system/kubelet.service; enabled; vendor preset: enabled) 
+    Drop-In: /usr/lib/systemd/system/kubelet.service.d 
+             └─10-kubeadm.conf 
+     Active: active (running) since Tue 2025-10-07 18:11:05 CDT; 5 days ago 
+       Docs: https://kubernetes.io/docs/ 
+   Main PID: 1302401 (kubelet) 
+      Tasks: 58 (limit: 231379) 
+     Memory: 63.0M 
+     CGroup: /system.slice/kubelet.service 
+             └─1302401 /usr/bin/kubelet --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig=/etc/kubernetes/kubelet.conf --config=/var/lib/kubelet/config.yaml conta>
+----
 Note: Swap is typically enabled by default during OS installation and listed in /etc/fstab. Kubernetes does not support running with swap enabled. 
 
 [.indented]
