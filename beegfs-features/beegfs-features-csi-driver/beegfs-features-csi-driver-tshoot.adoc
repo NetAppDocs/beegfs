@@ -147,7 +147,8 @@ root@node01:/home/user_id/beegfs-csi-driver# systemctl status kubelet
      CGroup: /system.slice/kubelet.service 
              └─1302401 /usr/bin/kubelet --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig=/etc/kubernetes/kubelet.conf --config=/var/lib/kubelet/config.yaml conta>
 ----
-Note: Swap is typically enabled by default during OS installation and listed in /etc/fstab. Kubernetes does not support running with swap enabled. 
+
+NOTE: Swap is typically enabled by default during OS installation and listed in /etc/fstab. Kubernetes does not support running with swap enabled. 
 
 [.indented]
 ====
