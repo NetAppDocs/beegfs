@@ -90,8 +90,8 @@ root@node01:/home/user_id/beegfs-csi-driver# systemctl status containerd
 
 [.indented]
 ====
-
-2. *Error in kubelet*
+[start=2]
+. *Error in kubelet*
 
 Check the status of the kubelet service: 
 [source,console]
@@ -149,10 +149,10 @@ NOTE: Swap is typically enabled by default during OS installation and listed in 
 [.indented]
 ====
 
-=== Troubleshooting BeeGFS Client and Helperd Configuration
-
 [.indented]
 ====
+[start=3]
+. *Troubleshooting BeeGFS Client and Helperd Configuration*
 
 Review the configuration in /etc/beegfs/beegfs-client.conf. 
 
@@ -182,12 +182,11 @@ image:CSI_KB_20.png["Screenshot showing connDisableAuthentication configuration"
 [.indented]
 ====
 
-
-=== Troubleshooting Airgapped Kubernetes Deployment 
-
-
 [.indented]
 ====
+[start=4]
+. *Troubleshooting Airgapped Kubernetes Deployment*
+
 * If your air-gapped environment does not have a Docker Hub mirror, then you pull the necessary images from a machine with access to the internet then save them as tar files.  
 
 * List of docker images can be found in the yaml files in deploy/k8s/overlays/default/kustomization.yaml.
@@ -210,12 +209,11 @@ Once the images are available, copy deploy/k8s/overlays/default to deploy/k8s/ov
 
 ====
 
-
-=== Troubleshooting BeeGFS Controller issues
-
-
 [.indented] 
 ====
+[start=5]
+. *Troubleshooting BeeGFS Controller issues*
+
 After deploying overlays, we may find status as PENDING in the output of kubectl get all.  
 image:CSI_KB_22.png["Screenshot showing docker images in kustomization.yaml"]
 
