@@ -13,12 +13,12 @@ summary: "Troubleshooting the BeeGFS CSI Driver Deployment."
 
 
 [.lead]
-In Guidance for troubleshooting issues with the BeeGFS CSI Driver deployment, Make sure that:
+In guidance for troubleshooting issues with the BeeGFS CSI Driver deployment, ensure sure that:
 
 * All pre-requisites have been, including BeeGFS client setup and configuration. 
-* Deploy the BeeGFS-CSI driver using the appropriate overlays. 
+* The BeeGFS-CSI driver has been deployed using the appropriate overlays. 
 * Verify the deployment and troubleshoot any errors, such as taint issues or swap being enabled. 
-* Deploy and validate example applications to confirm functionality. 
+* Example applications have been deployed and validated to confirm functionality. 
 
 
 === Kubernetes setup - Common Error Scenarios 
