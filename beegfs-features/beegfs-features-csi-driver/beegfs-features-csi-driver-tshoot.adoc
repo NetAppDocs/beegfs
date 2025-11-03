@@ -87,9 +87,6 @@ root@node01:/home/user_id/beegfs-csi-driver# systemctl status containerd
 ----
 ====
 
-[.indented]
-====
-
 
 [.indented]
 ====
@@ -149,11 +146,8 @@ root@node01:/home/user_id/beegfs-csi-driver# systemctl status kubelet
 ----
 
 NOTE: Swap is typically enabled by default during OS installation and listed in /etc/fstab. Kubernetes does not support running with swap enabled. 
-
 [.indented]
 ====
-
-
 
 === Troubleshooting BeeGFS Client and Helperd Configuration
 
