@@ -281,26 +281,70 @@ Once the images are available, copy deploy/k8s/overlays/default to deploy/k8s/ov
 [start=5]
 . *Troubleshooting BeeGFS Controller issues*
 
-After deploying overlays, we may find status as PENDING in the output of kubectl get all.  
-image:CSI_KB_22.png["Screenshot showing docker images in kustomization.yaml"]
+After deploying overlays, we may find status as PENDING in the output of kubectl get all. 
+[source,console]
+----
+root@node01:/home/user_id/beegfs-csi-driver# kubectl get all -n beegfs-csi 
+NAME                          READY   STATUS    RESTARTS   AGE 
+pod/csi-beegfs-controller-0   0/3     Pending   0          59s 
+----
 
 If the status is as shown above, then it is time to explore the pods created by using the describe command. 
-[.command-window]
+[source,shell]
+----
 kubectl describe pod csi-beegfs-controller-0 -n beegfs-csi 
-
-If you encounter errors related to "untolerated taint" (visible in the output of kubectl describe), remove the taint from the node using the command shown below: 
-
-image:CSI_KB_23.png["Screenshot showing docker images in kustomization.yaml"]
-[.command-window]
+----
+If you encounter errors related to "untolerated taint" (visible in the output of kubectl describe) as below: 
+[source,console]
+----
+Events: 
+  Type     Reason            Age   From               Message 
+  ----     ------            ----  ----               ------- 
+  Warning  FailedScheduling  84s   default-scheduler  0/1 nodes are available: 1 node(s) had untolerated taint {node.kubernetes.io/disk-pressure: }. preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling. 
+----
+Remove the taint from the node using the command: 
+[source,shell]
+----
 kubectl taint nodes node01 node-role.kubernetes.io/control-plane:NoSchedule-
-
+----
 Expected Output:
-image:CSI_KB_24.png["Screenshot showing docker images in kustomization.yaml"]
+[source,console]
+----
+root@node01:/home/user_id/beegfs-csi-driver# kubectl taint nodes node01 node-role.kubernetes.io/control-plane:NoSchedule-  
+error: taint "node-role.kubernetes.io/control-plane:NoSchedule" not found 
+----
 
-After removing the taint, re-apply the overlays. The issue would be resolved: 
-[.command-window]
+After removing the taint, re-apply the overlays. The issue will then be resolved: 
+[source,shell]
+----
 kubectl apply -k deploy/k8s/overlays/default 
+----
+[.indented] 
+====
 
 [.indented] 
-
 ====
+[start=6]
+. *Downloading the images and saving them locally*
+Kindly note that these images are first pulled from docker and then saved to local as tar files. 
+These are the commands used: 
+[source,shell]
+----
+docker pull ghcr.io/thinkparq/beegfs-csi-driver:v1.7.0 
+docker pull registry.k8s.io/sig-storage/csi-provisioner:v3.5.0 
+docker pull registry.k8s.io/sig-storage/csi-resizer:v1.11.1 
+docker pull registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0 
+docker pull registry.k8s.io/sig-storage/livenessprobe:v2.10.0 
+----
+These are the commands used to save the docker images as tar files: 
+[source,shell]
+----
+docker save ghcr.io/thinkparq/beegfs-csi-driver:v1.7.0 -o beegfs-csi-driver_v1.7.0.tar 
+docker save registry.k8s.io/sig-storage/csi-provisioner:v3.5.0 -o csi-provisioner_v3.5.0.tar 
+docker save registry.k8s.io/sig-storage/csi-resizer:v1.11.1 -o csi-resizer_v1.11.1.tar 
+docker save registry.k8s.io/sig-storage/livenessprobe:v2.10.0 -o livenessprobe_v2.10.0.tar 
+docker save registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0 -o csi-node-driver-registrar_v2.8.0.tar 
+----
+[.indented] 
+====
+
