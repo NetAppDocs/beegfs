@@ -13,12 +13,12 @@ summary: "Overview and configuration of the BeeGFS CSI Driver."
 
 
 [.lead]
-The BeeGFS CSI Driver enables Kubernetes clusters to dynamically provision and manage BeeGFS volumes, integrating high-performance BeeGFS storage with containerized workloads.
+The BeeGFS CSI driver enables Kubernetes clusters to dynamically provision and manage BeeGFS volumes, integrating high-performance BeeGFS storage with containerized workloads.
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png[One] Ensure all prerequisites are met
 
 [role="quick-margin-para"]
-This includes verifying the clients have a running Kubernetes cluster, connectivity to the BeeGFS cluster, and the necessary permissions to install cluster-wide resources.
+This includes verifying that you have a running Kubernetes cluster, connectivity to the BeeGFS cluster, and the necessary permissions to install cluster-wide resources.
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png[Two] Deploy the BeeGFS CSI driver
 
@@ -33,4 +33,4 @@ Check that all BeeGFS CSI driver components are installed and operational by ins
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png[Four] Deploy and validate example applications
 
 [role="quick-margin-para"]
-Apply an example Kubernetes manifests and confirm that workloads can access BeeGFS-backed storage as expected.
+Apply example Kubernetes manifests and confirm that workloads can access BeeGFS-backed storage as expected.
