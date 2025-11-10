@@ -29,7 +29,7 @@ git clone https://github.com/ThinkParQ/beegfs-csi-driver.git
 
 Please follow the below mentioned steps for doing the offline deployment of CSI Driver: 
 
-. Save the “beegfs-csi-driver" folder downloaded from Git to the directory:
+. Save the downloaded “beegfs-csi-driver" files to:
 [source,shell]
 ----
   /home/<User>/beegfs-csi-driver  
