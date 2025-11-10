@@ -13,10 +13,7 @@ summary: "Deployment of the BeeGFS CSI Driver."
 
 
 [.lead]
-=== Prepare for Deployment
-
-Before deploying the BeeGFS CSI Driver, ensure that you have completed all pre-requisites outlined in the section 'CSI Driver Prerequisites'. 
-This includes verifying your Kubernetes setup, validating the BeeGFS client and services, and preparing any air-gapped nodes if necessary.
+Instructions for deploying the BeeGFS CSI Driver.
 
 == Offline Access: 
 If you only have offline access, download the BeeGFS-CSI driver repo from your internal server. 
