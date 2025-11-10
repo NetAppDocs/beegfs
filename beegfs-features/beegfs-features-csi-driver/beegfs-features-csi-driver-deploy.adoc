@@ -35,7 +35,7 @@ Please follow the below mentioned steps for doing the offline deployment of CSI 
   /home/<User>/beegfs-csi-driver  
 ----
 [start=2]
-. Save the images downloaded from the location provided by the PS team in the directory: 
+. Save the downloaded images to the following directory: 
 [source,shell]
 ----
   /home/<User>/beegfs-csi-images  
