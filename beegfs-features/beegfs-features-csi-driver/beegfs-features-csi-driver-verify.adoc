@@ -13,11 +13,6 @@ summary: "Verification of the BeeGFS CSI Driver Deployment."
 
 
 [.lead]
-Instructions for verifying the BeeGFS CSI Driver deployment.
-
-== Verification Steps
-
-=== 1. Verify CSI Driver Deployment
 
 To verify the deployment of the BeeGFS CSI Driver, you can check the status of the CSI Driver pods and ensure they are running correctly.
 
@@ -29,14 +24,13 @@ kubectl get all -n beegfs-csi
 ----
 
 Expected Output:
-[source,shell]
 ----
 NAME                          READY    STATUS      RESTARTS    AGE  
 pod/csi-beegfs-controller-0   3/3      Running     0           5d11h
 pod/csi-beegfs-node-8f917     3/3      Running     0           5d11h
 ----
 
-=== 2. Inspect Controller Pod 
+=== Inspect Controller Pod 
 
 (Describes the controller pod for more details and error checking):
 
@@ -46,7 +40,6 @@ kubectl describe pod csi-beegfs-controller-0 -n beegfs-csi
 ----
 
 Expected Output:
-[source,shell]
 ----
 Events: 
 
@@ -65,7 +58,7 @@ Events:
   Normal   Created    73s (x4 over 117s)   kubelet            Created container: beegfs 
 ----
 
-=== 3. Deploy Example Application
+=== Deploy Example Application
 
 From the project directory, deploy the example application files, which include a StorageClass, PVC, and a pod using the BeeGFS CSI driver. 
 
@@ -80,7 +73,6 @@ beegfs-check-servers
 ----
 
 .Expected Output:
-[source,shell]
 ----
 root@node01:/home/user_id/beegfs-csi-driver# beegfs-check-servers 
 Management 
@@ -93,7 +85,6 @@ mgmt [ID: 1]: reachable at XXX.X.AB.1:8008 (protocol: TCP)
 * Update the value for volDirBasePath. Set the value to an unique value such as k8s cluster name to prevent multiple k8s clusters from dynamically provisioning volumes at the same BeeGFS path.
 
 .Expected Output:
-[source,shell]
 ----
 Copyright 2021 NetApp, Inc. All Rights Reserved. 
 #Licensed under the Apache License, Version 2.0. 
@@ -119,7 +110,7 @@ a1lowVolumeExpansion: true
 ----
 ====
 
-=== 4. Deploy
+=== Deploy
 
 [source,console]
 ----
@@ -127,7 +118,6 @@ kubectl apply -f examples/k8s/dyn
 ----
 
 .Expected Output:
-[source,shell]
 ----
 root@node01:/home/user_id/beegfs-csi-driver# kubectl apply -f examples/k8s/dyn 
 pod/csi-beegfs-dyn-app created 
@@ -135,7 +125,7 @@ persistentvolumeclaim/csi-beegfs-dyn-pvc created
 storageclass.storage.k8s.io/csi-beegfs-dyn-sc created 
 ----
 
-=== 5. Verify StorageClass 
+=== Verify StorageClass 
 
 ==== Check that the StorageClass was created successfully: 
 
@@ -145,7 +135,6 @@ kubectl get sc
 ----
 
 Expected Output:
-[source,shell]
 ----
 root@node01:/home/user_id/beegfs-csi-driver# kubectl get sc  
 NAME                PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE 
