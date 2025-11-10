@@ -15,8 +15,6 @@ summary: "Pre-requisites to deploy the BeeGFS CSI Driver"
 [.lead]
 Before deploying and configuring the BeeGFS CSI Driver, ensure you have a running Kubernetes cluster, access to a BeeGFS storage system, and the necessary permissions to install cluster-wide resources.
 
-== Steps
-
 === Verify Kubernetes Setup
 
 Run the following command to check the status of pods in your Kubernetes cluster:
