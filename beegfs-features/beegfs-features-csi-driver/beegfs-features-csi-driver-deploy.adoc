@@ -16,12 +16,12 @@ summary: "Deployment of the BeeGFS CSI Driver."
 Instructions for deploying the BeeGFS CSI Driver.
 
 == Offline Access: 
-If you only have offline access, download the BeeGFS-CSI driver repo from your internal server. 
 
 . Retrieve Images for Offline Deployment 
 
-Offline deployment refers to the unavailability of the internet to download container images needed for CSI-Driver. In this case, both the kubernetes yaml files and the container images need to be downloaded in advance and copied to the system where the CSI driver setup is to be done. The kubernetes yaml files can be downloaded from this Github repository: 
+In environments where internet access is restricted or unavailable—such as air-gapped systems—standard deployment methods for the CSI Driver won’t work, as container images cannot be pulled directly from public registries. To enable offline deployment, both the Kubernetes YAML configuration files and the required container images must be downloaded in advance on a system with internet access. These assets should then be transferred to the target system where the CSI Driver will be installed. 
 
+The YAML files can be sourced from the official BeeGFS CSI Driver GitHub repository, ensuring consistency with the latest release:
 [source,console]
 ----
 git clone https://github.com/ThinkParQ/beegfs-csi-driver.git 
