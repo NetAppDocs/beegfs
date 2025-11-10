@@ -29,20 +29,14 @@ git clone https://github.com/ThinkParQ/beegfs-csi-driver.git
 
 Please follow the below mentioned steps for doing the offline deployment of CSI Driver: 
 
-. Save the downloaded “beegfs-csi-driver" files to the following directory:
-[source,shell]
-----
-  /home/<User>/beegfs-csi-driver  
-----
+. Save the downloaded “beegfs-csi-driver" files to the `/home/<User>/beegfs-csi-driver` directory.
+
 [start=2]
-. Save the downloaded images to the following directory: 
-[source,shell]
-----
-  /home/<User>/beegfs-csi-images  
-----
+. Save the downloaded images to the `/home/<User>/beegfs-csi-images` directory: 
+
 Since this Kubernetes setup depends on containerd for image management, these images which are saved as .tar files need to be uploaded to containerd 
 [start=3]
-. Navigate to the directory where the images are saved (/home/<User>/beegfs-csi-images). 
+. Navigate to the `/home/<User>/beegfs-csi-images` directory where the images are saved. 
 . Run the following commands to load the images: 
 [source,shell]
 ----
@@ -65,7 +59,7 @@ crictl images
 
 
 [start=6]
-. Navigate to the “beegfs-csi-driver" folder which is downloaded from git 
+. Navigate to the `beegfs-csi-driver` folder which is downloaded from git 
 [source,shell]
 ----
 cd /home/<User>/beegfs-csi-driver 
