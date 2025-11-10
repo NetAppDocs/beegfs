@@ -131,14 +131,11 @@ spec:
 ----
 
 [start=10]
-. Refer the  yaml file for “image-pull-policy" in the “kustomization.yaml” file in `patchesStrategicMerge` section. Add a new entry for the path of the new yaml file: 
-[source,shell]
----- 
-patches/image-pull-policy.yaml 
----- 
+. Reference the image-pull-policy.yaml file in the patchesStrategicMerge section of your kustomization.yaml, and add a new entry pointing to the file path: `patches/image-pull-policy.yaml`.
+
 NOTE: Since Kubernetes is referring to containerd for getting its images, we are referencing images loaded in containerd. If Kubernetes is configured to load images from Docker, then the images would be used from docker daemon. In either case, the image-pull-policy yaml file is going to remain the same. 
 
-== Online Access - GithubRepo:
+== Online Deployment:
 If you have online web access and you are on a machine with kubectl and access to the Kubernetes cluster where you want to deploy the BeeGFS CSI driver, clone this repository:
 git clone https://github.com/ThinkParQ/beegfs-csi-driver.git.
 
