@@ -26,7 +26,6 @@ The YAML files can be sourced from the official BeeGFS CSI Driver GitHub reposit
 ----
 git clone https://github.com/ThinkParQ/beegfs-csi-driver.git 
 ----
-The PS team can provide the path of the location to download the container images. 
 
 Please follow the below mentioned steps for doing the offline deployment of CSI Driver: 
 
