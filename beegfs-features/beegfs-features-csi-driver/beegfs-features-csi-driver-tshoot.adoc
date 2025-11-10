@@ -30,7 +30,6 @@ Error example when trying to get all the currently running pods on the node:
 kubectl get pods
 ----
 .Example of Erroneous Output: 
-[source,shell]
 ----
 root@node@1:~# kubectl get pods 
 E0829 14:30:28.644318 5617 memcache.go:265)] "Unhandled Error" err="couldn't get current server API group list: Get \"https://XX.YYY.ZZ.CC:644 
@@ -57,7 +56,6 @@ Check the status of the containerd daemon:
 systemctl status containerd
 ----
 Expected Output:
-[source,shell]
 ----
 root@node01:/home/user_id/beegfs-csi-driver# systemctl status containerd 
 o containerd.service - containerd container runtime 
@@ -71,7 +69,6 @@ If the daemon is not running, restart it:
 systemctl restart containerd
 ----
 Expected Output:
-[source,shell]
 ----
 root@node01:/home/user_id/beegfs-csi-driver# systemctl status containerd 
 o containerd.service - containerd container runtime 
@@ -104,7 +101,6 @@ Check the status of the kubelet service:
 systemctl status kubelet
 ----
 Expected Output:
-[source,shell]
 ----
 image:CSI_KB_15.png["Screenshot showing kubelet service active and running"]
 ----
@@ -114,7 +110,6 @@ If the service is not running, restart it:
 systemctl restart kubelet
 ----
 Expected Output:
-[source,shell]
 ----
 image:CSI_KB_16.png["Screenshot showing kubelet service active and running"]
 ----
@@ -134,7 +129,6 @@ swapoff -a
 systemctl restart kubelet
 ----
 Expected Output:
-[source,shell]
 ----
 root@node01:/home/user_id/beegfs-csi-driver# systemctl status kubelet 
 ● kubelet.service - kubelet: The Kubernetes Node Agent 
@@ -178,7 +172,6 @@ ibs1f1
 ----
 * Update the path for the connAuthFile parameter if authentication is enabled. 
 Example configuration screenshot shown below:
-[source,shell]
 ----
 connDisableAuthentication = false 
 # BEGIN ANSIBLE NETAPP_ESERIES.HOST.UPDATE_CONF MANAGED BLOCK 
@@ -206,7 +199,6 @@ connDisableAuthentication = false
 NOTE: If the customer is willing for the BeeGFS file system to connect without 	authentication, then the flag above should be set to true. 
 
 Example configuration screenshot shown below:
-[source,shell]
 ----
 # --- Section 1: [Settings] ---  
 # 
@@ -287,7 +279,6 @@ Once the images are available, copy deploy/k8s/overlays/default to deploy/k8s/ov
 . *Troubleshooting BeeGFS Controller issues*
 
 After deploying overlays, we may find status as PENDING in the output of kubectl get all. 
-[source,console]
 ----
 root@node01:/home/user_id/beegfs-csi-driver# kubectl get all -n beegfs-csi 
 NAME                          READY   STATUS    RESTARTS   AGE 
@@ -300,7 +291,6 @@ If the status is as shown above, then it is time to explore the pods created by 
 kubectl describe pod csi-beegfs-controller-0 -n beegfs-csi 
 ----
 If you encounter errors related to "untolerated taint" (visible in the output of kubectl describe) as below: 
-[source,console]
 ----
 Events: 
   Type     Reason            Age   From               Message 
