@@ -102,7 +102,16 @@ systemctl status kubelet
 ----
 Expected Output:
 ----
-image:CSI_KB_15.png["Screenshot showing kubelet service active and running"]
+root@node01:/home/user_id/beegfs-csi-driver# systemctl status kubelet 
+o kubelet.service - kubelet: The Kubernetes Node Agent 
+    Loaded: loaded (/lib/systemd/system/kubelet.service; enabled; vendor preset: enabled) 
+    Drop-In: /usr/lib/systemd/system/kubelet.service.d 
+             └─10-kubeadm.conf 
+    Active: activating (auto-restart) (Result: exit-code) since Fri 2025-08-29 14:34:25 CDT; 6s ago 
+      Docs: https://kubernetes.io/docs/ 
+     Process: 6636 ExecStart=/usr/bin/kubelet $KUBELET_KUBECONFIG ARGS $KUBELET CONFIG ARGS $KUBELET KUBEADM ARGS
+     $KUBELET_EXTRA ARGS (code=exited, status=1/FAILURE) 
+     Main PID: 6636 (code=exited, status=1/FAILURE) 
 ----
 If the service is not running, restart it:
 [source,console]
