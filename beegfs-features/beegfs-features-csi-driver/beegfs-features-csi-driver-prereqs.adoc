@@ -41,7 +41,7 @@ beegfs-check-servers
 ----
 
 .Expected Output:
-[source,shell]
+----
 root@node01:/home/user_id/beegfs-csi-driver# beegfs-check-servers 
 Management 
 ========== 
