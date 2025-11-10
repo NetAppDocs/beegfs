@@ -118,10 +118,6 @@ If the service is not running, restart it:
 ----
 systemctl restart kubelet
 ----
-Expected Output:
-----
-image:CSI_KB_16.png["Screenshot showing kubelet service active and running"]
-----
 If issue persists, check the syslog for errors:
 [source,console]
 ----
