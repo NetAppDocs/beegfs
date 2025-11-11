@@ -63,15 +63,16 @@ Events:
 From the project directory, deploy the example application files, which include a StorageClass, PVC, and a pod using the BeeGFS CSI driver. 
 
 Before deploying: 
-[.indented]
+
 ====
 
 * Get the IP of the BeeGFS management node:
++
 [source,console]
 ----
 beegfs-check-servers
 ----
-
++
 .Expected Output:
 ----
 root@node01:/home/user_id/beegfs-csi-driver# beegfs-check-servers 
