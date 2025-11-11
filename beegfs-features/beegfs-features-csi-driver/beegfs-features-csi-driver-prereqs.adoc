@@ -25,7 +25,7 @@ kubectl get pods
 ----
 
 .Expected Output:
-[source,shell]
+----
 root@node@1:/etc/cni/net.d# kubectl get pods 
 No resources found in default namespace. 
 ----
