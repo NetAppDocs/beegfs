@@ -74,5 +74,22 @@ stor_32_tgt_3201 [ID: 3201]: reachable at XXX.X.DD.32:8323 (protocol: TCP)
 For deploying BeeGFS CSI driver in environments where Kubernetes nodes do not have internet access, you must either ensure all necessary images (see deploy/k8s/overlays/default for a complete list) are available on all nodes or ensure they can be pulled from some internal registry. 
 
 Overlays Default Image List can be found in these yaml files: 
-
 image:CSI_KB_03.png["List of images used by the BeeGFS CSI Driver in YAML format"]
+
+These are the list of images that are needed for this deployment:  
+----
+ghcr.io/thinkparq/beegfs-csi-driver                    
+registry.k8s.io/sig-storage/csi-node-driver-registrar  
+registry.k8s.io/sig-storage/csi-provisioner            
+registry.k8s.io/sig-storage/csi-resizer                
+registry.k8s.io/sig-storage/livenessprobe              
+----
+
+[.spacer]
+====
+====
+
+
+
+
+
