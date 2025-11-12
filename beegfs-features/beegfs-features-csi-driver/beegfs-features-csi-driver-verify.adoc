@@ -14,7 +14,7 @@ summary: "Verification of the BeeGFS CSI Driver Deployment."
 
 [.lead]
 
-To verify the deployment of the BeeGFS CSI Driver, you can check the status of the CSI Driver pods and ensure they are running correctly.
+To verify that the BeeGFS CSI Driver has been deployed successfully, check the status of the CSI Driver pods and confirm that they are running as expected.
 
 Check the status of all resources in the BeeGFS-CSI namespace:
 
@@ -134,7 +134,7 @@ storageclass.storage.k8s.io/csi-beegfs-dyn-sc created
 kubectl get sc
 ----
 
-Expected Output:
+.Expected Output:
 ----
 root@node01:/home/user_id/beegfs-csi-driver# kubectl get sc  
 NAME                PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE 
