@@ -39,7 +39,7 @@ Since this Kubernetes setup depends on containerd for image management, these im
 . Navigate to the `/home/<User>/beegfs-csi-images` directory where the images are saved. 
 +
 . Run the following commands to load the images: 
-+
++ 
 [source,shell]
 ----
 # Loading these docker images saved in local directory to containerd: 
