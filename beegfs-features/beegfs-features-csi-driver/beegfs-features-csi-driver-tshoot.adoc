@@ -46,8 +46,7 @@ E0829 14:30:28.650161 5617 memcache.go:265) "Unhandled Error" err="couldn't get 
 ----
 
 There are several areas of investigation for fixing most of the issues like these. We can look at the areas in this order: 
-[.indented]
-====
+
 1. *Error in containerd*
 
 Check the status of the containerd daemon: 
@@ -87,11 +86,7 @@ root@node01:/home/user_id/beegfs-csi-driver# systemctl status containerd
      Memory: 1.0G 
      CGroup: /system.slice/containerd.service 
 ----
-====
 
-
-[.indented]
-====
 [start=2]
 . *Error in kubelet*
 
@@ -150,11 +145,7 @@ root@node01:/home/user_id/beegfs-csi-driver# systemctl status kubelet
 ----
 
 NOTE: Swap is typically enabled by default during OS installation and listed in /etc/fstab. Kubernetes does not support running with swap enabled. 
-[.indented]
-====
 
-[.indented]
-====
 [start=3]
 . *Troubleshooting BeeGFS Client and Helperd Configuration*
 
@@ -221,11 +212,6 @@ runDaemonized 			= true
 tuneNumWorkers 			= 2 
 ----
 
-[.indented]
-====
-
-[.indented]
-====
 [start=4]
 . *Troubleshooting Airgapped Kubernetes Deployment*
 
@@ -274,12 +260,7 @@ docker load < beegfs-csi-driver.tar.gz
 
 Once the images are available, copy `deploy/k8s/overlays/default` to `deploy/k8s/overlays/my-overlay` and modify the images to point to the images now locally available. Adjust the images[].newTag fields as necessary to ensure they either match images that exist on the Kubernetes nodes or reference your internal registry. 
 
-[.indented] 
 
-====
-
-[.indented] 
-====
 [start=5]
 . *Troubleshooting BeeGFS Controller issues*
 
@@ -318,11 +299,8 @@ After removing the taint, re-apply the overlays. The issue will then be resolved
 ----
 kubectl apply -k deploy/k8s/overlays/default 
 ----
-[.indented] 
-====
 
-[.indented] 
-====
+
 [start=6]
 . *Downloading the images and saving them locally*
 Kindly note that these images are first pulled from docker and then saved to local as tar files. 
@@ -344,6 +322,5 @@ docker save registry.k8s.io/sig-storage/csi-resizer:v1.11.1 -o csi-resizer_v1.11
 docker save registry.k8s.io/sig-storage/livenessprobe:v2.10.0 -o livenessprobe_v2.10.0.tar 
 docker save registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0 -o csi-node-driver-registrar_v2.8.0.tar 
 ----
-[.indented] 
-====
+
 
