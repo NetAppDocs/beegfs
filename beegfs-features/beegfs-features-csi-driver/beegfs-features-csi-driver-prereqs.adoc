@@ -85,11 +85,6 @@ registry.k8s.io/sig-storage/csi-resizer
 registry.k8s.io/sig-storage/livenessprobe              
 ----
 
-[.spacer]
-====
-====
-
-
 
 
 
