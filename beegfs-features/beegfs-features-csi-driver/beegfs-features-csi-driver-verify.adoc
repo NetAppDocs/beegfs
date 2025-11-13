@@ -125,7 +125,7 @@ persistentvolumeclaim/csi-beegfs-dyn-pvc created
 storageclass.storage.k8s.io/csi-beegfs-dyn-sc created 
 ----
 
-=== Verify StorageClass 
+== Verify StorageClass 
 
 ==== Check that the StorageClass was created successfully: 
 
