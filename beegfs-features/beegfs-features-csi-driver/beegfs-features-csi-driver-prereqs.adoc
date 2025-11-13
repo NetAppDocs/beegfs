@@ -70,7 +70,8 @@ stor_31_tgt_3101 [ID: 3101]: reachable at XXX.X.CC.ST:8313 (protocol: TCP)
 stor_32_tgt_3201 [ID: 3201]: reachable at XXX.X.DD.32:8323 (protocol: TCP) 
 ----
 
-== Prepare Air-Gapped Kubernetes Nodes for Deployment 
+== Prepare Air-Gapped Kubernetes Nodes for Deployment
+
 For deploying BeeGFS CSI driver in environments where Kubernetes nodes do not have internet access, you must either ensure all necessary images (see deploy/k8s/overlays/default for a complete list) are available on all nodes or ensure they can be pulled from some internal registry. 
 
 Overlays Default Image List can be found in these yaml files: 
