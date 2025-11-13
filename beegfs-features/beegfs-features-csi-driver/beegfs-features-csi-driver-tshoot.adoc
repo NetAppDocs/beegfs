@@ -136,6 +136,7 @@ tail -f /var/log/syslog | grep kubelet
 *Swap Issue*
 +
 If you encounter errors related to “swap,” disable swap and restart the kubelet.
++
 NOTE: For the swapoff command shown below, it’s best to type it manually rather than copy it from here. Copying may cause issues if the hyphen changes from a standard ASCII hyphen-minus (-) to a Unicode en dash (–).
 +
 [source,console]
