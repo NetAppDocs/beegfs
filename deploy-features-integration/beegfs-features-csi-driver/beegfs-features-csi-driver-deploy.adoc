@@ -270,19 +270,21 @@ After installing the BeeGFS CSI Driver (either Air-Gapped or Online), you can de
 
 . Get the IP address of the BeeGFS management node:
 +
-.BeeGFS 7.4
+**BeeGFS 7.4**
++
 [source,console]
 ----
 beegfs-check-servers
 ----
 +
-.BeeGFS 8
+**BeeGFS 8**
++
 [source,console]
 ----
 beegfs health network
 ----
 +
-.Expected Output:
+**Expected Output:**
 +
 ----
 Management 
@@ -320,7 +322,7 @@ allowVolumeExpansion: true
 kubectl apply -f examples/k8s/dyn
 ----
 +
-.Expected Output:
+**Expected Output:**
 +
 ----
 pod/csi-beegfs-dyn-app created 

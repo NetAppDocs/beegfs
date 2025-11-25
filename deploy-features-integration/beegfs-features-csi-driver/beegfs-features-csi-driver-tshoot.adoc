@@ -51,7 +51,7 @@ Check the status of the containerd daemon:
 systemctl status containerd
 ----
 
-Expected Output:
+**Expected Output:**
 
 ----
 root@node01:/home/user_id/beegfs-csi-driver# systemctl status containerd 
@@ -78,7 +78,7 @@ Check the status of the kubelet service:
 systemctl status kubelet
 ----
 
-Expected Output:
+**Expected Output:**
 
 ----
 root@node01:/home/user_id/beegfs-csi-driver# systemctl status kubelet 
@@ -121,7 +121,7 @@ swapoff -a
 systemctl restart kubelet
 ----
 
-Expected Output:
+**Expected Output:**
 
 ----
 root@node01:/home/user_id/beegfs-csi-driver# systemctl status kubelet 
@@ -201,6 +201,7 @@ connAuthFile=/etc/beegfs/XXX.X.XX.X_connAuthFile
 NOTE: If you intentionally want to allow the BeeGFS file system to connect **without authentication**, set `connDisableAuthentication = true` and remove or comment out the `connAuthFile` parameter.
 +
 **Example helperd configuration:**
++
 ----
 # --- Section 1: [Settings] ---
 #
@@ -265,7 +266,7 @@ Remove the taint from the node using the following command:
 kubectl taint nodes node01 node-role.kubernetes.io/control-plane:NoSchedule-
 ----
 
-Expected Output:
+**Expected Output:**
 
 ----
 root@node01:/home/user_id/beegfs-csi-driver# kubectl taint nodes node01 node-role.kubernetes.io/control-plane:NoSchedule-  

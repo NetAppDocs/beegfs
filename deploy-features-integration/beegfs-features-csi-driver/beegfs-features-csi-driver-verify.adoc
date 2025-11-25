@@ -23,7 +23,7 @@ To check the status of all resources in the BeeGFS-CSI namespace, run:
 kubectl get all -n beegfs-csi
 ----
 
-Expected Output:
+**Expected Output:**
 ----
 NAME                          READY    STATUS      RESTARTS    AGE  
 pod/csi-beegfs-controller-0   3/3      Running     0           5d11h
@@ -39,7 +39,7 @@ To diagnose issues or gather more details about the BeeGFS CSI Controller pod, u
 kubectl describe pod csi-beegfs-controller-0 -n beegfs-csi
 ----
 
-Expected Output:
+**Expected Output:**
 ----
 Events: 
 
@@ -67,7 +67,7 @@ Events:
 kubectl get sc
 ----
 +
-Expected Output:
+**Expected Output:**
 +
 ----
 root@node01:/home/user_id/beegfs-csi-driver# kubectl get sc  

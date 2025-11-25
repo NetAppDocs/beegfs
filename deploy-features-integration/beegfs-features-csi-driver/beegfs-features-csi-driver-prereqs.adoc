@@ -24,7 +24,7 @@ Run the following command to check the status of pods in your Kubernetes cluster
 kubectl get pods
 ----
 
-.Expected output:
+**Expected output:**
 ----
 root@node01:/etc/cni/net.d# kubectl get pods
 No resources found in default namespace.
@@ -36,13 +36,13 @@ If no pods are running, the list will be empty. Otherwise, pods should be listed
 
 Verify the BeeGFS cluster is healthy and all services are reachable by running the following command:
 
-.BeeGFS 7.4
+**BeeGFS 7.4**
 [source,console]
 ----
 beegfs-check-servers
 ----
 
-.BeeGFS 8
+**BeeGFS 8**
 [source,console]
 ----
 beegfs health check
@@ -50,7 +50,7 @@ beegfs health check
 
 NOTE: The CSI Driver works with both `beegfs-dkms-client` and `beegfs-client`, which must be installed on each Kubernetes node. For installation steps, see the BeeGFS Client DKMS documentation: https://doc.beegfs.io/latest/advanced_topics/client_dkms.html
 
-.BeeGFS 7.4 Expected output:
+**BeeGFS 7.4 Expected output:**
 ----
 root@node01:/home/user_id/beegfs-csi-driver# beegfs-check-servers
 Management
