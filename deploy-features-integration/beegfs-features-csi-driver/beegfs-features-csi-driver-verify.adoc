@@ -16,7 +16,7 @@ summary: "Verification of the BeeGFS CSI Driver Deployment."
 
 To verify that the BeeGFS CSI Driver has been deployed successfully, check the status of the CSI Driver pods and confirm that they are running as expected.
 
-Check the status of all resources in the BeeGFS-CSI namespace:
+To check the status of all resources in the BeeGFS-CSI namespace, run:
 
 [source,console]
 ----
@@ -32,7 +32,7 @@ pod/csi-beegfs-node-8f917     3/3      Running     0           5d11h
 
 == Inspect Controller Pod 
 
-(Describes the controller pod for more details and error checking):
+To diagnose issues or gather more details about the BeeGFS CSI Controller pod, use the following command to describe the pod and review its events, status, and recent activity:
 
 [source,console]
 ----
@@ -60,27 +60,31 @@ Events:
 
 == Verify StorageClass 
 
-==== Check that the StorageClass was created successfully: 
-
+. Validate the StorageClass was created successfully: 
++
 [source,console]
 ----
 kubectl get sc
 ----
-
-.Expected Output:
++
+Expected Output:
++
 ----
 root@node01:/home/user_id/beegfs-csi-driver# kubectl get sc  
 NAME                PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE 
 csi-beegfs-dyn-sc   beegfs.csi.org.com   Delete          Immediate           true                   17s 
 ----
 
-==== Verify the drive is mounted correctly: 
-Check that the drive configured in examples/k8s/dyn/dyn-sc.yaml is showing under /mnt/beegfs. 
-In this case the mount-drive was named as “user_id_k8s”, which is showing up the screenshot as shown below:
-[source,shell]
+. Confirm that the BeeGFS volume is mounted as expected.
++
+Verify the directory specified as `volDirBasePath` in `examples/k8s/dyn/dyn-sc.yaml` appears under `/mnt/beegfs`.
++
+For example, if `volDirBasePath` is set to `user_id_k8s`, you should see this directory listed:
++
+[source,console]
 ----
-root@node01:/# ls -ltr /mnt/beegfs/ 
-total 1 
-drwxrwxrwx 4 root root 2 Oct 15 10:16 user_k8s 
+root@node01:/# ls -ltr /mnt/beegfs/
+total 1
+drwxrwxrwx 4 root root 2 Oct 15 10:16 user_id_k8s
 ----
 

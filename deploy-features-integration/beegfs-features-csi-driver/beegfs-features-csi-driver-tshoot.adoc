@@ -31,7 +31,7 @@ Example error when attempting to retrieve all currently running pods on the node
 kubectl get pods
 ----
 
-.Output Showing an Error:
+**Example output of an error:**
 ----
 root@node@1:~# kubectl get pods 
 E0829 14:30:28.644318 5617 memcache.go:265)] "Unhandled Error" err="couldn't get current server API group list: Get \"https://XX.YYY.ZZ.CC:644 
@@ -40,7 +40,7 @@ E0829 14:30:28.644318 5617 memcache.go:265)] "Unhandled Error" err="couldn't get
  The connection to the server XX.YYY.ZZ.CC:6443 was refused - did you specify the right host or port? 
 ----
 
-There are several key areas to investigate when addressing issues like these. We recommend reviewing them in the following order:
+There are several key areas to investigate when addressing issues like these. It is recommend to start by examining each area listed below.
 
 == Error in containerd
 
@@ -111,8 +111,6 @@ tail -f /var/log/syslog | grep kubelet
 
 If you encounter errors related to “swap,” disable swap and restart the kubelet.
 
-NOTE: For the swapoff command shown below, it’s best to type it manually rather than copy it from here. Copying may cause issues if the hyphen changes from a standard ASCII hyphen-minus (-) to a Unicode en dash (–).
-
 [source,console]
 ----
 swapoff -a
@@ -144,9 +142,9 @@ NOTE: Swap is usually enabled by default during the operating system installatio
 
 == Troubleshooting BeeGFS Client and Helperd Configuration
 
-Review the configuration in `/etc/beegfs/beegfs-client.conf`.
-
-* By default, BeeGFS connection authentication should be **enabled** for secure environments. Ensure the `connDisableAuthentication` flag is set to `false` and the correct path for the `connAuthFile` is specified:
+. Review the configuration in `/etc/beegfs/beegfs-client.conf`.
++
+By default, BeeGFS connection authentication should be **enabled** for secure environments. Ensure the `connDisableAuthentication` flag is set to `false` and the correct path for the `connAuthFile` is specified:
 +
 [source,console]
 ----
@@ -156,17 +154,20 @@ connAuthFile=/etc/beegfs/XXX.X.XX.X_connAuthFile
 +
 NOTE: If you intentionally want to allow the BeeGFS file system to connect **without authentication**, set `connDisableAuthentication = true` and remove or comment out the `connAuthFile` parameter.
 
-* Verify the IP address for the management service in the `sysMgmtdHost` parameter is set correctly.
-* Update the paths for `connRDMAInterfacesFile` and `connInterfacesFile`. These files specify the network interfaces used for storage or inter-node communication. For example:
+. Verify the IP address for the management service in the `sysMgmtdHost` parameter is set correctly.
+
+. Update the paths for `connRDMAInterfacesFile` and `connInterfacesFile`. These files specify the network interfaces used for storage or inter-node communication. For example:
 +
 [source,shell]
 ----
 ibs1f0
 ibs1f1
 ----
-* Update the path for the `connAuthFile` parameter **if authentication is enabled**.
 
-Example configuration:
+. Update the path for the `connAuthFile` parameter **if authentication is enabled**.
++
+**Example configuration:**
++
 ----
 connDisableAuthentication = false
 connAuthFile=/etc/beegfs/XXX.X.XX.X_connAuthFile
@@ -187,19 +188,19 @@ sysMgmtdHost=XXX.X.XX.X
 connInterfacesFile=/etc/beegfs/XXX.X.XX.X_8004_connInterfaces.conf
 ----
 
-Review the configuration in `/etc/beegfs/beegfs-helperd.conf`.
-
-* As with the client configuration, connection authentication should be **enabled** by default. Ensure the `connDisableAuthentication` flag is set to `false` and the correct path for the `connAuthFile` is specified:
-
+. Review the configuration in `/etc/beegfs/beegfs-helperd.conf`.
++
+As with the client configuration, connection authentication should be **enabled** by default. Ensure the `connDisableAuthentication` flag is set to `false` and the correct path for the `connAuthFile` is specified:
++
 [source,console]
 ----
 connDisableAuthentication = false
 connAuthFile=/etc/beegfs/XXX.X.XX.X_connAuthFile
 ----
-
++
 NOTE: If you intentionally want to allow the BeeGFS file system to connect **without authentication**, set `connDisableAuthentication = true` and remove or comment out the `connAuthFile` parameter.
-
-Example helperd configuration:
++
+**Example helperd configuration:**
 ----
 # --- Section 1: [Settings] ---
 #

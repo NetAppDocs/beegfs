@@ -257,7 +257,7 @@ statefulset.apps/csi-beegfs-controller created
 daemonset.apps/csi-beegfs-node created
 csidriver.storage.k8s.io/beegfs.csi.netapp.com created
 ----
-
++
 NOTE: Use `kubectl apply -k` for overlays (directories containing a `kustomization.yaml` file). Use `kubectl apply -f` for plain YAML manifests or directories of manifests.
 
 . Proceed to the <<Deploy Example Application>> section to validate your BeeGFS CSI Driver setup.
