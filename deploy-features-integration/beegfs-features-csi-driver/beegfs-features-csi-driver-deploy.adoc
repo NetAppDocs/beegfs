@@ -1,0 +1,293 @@
+---
+sidebar: sidebar
+permalink: deploy-features-integration/beegfs-csi-driver/csi-driver-deploy.html
+keywords: BeeGFS Features, CSI, Driver
+summary: "Deployment Instructions for the BeeGFS CSI Driver."
+---
+= Deployment of the BeeGFS CSI Driver
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ../media/
+
+
+[.lead]
+Instructions for deploying the BeeGFS CSI Driver in a Kubernetes environment.
+
+== Air-Gapped Deployment
+
+. Deploy the BeeGFS CSI Driver using your customized overlay. This step applies all your configuration changes, including the use of locally imported images and the updated image pull policy.
++
+Run the following command from the root of your cloned BeeGFS CSI Driver repository:
++
+[source,console]
+----
+kubectl apply -k deploy/k8s/overlays/beegfs-overlay
+----
+
+== Deploy Example Application
+
+After deploying the BeeGFS CSI Driver, you can deploy the example application to validate your setup. This example includes a StorageClass, PersistentVolumeClaim (PVC), and a pod using the BeeGFS CSI driver.
+
+=== Before deploying:
+
+. Get the IP address of the BeeGFS management node:
++
+[source,console]
+----
+beegfs-check-servers
+----
++
+.Expected Output:
++
+----
+root@node01:/home/user_id/beegfs-csi-driver# beegfs-check-servers 
+Management 
+========== 
+mgmt [ID: 1]: reachable at XXX.X.AB.1:8008 (protocol: TCP) 
+----
+
+. Update the management node IP in `examples/k8s/dyn/dyn-sc.yaml`.
+
+. Update the value for `volDirBasePath`. Set this to a unique value (such as your k8s cluster name) to prevent multiple clusters from dynamically provisioning volumes at the same BeeGFS path.
++
+.Example StorageClass snippet:
++
+[source,yaml]
+----
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: csi-beegfs-dyn-sc
+provisioner: beegfs.csi.netapp.com
+parameters:
+  # Replace "localhost" with the IP address or hostname of the BeeGFS management daemon.
+  sysMgmtdHost: 192.1.18.1
+  # Replace "name" with a unique k8s cluster name.
+  volDirBasePath: user_id_k8s
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
+----
+
+=== Deploy
+
+. Deploy the example application files:
++
+[source,console]
+----
+kubectl apply -f examples/k8s/dyn
+----
++
+.Expected Output:
++
+----
+root@node01:/home/user_id/beegfs-csi-driver# kubectl apply -f examples/k8s/dyn 
+pod/csi-beegfs-dyn-app created 
+persistentvolumeclaim/csi-beegfs-dyn-pvc created 
+storageclass.storage.k8s.io/csi-beegfs-dyn-sc created 
+----
+
+== Online Deployment
+
+. Deploy the default overlay using `kubectl`. This will automatically pull the required images from their respective registries and create all necessary Kubernetes resources:
++
+[source,console]
+----
+kubectl apply -k deploy/k8s/overlays/default
+----
+
+. Verify that the resources have been created and the pods are running:
++
+[source,console]
+----
+kubectl get pods -n beegfs-csi
+----
+
+. Example output:
++
+----
+namespace/beegfs-csi created
+serviceaccount/csi-beegfs-controller-sa created
+serviceaccount/csi-beegfs-node-sa created
+role.rbac.authorization.k8s.io/csi-beegfs-privileged-scc-role created
+clusterrole.rbac.authorization.k8s.io/csi-beegfs-provisioner-role created
+rolebinding.rbac.authorization.k8s.io/csi-beegfs-privileged-scc-binding created
+clusterrolebinding.rbac.authorization.k8s.io/csi-beegfs-provisioner-binding created
+configmap/csi-beegfs-config-kkc8fg68fh created
+secret/csi-beegfs-connauth-b8kbm2mmm2 created
+statefulset.apps/csi-beegfs-controller created
+daemonset.apps/csi-beegfs-node created
+csidriver.storage.k8s.io/beegfs.csi.netapp.com created
+----
+
+NOTE: If you need to deploy a customized overlay (for example, with modified configuration or patches), specify the path to your overlay directory instead of `default` in the `kubectl apply -k` command.
+
+== Deploy Example Application
+
+After deploying the BeeGFS CSI Driver, you can deploy the example application to validate your setup. This example includes a StorageClass, PersistentVolumeClaim (PVC), and a pod using the BeeGFS CSI driver.
+
+=== Before deploying:
+
+. Get the IP address of the BeeGFS management node:
++
+.BeeGFS 7.4
+[source,console]
+----
+beegfs-check-servers
+----
++
+.BeeGFS 8
+[source,console]
+----
+beegfs health network
+----
++
+.Expected Output:
++
+----
+Management 
+========== 
+mgmt [ID: 1]: reachable at 192.1.18.1:8008 (protocol: TCP) 
+----
+
+. Update the management node IP in `examples/k8s/dyn/dyn-sc.yaml`.
+
+. Update the value for `volDirBasePath`. Set this to a unique value (such as your k8s cluster name) to prevent multiple clusters from dynamically provisioning volumes at the same BeeGFS path.
++
+.Example StorageClass snippet:
++
+[source,yaml]
+----
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: csi-beegfs-dyn-sc
+provisioner: beegfs.csi.netapp.com
+parameters:
+  # Replace "localhost" with the IP address or hostname of the BeeGFS management daemon.
+  sysMgmtdHost: 192.1.18.1
+  # Replace "name" with a unique k8s cluster name.
+  volDirBasePath: user_id_k8s
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
+----
+
+=== Deploy
+
+. Deploy the example application files:
++
+[source,console]
+----
+kubectl apply -f examples/k8s/dyn
+----
++
+.Expected Output:
++
+----
+root@node01:/home/user_id/beegfs-csi-driver# kubectl apply -f examples/k8s/dyn 
+pod/csi-beegfs-dyn-app created 
+persistentvolumeclaim/csi-beegfs-dyn-pvc created 
+storageclass.storage.k8s.io/csi-beegfs-dyn-sc created 
+----
+
+. Deploy the BeeGFS CSI Driver using your customized overlay:
++
+[source,console]
+----
+kubectl apply -k deploy/k8s/overlays/beegfs-overlay
+----
+
+== Online Deployment
+
+. Deploy the default overlay using `kubectl`:
++
+[source,console]
+----
+kubectl apply -k deploy/k8s/overlays/default
+----
+
+. Verify that the resources have been created and the pods are running:
++
+[source,console]
+----
+kubectl get pods -n beegfs-csi
+----
+
+NOTE: Use `kubectl apply -k` for overlays (directories with `kustomization.yaml`). Use `kubectl apply -f` for plain YAML manifests or directories of manifests.
+
+== Deploy Example Application
+
+After deploying the BeeGFS CSI Driver (either Air-Gapped or Online), you can deploy the example application to validate your setup. This example includes a StorageClass, PersistentVolumeClaim (PVC), and a pod using the BeeGFS CSI driver.
+
+=== Configure the BeeGFS Management IP
+
+. Get the IP address of the BeeGFS management node:
++
+.BeeGFS 7.4
+[source,console]
+----
+beegfs-check-servers
+----
++
+.BeeGFS 8
+[source,console]
+----
+beegfs health network
+----
++
+.Example Output:
++
+----
+Management 
+========== 
+mgmt [ID: 1]: reachable at 192.1.18.1:8008 (protocol: TCP) 
+----
+
+. Update the management node IP in `examples/k8s/dyn/dyn-sc.yaml`.
+
+. Update the value for `volDirBasePath`. Set this to a unique value (such as your k8s cluster name) to prevent multiple clusters from dynamically provisioning volumes at the same BeeGFS path.
++
+.Example StorageClass snippet:
++
+[source,yaml]
+----
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: csi-beegfs-dyn-sc
+provisioner: beegfs.csi.netapp.com
+parameters:
+  sysMgmtdHost: 192.1.18.1
+  volDirBasePath: user_id_k8s
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
+----
+
+=== Deploy
+
+. Deploy the example application files:
++
+[source,console]
+----
+kubectl apply -f examples/k8s/dyn
+----
++
+.Expected Output:
++
+----
+pod/csi-beegfs-dyn-app created 
+persistentvolumeclaim/csi-beegfs-dyn-pvc created 
+storageclass.storage.k8s.io/csi-beegfs-dyn-sc created 
+----
+
+. Verify that the example pod and PVC are running and bound:
++
+[source,console]
+----
+kubectl get pod csi-beegfs-dyn-app
+kubectl get pvc csi-beegfs-dyn-pvc
+----

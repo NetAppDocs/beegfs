@@ -1,0 +1,83 @@
+---
+sidebar: sidebar
+permalink: deploy-features-integration/beegfs-csi-driver/csi-driver-prereqs.html
+keywords: BeeGFS Features, CSI, Driver
+summary: "Prerequisites to deploy the BeeGFS CSI Driver"
+---
+= Prerequisites to deploy the BeeGFS CSI Driver
+:hardbreaks:
+:nofooter:
+:icons: font
+:linkattrs:
+:imagesdir: ../media/
+
+
+[.lead]
+Before deploying and configuring the BeeGFS CSI Driver, ensure you have a running Kubernetes cluster, access to your BeeGFS cluster, and appropriate permissions to install cluster-wide resources.
+
+== Verify Kubernetes Setup
+
+Run the following command to check the status of pods in your Kubernetes cluster:
+
+[source,console]
+----
+kubectl get pods
+----
+
+.Expected output:
+----
+root@node01:/etc/cni/net.d# kubectl get pods
+No resources found in default namespace.
+----
+
+If no pods are running, the list will be empty. Otherwise, pods should be listed without errors.
+
+== Validate BeeGFS Client and Services
+
+Verify the BeeGFS cluster is healthy and all services are reachable by running the following command:
+
+.BeeGFS 7.4
+[source,console]
+----
+beegfs-check-servers
+----
+
+.BeeGFS 8
+[source,console]
+----
+beegfs health check
+----
+
+NOTE: The CSI Driver works with both `beegfs-dkms-client` and `beegfs-client`, which must be installed on each Kubernetes node. For installation steps, see the BeeGFS Client DKMS documentation: https://doc.beegfs.io/latest/advanced_topics/client_dkms.html
+
+.BeeGFS 7.4 Expected output:
+----
+root@node01:/home/user_id/beegfs-csi-driver# beegfs-check-servers
+Management
+==========
+mgmt [ID: 1]: reachable at XXX.X.AB.1:8008 (protocol: TCP)
+
+Metadata
+==========
+meta_25_tgt_2501 [ID: 2501]: reachable at XXX.X.AA.MN:8255 (protocol: RDMA)
+meta_26_tgt_2601 [ID: 2601]: reachable at XXX.X.BB.NO:8265 (protocol: RDMA)
+meta_27_tgt_2701 [ID: 2701]: reachable at XXX.X.AA.OP:8275 (protocol: RDMA)
+meta_28_tgt_2801 [ID: 2801]: reachable at XXX.X.BB.PQ:8285 (protocol: RDMA)
+meta_29_tgt_2901 [ID: 2901]: reachable at XXX.X.AA.QR:8295 (protocol: RDMA)
+meta_30_tgt_3001 [ID: 3001]: reachable at XXX.X.BB.RS:8305 (protocol: RDMA)
+meta_31_tgt_3101 [ID: 3101]: reachable at XXX.X.AA.ST:8315 (protocol: RDMA)
+meta_32_tgt_3201 [ID: 3201]: reachable at XXX.X.BB.TU:8325 (protocol: RDMA)
+
+Storage
+==========
+stor_25_tgt_2501 [ID: 2501]: reachable at XXX.X.CC.MN:8253 (protocol: RDMA)
+stor_26_tgt_2601 [ID: 2601]: reachable at XXX.X.DD.NO:8263 (protocol: RDMA)
+stor_27_tgt_2701 [ID: 2701]: reachable at XXX.X.CC.OP:8273 (protocol: RDMA)
+stor_28_tgt_2801 [ID: 2801]: reachable at XXX.X.DD.PQ:8283 (protocol: RDMA)
+stor_29_tgt_2901 [ID: 2901]: reachable at XXX.X.CC.QR:8293 (protocol: RDMA)
+stor_30_tgt_3001 [ID: 3001]: reachable at XXX.X.DD.RS:8303 (protocol: RDMA)
+stor_31_tgt_3101 [ID: 3101]: reachable at XXX.X.CC.ST:8313 (protocol: RDMA)
+stor_32_tgt_3201 [ID: 3201]: reachable at XXX.X.DD.32:8323 (protocol: RDMA)
+----
+
+If any services are unreachable, ensure the BeeGFS client is correctly configured and that network connectivity to the BeeGFS servers is functional.
