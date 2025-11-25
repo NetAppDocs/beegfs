@@ -17,81 +17,217 @@ Instructions for deploying the BeeGFS CSI Driver in a Kubernetes environment.
 
 == Air-Gapped Deployment
 
-. Deploy the BeeGFS CSI Driver using your customized overlay. This step applies all your configuration changes, including the use of locally imported images and the updated image pull policy.
+To perform an Air-Gapped (offline) deployment, both the Kubernetes YAML configuration files and the required container images must be downloaded in advance on a system with internet access. These files then need to be transferred to the target node(s) where the CSI Driver will be installed.
+
+=== Retrieve the Driver and Images
+
+Perform the following steps to deploy the BeeGFS CSI Driver in an air-gapped environment.
+
+. Clone the BeeGFS CSI Driver GitHub repository to your system with internet access:
 +
-Run the following command from the root of your cloned BeeGFS CSI Driver repository:
+[source,console]
+----
+git clone https://github.com/ThinkParQ/beegfs-csi-driver.git
+----
+
+. Acquire and record the latest image version tags from the images listed below. You can visit the official registries or GitHub releases for each image to determine the latest version tags:
++
+[options="header",cols="20%,80%"]
+|===
+| Image Name                        | Registry URL/Reference
+| beegfs-csi-driver                  | https://github.com/ThinkParQ/beegfs-csi-driver/pkgs/container/beegfs-csi-driver
+| csi-provisioner                    | https://github.com/kubernetes-csi/external-provisioner/releases
+| csi-resizer                        | https://github.com/kubernetes-csi/external-resizer/releases
+| livenessprobe                      | https://github.com/kubernetes-csi/livenessprobe/releases
+| csi-node-driver-registrar          | https://github.com/kubernetes-csi/node-driver-registrar/releases
+|===
+
+. Pull each image to your system using containerd, being sure to replace `<latest-tag>` with the actual latest tag for each image:
++
+[source,console]
+----
+ctr -n k8s.io images pull ghcr.io/thinkparq/beegfs-csi-driver:<latest-tag>
+ctr -n k8s.io images pull registry.k8s.io/sig-storage/csi-provisioner:<latest-tag>
+ctr -n k8s.io images pull registry.k8s.io/sig-storage/csi-resizer:<latest-tag>
+ctr -n k8s.io images pull registry.k8s.io/sig-storage/livenessprobe:<latest-tag>
+ctr -n k8s.io images pull registry.k8s.io/sig-storage/csi-node-driver-registrar:<latest-tag>
+----
+
+. Each pulled image must be exported as a separate `.tar` file. This is necessary to transfer the images to your Air-Gapped environment and import them into containerd on the target system. For example:
++
+[source,console]
+----
+ctr -n k8s.io images export beegfs-csi-driver_<latest-tag>.tar ghcr.io/thinkparq/beegfs-csi-driver:<latest-tag>
+ctr -n k8s.io images export csi-provisioner_<latest-tag>.tar registry.k8s.io/sig-storage/csi-provisioner:<latest-tag>
+ctr -n k8s.io images export csi-resizer_<latest-tag>.tar registry.k8s.io/sig-storage/csi-resizer:<latest-tag>
+ctr -n k8s.io images export livenessprobe_<latest-tag>.tar registry.k8s.io/sig-storage/livenessprobe:<latest-tag>
+ctr -n k8s.io images export csi-node-driver-registrar_<latest-tag>.tar registry.k8s.io/sig-storage/csi-node-driver-registrar:<latest-tag>
+----
++
+Repeat this export command for every required image, replacing the image name and tag as appropriate.
+
+. Copy the BeeGFS CSI Driver repo and all exported `.tar` files to your Air-Gapped environment using your preferred method. For this setup, save the `beegfs-csi-driver` files to `/home/<User>/beegfs-csi-driver` and the images to `/home/<User>/beegfs-csi-images`.
+
+=== Import the Required Images
+
+. Navigate to the `/home/<User>/beegfs-csi-images` directory where the images are saved and import each image using containerd. For example:
++ 
+[source,console]
+----
+ctr -n k8s.io images import beegfs-csi-driver_<latest-tag>.tar 
+ctr -n k8s.io images import csi-provisioner_<latest-tag>.tar
+ctr -n k8s.io images import csi-resizer_<latest-tag>.tar
+ctr -n k8s.io images import livenessprobe_<latest-tag>.tar
+ctr -n k8s.io images import csi-node-driver-registrar_<latest-tag>.tar
+----
+
+. Run the following command to verify the images were loaded in containerd:
++
+[source,console]
+----
+crictl images 
+----
+
+=== Configure and Deploy the CSI Driver Overlays
+
+. Navigate to the `/home/<User>/beegfs-csi-driver` directory.
+
+. By default, the overlay configurations are intended for online deployments. To perform an air-gapped deployment the overlay configuration needs to be modified. Copy the “default” overlay folder to a new overlay, such as `beegfs-overlay`:
++
+[source,console]
+----
+cp -r deploy/k8s/overlays/default deploy/k8s/overlays/beegfs-overlay
+----
+
+. Edit the `deploy/k8s/overlays/beegfs-overlay/kustomization.yaml` file. Uncomment and update the `images` section with the exact tags you downloaded:
++
+[source,yaml]
+----
+  - name: ghcr.io/thinkparq/beegfs-csi-driver 
+    newTag: <latest-tag>
+    # digest: sha256:eb7ff01259e6770d0103f219e11b7ff334c9d9102a29ea0af95a3c0d7aec1ae3 
+  - name: k8s.gcr.io/sig-storage/csi-provisioner 
+    newName: registry.k8s.io/sig-storage/csi-provisioner 
+    newTag: <latest-tag>
+  - name: k8s.gcr.io/sig-storage/csi-resizer 
+    newName: registry.k8s.io/sig-storage/csi-resizer 
+    newTag: <latest-tag>
+  - name: k8s.gcr.io/sig-storage/livenessprobe 
+    newName: registry.k8s.io/sig-storage/livenessprobe 
+    newTag: <latest-tag> 
+  - name: k8s.gcr.io/sig-storage/csi-node-driver-registrar 
+    newName: registry.k8s.io/sig-storage/csi-node-driver-registrar 
+    newTag: <latest-tag>
+----
+
+. Set Kubernetes to use the locally loaded images in containerd by changing the image pull policy from `Always` to `Never`. Create a file named `image-pull-policy.yaml` in your `deploy/k8s/overlays/beegfs-overlay/` directory with the following content:
++
+[source,yaml]
+---- 
+# Patch for controller 
+kind: StatefulSet 
+apiVersion: apps/v1 
+metadata: 
+  name: csi-beegfs-controller 
+spec: 
+  template: 
+    spec: 
+      containers: 
+        - name: beegfs 
+          imagePullPolicy: Never 
+        - name: csi-provisioner 
+          imagePullPolicy: Never 
+        - name: csi-resizer 
+          imagePullPolicy: Never 
+
+# Patch for node 
+kind: DaemonSet 
+apiVersion: apps/v1 
+metadata: 
+  name: csi-beegfs-node 
+spec: 
+  template: 
+    spec: 
+      containers: 
+        - name: beegfs 
+          imagePullPolicy: Never 
+        - name: node-driver-registrar 
+          imagePullPolicy: Never 
+        - name: liveness-probe 
+          imagePullPolicy: Never 
+----
++
+NOTE: Setting `imagePullPolicy: Never` ensures Kubernetes uses the images loaded into containerd and does not attempt to pull from external registries.
+
+. Open `deploy/k8s/overlays/beegfs-overlay/kustomization.yaml` and add the following section:
++
+[source,yaml]
+----
+patchesStrategicMerge:
+  - image-pull-policy.yaml
+----
++
+NOTE: The `patchesStrategicMerge` section allows you to apply custom patches—such as changing the `imagePullPolicy` on top of the base Kubernetes manifests. Verify the path to `image-pull-policy.yaml` is correct relative to your `kustomization.yaml` file.
+
+=== Install the BeeGFS CSI Driver
+
+. Install the BeeGFS CSI Driver using your customized overlay. This step applies all your configuration changes, including the use of locally imported images and the updated image pull policy.
++
+From the root of your cloned BeeGFS CSI Driver repository, run:
 +
 [source,console]
 ----
 kubectl apply -k deploy/k8s/overlays/beegfs-overlay
 ----
 
-== Deploy Example Application
-
-After deploying the BeeGFS CSI Driver, you can deploy the example application to validate your setup. This example includes a StorageClass, PersistentVolumeClaim (PVC), and a pod using the BeeGFS CSI driver.
-
-=== Before deploying:
-
-. Get the IP address of the BeeGFS management node:
-+
-[source,console]
-----
-beegfs-check-servers
-----
-+
-.Expected Output:
-+
-----
-root@node01:/home/user_id/beegfs-csi-driver# beegfs-check-servers 
-Management 
-========== 
-mgmt [ID: 1]: reachable at XXX.X.AB.1:8008 (protocol: TCP) 
-----
-
-. Update the management node IP in `examples/k8s/dyn/dyn-sc.yaml`.
-
-. Update the value for `volDirBasePath`. Set this to a unique value (such as your k8s cluster name) to prevent multiple clusters from dynamically provisioning volumes at the same BeeGFS path.
-+
-.Example StorageClass snippet:
-+
-[source,yaml]
-----
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: csi-beegfs-dyn-sc
-provisioner: beegfs.csi.netapp.com
-parameters:
-  # Replace "localhost" with the IP address or hostname of the BeeGFS management daemon.
-  sysMgmtdHost: 192.1.18.1
-  # Replace "name" with a unique k8s cluster name.
-  volDirBasePath: user_id_k8s
-reclaimPolicy: Delete
-volumeBindingMode: Immediate
-allowVolumeExpansion: true
-----
-
-=== Deploy
-
-. Deploy the example application files:
-+
-[source,console]
-----
-kubectl apply -f examples/k8s/dyn
-----
-+
-.Expected Output:
-+
-----
-root@node01:/home/user_id/beegfs-csi-driver# kubectl apply -f examples/k8s/dyn 
-pod/csi-beegfs-dyn-app created 
-persistentvolumeclaim/csi-beegfs-dyn-pvc created 
-storageclass.storage.k8s.io/csi-beegfs-dyn-sc created 
-----
+. Proceed to the <<Deploy Example Application>> section to deploy and validate your BeeGFS CSI Driver setup.
 
 == Online Deployment
 
-. Deploy the default overlay using `kubectl`. This will automatically pull the required images from their respective registries and create all necessary Kubernetes resources:
+If your Kubernetes nodes have internet access, you can deploy the BeeGFS CSI Driver directly without needing to manually download or transfer container images. When the pods are deployed, they will automatically download the images from image-hub and spin up the required services.
+
+=== Retrieve the Driver Repository
+
+. Clone the BeeGFS CSI Driver GitHub repository to your local system:
++
+[source,console]
+----
+git clone https://github.com/ThinkParQ/beegfs-csi-driver.git
+----
+
+=== Configure the Driver
+
+. Navigate to the cloned repository directory and, if necessary, update the configuration files in the default overlay directory:
++
+[source,console]
+----
+ls deploy/k8s/overlays/default/
+----
++
+You should see files such as:
++
+----
+csi-beegfs-config.yaml
+csi-beegfs-connauth.yaml
+kustomization.yaml
+namespace.yaml
+patches/
+----
+
+. If your BeeGFS client configuration file is not named `/etc/beegfs/beegfs-client.conf`, create a symbolic link with this exact name pointing to your configuration file:
++
+[source,console]
+----
+ln -s /path/to/your/beegfs-client.conf /etc/beegfs/beegfs-client.conf
+----
++
+NOTE: The CSI driver requires the configuration file to be located at `/etc/beegfs/beegfs-client.conf` and to have that exact name.
+
+. If you need to customize any settings such as storage classes, secrets, or connection authentication, edit the relevant files in `deploy/k8s/overlays/default/` before deployment.
+
+=== Install the BeeGFS CSI Driver
+
+. Install the default overlay using `kubectl`. This will automatically pull the required images from their respective registries and create all necessary Kubernetes resources:
 +
 [source,console]
 ----
@@ -122,11 +258,13 @@ daemonset.apps/csi-beegfs-node created
 csidriver.storage.k8s.io/beegfs.csi.netapp.com created
 ----
 
-NOTE: If you need to deploy a customized overlay (for example, with modified configuration or patches), specify the path to your overlay directory instead of `default` in the `kubectl apply -k` command.
+NOTE: Use `kubectl apply -k` for overlays (directories containing a `kustomization.yaml` file). Use `kubectl apply -f` for plain YAML manifests or directories of manifests.
+
+. Proceed to the <<Deploy Example Application>> section to validate your BeeGFS CSI Driver setup.
 
 == Deploy Example Application
 
-After deploying the BeeGFS CSI Driver, you can deploy the example application to validate your setup. This example includes a StorageClass, PersistentVolumeClaim (PVC), and a pod using the BeeGFS CSI driver.
+After installing the BeeGFS CSI Driver (either Air-Gapped or Online), you can deploy the example application to validate your setup. This example includes a StorageClass, PersistentVolumeClaim (PVC), and a pod using the BeeGFS CSI driver.
 
 === Before deploying:
 
@@ -145,100 +283,6 @@ beegfs health network
 ----
 +
 .Expected Output:
-+
-----
-Management 
-========== 
-mgmt [ID: 1]: reachable at 192.1.18.1:8008 (protocol: TCP) 
-----
-
-. Update the management node IP in `examples/k8s/dyn/dyn-sc.yaml`.
-
-. Update the value for `volDirBasePath`. Set this to a unique value (such as your k8s cluster name) to prevent multiple clusters from dynamically provisioning volumes at the same BeeGFS path.
-+
-.Example StorageClass snippet:
-+
-[source,yaml]
-----
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: csi-beegfs-dyn-sc
-provisioner: beegfs.csi.netapp.com
-parameters:
-  # Replace "localhost" with the IP address or hostname of the BeeGFS management daemon.
-  sysMgmtdHost: 192.1.18.1
-  # Replace "name" with a unique k8s cluster name.
-  volDirBasePath: user_id_k8s
-reclaimPolicy: Delete
-volumeBindingMode: Immediate
-allowVolumeExpansion: true
-----
-
-=== Deploy
-
-. Deploy the example application files:
-+
-[source,console]
-----
-kubectl apply -f examples/k8s/dyn
-----
-+
-.Expected Output:
-+
-----
-root@node01:/home/user_id/beegfs-csi-driver# kubectl apply -f examples/k8s/dyn 
-pod/csi-beegfs-dyn-app created 
-persistentvolumeclaim/csi-beegfs-dyn-pvc created 
-storageclass.storage.k8s.io/csi-beegfs-dyn-sc created 
-----
-
-. Deploy the BeeGFS CSI Driver using your customized overlay:
-+
-[source,console]
-----
-kubectl apply -k deploy/k8s/overlays/beegfs-overlay
-----
-
-== Online Deployment
-
-. Deploy the default overlay using `kubectl`:
-+
-[source,console]
-----
-kubectl apply -k deploy/k8s/overlays/default
-----
-
-. Verify that the resources have been created and the pods are running:
-+
-[source,console]
-----
-kubectl get pods -n beegfs-csi
-----
-
-NOTE: Use `kubectl apply -k` for overlays (directories with `kustomization.yaml`). Use `kubectl apply -f` for plain YAML manifests or directories of manifests.
-
-== Deploy Example Application
-
-After deploying the BeeGFS CSI Driver (either Air-Gapped or Online), you can deploy the example application to validate your setup. This example includes a StorageClass, PersistentVolumeClaim (PVC), and a pod using the BeeGFS CSI driver.
-
-=== Configure the BeeGFS Management IP
-
-. Get the IP address of the BeeGFS management node:
-+
-.BeeGFS 7.4
-[source,console]
-----
-beegfs-check-servers
-----
-+
-.BeeGFS 8
-[source,console]
-----
-beegfs health network
-----
-+
-.Example Output:
 +
 ----
 Management 
@@ -291,3 +335,5 @@ storageclass.storage.k8s.io/csi-beegfs-dyn-sc created
 kubectl get pod csi-beegfs-dyn-app
 kubectl get pvc csi-beegfs-dyn-pvc
 ----
+
+NOTE: The example application deployment steps are identical for both Air-Gapped and Online deployments. Ensure you have updated the management node IP and `volDirBasePath` in the StorageClass manifest before deploying.
