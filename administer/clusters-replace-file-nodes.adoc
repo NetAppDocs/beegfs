@@ -45,7 +45,7 @@ all:
 
 . From one of the other nodes in the cluster, remove the old node: `pcs cluster node remove <HOSTNAME>`.
 +
-IMPORTANT: DO NOT PROCEED BEFORE RUNNING THIS STEP.
+CAUTION: DO NOT PROCEED BEFORE RUNNING THIS STEP.
 
 . On the Ansible control node:
 .. Remove the old SSH key with:
