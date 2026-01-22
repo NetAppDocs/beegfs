@@ -62,7 +62,7 @@ If needed, you can obtain a temporary BeeGFS 8 evaluation license from the link:
 
 Before starting the upgrade, carefully prepare your environment to ensure a smooth transition and minimize downtime.
 
-. Ensure your cluster is in a health state, with all BeeGFS services running on their preferred nodes. From a file node running BeeGFS services, verify all Pacemaker resources are running on their preferred nodes:
+. Ensure your cluster is in a healthy state, with all BeeGFS services running on their preferred nodes. From a file node running BeeGFS services, verify all Pacemaker resources are running on their preferred nodes:
 +
 [source,console]
 ----
@@ -287,25 +287,25 @@ sudo firewall-cmd --reload
 
 === Update the BeeGFS monitor script
 
-The Pacemaker `beegfs-monitor` OCF scripts requires updates to support the new TOML configuration format introduced in BeeGFS 7.4.x and later versions.
+The Pacemaker `beegfs-monitor` OCF script requires updates to support the new TOML configuration format introduced in BeeGFS 7.4.x and later versions.
 
 . Create a backup of the current script:
 +
-[source,bash]
+[source,console]
 ----
 cp /usr/lib/ocf/resource.d/eseries/beegfs-monitor /usr/lib/ocf/resource.d/eseries/beegfs-monitor.bak.$(date +%F)
 ----
 
 . Update the management configuration file path from `.conf` to `.toml`:
 +
-[source,bash]
+[source,console]
 ----
 sed -i 's|mgmt_config/beegfs-mgmtd\.conf|mgmt_config/beegfs-mgmtd.toml|' /usr/lib/ocf/resource.d/eseries/beegfs-monitor
 ----
 +
 Alternatively, manually locate the following block in the script:
 +
-[source,bash]
+[source,console]
 ----
 case $type in
   management)

@@ -21,14 +21,14 @@ BeeGFS 8 introduces TLS support for encrypting network communications between se
 
 [NOTE]
 ====
-Machines running the `beegfs-client` service do not require TLS to mount the BeeGFS filesystem. TLS must be setup to utilize the BeeGFS CLI and other beegfs services, such as remote and sync.
+Machines running the `beegfs-client` service do not require TLS to mount the BeeGFS filesystem. TLS must be set up to utilize the BeeGFS CLI and other beegfs services, such as remote and sync.
 ====
 
 * **Using existing Certificate Authority:** Use certificates signed by an existing trusted Certificate Authority (CA) within your organization or creating a dedicated CA for your BeeGFS cluster.
 
 * **Creating a local Certificate Authority:** Creating a local Certificate Authority and using it to sign certificates for your BeeGFS services. This approach is suitable for environments where you want to manage your own trust chain without relying on an external CA.
 
-* **TLS Disabled:** Disable TLS entirely for environments where encryption is not required or for troubleshooting. This is discouraged as it exposes potentially sensitive information about the internal file system structure and configuration in clear text.
+* **TLS Disabled:** Disable TLS entirely for environments where encryption is not required or for troubleshooting. This is discouraged as it exposes potentially sensitive information about the internal file system structure and configuration as cleartext.
 
 Choose the method that best suits your environment and organizational security policies. Refer to the link:https://doc.beegfs.io/latest/advanced_topics/tls.html[BeeGFS TLS^] documentation for additional details.
 
@@ -44,8 +44,8 @@ For new BeeGFS 8 cluster deployments, set the paths of the certificate and key f
 ----
 beegfs_ha_tls_enabled: true
 
-beegfs_ha_ca_cert_src_path = /path/to/cert.pem
-beegfs_ha_ca_key_src_path = /path/to/key.pem
+beegfs_ha_ca_cert_src_path: /path/to/cert.pem
+beegfs_ha_ca_key_src_path: /path/to/key.pem
 ----
 
 [NOTE]
@@ -297,7 +297,7 @@ beegfs health check
 
 == Disabling TLS
 
-TLS can be disabled for troubleshooting or if desired by the users. This is discouraged as it exposes potentially sensitive information about the internal file system structure and configuration in clear text.
+TLS can be disabled for troubleshooting or if desired by the users. This is discouraged as it exposes potentially sensitive information about the internal file system structure and configuration in clear-text form.
 
 === New BeeGFS 8 deployments
 
