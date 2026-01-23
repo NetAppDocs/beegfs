@@ -151,8 +151,10 @@ sidebar:
           url: /administer/clusters-reconfigure.html
         - title: Update HA cluster components
           entries:
-            - title: Update BeeGFS version
-              url: /administer/clusters-update-beegfs.html
+            - title: Upgrade to BeeGFS v8
+              url: /administer/clusters-update-beegfs-v8.html
+            - title: Update BeeGFS 7.4.6 and below
+              url: /administer/clusters-update-beegfs-v7.html
             - title: Upgrade Pacemaker and Corosync packages
               url: /administer/clusters-update-ha-services.html
             - title: Update file node adapter firmware
