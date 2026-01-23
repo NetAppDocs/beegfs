@@ -17,7 +17,9 @@ Follow these steps to update your HA cluster between BeeGFS 7.x versions.
 
 == Overview
 
-This procedure covers upgrading between BeeGFS 7.x versions, including updates to patch, minor, or major versions within the BeeGFS 7.x release family. Use Ansible to perform all BeeGFS upgrades for consistent and reliable updates.
+BeeGFS follows a `major.minor.patch` versioning scheme. BeeGFS HA Ansible roles are provided for each supported `major.minor` version (e.g., `beegfs_ha_7_2` and `beegfs_ha_7_3`). Each HA role is pinned to the latest BeeGFS patch version available at the time of the Ansible collection's release.
+
+Ansible should be used for all BeeGFS upgrades, including moving between major, minor, and patch versions of BeeGFS. To update BeeGFS you will first need to update the BeeGFS Ansible collection, which will also pull in the latest fixes and enhancements to the deployment/management automation and underlying HA cluster. Even after updating to the latest version of the collection, BeeGFS will not be upgraded until `ansible-playbook` is ran with the `-e "beegfs_ha_force_upgrade=true"` set. For additional details about each upgrade refer to the link:https://doc.beegfs.io/latest/advanced_topics/upgrade.html[BeeGFS Upgrade documentation^] for your current version.
 
 NOTE: If you are upgrading to BeeGFS v8, see the link:clusters-update-beegfs-v8.html[Upgrade to BeeGFS v8] procedure instead.
 
@@ -37,9 +39,9 @@ The following upgrade paths have been tested and verified for BeeGFS 7.x version
 | 7.4.2            | 7.4.6           | Yes       | Upgrade using beegfs collection v3.2.0
 |===
 
-== Upgrade procedure
+== BeeGFS upgrade steps
 
-The BeeGFS 7.x upgrade process uses Ansible to automatically handle package updates and cluster management.
+The following sections provide steps to update the BeeGFS Ansible collection and BeeGFS itself. Pay special attention to any extra step(s) for updating BeeGFS major or minor versions.
 
 === Step 1: Upgrade BeeGFS collection
 

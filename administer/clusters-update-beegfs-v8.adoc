@@ -17,7 +17,7 @@ Follow these steps to upgrade your BeeGFS HA cluster from version 7.4.6 to BeeGF
 
 == Overview
 
-BeeGFS v8 introduces several significant changes which require additional setup before upgrading from BeeGFS v7. This procedure guides you through preparing your cluster for BeeGFS v8's new features and requirements.
+BeeGFS v8 introduces several significant changes which require additional setup before upgrading from BeeGFS v7. This document guides you through preparing your cluster for BeeGFS v8's new requirements, and then upgrading to BeeGFS v8.
 
 IMPORTANT: Before upgrading to BeeGFS v8, ensure your system is running at least BeeGFS 7.4.6. Any cluster running a release previous to BeeGFS 7.4.6 must first link:clusters-update-beegfs-v7.html[upgrade to version 7.4.6] before proceeding with this BeeGFS v8 upgrade procedure.
 
