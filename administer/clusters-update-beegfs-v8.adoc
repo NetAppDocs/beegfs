@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar
 permalink: administer/clusters-update-beegfs-v8.html
-keywords: BeeGFS on NetApp, HA, Cluster, Administration, update, upgrade, BeeGFS 8
-summary: "Update from BeeGFS 7.4.6 to BeeGFS 8."
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, update, upgrade, BeeGFS 8, BeeGFS v8
+summary: "Update from BeeGFS v7.4.6 to BeeGFS v8."
 ---
 = Upgrade to BeeGFS v8
 :hardbreaks:
