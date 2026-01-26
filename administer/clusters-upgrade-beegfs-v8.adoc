@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: administer/clusters-update-beegfs-v8.html
+permalink: administer/clusters-upgrade-beegfs-v8.html
 keywords: BeeGFS on NetApp, HA, Cluster, Administration, update, upgrade, BeeGFS 8, BeeGFS v8
 summary: "Update from BeeGFS v7.4.6 to BeeGFS v8."
 ---
