@@ -1,10 +1,10 @@
 ---
 sidebar: sidebar
-permalink: administer/clusters-update-beegfs-v7.html
+permalink: administer/clusters-update-beegfs.html
 keywords: BeeGFS on NetApp, HA, Cluster, Administration, update, upgrade
-summary: "Update BeeGFS 7.4.6 and below using Ansible."
+summary: "Use Ansible to update BeeGFS and the HA cluster."
 ---
-= Update BeeGFS 7.4.6 and below
+= Upgrade BeeGFS services
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -13,7 +13,7 @@ summary: "Update BeeGFS 7.4.6 and below using Ansible."
 
 
 [.lead]
-Follow these steps to update your HA cluster between BeeGFS 7.x versions.
+Use Ansible to update the BeeGFS version running on your HA cluster.
 
 == Overview
 
@@ -25,7 +25,7 @@ NOTE: If you are upgrading to BeeGFS v8, see the link:clusters-update-beegfs-v8.
 
 == Tested upgrade paths
 
-The following upgrade paths have been tested and verified for BeeGFS 7.x versions:
+The following upgrade paths have been tested and verified:
 
 [cols="1,1,1,5" options="header"]
 |===
@@ -37,6 +37,9 @@ The following upgrade paths have been tested and verified for BeeGFS 7.x version
 | 7.3.2            | 7.4.1           | Yes       | Upgrade using beegfs collection v3.2.0
 | 7.4.1            | 7.4.2           | Yes       | Upgrade using beegfs collection v3.2.0
 | 7.4.2            | 7.4.6           | Yes       | Upgrade using beegfs collection v3.2.0
+| 7.4.6            | 8.0             | Yes       | Upgrade using the instructions in the link:clusters-update-beegfs-v8.html[Upgrade to BeeGFS v8] procedure.
+| 7.4.6            | 8.1             | Yes       | Upgrade using the instructions in the link:clusters-update-beegfs-v8.html[Upgrade to BeeGFS v8] procedure.
+| 7.4.6            | 8.2             | Yes       | Upgrade using the instructions in the link:clusters-update-beegfs-v8.html[Upgrade to BeeGFS v8] procedure.
 |===
 
 == BeeGFS upgrade steps

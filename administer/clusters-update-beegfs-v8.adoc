@@ -2,7 +2,7 @@
 sidebar: sidebar
 permalink: administer/clusters-update-beegfs-v8.html
 keywords: BeeGFS on NetApp, HA, Cluster, Administration, update, upgrade, BeeGFS 8
-summary: "Upgrade from BeeGFS 7.4.6 to BeeGFS 8."
+summary: "Update from BeeGFS 7.4.6 to BeeGFS 8."
 ---
 = Upgrade to BeeGFS v8
 :hardbreaks:
@@ -19,17 +19,7 @@ Follow these steps to upgrade your BeeGFS HA cluster from version 7.4.6 to BeeGF
 
 BeeGFS v8 introduces several significant changes which require additional setup before upgrading from BeeGFS v7. This document guides you through preparing your cluster for BeeGFS v8's new requirements, and then upgrading to BeeGFS v8.
 
-IMPORTANT: Before upgrading to BeeGFS v8, ensure your system is running at least BeeGFS 7.4.6. Any cluster running a release previous to BeeGFS 7.4.6 must first link:clusters-update-beegfs-v7.html[upgrade to version 7.4.6] before proceeding with this BeeGFS v8 upgrade procedure.
-
-== Tested upgrade path
-
-The following upgrade path has been tested and verified:
-
-[cols="1,1,1,5" options="header"]
-|===
-| Original Version | Upgrade Version | Multirail | Details
-| 7.4.6            | 8.2             | Yes       | Upgrade from BeeGFS 7.4.6 to BeeGFS 8.2 using this procedure
-|===
+IMPORTANT: Before upgrading to BeeGFS v8, ensure your system is running at least BeeGFS 7.4.6. Any cluster running a release previous to BeeGFS 7.4.6 must first link:clusters-upgrade-beegfs-v7.html[upgrade to version 7.4.6] before proceeding with this BeeGFS v8 upgrade procedure.
 
 == Key changes in BeeGFS v8
 
@@ -43,7 +33,7 @@ For more details and additional changes in BeeGFS 8, see the link:https://doc.be
 
 [IMPORTANT]
 ====
-Upgrading to BeeGFS v8 requires cluster downtime. Plan your upgrade during a scheduled maintenance window to minimize impact on users and workloads.
+Upgrading to BeeGFS v8 requires cluster downtime. In addition, BeeGFS v7 clients cannot connect to BeeGFS v8 clusters. Coordinate the upgrade timing between the cluster and clients carefully to minimize impact on operations.
 ====
 
 == Prepare your BeeGFS cluster for the upgrade
@@ -65,7 +55,7 @@ pcs status
 +
 [source,console]
 ----
-cp -r /mnt/mgmt_tgt_mgmt01/data /mnt/mgmt_tgt_mgmt01/data_backup_$(date +%Y%m%d)
+cp -r /mnt/mgmt_tgt_mgmt01/data /mnt/mgmt_tgt_mgmt01/data_beegfs_v7_backup_$(date +%Y%m%d)
 ----
 
 .. Run the following commands from a beegfs client and save their output for reference:
@@ -208,6 +198,7 @@ Preparing the `beegfs-mgmtd.toml` configuration file will be done after completi
 ----
 dnf install libbeegfs-license
 ----
+
 . Download your BeeGFS v8 license file to the management nodes and place it at:
 +
 ----
@@ -234,7 +225,7 @@ log-level = "info"
 node-offline-timeout = "900s"
 quota-enable = false
 auth-disable = false
-auth-file = "/etc/beegfs/<mgmt_ip>_connAuthFile"
+auth-file = "/etc/beegfs/<mgmt_service_ip>_connAuthFile"
 db-file = "/mnt/mgmt_tgt_mgmt01/data/mgmtd.sqlite"
 license-disable = false
 license-cert-file = "/etc/beegfs/license.pem"
@@ -428,3 +419,16 @@ If errors appear in the journal logs, review the management configuration file p
 ----
 pcs property set stonith-enabled=true
 ----
+
+== Update BeeGFS clients
+
+After successfully upgrading your cluster to version 8, you must also update all BeeGFS clients. Perform the following steps to upgrade all clients communicating with your cluster.
+
+. 
+
+Key considerations for client upgrades:
+
+* **TLS certificates**: Clients require TLS certificates to communicate with the BeeGFS v8 management service. Ensure the TLS certificates configured in the link:../deploy-features-integration/beegfs-tls/beegfs-tls-deploy.html[Configure TLS Encryption for BeeGFS 8] procedure are distributed to all client nodes.
+
+* **Client configuration**: Update the `beegfs-client.conf` file on each client to include the TLS certificate and key paths.
+
