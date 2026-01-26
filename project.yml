@@ -135,10 +135,8 @@ sidebar:
               url: /deploy-features-integration/beegfs-csi-driver/csi-driver-verify.html
             - title: Troubleshooting
               url: /deploy-features-integration/beegfs-csi-driver/csi-driver-tshoot.html
-        - title: BeeGFS TLS Encryption
-          entries:
-            - title: Configure TLS Encryption for BeeGFS 8
-              url: /deploy-features-integration/beegfs-tls/beegfs-tls-deploy.html
+        - title: Configure TLS Encryption for BeeGFS 8
+          url: /deploy-features-integration/beegfs-tls/beegfs-tls-deploy.html
     - title: Administer BeeGFS Clusters
       entries:
         - title: Overview, key concepts, and terminology

@@ -19,7 +19,7 @@ Follow these steps to upgrade your BeeGFS HA cluster from version 7.4.6 to BeeGF
 
 BeeGFS v8 introduces several significant changes which require additional setup before upgrading from BeeGFS v7. This document guides you through preparing your cluster for BeeGFS v8's new requirements, and then upgrading to BeeGFS v8.
 
-IMPORTANT: Before upgrading to BeeGFS v8, ensure your system is running at least BeeGFS 7.4.6. Any cluster running a release previous to BeeGFS 7.4.6 must first link:clusters-upgrade-beegfs-v7.html[upgrade to version 7.4.6] before proceeding with this BeeGFS v8 upgrade procedure.
+IMPORTANT: Before upgrading to BeeGFS v8, ensure your system is running at least BeeGFS 7.4.6. Any cluster running a release previous to BeeGFS 7.4.6 must first link:clusters-upgrade-beegfs.html[upgrade to version 7.4.6] before proceeding with this BeeGFS v8 upgrade procedure.
 
 == Key changes in BeeGFS v8
 
@@ -420,15 +420,80 @@ If errors appear in the journal logs, review the management configuration file p
 pcs property set stonith-enabled=true
 ----
 
-== Update BeeGFS clients
+. Proceed to the next section to upgrade the BeeGFS clients on in the cluster and check the BeeGFS cluster's health.
 
-After successfully upgrading your cluster to version 8, you must also update all BeeGFS clients. Perform the following steps to upgrade all clients communicating with your cluster.
+== Upgrade BeeGFS clients
 
-. 
+After successfully upgrading your cluster to BeeGFS v8, you must also upgrade all BeeGFS clients. 
 
-Key considerations for client upgrades:
+The following steps outline the process to upgrade BeeGFS clients on an Ubuntu-based system.
 
-* **TLS certificates**: Clients require TLS certificates to communicate with the BeeGFS v8 management service. Ensure the TLS certificates configured in the link:../deploy-features-integration/beegfs-tls/beegfs-tls-deploy.html[Configure TLS Encryption for BeeGFS 8] procedure are distributed to all client nodes.
+. If not already done, stop the BeeGFS client service:
++
+[source,console]
+----
+systemctl stop beegfs-client
+----
 
-* **Client configuration**: Update the `beegfs-client.conf` file on each client to include the TLS certificate and key paths.
+. Add the BeeGFS v8 package repository for your Linux distribution. Instructions for using the official BeeGFS repositories can be found at the link:https://www.beegfs.io/c/download/[BeeGFS download page]. Otherwise, configure your local BeeGFS mirror repository accordingly.
++
+The following steps use the official BeeGFS 8.2 repository on an Ubuntu-based system:
 
+. Import the BeeGFS GPG key:
++
+[source,console]
+----
+wget https://www.beegfs.io/release/beegfs_8.2/gpg/GPG-KEY-beegfs -O /etc/apt/trusted.gpg.d/beegfs.asc
+----
+
+. Download the repository file:
++
+[source,console]
+----
+wget https://www.beegfs.io/release/beegfs_8.2/dists/beegfs-noble.list -O /etc/apt/sources.list.d/beegfs.list
+----
++
+[NOTE]
+====
+Remove any previously configured BeeGFS repositories to avoid conflicts with the new BeeGFS v8 repository.
+====
+
+. Upgrade the BeeGFS client packages:
++
+[source,console]
+----
+apt-get update
+apt-get install --only-upgrade beegfs-client
+----
+
+. Configure TLS for the client. TLS is required to use the BeeGFS CLI. Reference the link:../deploy-features-integration/beegfs-tls/beegfs-tls-deploy.html[Configure TLS Encryption for BeeGFS 8] procedure to configure TLS on the client.
+
+. Start the BeeGFS client service:
++
+[source,console]
+----
+systemctl start beegfs-client
+----
+
+== Verify the upgrade
+
+After finishing the upgrade to BeeGFS v8, run the following commands to verify the upgrade was successful.
+
+. Verify the root inode is owned by the same metadata node as before. This should happen automatically if you used the `import-from-v7` functionality in the management service:
++
+[source,console]
+----
+beegfs entry info /mnt/beegfs
+----
+
+. Verify all nodes and targets are online and in a good state:
++
+[source,console]
+----
+beegfs health check
+----
++
+[NOTE]
+====
+If the "Available Capacity" check warns that targets are low on free space, you can adjust the "capacity pool" thresholds defined in the `beegfs-mgmtd.toml` file so they are better suited to your environment.
+====
