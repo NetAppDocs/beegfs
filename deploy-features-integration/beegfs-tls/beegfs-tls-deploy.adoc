@@ -158,7 +158,7 @@ authorityKeyIdentifier = keyid:always,issuer:always
 
 . Generate the CA certificate. This certificate should be valid for the life of the system, otherwise you will need to plan to regenerate certificates before they expire. Once a certificate expires, communication between some components will not be possible and updating TLS certificates will typically require restarting services to complete.
 +
-The following command generates a CA certificate valid for 100 years:
+The following command generates a CA certificate valid for 1 year:
 +
 [source,console]
 ----
