@@ -96,7 +96,7 @@ pcs cluster stop --all
 
 == Upgrade the BeeGFS packages
 
-On all file nodes in the cluster, add the BeeGFS v8 package repository for your Linux distribution. Instructions for using the official BeeGFS repositories can be found at the link:https://www.beegfs.io/c/download/[BeeGFS download page]. Otherwise, configure your local beegfs mirror repository accordingly.
+On all file nodes in the cluster, add the BeeGFS v8 package repository for your Linux distribution. Instructions for using the official BeeGFS repositories can be found at the link:https://www.beegfs.io/c/download/[BeeGFS download page^]. Otherwise, configure your local beegfs mirror repository accordingly.
 
 The following steps walkthrough using the official BeeGFS 8.2 repository on RHEL 9 file nodes. Perform the following steps on all file nodes in the cluster:
 
@@ -435,7 +435,7 @@ The following steps outline the process to upgrade BeeGFS clients on an Ubuntu-b
 systemctl stop beegfs-client
 ----
 
-. Add the BeeGFS v8 package repository for your Linux distribution. Instructions for using the official BeeGFS repositories can be found at the link:https://www.beegfs.io/c/download/[BeeGFS download page]. Otherwise, configure your local BeeGFS mirror repository accordingly.
+. Add the BeeGFS v8 package repository for your Linux distribution. Instructions for using the official BeeGFS repositories can be found at the link:https://www.beegfs.io/c/download/[^BeeGFS download page^]. Otherwise, configure your local BeeGFS mirror repository accordingly.
 +
 The following steps use the official BeeGFS 8.2 repository on an Ubuntu-based system:
 
@@ -466,7 +466,7 @@ apt-get update
 apt-get install --only-upgrade beegfs-client
 ----
 
-. Configure TLS for the client. TLS is required to use the BeeGFS CLI. Reference the link:../deploy-features-integration/beegfs-tls/beegfs-tls-deploy.html[Configure TLS Encryption for BeeGFS 8] procedure to configure TLS on the client.
+. Configure TLS for the client. TLS is required to use the BeeGFS CLI. Reference the link:../deploy-features-integration/beegfs-tls/beegfs-tls-deploy.html[Configure TLS Encryption for BeeGFS 8^] procedure to configure TLS on the client.
 
 . Start the BeeGFS client service:
 +

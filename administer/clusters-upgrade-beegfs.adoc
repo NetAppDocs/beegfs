@@ -113,10 +113,20 @@ Behind the scenes the BeeGFS HA role will handle:
 
 ==== Changes to connection based authentication
 
-BeeGFS versions released after 7.3.1 will no longer allow services to start without either specifying a `connAuthFile` or setting `connDisableAuthentication=true` in the service's configuration file. It is highly recommended to enable connection based authentication security. See link:https://doc.beegfs.io/7.3.2/advanced_topics/authentication.html#connectionbasedauth[BeeGFS Connection Based Authentication^] for more information.
+BeeGFS version 7.3.2 and later require connection based authentication to be configured. Services will not start without either:
 
-By default the `beegfs_ha*` roles will generate and distribute this file, also adding it to the Ansible control node at `<playbook_directory>/files/beegfs/<beegfs_mgmt_ip_address>_connAuthFile`. The `beegfs_client` role will also check for the presence of this file and supply it to the clients if available.
+* Specifying a `connAuthFile`, or
+* Setting `connDisableAuthentication=true` in the service's configuration file.
 
-WARNING: If the `beegfs_client` role was not used to configure clients, this file will need to be manually distributed to each client and the `connAuthFile` configuration in the `beegfs-client.conf` file set to use it. When upgrading from a previous version of BeeGFS where connection based authentication was not enabled, clients will loose access unless connection based authentication is disabled as part of the upgrade by setting `beegfs_ha_conn_auth_enabled: false` in `group_vars/ha_cluster.yml` (not recommended).
+It is highly recommended to enable connection based authentication for security. See link:https://doc.beegfs.io/7.3.2/advanced_topics/authentication.html#connectionbasedauth[BeeGFS Connection Based Authentication^] for more information.
 
-For additional details and alternate configuration options see the step to configure connection authentication in the link:../custom/architectures-inventory-common-file-node-configuration.html[Specify Common File Node Configuration^] section.
+The `beegfs_ha*` roles automatically generate and distribute the authentication file to:
+
+* All file nodes in the cluster
+* The Ansible control node at `<playbook_directory>/files/beegfs/<beegfs_mgmt_ip_address>_connAuthFile`
+
+The `beegfs_client` role will automatically detect and apply this file to clients when it's present.
+
+WARNING: If you did not use the `beegfs_client` role to configure clients, you must manually distribute the authentication file to each client and configure the `connAuthFile` setting in the `beegfs-client.conf` file. When upgrading from a BeeGFS version without connection based authentication, clients will lose access unless you disable connection based authentication during the upgrade by setting `beegfs_ha_conn_auth_enabled: false` in `group_vars/ha_cluster.yml` (not recommended).
+
+For additional details and alternate configuration options, see the connection authentication configuration step in the link:../custom/architectures-inventory-common-file-node-configuration.html[Specify Common File Node Configuration^] section.

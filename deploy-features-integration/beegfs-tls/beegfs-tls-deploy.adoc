@@ -19,7 +19,7 @@ Configure TLS encryption to secure communication between BeeGFS v8 management se
 
 BeeGFS v8 introduces TLS support for encrypting network communications between administrative tools (such as the `beegfs` command-line utility) and BeeGFS server services like Management or Remote. This guide covers configuring TLS encryption in your BeeGFS cluster using three TLS configuration methods:
 
-* **Using an existing Certificate Authority:** Use the existing certificates on your BeeGFS cluster which have been signed by a trusted Certificate Authority.
+* **Using a trusted Certificate Authority:** Use existing CA-signed certificates on your BeeGFS cluster.
 
 * **Creating a local Certificate Authority:** Creating a local Certificate Authority and using it to sign certificates for your BeeGFS services. This approach is suitable for environments where you want to manage your own trust chain without relying on an external CA.
 
@@ -67,7 +67,7 @@ tls-key-file = /path/to/key.pem
 
 === Configuring BeeGFS v8 clients with CA-signed certificates
 
-For each machine communicating with the BeeGFS management services, configure them to use the system's certificate pool by specifying `tls-cert-file = ""` in their configuration file or command line flags. This will allow the client to trust the CA-signed certificates presented by the management services.
+To configure BeeGFS v8 clients to trust CA-signed certificates using the system's certificate pool, set tls-cert-file = "" in each client's configuration. If the system certificate pool is not being used, provide the path to a local certificate by setting tls-cert-file = <local cert>. This setup allows clients to authenticate the certificates presented by BeeGFS management services.
 
 == Creating a local Certificate Authority
 
