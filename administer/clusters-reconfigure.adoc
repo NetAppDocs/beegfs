@@ -50,4 +50,4 @@ Steps:
 . To disable fencing run: `pcs property set stonith-enabled=false`
 . To enable fencing run: `pcs property set stonith-enabled=true`
 
-Note: This setting will be overridden the next time you run the Ansible playbook. 
+CAUTION: This setting will be overridden the next time you run the Ansible playbook. 

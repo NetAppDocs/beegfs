@@ -83,8 +83,7 @@ The following diagram shows the IOR test results with three BeeGFS building bloc
 
 image:beegfs-design-image17.png["Three BeeGFS building blocks with single client IOR results"]
 
-[NOTE]
-BeeGFS striping for these tests was set to a 1MB chunksize with eight targets per file.
+NOTE: BeeGFS striping for these tests was set to a 1MB chunksize with eight targets per file.
 
 Although write and initial read performance is higher using the default buffered mode, for workloads that reread the same data multiple times, a significant performance boost is seen with the native caching mode.  This improved reread performance is important for workloads like deep learning that reread the same dataset multiple times across many epochs.
 
@@ -121,8 +120,7 @@ As part of validating this architecture, NetApp executed several functional test
 * Gracefully placing a node back online and failing back services to the original node.
 * Powering off one of the InfiniBand switches using the PDU. All tests were performed while stress testing was in progress with the `sysSessionChecksEnabled: false` parameter set on the BeeGFS clients. No errors or disruption to I/O was observed.
 
-[NOTE]
-There is a known issue (see the https://github.com/netappeseries/beegfs/blob/master/CHANGELOG.md[Changelog^]) when BeeGFS client/server RDMA connections are disrupted unexpectedly, either through loss of the primary interface (as defined in `connInterfacesFile`) or a BeeGFS server failing; active client I/O can hang for up to ten minutes before resuming. This issue does not occur when BeeGFS nodes are gracefully placed in and out of standby for planned maintenance or if TCP is in use.
+NOTE: There is a known issue (see the https://github.com/netappeseries/beegfs/blob/master/CHANGELOG.md[Changelog^]) when BeeGFS client/server RDMA connections are disrupted unexpectedly, either through loss of the primary interface (as defined in `connInterfacesFile`) or a BeeGFS server failing; active client I/O can hang for up to ten minutes before resuming. This issue does not occur when BeeGFS nodes are gracefully placed in and out of standby for planned maintenance or if TCP is in use.
 
 == NVIDIA DGX SuperPOD and BasePOD validation
 
