@@ -67,6 +67,11 @@ tls-key-file = /path/to/key.pem
 
 === Configuring BeeGFS v8 clients with CA-signed certificates
 
+[IMPORTANT]
+====
+If you are upgrading an existing BeeGFS 7 cluster to BeeGFS 8, follow the link:../../administer/clusters-upgrade-beegfs-v8.html[Upgrade to BeeGFS 8] procedure. Do not configure client TLS until instructed to do so in the upgrade procedure.
+====
+
 To configure BeeGFS v8 clients to trust CA-signed certificates using the system's certificate pool, set tls-cert-file = "" in each client's configuration. If the system certificate pool is not being used, provide the path to a local certificate by setting tls-cert-file = <local cert>. This setup allows clients to authenticate the certificates presented by BeeGFS management services.
 
 == Creating a local Certificate Authority
@@ -282,6 +287,11 @@ Successfully loaded license certificate: TMP-XXXXXXXXXX
 ----
 
 === Configure TLS for BeeGFS v8 clients
+
+[IMPORTANT]
+====
+If you are upgrading an existing BeeGFS 7 cluster to BeeGFS 8, follow the link:../../administer/clusters-upgrade-beegfs-v8.html[Upgrade to BeeGFS 8] procedure. Do not configure client TLS until instructed to do so in the upgrade procedure.
+====
 
 Create and distribute certificates signed by the local CA to all BeeGFS clients that will be requiring communication with BeeGFS management services.
 

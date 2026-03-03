@@ -16,73 +16,118 @@ summary: "To implement the BeeGFS on NetApp solution, make sure your environment
 [.lead]
 To implement the BeeGFS on NetApp solution, ensure your environment meets the technology requirements outlined in this document.
 
-== Hardware requirements
-Before you begin, ensure that your hardware meets the following specifications for a single second-generation building block design of the BeeGFS on NetApp solution. The exact components for a particular deployment may vary based on customer requirements.
+== Requirements overview
 
+This page details the hardware, software, and firmware requirements for implementing BeeGFS on NetApp building blocks. Requirements are organized into the following sections:
+
+* <<Hardware requirements>> - File nodes (hardware/software/firmware), block nodes (hardware/firmware), networking, and cabling
+* <<Software deployment requirements>> - Ansible-deployed components
+* <<Ansible control node requirements>> - Control node software versions
+
+== Hardware requirements
+
+Before you begin, ensure that your hardware meets the following specifications for a single building block design of the BeeGFS on NetApp solution. The exact components for a particular deployment may vary based on customer requirements. Each file node should meet or exceed these specifications to achieve expected performance.
+
+=== File node requirements
+
+[options="header" cols="10%,90%"]
+|===
+|Quantity |Specifications
+
+|2
+a|*Lenovo ThinkSystem SR665 V3*
+
+*Hardware:*
+
+* *Processors:* 2x AMD EPYC 9124 16C 3.0 GHz (configured as two NUMA zones)
+* *Memory:* 256GB (16x 16GB TruDDR5 4800MHz RDIMM-A)
+* *PCIe Expansion:* Four PCIe Gen5 x16 slots (two per NUMA zone)
+* *HCA Cards:* 4x MCX755106AS-HEAT ConnectX-7, NDR200, QSFP112, 2-port, PCIe Gen5 x16, InfiniBand Adapter
+* *Storage:* Two drives in RAID 1 for OS (1TB 7.2K SATA or better)
+* *Management:* 1GbE port for in-band OS management
+* *BMC:* 1GbE BMC with Redfish API for out-of-band server management
+* *Power:* Dual hot swap power supplies and performance fans
+
+*Software and Firmware:*
+
+* *Operating System:* RedHat 9.4 Server Physical with High Availability (2 socket)
+* *Linux Kernel:* 5.14.0-427.42.1.el9_4.x86_64
+* *HCA Firmware:* FW: 28.46.1006, PXE: 3.8.0100, UEFI: 14.39.0013
+|===
+
+IMPORTANT: File nodes require a valid RedHat Enterprise Linux Server subscription and the Red Hat Enterprise Linux High Availability Add-On.
+
+=== Block node requirements
+
+Each building block requires two E-Series arrays of the same model. Do not mix array models within the same building block.
 
 [options="header" cols="10%,20%,70%"]
 |===
-|Quantity |Hardware component |Requirements
-
-a|2
-a|BeeGFS file nodes
-a|Each file node should meet or exceed the specifications of the recommended file nodes to achieve expected performance.
-
-*Recommended file node options:*
-
-* *Lenovo ThinkSystem SR665 V3*
-** *Processors:* 2x AMD EPYC 9124 16C 3.0 GHz (configured as two NUMA zones).
-** *Memory:* 256GB (16x 16GB TruDDR5 4800MHz RDIMM-A)
-** *PCIe Expansion:* Four PCIe Gen5 x16 slots (two per NUMA zone)
-** *Miscellaneous:*
-
-*** Two drives in RAID 1 for OS (1TB 7.2K SATA or better)
-*** 1GbE port for in-band OS management
-*** 1GbE BMC with Redfish API for out-of-band server management
-*** Dual hot swap power supplies and performance fans
+|Quantity |Model |Specifications
 
 |2
-|E-Series block nodes (EF600 array)
-a|*Memory:* 256GB (128GB per controller).
-*Adapter:* 2-port 200Gb/HDR (NVMe/IB).
-*Drives:* Configured to match desired metadata and storage capacity.
+|EF80
+a|*Hardware:*
 
-|8
-|InfiniBand host card adapters (for file nodes).
-a|Host card adapters will vary based on the server model used for the file node. Recommendations for verified file nodes include:
+* *Memory:* 128GB (64GB per controller)
+* *Adapter:* 2x 2-port 200Gb/NDR (NVMe/IB)
+* *Drives:* Configured to match desired metadata and storage capacity
 
-* *Lenovo ThinkSystem SR665 V3 Server:*
-** MCX755106AS-HEAT ConnectX-7, NDR200, QSFP112, 2-port, PCIe Gen5 x16, InfiniBand Adapter
+*Firmware:*
+
+* *SANtricity OS:* 12.00
+* *NVSRAM:* NEF80-200834-D00
+* *Drive Firmware:* Latest available for your drive models (see link:https://mysupport.netapp.com/site/downloads/firmware/e-series-disk-firmware[E-Series disk firmware site^])
+
+|2
+|EF600
+a|*Hardware:*
+
+* *Memory:* 256GB (128GB per controller)
+* *Adapter:* 2-port 200Gb/HDR (NVMe/IB)
+* *Drives:* Configured to match desired metadata and storage capacity
+
+*Firmware:*
+
+* *SANtricity OS:* 11.90R5
+* *NVSRAM:* N6000-890834-D02
+* *Drive Firmware:* Latest available for your drive models (see link:https://mysupport.netapp.com/site/downloads/firmware/e-series-disk-firmware[E-Series disk firmware site^])
+|===
+
+=== Storage network switch requirements
+
+[options="header" cols="10%,90%"]
+|===
+|Quantity |Specifications
 
 |1
-|Storage network switch
-a|The storage network switch must be capable of 200Gb/s InfiniBand speeds. Recommended switch models include:
+a|*NVIDIA QM9700 Quantum 2 NDR InfiniBand Switch*
 
-* *NVIDIA QM9700 Quantum 2 NDR InfiniBand switch*
-* *NVIDIA MQM8700 Quantum HDR InfiniBand switch*
-
+The storage network switch must be capable of 200Gb/s InfiniBand speeds. The NVIDIA QM9700 is the recommended switch for the cluster.
 |===
+
+NOTE: Alternative switches such as the NVIDIA MQM8700 Quantum may be used but require different cabling.
 
 === Cabling requirements
 
+==== Block node to file node cables
+
 [id=block-file-cables]
+Direct connections from block nodes to file nodes require the following cables:
 
-*Direct connections from block nodes to file nodes.*
-
-[options="header" cols="10%,70%,20%"]
+[options="header" cols="15%,60%,25%"]
 |===
-| Quantity | Part Number | Length
+|Quantity |Cable Specification |Length
 
-| 8
-| MCP1650-H001E30 (NVIDIA Passive Copper cable, QSFP56, 200Gb/s)
-| 1m
+|8
+|MCP1650-H001E30 - NVIDIA Passive Copper cable, QSFP56, 200Gb/s
+|1m
 |===
+
+==== File node to storage switch cables
 
 [id=file-switch-cables]
-
-*Connections from file nodes to the storage network switch.*
-Select the appropriate cable option from the following table according to your InfiniBand storage switch. +
-The recommended cable length is 2m; however, this may vary based on the customer's environment.
+The following cable types are recommended for the NVIDIA QM9700 Quantum 2 switch. Choose either active fiber or passive copper based on your requirements. Quantities are per building block.
 
 [options="header",cols="20%,15%,10%,55%"]
 |===
@@ -100,78 +145,23 @@ The recommended cable length is 2m; however, this may vary based on the customer
 | Passive Copper
 | 2
 | MCP7Y40-N002 (NVIDIA passive copper splitter cable, InfiniBand 800Gb/s to 4x 200Gb/s, OSFP to 4x QSFP112)
-
-.2+| NVIDIA MQM8700
-| Active Fiber
-| 8
-| MFS1S00-H003E (NVIDIA Active Fiber cable, InfiniBand 200Gb/s, QSFP56)
-
-| Passive Copper
-| 8
-| MCP1650-H002E26 (NVIDIA Passive Copper cable, InfiniBand 200Gb/s, QSFP56)
 |===
 
-== Software and firmware requirements
 
-To ensure predictable performance and reliability, releases of the BeeGFS on NetApp solution are tested with specific versions of software and firmware components. These versions are required for implementation of the solution.
-
-=== File node requirements
-
-[options="header" cols="20%,80%"]
-|===
-|Software |Version
-
-|RedHat Enterprise Linux
-|RedHat 9.4 Server Physical with High Availability (2 socket).
-
-IMPORTANT: File nodes require a valid RedHat Enterprise Linux Server subscription and the Red Hat Enterprise Linux High Availability Add-On.
-
-|Linux Kernel
-|5.14.0-427.42.1.el9_4.x86_64
-a|HCA Firmware
-a|
-*ConnectX-7 HCA Firmware*
-FW: 28.45.1200 +
-PXE: 3.7.0500 +
-UEFI: 14.38.0016
-
-*ConnectX-6 HCA Firmware*
-FW: 20.43.1014 +
-PXE: 3.7.0500 +
-UEFI: 14.36.0016
-|===
-
-=== EF600 block node requirements
-
-[options="header" cols="20%,80%"]
-|===
-|Software |Version
-
-|SANtricity OS
-|11.90R3
-|NVSRAM
-|N6000-890834-D02.dlp
-|Drive Firmware
-|Latest available for the drive models in use.
-|===
 
 === Software deployment requirements
+
 The following table lists the software requirements deployed automatically as part of the Ansible-based BeeGFS deployment.
 
 [options="header" cols="20%,80%"]
 |===
 |Software |Version
 
-|BeeGFS
-|7.4.6
-|Corosync
-|3.1.8-1
-|Pacemaker
-|2.1.7-5.2
-|Fence Agents (redfish/apc)
-|4.10.0-62
-|InfiniBand / RDMA Drivers
-|MLNX_OFED_LINUX-23.10-3.2.2.0-LTS
+|BeeGFS |8.2.2
+|Corosync |3.1.8-1
+|Pacemaker |2.1.7-5.2
+|Fence Agents (redfish/apc) |4.10.0-62
+|InfiniBand / RDMA Drivers |DOCA-OFED-25.04-0.6.1
 |===
 
 === Ansible control node requirements
@@ -183,14 +173,8 @@ The software requirements listed in the following tables are specific to the ver
 |===
 |Software |Version
 
-|Ansible
-|10.x
-|Ansible-core
-|>= 2.13.0
-|Python
-|3.10
-|Additional Python packages
-|Cryptography-43.0.0, netaddr-1.3.0, ipaddr-2.2.0
-|NetApp E-Series BeeGFS Ansible Collection
-|3.2.0
+|Ansible-core |>= 2.19.0
+|Python |3.12
+|Additional Python packages |Cryptography-46.0.3, netaddr-1.3.0, ipaddr-2.2.0
+|NetApp E-Series BeeGFS Ansible Collection |4.0.0
 |===
