@@ -2,7 +2,7 @@
 sidebar: sidebar
 permalink: administer/clusters-upgrade-beegfs-v8.html
 keywords: BeeGFS on NetApp, HA, Cluster, Administration, update, upgrade, BeeGFS 8
-summary: "Update from BeeGFS 7.4.6 to BeeGFS 8."
+summary: "Update from BeeGFS 7.4 to BeeGFS 8."
 ---
 = Upgrade to BeeGFS 8
 :hardbreaks:
@@ -13,13 +13,13 @@ summary: "Update from BeeGFS 7.4.6 to BeeGFS 8."
 
 
 [.lead]
-Follow these steps to upgrade your BeeGFS HA cluster from version 7.4.6 to BeeGFS 8.
+Follow these steps to upgrade your BeeGFS HA cluster from BeeGFS 7.4 to BeeGFS 8.
 
 == Overview
 
 BeeGFS 8 introduces several significant changes which require additional setup before upgrading from BeeGFS 7. This document guides you through preparing your cluster for BeeGFS 8's new requirements, and then upgrading to BeeGFS 8.
 
-IMPORTANT: Before upgrading to BeeGFS 8, ensure your system is running at least BeeGFS 7.4.6. Any cluster running a release previous to BeeGFS 7.4.6 must first link:clusters-upgrade-beegfs.html[upgrade to version 7.4.6] before proceeding with this BeeGFS 8 upgrade procedure.
+IMPORTANT: Before upgrading to BeeGFS 8, ensure your system is running at least BeeGFS 7.4. Any cluster running a release earlier than BeeGFS 7.4 must first link:clusters-upgrade-beegfs.html[upgrade to BeeGFS 7.4] before proceeding with this BeeGFS 8 upgrade procedure.
 
 == Key changes in BeeGFS 8
 
