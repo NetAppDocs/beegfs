@@ -49,14 +49,7 @@ Before starting the upgrade, carefully prepare your environment to ensure a smoo
 pcs status
 ----
 
-. Record and back up your cluster configuration.
-
-.. Refer to the link:https://doc.beegfs.io/7.4.6/advanced_topics/backup.html[BeeGFS Backup documentation^] for instructions on backing up your cluster configuration. At a minimum perform a backup of the management data directory:
-+
-[source,console]
-----
-tar --force-local -cpzf /mnt/mgmt_tgt_mgmt01/data_beegfs_7_backup_$(date +'%F_%T').tar.gz /mnt/mgmt_tgt_mgmt01/data
-----
+. Record and back up your cluster configuration. The BeeGFS management service data will be backed up later as part of the management database upgrade process.
 
 .. Run the following commands from a beegfs client and save their output for reference:
 +
@@ -116,12 +109,20 @@ dnf update beegfs-mgmtd
 
 On one of the file nodes running the BeeGFS management service, perform the following steps to migrate the management database from BeeGFS 7 to BeeGFS 8.
 
+. Perform a backup of the management data directory:
++
+[source,console]
+----
+tar --force-local -cpzf /mnt/mgmt_tgt_mgmt01/data_beegfs_7_backup_$(date +'%F_%T').tar.gz /mnt/mgmt_tgt_mgmt01/data
+----
+
 . List all NVMe devices and filter for the management target:
 +
 [source,console]
 ----
 nvme netapp smdevices | grep mgmt_tgt
 ----
+
 .. Note the device path from the output.
 
 .. Mount the management target device to the existing management target mount point (replace `/dev/nvmeXnY` with your device path):
