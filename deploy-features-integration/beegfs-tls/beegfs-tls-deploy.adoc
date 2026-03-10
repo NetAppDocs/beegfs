@@ -4,7 +4,7 @@ permalink: deploy-features-integration/beegfs-tls/beegfs-tls-deploy.html
 keywords: BeeGFS on NetApp, HA, Cluster, TLS, encryption, security, certificate authority
 summary: "Configure TLS encryption for secure communication between BeeGFS services and clients."
 ---
-= Configure TLS Encryption for BeeGFS v8
+= Configure TLS Encryption for BeeGFS 8
 :hardbreaks:
 :nofooter:
 :icons: font
@@ -13,31 +13,33 @@ summary: "Configure TLS encryption for secure communication between BeeGFS servi
 
 
 [.lead]
-Configure TLS encryption to secure communication between BeeGFS v8 management services and clients.
+Configure TLS encryption to secure communication between BeeGFS 8 management services and clients.
 
 == Overview
 
-BeeGFS v8 introduces TLS support for encrypting network communications between administrative tools (such as the `beegfs` command-line utility) and BeeGFS server services like Management or Remote. This guide covers configuring TLS encryption in your BeeGFS cluster using three TLS configuration methods:
+BeeGFS 8 introduces TLS support for encrypting network communications between administrative tools (such as the `beegfs` command-line utility) and BeeGFS server services like Management or Remote. Configure TLS encryption in your BeeGFS cluster using one of three methods:
 
-* **Using a trusted Certificate Authority:** Use existing CA-signed certificates on your BeeGFS cluster.
+* *Using a trusted Certificate Authority:* Use existing CA-signed certificates on your BeeGFS cluster.
 
-* **Creating a local Certificate Authority:** Creating a local Certificate Authority and using it to sign certificates for your BeeGFS services. This approach is suitable for environments where you want to manage your own trust chain without relying on an external CA.
+* *Creating a local Certificate Authority:* Create a local Certificate Authority and use it to sign certificates for your BeeGFS services. This approach is suitable for environments where you want to manage your own trust chain without relying on an external CA.
 
-* **TLS Disabled:** Disable TLS entirely for environments where encryption is not required or for troubleshooting. This is discouraged as it exposes potentially sensitive information about the internal file system structure and configuration as cleartext.
+* *TLS Disabled:* Disable TLS entirely for environments where encryption is not required or for troubleshooting. Avoid this option in production environments because it exposes potentially sensitive information about the file system structure and configuration as cleartext.
 
 Choose the method that best suits your environment and organizational policies. Refer to the link:https://doc.beegfs.io/latest/advanced_topics/tls.html[BeeGFS TLS^] documentation for additional details.
 
 [NOTE]
 ====
-Machines running the `beegfs-client` service do not require TLS to mount the BeeGFS filesystem. TLS must be set up to utilize the BeeGFS CLI and other beegfs services, such as remote and sync.
+Clients running the `beegfs-client` service do not require TLS to mount the BeeGFS file system. TLS is required to use the BeeGFS CLI and other BeeGFS services, such as Remote and Sync.
 ====
 
+[id=using-trusted-ca]
 == Using a Trusted Certificate Authority
 
-If you have access to certificates issued by a trusted Certificate Authority (CA)—whether from an internal enterprise CA or a third-party provider—you can configure BeeGFS v8 to use these CA-signed certificates instead of generating self-signed ones.
+If you have access to certificates issued by a trusted Certificate Authority (CA)—whether from an internal enterprise CA or a third-party provider—you can configure BeeGFS 8 to use these CA-signed certificates instead of generating self-signed ones.
 
-=== Deploying a new BeeGFS v8 cluster
-For a new BeeGFS v8 cluster deployment, configure the Ansible inventory's `user_defined_params.yml` file to reference your CA-signed certificates:
+=== Deploying a new BeeGFS 8 cluster
+
+For a new BeeGFS 8 cluster deployment, configure the Ansible inventory's `user_defined_params.yml` file to reference your CA-signed certificates:
 
 [source,yaml]
 ----
@@ -55,9 +57,9 @@ beegfs_ha_tls_key_src_path: files/beegfs/cert/mgmtd_tls_key.pem
 If `beegfs_ha_tls_config_options.alt_names` is not empty, Ansible will automatically generate a self-signed TLS certificate and key, using the provided alt_names as Subject Alternative Names (SANs) in the certificate. To use your own custom TLS certificate and key (as specified by `beegfs_ha_tls_cert_src_path` and `beegfs_ha_tls_key_src_path`), you must comment out or remove the entire `beegfs_ha_tls_config_options` section. Otherwise, the self-signed certificate generation will take precedence, and your custom certificate and key will not be used.
 ====
 
-=== Configuring an existing BeeGFS v8 cluster
+=== Configuring an existing BeeGFS 8 cluster
 
-For an existing BeeGFS v8 cluster, set the paths in the BeeGFS management services' configuration file to the file node's CA-signed certificates:
+For an existing BeeGFS 8 cluster, set the paths in the BeeGFS management services' configuration file to the file node's CA-signed certificates:
 
 [source,toml]
 ----
@@ -65,22 +67,23 @@ tls-cert-file = /path/to/cert.pem
 tls-key-file = /path/to/key.pem
 ----
 
-=== Configuring BeeGFS v8 clients with CA-signed certificates
+=== Configuring BeeGFS 8 clients with CA-signed certificates
 
 [IMPORTANT]
 ====
 If you are upgrading an existing BeeGFS 7 cluster to BeeGFS 8, follow the link:../../administer/clusters-upgrade-beegfs-v8.html[Upgrade to BeeGFS 8] procedure. Do not configure client TLS until instructed to do so in the upgrade procedure.
 ====
 
-To configure BeeGFS v8 clients to trust CA-signed certificates using the system's certificate pool, set tls-cert-file = "" in each client's configuration. If the system certificate pool is not being used, provide the path to a local certificate by setting tls-cert-file = <local cert>. This setup allows clients to authenticate the certificates presented by BeeGFS management services.
+To configure BeeGFS 8 clients to trust CA-signed certificates using the system's certificate pool, set tls-cert-file = "" in each client's configuration. If the system certificate pool is not being used, provide the path to a local certificate by setting tls-cert-file = <local cert>. This setup allows clients to authenticate the certificates presented by BeeGFS management services.
 
+[id=creating-local-ca]
 == Creating a local Certificate Authority
 
-If your organization wants to create its own certificate infrastructure for the BeeGFS cluster, you can create a local Certificate Authority (CA) to issue and sign certificates for your BeeGFS cluster. This approach involves creating a CA that signs certificates for BeeGFS management services, which are then distributed to clients to establish a trust chain. Follow these instructions to set up a local CA and deploy certificates on your existing or new BeeGFS v8 cluster.
+If your organization wants to create its own certificate infrastructure for the BeeGFS cluster, you can create a local Certificate Authority (CA) to issue and sign certificates for your BeeGFS cluster. This approach involves creating a CA that signs certificates for BeeGFS management services, which are then distributed to clients to establish a trust chain.
 
-=== Deploying a new BeeGFS v8 cluster
+=== Deploying a new BeeGFS 8 cluster
 
-For a new BeeGFS v8 deployment, the `beegfs_8` Ansible role will handle creating a local CA on the control node and generating the necessary certificates for the management services. This can be enabled by setting the following parameters in the Ansible inventory's `user_defined_params.yml` file:
+For a new BeeGFS 8 deployment, the `beegfs_8` Ansible role (included in the BeeGFS HA collection) creates a local CA on the control node and generates the necessary certificates for the management services. Enable this by setting the following parameters in the Ansible inventory's `user_defined_params.yml` file:
 
 [source,yaml]
 ----
@@ -101,13 +104,13 @@ beegfs_ha_tls_config_options:
 If `beegfs_ha_tls_config_options.alt_names` is not supplied, then Ansible will attempt to use existing certificates in the specified certificate/key paths.
 ====
 
-=== Configuring an existing BeeGFS v8 cluster
+=== Configuring an existing BeeGFS 8 cluster
 
 For an existing BeeGFS cluster, you can integrate TLS by creating a local Certificate Authority and generating the necessary certificates for the management services. Update the paths in the BeeGFS management services' configuration file to point to the newly created certificates.
 
 [IMPORTANT]
 ====
-Instructions in this section are to be used as a reference. Proper security precautions should be taken when handling private keys and certificates.
+Use these instructions as a reference. Take proper security precautions when handling private keys and certificates.
 ====
 
 ==== Create the Certificate Authority
@@ -161,7 +164,7 @@ subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid:always,issuer:always
 ----
 
-. Generate the CA certificate. This certificate should be valid for the life of the system, otherwise you will need to plan to regenerate certificates before they expire. Once a certificate expires, communication between some components will not be possible and updating TLS certificates will typically require restarting services to complete.
+. Generate the CA certificate. This certificate should be valid for the life of the system. Plan to regenerate certificates before they expire. After a certificate expires, communication between some components fails. Updating TLS certificates typically requires restarting services.
 +
 The following command generates a CA certificate valid for 1 year:
 +
@@ -172,6 +175,7 @@ openssl req -new -x509 -key ca_key.pem -out ca_cert.pem -days 365 -config ca.cnf
 +
 NOTE: While this example uses a 1-year validity period for simplicity, you should adjust the `-days` parameter according to your organization's security requirements and establish a certificate renewal process.
 
+[id=create-management-service-certificates]
 ==== Create management service certificates
 
 Generate certificates for your BeeGFS management services and sign them with the CA you created. These certificates will be installed on the file nodes running BeeGFS management services.
@@ -213,7 +217,7 @@ IP.1 = <beegfs_mgmt_service_ip_1>
 IP.2 = <beegfs_mgmt_service_ip_2>
 ----
 +
-Update the distinguished name fields to match your CA configuration and the `IP.1` and `IP.2` values with your management service IP addresses.
+Update the distinguished name fields to match your CA configuration, and replace the `IP.1` and `IP.2` values with your management service IP addresses.
 
 . Generate a Certificate Signing Request (CSR):
 +
@@ -265,7 +269,7 @@ tls-cert-file = "/etc/beegfs/mgmtd_tls_cert.pem"
 tls-key-file = "/etc/beegfs/mgmtd_tls_key.pem"
 ----
 
-. Take appropriate action to safely restart the BeeGFS management service for the changes to take effect:
+. Restart the BeeGFS management service:
 +
 [source,console]
 ----
@@ -279,25 +283,28 @@ systemctl restart beegfs-mgmtd
 journalctl -xeu beegfs-mgmtd
 ----
 +
+[NOTE]
+====
 Look for log entries indicating successful TLS initialization and certificate loading.
+====
 +
 ----
 Successfully initialized certificate verification library.
 Successfully loaded license certificate: TMP-XXXXXXXXXX
 ----
 
-=== Configure TLS for BeeGFS v8 clients
+=== Configure TLS for BeeGFS 8 clients
 
 [IMPORTANT]
 ====
 If you are upgrading an existing BeeGFS 7 cluster to BeeGFS 8, follow the link:../../administer/clusters-upgrade-beegfs-v8.html[Upgrade to BeeGFS 8] procedure. Do not configure client TLS until instructed to do so in the upgrade procedure.
 ====
 
-Create and distribute certificates signed by the local CA to all BeeGFS clients that will be requiring communication with BeeGFS management services.
+Create and distribute certificates signed by the local CA to all BeeGFS clients that require communication with BeeGFS management services.
 
-. Generate a certificate for the client using the same process as the management service certificate above, but with the client's IP address or hostname in the Subject Alternative Name (SAN) field.
+. Generate a client certificate using the same process described in <<create-management-service-certificates>>, substituting the client's IP address or hostname in the Subject Alternative Name (SAN) field.
 
-. Secure remote copy the client's certificate to the client and rename the certificate to `cert.pem` on the client:
+. Copy the client certificate to the client node and rename it to `cert.pem`:
 +
 [source,console]
 ----
@@ -311,33 +318,34 @@ scp client_cert.pem user@client:/etc/beegfs/cert.pem
 systemctl restart beegfs-client
 ----
 
-. Verify client connectivity by executing a `beegfs CLI` command, such as:
+. Verify client connectivity by running a BeeGFS CLI command, such as:
 +
 [source,console]
 ----
 beegfs health check
 ----
 
+[id=disabling-tls]
 == Disabling TLS
 
-TLS can be disabled for troubleshooting or if desired by the users. This is discouraged as it exposes potentially sensitive information about the internal file system structure and configuration in cleartext form. Follow these instructions to disable TLS on your existing or new BeeGFS v8 cluster.
+Disable TLS for troubleshooting or if your environment does not require encryption. Avoid this option in production environments because it exposes potentially sensitive information about the file system structure and configuration as cleartext.
 
-=== Deploying a new BeeGFS v8 cluster
+=== Deploying a new BeeGFS 8 cluster
 
-For a new BeeGFS cluster deployment, the cluster can be deployed with TLS disabled by setting the following parameter in the Ansible inventory's `user_defined_params.yml` file:
+For a new BeeGFS cluster deployment, disable TLS by setting the following parameter in the Ansible inventory's `user_defined_params.yml` file:
 
 [source,yaml]
 ----
 beegfs_ha_tls_enabled: false
 ----
 
-=== Configuring an existing BeeGFS v8 cluster
+=== Configuring an existing BeeGFS 8 cluster
 
-For an existing BeeGFS v8 cluster, edit the management service configuration file. For example, edit the file at `/mnt/mgmt_tgt_mgmt01/mgmt_config/beegfs-mgmtd.toml` and set:
+For an existing BeeGFS 8 cluster, edit the management service configuration file. For example, edit the file at `/mnt/mgmt_tgt_mgmt01/mgmt_config/beegfs-mgmtd.toml` and set:
 
 [source,toml]
 ----
 tls-disable = true
 ----
 
-Take appropriate action to safely restart the management service for the changes to take effect.
+Restart the management service for the changes to take effect.
