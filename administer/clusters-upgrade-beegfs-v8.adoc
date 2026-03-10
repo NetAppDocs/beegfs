@@ -438,7 +438,7 @@ apt-get update
 apt-get install --only-upgrade beegfs-client
 ----
 
-. Configure TLS for the client. TLS is required to use the BeeGFS CLI  from client nodes. Reference the link:../deploy-features-integration/beegfs-tls/beegfs-tls-deploy.html#configure-tls-for-beegfs-v8-clients[Configure TLS for BeeGFS 8 clients] section in the TLS deployment guide to configure TLS on the client.
+. Configure TLS for the client. TLS is required to use the BeeGFS CLI from client nodes. Reference the link:../deploy-features-integration/beegfs-tls/beegfs-tls-deploy.html#configure-tls-for-beegfs-v8-clients[Configure TLS for BeeGFS 8 clients] section in the TLS deployment guide to configure TLS on the client.
 +
 [NOTE]
 ====
