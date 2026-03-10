@@ -91,7 +91,7 @@ pcs property set stonith-enabled=false
 pcs cluster stop --all
 ----
 
-== Upgrade the BeeGFS management daemon package
+== Upgrade the BeeGFS management package
 
 On all file nodes in the cluster, add the BeeGFS 8 package repository for your Linux distribution. Instructions for adding the official BeeGFS repository for your Linux distribution can be found at the link:https://www.beegfs.io/c/download/[BeeGFS download page^]. Otherwise, configure your local BeeGFS mirror repository accordingly.
 
