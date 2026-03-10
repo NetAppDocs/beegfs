@@ -50,12 +50,12 @@ a|*Lenovo ThinkSystem SR665 V3*
 
 *Software and Firmware:*
 
-* *Operating System:* RedHat 9.4 Server Physical with High Availability (2 socket)
+* *Operating System:* Red Hat 9.4 Server Physical with High Availability (2 socket)
 * *Linux Kernel:* 5.14.0-427.42.1.el9_4.x86_64
 * *HCA Firmware:* FW: 28.46.1006, PXE: 3.8.0100, UEFI: 14.39.0013
 |===
 
-IMPORTANT: File nodes require a valid RedHat Enterprise Linux Server subscription and the Red Hat Enterprise Linux High Availability Add-On.
+IMPORTANT: File nodes require a valid Red Hat Enterprise Linux Server subscription and the Red Hat Enterprise Linux High Availability Add-On.
 
 === Block node requirements
 
