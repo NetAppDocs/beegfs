@@ -197,7 +197,7 @@ dnf install libbeegfs-license
 
 BeeGFS 8 requires TLS encryption for secure communication between management services and the beegfs-tool. There are three options for configuring TLS encryption on network communications between management services and beegfs-tool. The recommended and most secure method is to use certificates signed by a trusted Certificate Authority. Alternatively, you can create your own local CA to sign certificates for your BeeGFS cluster. For environments where encryption is not required or for troubleshooting, TLS can be disabled entirely, though this is discouraged as it exposes sensitive information to the network.
 
-Before proceeding, follow the instructions in the link:../deploy-features-integration/beegfs-tls/beegfs-tls-deploy.html[Configure TLS Encryption for BeeGFS 8] guide to setup TLS encryption for the management services on your file nodes.
+Before proceeding, follow the instructions in the link:../deploy-features-integration/beegfs-tls/beegfs-tls-deploy.html[Configure TLS Encryption for BeeGFS 8] guide to set up TLS encryption for the management services on your file nodes.
 
 [NOTE]
 ====
