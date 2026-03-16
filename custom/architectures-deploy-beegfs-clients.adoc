@@ -76,7 +76,7 @@ all:
     ansible_ssh_user: <USER>
     ansible_become_password: <PASSWORD>
 ----
-IMPORTANT: Do not store passwords in plain text. Instead, use the Ansible Vault (see the link:https://docs.ansible.com/ansible/latest/user_guide/vault.html[Ansible documentation^] for Encrypting content with Ansible Vault) or use the `--ask-become-pass` option when running the playbook.
+NOTE: Do not store passwords in plain text. Instead, use the Ansible Vault (see the link:https://docs.ansible.com/ansible/latest/user_guide/vault.html[Ansible documentation^] for Encrypting content with Ansible Vault) or use the `--ask-become-pass` option when running the playbook.
 
 . In the `client_inventory.yml` file, list all hosts that should be configured as BeeGFS clients under the `beegfs_clients` group, and then refer to the inline comments and uncomment any additional configuration required to build the BeeGFS client kernel module on your system:
 +
