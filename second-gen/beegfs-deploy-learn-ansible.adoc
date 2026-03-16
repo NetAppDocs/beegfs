@@ -24,8 +24,7 @@ Each role in the NetApp E-Series Ansible collection is a complete end-to-end dep
 
 While in-depth documentation is provided with the roles, the deployment procedures describe how to use the role to deploy a NetApp Verified Architecture using the second generation BeeGFS building block design.
 
-[NOTE]
-  Although the deployment steps attempt to provide enough detail so that prior experience with Ansible is not a prerequisite, you should have some familiarity with Ansible and related terminology.
+NOTE: Although the deployment steps attempt to provide enough detail so that prior experience with Ansible is not a prerequisite, you should have some familiarity with Ansible and related terminology.
 
 == Inventory layout for a BeeGFS HA cluster
 Define a BeeGFS HA cluster using the Ansible inventory structure.
@@ -34,8 +33,7 @@ Anyone with previous Ansible experience should be aware that the BeeGFS HA role 
 
 An Ansible inventory typically consists of the files in `host_vars` and `group_vars`, along with an `inventory.yml` file that assigns hosts to specific groups (and potentially groups to other groups).
 
-[NOTE]
-Don’t create any files with the content in this subsection, which is intended as an example only.
+NOTE: Don’t create any files with the content in this subsection, which is intended as an example only.
 
 Although this configuration is predetermined based on the configuration profile, you should have a general understanding of how everything is laid out as an Ansible inventory, as follows:
 
@@ -90,5 +88,4 @@ beegfs_targets:
 
 This layout allows the BeeGFS service, network, and storage configuration for each resource to be defined in a single place. Behind the scenes, the BeeGFS role aggregates the necessary configuration for each file and block node based on this inventory structure.
 
-[NOTE]
-The BeeGFS numerical and string node ID for each service is automatically configured based on the group name. Thus,  in addition to the general Ansible requirement for group names to be unique, groups representing a BeeGFS service must end in a number that is unique for the type of BeeGFS service the group represents. For example,  meta_01 and stor_01 are allowed, but metadata_01 and meta_01 are not.
+NOTE: The BeeGFS numerical and string node ID for each service is automatically configured based on the group name. Thus,  in addition to the general Ansible requirement for group names to be unique, groups representing a BeeGFS service must end in a number that is unique for the type of BeeGFS service the group represents. For example,  meta_01 and stor_01 are allowed, but metadata_01 and meta_01 are not.

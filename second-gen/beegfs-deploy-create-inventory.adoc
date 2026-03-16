@@ -117,8 +117,7 @@ eseries_nvme_ib_interfaces:
     configure: true
 ....
 +
-[NOTE]
-If you have already deployed the BeeGFS cluster, you must stop the cluster before adding or changing statically configured IP addresses, including cluster IPs and IPs used for NVMe/IB. This is required so these changes take effect properly and do not disrupt cluster operations.
+NOTE: If you have already deployed the BeeGFS cluster, you must stop the cluster before adding or changing statically configured IP addresses, including cluster IPs and IPs used for NVMe/IB. This is required so these changes take effect properly and do not disrupt cluster operations.
 
 . Under `host_vars/`, create a file for each BeeGFS block node named `<HOSTNAME>.yml` and populate it with the following content.
 +
@@ -198,8 +197,7 @@ eseries_ib_opensm_options:
   virt_max_ports_in_process: "0"
 ....
 +
-[NOTE]
-If the `ansible_ssh_user` is already `root`, then you can optionally omit the `ansible_become_password` and specify the `--ask-become-pass` option when running the playbook.
+NOTE: If the `ansible_ssh_user` is already `root`, then you can optionally omit the `ansible_become_password` and specify the `--ask-become-pass` option when running the playbook.
 
 . Optionally, configure a name for the high-availability (HA) cluster and specify a user for intra-cluster communication.
 +
@@ -232,8 +230,7 @@ beegfs_ha_alert_verbosity: 3
 #  5) high-level node activity + fencing action information + resources
 ....
 +
-[NOTE]
-While seemingly redundant, `beegfs_ha_mgmtd_floating_ip` is important when you scale the BeeGFS file system beyond a single HA cluster. Subsequent HA clusters are deployed without an additional BeeGFS management service and point at the management service provided by the first cluster.
+NOTE: While seemingly redundant, `beegfs_ha_mgmtd_floating_ip` is important when you scale the BeeGFS file system beyond a single HA cluster. Subsequent HA clusters are deployed without an additional BeeGFS management service and point at the management service provided by the first cluster.
 +
 . Configure a fencing agent. (For more details, see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters[Configure fencing in a Red Hat High Availability cluster^].) The following output shows examples for configuring common fencing agents. Choose one of these options.
 +
@@ -333,8 +330,7 @@ beegfs_ha_beegfs_meta_conf_ha_group_options:
   tuneTargetChooser: randomrobin
 ....
 +
-[NOTE]
-In verification testing, `randomrobin` was typically used to ensure that test files were evenly distributed across all BeeGFS storage targets during performance benchmarking (for more information on benchmarking, see the BeeGFS site for https://doc.beegfs.io/latest/advanced_topics/benchmark.html[Benchmarking a BeeGFS System^]).  With real world use, this might cause lower numbered targets to fill up faster than higher numbered targets. Omitting `randomrobin` and just using the default `randomized` value has been shown to provide good performance while still utilizing all available targets.
+NOTE: In verification testing, `randomrobin` was typically used to ensure that test files were evenly distributed across all BeeGFS storage targets during performance benchmarking (for more information on benchmarking, see the BeeGFS site for https://doc.beegfs.io/latest/advanced_topics/benchmark.html[Benchmarking a BeeGFS System^]).  With real world use, this might cause lower numbered targets to fill up faster than higher numbered targets. Omitting `randomrobin` and just using the default `randomized` value has been shown to provide good performance while still utilizing all available targets.
 
 == Step 5: Define the configuration for the common block node
 
@@ -369,8 +365,7 @@ eseries_drive_firmware_firmware_list:
 eseries_drive_firmware_upgrade_drives_online: true
 ....
 +
-[NOTE]
-Setting `eseries_drive_firmware_upgrade_drives_online` to `false` will speed up the upgrade, but should not be done until after BeeGFS is deployed. This is because that setting requires stopping all I/O to the drives before the upgrade to avoid application errors. Although performing an online drive firmware upgrade before configuring volumes is still quick, we recommend you always set this value to `true` to avoid issues later.
+NOTE: Setting `eseries_drive_firmware_upgrade_drives_online` to `false` will speed up the upgrade, but should not be done until after BeeGFS is deployed. This is because that setting requires stopping all I/O to the drives before the upgrade to avoid application errors. Although performing an online drive firmware upgrade before configuring volumes is still quick, we recommend you always set this value to `true` to avoid issues later.
 +
 . To optimize performance, make the following changes to the global configuration:
 +
@@ -397,5 +392,4 @@ eseries_volume_cache_without_batteries: false
 eseries_storage_pool_usable_drives: "99:0,99:23,99:1,99:22,99:2,99:21,99:3,99:20,99:4,99:19,99:5,99:18,99:6,99:17,99:7,99:16,99:8,99:15,99:9,99:14,99:10,99:13,99:11,99:12"
 ....
 +
-[NOTE]
-The value specified for `eseries_storage_pool_usable_drives` is specific to NetApp EF600 block nodes and controls the order in which drives are assigned to new volume groups. This ordering ensures that the I/O to each group is evenly distributed across backend drive channels.
+NOTE: The value specified for `eseries_storage_pool_usable_drives` is specific to NetApp EF600 block nodes and controls the order in which drives are assigned to new volume groups. This ordering ensures that the I/O to each group is evenly distributed across backend drive channels.

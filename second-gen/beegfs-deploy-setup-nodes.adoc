@@ -21,23 +21,21 @@ While most software configuration tasks are automated using the NetApp-provided 
 +
 To learn how to configure networking for the validated Lenovo SR665 V3 file nodes, see the https://pubs.lenovo.com/sr665-v3/[Lenovo ThinkSystem Documentation^].
 +
-[NOTE]
-A  baseboard management controller (BMC), sometimes referred to as a service processor, is the generic name for the out-of-band management capability built into various server platforms that can provide remote access even if the operating system is not installed or accessible. Vendors typically market this functionality with their own branding. For example, on the Lenovo SR665, the BMC is referred to as the _Lenovo XClarity Controller (XCC)_.
+NOTE: A  baseboard management controller (BMC), sometimes referred to as a service processor, is the generic name for the out-of-band management capability built into various server platforms that can provide remote access even if the operating system is not installed or accessible. Vendors typically market this functionality with their own branding. For example, on the Lenovo SR665, the BMC is referred to as the _Lenovo XClarity Controller (XCC)_.
 
 . Configure the system settings for maximum performance.
 +
 You configure the system settings using the UEFI setup (formerly known as the BIOS) or by using the Redfish APIs provided by many BMCs. The system settings vary based on the server model used as a file node.
 +
-To learn how to configure the system settings for the validated Lenovo SR665 file nodes, see link:beegfs-deploy-file-node-tuning.html[Tune system settings for performance].
+To learn how to configure the system settings for the validated Lenovo SR665 V3 file nodes, see link:beegfs-deploy-file-node-tuning.html[Tune system settings for performance].
 
-. Install Red Hat 9.3 and configure the host name and network port used to manage the operating system including SSH connectivity from the Ansible control node.
+. Install Red Hat Enterprise Linux (RHEL) 9.4 and configure the host name and network port used to manage the operating system including SSH connectivity from the Ansible control node.
 +
 Do not configure IPs on any of the InfiniBand ports at this time.
 +
-[NOTE]
-While not strictly required, subsequent sections presume that host names are sequentially numbered (such as h1-hN) and refer to tasks that should be completed on odd versus even numbered hosts.
+NOTE: While not strictly required, subsequent sections presume that host names are sequentially numbered (such as h1-hN) and refer to tasks that should be completed on odd versus even numbered hosts.
 
-. Use RedHat Subscription Manager to register and subscribe the system to allow installation of the required packages from the official Red Hat repositories and to limit updates to the supported version of Red Hat: `subscription-manager release --set=9.3`. For instructions, see https://access.redhat.com/solutions/253273[How to register and subscribe a RHEL system^] and  https://access.redhat.com/solutions/2761031[How to limit updates^].
+. Use Red Hat Subscription Manager to register and subscribe the system to allow installation of the required packages from the official Red Hat repositories and to limit updates to the supported version of Red Hat: `subscription-manager release --set=9.4`. For instructions, see https://access.redhat.com/solutions/253273[How to register and subscribe a RHEL system^] and  https://access.redhat.com/solutions/2761031[How to limit updates^].
 
 . Enable the Red Hat repository containing the packages required for high availability.
 +
@@ -58,5 +56,4 @@ For instructions on configuring ports, go to the https://docs.netapp.com/us-en/e
 +
 Setting a name can make it easier to refer to each system in subsequent sections. For instructions on setting the array name,  go to the https://docs.netapp.com/us-en/e-series-santricity/sm-interface/setup-wizard-overview.html#first-time-setup[E-Series Documentation Center^].
 
-[NOTE]
-While not strictly required, subsequent topics presume storage array names are sequentially numbered (such as c1 - cN) and refer to the steps that should be completed on odd versus even numbered systems.
+NOTE: While not strictly required, subsequent topics presume storage array names are sequentially numbered (such as c1 - cN) and refer to the steps that should be completed on odd versus even numbered systems.

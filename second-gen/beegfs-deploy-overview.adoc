@@ -23,8 +23,7 @@ Ansible allows companies like NetApp to expand on built-in functionality using c
 
 For additional details, see link:beegfs-deploy-learn-ansible.html[Learn about the Ansible inventory].
 
-[NOTE]
-Because numerous steps are involved in deploying the BeeGFS on NetApp solution, NetApp does not support manually deploying the solution.
+NOTE: Because numerous steps are involved in deploying the BeeGFS on NetApp solution, NetApp does not support manually deploying the solution.
 
 == Configuration profiles for BeeGFS building blocks
 The deployment procedures cover the following configuration profiles:
@@ -57,10 +56,13 @@ For detailed procedures, see link:beegfs-deploy-hardware.html[Deploy hardware].
 . link:beegfs-deploy-configure-clients.html[Configure BeeGFS clients].
 
 [NOTE]
+====
 The deploy procedures includes several examples where text needs to be copied to a file. Pay close attention to any inline comments denoted by “#” or “//” characters for anything that should or can be modified for a specific deployment. For example:
+[source,yaml]
 `beegfs_ha_ntp_server_pools:  # THIS IS AN EXAMPLE OF A COMMENT!
   - "pool 0.pool.ntp.org iburst maxsources 3"
   - "pool 1.pool.ntp.org iburst maxsources 3"`
+====
 
 Derivative architectures with variations in deployment recommendations:
 
