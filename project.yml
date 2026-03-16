@@ -142,7 +142,7 @@ sidebar:
         - title: Overview, key concepts, and terminology
           url: /administer/clusters-overview.html
         - title: When to use Ansible versus pcs
-          url: /administer/clusters-ansible-pcs.html
+          url: /administer/clusters-ansible-pcs.htmlP
         - title: Examine the state of the cluster
           url: /administer/clusters-examine-state.html
         - title: Reconfigure the HA cluster and BeeGFS
@@ -151,7 +151,7 @@ sidebar:
           entries:
             - title: Upgrade BeeGFS services
               url: /administer/clusters-upgrade-beegfs.html
-            - title: Upgrade to BeeGFS v8
+            - title: Upgrade to BeeGFS 8
               url: /administer/clusters-upgrade-beegfs-v8.html
             - title: Upgrade Pacemaker and Corosync packages
               url: /administer/clusters-update-ha-services.html
