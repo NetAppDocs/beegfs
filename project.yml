@@ -142,7 +142,7 @@ sidebar:
         - title: Overview, key concepts, and terminology
           url: /administer/clusters-overview.html
         - title: When to use Ansible versus pcs
-          url: /administer/clusters-ansible-pcs.htmlP
+          url: /administer/clusters-ansible-pcs.html
         - title: Examine the state of the cluster
           url: /administer/clusters-examine-state.html
         - title: Reconfigure the HA cluster and BeeGFS
