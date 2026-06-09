@@ -51,7 +51,7 @@ Ansible handles all software provisioning and configuration tasks including:
 
 Support for BeeGFS in Ansible is released on link:https://galaxy.ansible.com/netapp_eseries/beegfs[Ansible Galaxy] as a collection of roles and modules that automate the end-to-end deployment and management of BeeGFS HA clusters.
 
-BeeGFS itself is versioned following a <major>.<minor>.<patch> versioning scheme and the collection maintains roles for each supported <major>.<minor> version of BeeGFS, for example BeeGFS 7.2 or BeeGFS 7.3. As updates to the collection are released the patch version in each role will be updated to point at the latest available BeeGFS version for that release branch (example: 7.2.8). Each version of the collection is also tested and supported with specific Linux distributions and versions, currently Red Hat for file nodes, and RedHat and Ubuntu for clients. Running other distributions is not supported, and running other versions (especially other major versions) is not recommended. 
+BeeGFS itself is versioned following a <major>.<minor>.<patch> versioning scheme and the collection maintains roles for each supported <major>.<minor> version of BeeGFS, for example BeeGFS 7.2 or BeeGFS 7.3. As updates to the collection are released the patch version in each role will be updated to point at the latest available BeeGFS version for that release branch (example: 7.2.8). Each version of the collection is also tested and supported with specific Linux distributions and versions, currently Red Hat for file nodes, and Red Hat and Ubuntu for clients. Running other distributions is not supported, and running other versions (especially other major versions) is not recommended. 
 
 === Ansible Control Node
 
@@ -65,7 +65,7 @@ It is also recommend you setup passwordless SSH from the control node to all Bee
 
 === BeeGFS File Nodes
 
-File nodes must run RedHat 9.3 and have access to the HA repository containing required packages (pacemaker, corosync, fence-agents-all, resource-agents). For example the following command can be executed to enable the appropriate repository on RedHat 9: 
+File nodes must run Red Hat Enterprise Linux (RHEL) 9.4 and have access to the HA repository containing required packages (pacemaker, corosync, fence-agents-all, resource-agents). For example the following command can be executed to enable the appropriate repository on RHEL 9: 
 
 [source,bash]
 ----
@@ -74,6 +74,6 @@ subscription-manager repo-override repo=rhel-9-for-x86_64-highavailability-rpms 
 
 === BeeGFS Client Nodes
 
-A BeeGFS client Ansible role is available to install the BeeGFS client package and manage BeeGFS mount(s). This role has been tested with RedHat 8.4 and Ubuntu 22.04. 
+A BeeGFS client Ansible role is available to install the BeeGFS client package and manage BeeGFS mount(s). This role has been tested with RHEL 9.4 and Ubuntu 22.04. 
 
 If you are not using Ansible to setup the BeeGFS client and mount BeeGFS, any link:https://doc.beegfs.io/latest/release_notes.html#supported-linux-distributions-and-kernels[BeeGFS supported Linux distribution and kernel] can be used.

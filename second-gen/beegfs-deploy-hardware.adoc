@@ -15,8 +15,7 @@ summary: "Each building block consists of two validated x86 file nodes directly 
 [.lead]
 Each building block consists of two validated x86 file nodes directly connected to two block nodes using HDR (200Gb) InfiniBand cables.
 
-[NOTE]
-A minimum of two building blocks are required to establish quorum in the failover cluster. A two-node cluster has limitations that might prevent a successful failover from occurring. You can configure a two-node cluster by incorporating a third device as a tiebreaker; however, this documentation does not describe that design.
+NOTE: A minimum of two building blocks are required to establish quorum in the failover cluster. A two-node cluster has limitations that might prevent a successful failover from occurring. You can configure a two-node cluster by incorporating a third device as a tiebreaker; however, this documentation does not describe that design.
 
 The following steps are identical for each building block in the cluster, regardless of whether it is used to run both BeeGFS metadata and storage services, or just storage services, unless it is otherwise noted.
 
@@ -33,8 +32,7 @@ Rack the building blocks so the two BeeGFS file nodes are above the BeeGFS block
 +
 image:buildingblock-sr665v3.png["Building block"]
 +
-[NOTE]
-The power supply configuration for production use cases should typically use redundant PSUs.
+NOTE: The power supply configuration for production use cases should typically use redundant PSUs.
 +
 . If needed, install the drives in each of the BeeGFS block nodes.
 +
@@ -48,8 +46,7 @@ image:driveslots.png["EF600 drive slots"]
 +
 image:directattachcable-sr665v3.png["SR665V3 direct attach cabling"]
 +
-[NOTE]
-The nodes across multiple building blocks are never directly connected. Each building block should be treated as a standalone unit and all communication between building blocks occurs through network switches.
+NOTE: The nodes across multiple building blocks are never directly connected. Each building block should be treated as a standalone unit and all communication between building blocks occurs through network switches.
 +
 . Connect the remaining InfiniBand ports on the file node to the storage network's InfiniBand switch using the link:beegfs-technology-requirements.html#file-switch-cables[2m InfiniBand cables] specific to your InfiniBand storage switch.
 +
@@ -61,5 +58,4 @@ image:networkcable-sr665v3.png["Storage network cabling"]
 +
 . As needed, assemble additional building blocks following the same cabling guidelines.
 +
-[NOTE]
-The total number of building blocks that can be deployed in a single rack depends on the available power and cooling at each site.
+NOTE: The total number of building blocks that can be deployed in a single rack depends on the available power and cooling at each site.

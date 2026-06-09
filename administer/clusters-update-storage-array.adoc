@@ -19,7 +19,7 @@ Follow these steps to upgrade the HA cluster's E-Series storage array's componen
 
 Keeping your HA cluster's NetApp E-Series storage arrays up-to-date with the latest firmware ensures optimal performance and improved security. Firmware updates for the storage array are applied through SANtricity OS, NVSRAM, and drive firmware files.
 
-IMPORTANT: While the storage arrays can be upgraded with the HA cluster online, it is recommended to place the cluster into maintenance mode for all upgrades.
+NOTE: While the storage arrays can be upgraded with the HA cluster online, it is recommended to place the cluster into maintenance mode for all upgrades.
 
 == Block node upgrade steps
 

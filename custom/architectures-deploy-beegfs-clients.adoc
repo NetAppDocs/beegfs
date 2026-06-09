@@ -76,7 +76,7 @@ all:
     ansible_ssh_user: <USER>
     ansible_become_password: <PASSWORD>
 ----
-IMPORTANT: Do not store passwords in plain text. Instead, use the Ansible Vault (see the link:https://docs.ansible.com/ansible/latest/user_guide/vault.html[Ansible documentation^] for Encrypting content with Ansible Vault) or use the `--ask-become-pass` option when running the playbook.
+NOTE: Do not store passwords in plain text. Instead, use the Ansible Vault (see the link:https://docs.ansible.com/ansible/latest/user_guide/vault.html[Ansible documentation^] for Encrypting content with Ansible Vault) or use the `--ask-become-pass` option when running the playbook.
 
 . In the `client_inventory.yml` file, list all hosts that should be configured as BeeGFS clients under the `beegfs_clients` group, and then refer to the inline comments and uncomment any additional configuration required to build the BeeGFS client kernel module on your system:
 +
@@ -143,7 +143,7 @@ beegfs_ha_conn_auth_secret: <SECRET>
 beegfs_ha_conn_auth_enabled: false
 ----
 
-For a full list of supported parameters and additional details refer to the link:https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_client[full BeeGFS client documentation^]. For a complete example of a client inventory click link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/client_inventory.yml[here^].
+For a full list of supported parameters and additional details refer to the link:https://github.com/NetApp/beegfs/tree/master/roles/beegfs_client[full BeeGFS client documentation^]. For a complete example of a client inventory click link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/H2_DAC_IB_A2_EF600/beegfs_client/beegfs_client_inventory.yml[here^].
 
 === Create the BeeGFS Client Playbook File
 
@@ -195,7 +195,7 @@ For a full list of supported parameters and additional details refer to the link
         name: beegfs_client
 ----
 
-For a complete example of a client playbook click link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/client_playbook.yml[here^].
+For a complete example of a client playbook click link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/H2_DAC_IB_A2_EF600/beegfs_client/beegfs_client_playbook.yml[here^].
 
 === Run the BeeGFS Client Playbook
 

@@ -180,7 +180,7 @@ Steps to resolve:
 
 . Verify the node is actually powered off.
 +
-IMPORTANT: If the node you specify is not actually off, but running cluster services or resources, data corruption/cluster failure WILL occur.
+CAUTION: If the node you specify is not actually off, but running cluster services or resources, data corruption/cluster failure WILL occur.
 . Manually confirm fencing with: `pcs stonith confirm <NODE>`
 
 At this point services should finish failing over and be restarted on another healthy node.
@@ -191,7 +191,7 @@ At this point services should finish failing over and be restarted on another he
 
 Normally if a BeeGFS service needs to be restarted (say to facilitate a configuration change) this should be done by updating the Ansible inventory and rerunning the playbook. In some scenarios it may be desirable to restart individual services to facilitate faster troubleshooting, for example to change the logging level without needing to wait for the entire playbook to run.
 
-IMPORTANT: Unless any manual changes are also added to the Ansible inventory, they will be reverted the next time the Ansible playbook runs.
+CAUTION: Unless any manual changes are also added to the Ansible inventory, they will be reverted the next time the Ansible playbook runs.
 
 ==== Option 1: Systemd controlled restart
 

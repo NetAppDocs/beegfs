@@ -33,8 +33,7 @@ eseries_ipoib_interfaces:
     address: <IP>/<SUBNET_MASK>
 ....
 +
-[NOTE]
-If deploying with a two subnet addressing scheme, two InfiniBand interfaces must be configured on each client, one in each of the two storage IPoIB subnets. If using the example subnets and recommended ranges for each BeeGFS service listed here, clients should have one interface configured in the range of `100.127.1.0` to `100.127.99.255` and the other in `100.128.1.0` to `100.128.99.255`.
+NOTE: If deploying with a two subnet addressing scheme, two InfiniBand interfaces must be configured on each client, one in each of the two storage IPoIB subnets. If using the example subnets and recommended ranges for each BeeGFS service listed here, clients should have one interface configured in the range of `100.127.1.0` to `100.127.99.255` and the other in `100.128.1.0` to `100.128.99.255`.
 
 . Create a new file `client_inventory.yml`, and then populate the following parameters at the top:
 +
@@ -47,8 +46,7 @@ all:
 The defaults set by the BeeGFS HA role are based on the testing performed as part of this NetApp Verified Architecture and differ from the typical BeeGFS client defaults.
 ....
 +
-[NOTE]
-Do not store passwords in plain text. Instead, use the Ansible Vault (see the Ansible documentation for https://docs.ansible.com/ansible/latest/user_guide/vault.html[Encrypting content with Ansible Vault^]) or use the `--ask-become-pass` option when running the playbook.
+NOTE: Do not store passwords in plain text. Instead, use the Ansible Vault (see the Ansible documentation for https://docs.ansible.com/ansible/latest/user_guide/vault.html[Encrypting content with Ansible Vault^]) or use the `--ask-become-pass` option when running the playbook.
 
 . In the `client_inventory.yml` file, list all hosts that should be configured as BeeGFS clients under the `beegfs_clients` group, and then specify any additional configuration required to build the BeeGFS client kernel module.
 +
@@ -79,8 +77,7 @@ Do not store passwords in plain text. Instead, use the Ansible Vault (see the An
         beegfs_client_ofed_enable: False # Default value.
 ....
 +
-[NOTE]
-When using the NVIDIA OFED drivers, make sure that `beegfs_client_ofed_include_path` points to the correct "header include path" for your Linux installation. For more information, see the BeeGFS documentation for https://doc.beegfs.io/latest/advanced_topics/rdma_support.html[RDMA support^].
+NOTE: When using the NVIDIA OFED drivers, make sure that `beegfs_client_ofed_include_path` points to the correct "header include path" for your Linux installation. For more information, see the BeeGFS documentation for https://doc.beegfs.io/latest/advanced_topics/rdma_support.html[RDMA support^].
 
 . In the `client_inventory.yml` file, list the BeeGFS file systems you want mounted at the bottom of any previously defined `vars`.
 +
@@ -104,8 +101,7 @@ When using the NVIDIA OFED drivers, make sure that `beegfs_client_ofed_include_p
               sysSessionChecksEnabled: false
 ....
 +
-[NOTE]
-The `beegfs_client_config` represents the settings that were tested. See the documentation included with the `netapp_eseries.beegfs` collection’s `beegfs_client` role for a comprehensive overview of all options. This includes details around mounting multiple BeeGFS file systems or mounting the same BeeGFS file system multiple times.
+NOTE: The `beegfs_client_config` represents the settings that were tested. See the documentation included with the `netapp_eseries.beegfs` collection’s `beegfs_client` role for a comprehensive overview of all options. This includes details around mounting multiple BeeGFS file systems or mounting the same BeeGFS file system multiple times.
 
 . Create a new `client_playbook.yml` file, and then populate the following parameters:
 +
@@ -126,8 +122,7 @@ The `beegfs_client_config` represents the settings that were tested. See the doc
         name: beegfs_client
 ....
 +
-[NOTE]
-Omit importing the `netapp_eseries.host` collection and `ipoib` role if you have already installed the required IB/RDMA drivers and configured IPs on the appropriate IPoIB interfaces.
+NOTE: Omit importing the `netapp_eseries.host` collection and `ipoib` role if you have already installed the required IB/RDMA drivers and configured IPs on the appropriate IPoIB interfaces.
 
 . To install and build the client and mount BeeGFS, run the following command:
 +

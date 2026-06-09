@@ -33,8 +33,8 @@ Using the system setup (BIOS/UEFI) interface, ensure settings are set to maximiz
 
 Install a supported operating system based on the file node requirements listed link:../second-gen/beegfs-technology-requirements.html#file-node-requirements[here^]. Refer to any additional steps below based on your Linux distribution.
 
-==== RedHat
-Use RedHat Subscription Manager to register and subscribe the system to allow installation of the required packages from the official Red Hat repositories and to limit updates to the supported version of Red Hat: `subscription-manager release --set=<MAJOR_VERSION>.<MINOR_VERSION>`. For instructions, see https://access.redhat.com/solutions/253273[How to register and subscribe a RHEL system^] and  https://access.redhat.com/solutions/2761031[How to limit updates^].
+==== Red Hat
+Use Red Hat Subscription Manager to register and subscribe the system to allow installation of the required packages from the official Red Hat repositories and to limit updates to the supported version of Red Hat: `subscription-manager release --set=<MAJOR_VERSION>.<MINOR_VERSION>`. For instructions, see https://access.redhat.com/solutions/253273[How to register and subscribe a RHEL system^] and https://access.redhat.com/solutions/2761031[How to limit updates^].
 
 Enable the Red Hat repository containing the packages required for high availability:
 

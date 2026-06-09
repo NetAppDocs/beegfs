@@ -109,8 +109,7 @@ The following figure shows the Pacemaker-controlled BeeGFS services and dependen
 
 image:beegfs-design-image11.png["Pacemaker-controller services"]
 
-[NOTE]
-So that multiple BeeGFS services of the same type are started on the same node, Pacemaker is configured to start BeeGFS services using the Multi Mode configuration method. For more information, see the https://doc.beegfs.io/latest/advanced_topics/multimode.html[BeeGFS documentation on Multi Mode^].
+NOTE: So that multiple BeeGFS services of the same type are started on the same node, Pacemaker is configured to start BeeGFS services using the Multi Mode configuration method. For more information, see the https://doc.beegfs.io/latest/advanced_topics/multimode.html[BeeGFS documentation on Multi Mode^].
 
 Because BeeGFS services must be able to start on multiple nodes, the configuration file for each service (normally located at `/etc/beegfs`) is stored on one of the E-Series volumes used as the BeeGFS target for that service. This makes the configuration along with the data for a particular BeeGFS service accessible to all nodes that might need to run the service.
 

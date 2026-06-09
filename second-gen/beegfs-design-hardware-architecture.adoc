@@ -41,8 +41,7 @@ In the following figure, notice that:
 
 image:beegfs-design-image6.png["Network cabling"]
 
-[NOTE]
-When using splitter cables to connect the storage switch to file nodes, one cable should branch out and connect to the ports outlined in light green. Another cable should branch out and connect to the ports outlined in dark green.
+NOTE: When using splitter cables to connect the storage switch to file nodes, one cable should branch out and connect to the ports outlined in light green. Another cable should branch out and connect to the ports outlined in dark green.
 Additionally, for storage networks with redundant switches, ports outlined in light green should connect to one switch, while ports in dark green should connect to another switch.
 
 The cabling configuration depicted in the figure allows each BeeGFS service to:

@@ -19,8 +19,7 @@ These deployment instructions demonstrate how to deploy a file system that consi
 
 These steps are intended to show the full range of typical configuration profiles that you can use to configure NetApp BeeGFS building blocks to meet the requirements of the overall BeeGFS file system.
 
-[NOTE]
-In this and subsequent sections, adjust as needed to build the inventory representing the BeeGFS file system that you want to deploy. In particular, use Ansible host names that represent each block or file node and the desired IP addressing scheme for the storage network to ensure it can scale to the number of BeeGFS file nodes and clients.
+NOTE: In this and subsequent sections, adjust as needed to build the inventory representing the BeeGFS file system that you want to deploy. In particular, use Ansible host names that represent each block or file node and the desired IP addressing scheme for the storage network to ensure it can scale to the number of BeeGFS file nodes and clients.
 
 
 == Step 1: Create the Ansible inventory file
@@ -272,8 +271,7 @@ beegfs_targets:
           - size: 21.50            owning_controller: <OWNING CONTROLLER>
 ....
 +
-[NOTE]
- For the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
+NOTE: For the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
@@ -445,8 +443,7 @@ beegfs_targets:
             owning_controller: <OWNING CONTROLLER>
 ....
 +
-[NOTE]
-For the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
+NOTE: For the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
@@ -544,8 +541,7 @@ beegfs_targets:
           - size: 21.50            owning_controller: <OWNING CONTROLLER>
 ....
 +
-[NOTE]
- For the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages]..
+NOTE: For the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages]..
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller
@@ -688,8 +684,7 @@ beegfs_targets:
             owning_controller: <OWNING CONTROLLER>
 ....
 +
-[NOTE]
- For  the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
+NOTE: For  the correct size to use, see link:beegfs-deploy-recommended-volume-percentages.html[Recommended storage pool overprovisioning percentages].
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller

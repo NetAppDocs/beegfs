@@ -116,8 +116,7 @@ While not mandatory, this deployment presumes the following IPoIB subnet ranges 
 * The second octet is always odd or even, based on whether the file node InfiniBand port is odd or even.
 * BeeGFS cluster IPs are always `xxx. 127.100.yyy` or `xxx.128.100.yyy`.
 
-[NOTE]
-In addition to the interface used for in-band OS management, additional interfaces can be used by Corosync for cluster heart beating and synchronization. This ensures that the loss of a single interface does not bring down the entire cluster.
+NOTE: In addition to the interface used for in-band OS management, additional interfaces can be used by Corosync for cluster heart beating and synchronization. This ensures that the loss of a single interface does not bring down the entire cluster.
 
 * The BeeGFS Management service is always at `xxx.yyy.101.0` or `xxx.yyy.102.0`.
 * BeeGFS Metadata services are always at `xxx.yyy.101.zzz` or `xxx.yyy.102.zzz`.
@@ -204,5 +203,4 @@ The following table provides the range for Subnet B: 100.128.0.0/16.
 |100.128.1.1 - 100.128.99.255
 |===
 
-[NOTE]
-Not all IPs in the above ranges are used in this NetApp Verified Architecture. They demonstrate how IP addresses can be pre-allocated to allow easy file system expansion using a consistent IP addressing scheme. In this scheme, BeeGFS file nodes and service IDs correspond with the fourth octet of a well-known range of IPs. The file system could certainly scale beyond 255 nodes or services if needed.
+NOTE: Not all IPs in the above ranges are used in this NetApp Verified Architecture. They demonstrate how IP addresses can be pre-allocated to allow easy file system expansion using a consistent IP addressing scheme. In this scheme, BeeGFS file nodes and service IDs correspond with the fourth octet of a well-known range of IPs. The file system could certainly scale beyond 255 nodes or services if needed.

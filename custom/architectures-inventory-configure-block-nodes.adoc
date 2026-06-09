@@ -44,7 +44,7 @@ eseries_initiator_protocol: <PROTOCOL>
 ----
 . Depending on the protocol in use, the HIC ports may require additional configuration. When needed, HIC port configuration should be defined so the top entry in the configuration for each controller corresponds with with the physical left-most port on each controller, and the bottom port the right-most port. All ports require valid configuration even if they are not currently in use.
 +
-IMPORTANT: Also see the section below if you are using HDR (200Gb) InfiniBand or 200Gb RoCE with EF600 block nodes.
+NOTE: Also see the section below if you are using HDR (200Gb) InfiniBand or 200Gb RoCE with EF600 block nodes.
 
 .. For iSCSI:
 +
@@ -118,7 +118,7 @@ eseries_controller_nvme_roce_port_speed: auto            # General interface spe
 
 For additional options to configure HIC ports and host protocols including the ability to configure iSCSI CHAP refer to the link:https://github.com/netappeseries/santricity/tree/release-1.3.1/roles/nar_santricity_host#role-variables[documentation^] included with the SANtricity collection. Note when deploying BeeGFS the storage pool, volume configuration, and other aspects of provisioning storage will be configured elsewhere, and should not be defined in this file.
 
-Click link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/host_vars/ictad22a01.yml[here^] for an example of a complete inventory file representing a single block node.
+Click link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/H2_DAC_IB_A2_EF600/beegfs_cluster_building_blocks/beegfs_ha_building_block_cluster_1/host_vars/netapp_01.yml[here^] for an example of a complete inventory file representing a single block node.
 
 ### Using HDR (200Gb) InfiniBand or 200Gb RoCE with NetApp EF600 block nodes:
 

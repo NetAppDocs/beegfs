@@ -62,8 +62,7 @@ The following table provides recommended capacity sizing for metadata plus stora
 |460.60TB
 |===
 
-[NOTE]
-When sizing metadata plus storage building blocks, you can reduce costs by using smaller drives for metadata volume groups versus storage volume groups.
+NOTE: When sizing metadata plus storage building blocks, you can reduce costs by using smaller drives for metadata volume groups versus storage volume groups.
 
 == Capacity sizing for storage-only building blocks
 The following table provides rule-of-thumb capacity sizing for storage-only building blocks.
@@ -81,5 +80,4 @@ The following table provides rule-of-thumb capacity sizing for storage-only buil
 |538.55TB
 |===
 
-[NOTE]
-The performance and capacity overhead of including the management service in the base (first) building block are minimal, unless global file locking is enabled.
+NOTE: The performance and capacity overhead of including the management service in the base (first) building block are minimal, unless global file locking is enabled.
