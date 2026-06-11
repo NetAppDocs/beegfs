@@ -109,7 +109,7 @@ NOTE: A BeeGFS HA role is maintained for each supported major.minor version of B
 
 . Optional: If you wish to define additional tasks, keep in mind if the tasks should be directed to `all` hosts (including the E-Series storage systems) or only the file nodes. If needed define a new play specifically targeting file nodes using `- hosts: ha_cluster`.
 
-Click link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/playbook.yml[here^] for an example of a complete playbook file.
+Click link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/H2_DAC_IB_A2_EF600/beegfs_cluster_building_blocks/beegfs_ha_playbook.yml[here^] for an example of a complete playbook file.
 
 === Install the NetApp Ansible Collections
 

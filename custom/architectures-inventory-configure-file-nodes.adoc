@@ -117,7 +117,7 @@ eseries_nvme_roce_interfaces:
 ... Use of FCP or SAS do not require installing or configuring additional software. If using FCP, ensure switches are properly zoned following link:https://docs.netapp.com/us-en/e-series/config-linux/fc-configure-switches-task.html[NetApp^] and your switch vendor's best practices.
 ... Use of IB SRP is not recommended at this time. Use NVMe/IB or iSER depending on what your E-Series block nodes support.
 
-Click link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/host_vars/ictad22h01.yml[here^] for an example of a complete inventory file representing a single file node.
+Click link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/H2_DAC_IB_A2_EF600/beegfs_cluster_building_blocks/beegfs_ha_building_block_cluster_1/host_vars/beegfs_01.yml[here^] for an example of a complete inventory file representing a single file node.
 
 ### Advanced: Toggling NVIDIA ConnectX VPI Adapters between Ethernet and InfiniBand Mode
 

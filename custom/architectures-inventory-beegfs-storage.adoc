@@ -81,4 +81,4 @@ beegfs_targets:
             owning_controller: <CONTROLLER> # One of: A, B            
 ----
 
-Click link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/group_vars/stor_01.yml[here^] for an example of a complete inventory file representing a BeeGFS storage service.
+Click link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/H2_DAC_IB_A2_EF600/beegfs_cluster_building_blocks/beegfs_ha_building_block_cluster_1/group_vars/stor_01.yml[here^] for an example of a complete inventory file representing a BeeGFS storage service.

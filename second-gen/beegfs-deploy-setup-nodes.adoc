@@ -43,7 +43,7 @@ NOTE: While not strictly required, subsequent sections presume that host names a
 subscription-manager repo-override --repo=rhel-9-for-x86_64-highavailability-rpms --add=enabled:1
 ....
 
-. Update all HCA firmware to the version recommended in link:beegfs-technology-requirements.html[Technology requirements] using the link:..administer/clusters-update-hca-firmware.html[Update file node adapter firmware^] guide.
+. Update all HCA firmware to the version recommended in link:beegfs-technology-requirements.html[Technology requirements] using the link:../administer/clusters-update-hca-firmware.html[Update file node adapter firmware^] guide.
 
 == Set up block nodes
 Set up the EF600 block nodes by configuring the management port on each controller.

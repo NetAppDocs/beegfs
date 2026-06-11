@@ -143,7 +143,7 @@ beegfs_ha_conn_auth_secret: <SECRET>
 beegfs_ha_conn_auth_enabled: false
 ----
 
-For a full list of supported parameters and additional details refer to the link:https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_client[full BeeGFS client documentation^]. For a complete example of a client inventory click link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/client_inventory.yml[here^].
+For a full list of supported parameters and additional details refer to the link:https://github.com/NetApp/beegfs/tree/master/roles/beegfs_client[full BeeGFS client documentation^]. For a complete example of a client inventory click link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/H2_DAC_IB_A2_EF600/beegfs_client/beegfs_client_inventory.yml[here^].
 
 === Create the BeeGFS Client Playbook File
 
@@ -195,7 +195,7 @@ For a full list of supported parameters and additional details refer to the link
         name: beegfs_client
 ----
 
-For a complete example of a client playbook click link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/client_playbook.yml[here^].
+For a complete example of a client playbook click link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/H2_DAC_IB_A2_EF600/beegfs_client/beegfs_client_playbook.yml[here^].
 
 === Run the BeeGFS Client Playbook
 
