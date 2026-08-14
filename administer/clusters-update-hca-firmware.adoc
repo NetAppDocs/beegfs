@@ -67,7 +67,7 @@ Note the `PCI Device Name` for each adapter receiving firmware updates.
 
 . Reset each adapter using the `mlxfwreset` utility to apply the new firmware.
 +
-NOTE: Some firmware updates may require a reboot to apply the update. Refer to link:https://docs.nvidia.com/networking/display/mftv4310/mlxfwreset+%E2%80%93+loading+firmware+on+5th+generation+devices+tool#src-3566627427_safe-id-bWx4ZndyZXNldOKAk0xvYWRpbmdGaXJtd2FyZW9uNXRoR2VuZXJhdGlvbkRldmljZXNUb29sLW1seGZ3cmVzZXRMaW1pdGF0aW9ucw[NVIDIA's mlxfwreset limitations^] for guidance. If a reboot is required, perform a reboot instead of resetting the adapters.
+NOTE: Some firmware updates may require a reboot to apply the update. Refer to link:https://networking-docs.nvidia.com/mftswum/4201/mlxfwreset-loading-firmware-on-5th-generation-devices-tool#id-(4.20.1)mlxfwreset–LoadingFirmwareon5thGenerationDevicesTool-mlxfwresetLimitations[NVIDIA's mlxfwreset limitations^] for guidance. If a reboot is required, perform a reboot instead of resetting the adapters.
 
 .. Stop the opensm service:
 +
@@ -174,7 +174,7 @@ Note the `PCI Device Name` for each adapter receiving firmware updates.
 
 . Reset each adapter using the `mlxfwreset` utility to apply the new firmware.
 +
-NOTE: Some firmware updates may require a reboot to apply the update. Refer to link:https://docs.nvidia.com/networking/display/mftv4310/mlxfwreset+%E2%80%93+loading+firmware+on+5th+generation+devices+tool#src-3566627427_safe-id-bWx4ZndyZXNldOKAk0xvYWRpbmdGaXJtd2FyZW9uNXRoR2VuZXJhdGlvbkRldmljZXNUb29sLW1seGZ3cmVzZXRMaW1pdGF0aW9ucw[NVIDIA's mlxfwreset limitations^] for guidance. If a reboot is required, perform a reboot instead of resetting the adapters.
+NOTE: Some firmware updates may require a reboot to apply the update. Refer to link:https://networking-docs.nvidia.com/mftswum/4201/mlxfwreset-loading-firmware-on-5th-generation-devices-tool#id-(4.20.1)mlxfwreset–LoadingFirmwareon5thGenerationDevicesTool-mlxfwresetLimitations[NVIDIA's mlxfwreset limitations^] for guidance. If a reboot is required, perform a reboot instead of resetting the adapters.
 
 .. Stop the opensm service:
 +
