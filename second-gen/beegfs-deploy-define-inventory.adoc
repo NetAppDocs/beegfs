@@ -175,7 +175,7 @@ beegfs_targets:
             owning_controller: <OWNING CONTROLLER>
 ....
 +
-NOTE: The volume size is specified as a percentage of the overall storage pool (also referred to as a volume group). NetApp highly recommends that you leave some free capacity in each pool to allow room for SSD overprovisioning (for more information, see https://www.netapp.com/pdf.html?item=/media/17009-tr4800pdf.pdf[Introduction to NetApp EF600 array^]). The storage pool, `beegfs_m1_m2_m5_m6`, also allocates 1% of the pool’s capacity for the management service. Thus, for metadata volumes in the storage pool, `beegfs_m1_m2_m5_m6`, when 1.92TB or 3.84TB drives are used, set this value to `21.25`; for 7.65TB drives, set this value to `22.25`; and for 15.3TB drives, set this value to `23.75`.
+NOTE: The volume size is specified as a percentage of the overall storage pool (also referred to as a volume group). NetApp highly recommends that you leave some free capacity in each pool to allow room for SSD overprovisioning (for more information, see https://www.netapp.com/pdf.html?item=/media/17009-tr4800.pdf[Introduction to NetApp EF600 array^]). The storage pool, `beegfs_m1_m2_m5_m6`, also allocates 1% of the pool’s capacity for the management service. Thus, for metadata volumes in the storage pool, `beegfs_m1_m2_m5_m6`, when 1.92TB or 3.84TB drives are used, set this value to `21.25`; for 7.65TB drives, set this value to `22.25`; and for 15.3TB drives, set this value to `23.75`.
 +
 |===
 |File name |Port |Floating IPs |NUMA zone |Block node |Storage pool |Owning controller

@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: deploy-features-integration/beegfs-csi-driver/csi-driver-prereqs.html
+permalink: deploy-features-integration/beegfs-features-csi-driver/beegfs-features-csi-driver-prereqs.html
 keywords: BeeGFS Features, CSI, Driver
 summary: "Prerequisites to deploy the BeeGFS CSI Driver"
 ---
