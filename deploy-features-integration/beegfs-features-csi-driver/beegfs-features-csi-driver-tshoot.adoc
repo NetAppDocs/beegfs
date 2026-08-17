@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar
-permalink: deploy-features-integration/beegfs-csi-driver/csi-driver-tshoot.html
+permalink: deploy-features-integration/beegfs-features-csi-driver/beegfs-features-csi-driver-tshoot.html
 keywords: BeeGFS Features, CSI, Driver, Troubleshoot, Troubleshooting
 summary: "Troubleshooting the BeeGFS CSI Driver Deployment."
 ---
