@@ -9,7 +9,7 @@ summary: "Configure TLS encryption for secure communication between BeeGFS servi
 :nofooter:
 :icons: font
 :linkattrs:
-:imagesdir: ../../media/
+:imagesdir: ../media/
 
 
 [.lead]
