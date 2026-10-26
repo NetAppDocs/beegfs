@@ -40,7 +40,7 @@ Create the file `group_vars/ha_cluster.yml` and populate it as follows:
 ansible_ssh_user: root
 ansible_become_password: <PASSWORD>
 ----
-WARNING: Particularly for production environments, do not store passwords in plain text. Instead, use Ansible Vault (see link:https://docs.ansible.com/ansible/latest/vault_guide/index.html[Encrypting content with Ansible Vault^]) or the `--ask-become-pass` option when running the playbook. If the `ansible_ssh_user` is already root, then you can optionally omit the `ansible_become_password`.
+WARNING: Particularly for production environments, do not store passwords in plain text. Instead, use Ansible Vault (see link:https://docs.ansible.com/projects/ansible/latest/vault_guide/index.html[Encrypting content with Ansible Vault^]) or the `--ask-become-pass` option when running the playbook. If the `ansible_ssh_user` is already root, then you can optionally omit the `ansible_become_password`.
 
 . If you are configuring static IPs on ethernet or InfiniBand interfaces (for example cluster IPs) and multiple interfaces are in the same IP subnet (for example if ib0 is using 192.168.1.10/24 and ib1 is using 192.168.1.11/24), additional IP routing tables and rules must be setup for multi-homed support to work properly. Simply enable the provided network interface configuration hook as follows:  
 +
