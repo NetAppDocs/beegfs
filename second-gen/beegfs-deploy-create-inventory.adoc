@@ -34,7 +34,7 @@ Unless otherwise noted, all files and directories created in this step and follo
 +
 `packages`
 
-. Create a subdirectory for cluster passwords and secure the file by encrypting it with Ansible Vault (see https://docs.ansible.com/ansible/latest/user_guide/vault.html[Encrypting content with Ansible Vault^]):
+. Create a subdirectory for cluster passwords and secure the file by encrypting it with Ansible Vault (see https://docs.ansible.com/projects/ansible/latest/vault_guide/index.html[Encrypting content with Ansible Vault^]):
 +
 .. Create the subdirectory `group_vars/all`.
 .. In the `group_vars/all` directory, create a passwords file labeled `passwords.yml`.
