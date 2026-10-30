@@ -151,7 +151,7 @@ The following table lists the software requirements deployed automatically as pa
 |===
 
 === Ansible control node requirements
-The BeeGFS on NetApp solution is deployed and managed from an Ansible control node. For more information, see the https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html[Ansible documentation^].
+The BeeGFS on NetApp solution is deployed and managed from an Ansible control node. For more information, see the https://docs.ansible.com/projects/ansible/latest/network/getting_started/basic_concepts.html[Ansible documentation^].
 
 The software requirements listed in the following tables are specific to the version of the NetApp BeeGFS Ansible collection listed below.
 
