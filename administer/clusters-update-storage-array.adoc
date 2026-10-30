@@ -43,7 +43,7 @@ ansible-galaxy collection install netapp_eseries.santricity --upgrade
 ansible-galaxy collection install netapp_eseries-santricity-<VERSION>.tar.gz --upgrade
 ----
 +
-See link:https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html[Installing Collections^] for more information.
+See link:https://docs.ansible.com/projects/ansible/latest/collections_guide/collections_installing.html[Installing Collections^] for more information.
 
 . Obtain the latest firmware for your storage array and drives.
 .. Download the firmware files.
