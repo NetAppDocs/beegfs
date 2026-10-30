@@ -24,7 +24,7 @@ This section covers how to assemble the standard playbook used to deploy/manage 
 === Create the Ansible Playbook
 Create the file `playbook.yml` and populate it as follows:
 
-. First define a set of tasks (commonly referred to as a link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html#playbook-syntax[play^]) that should only run on NetApp E-Series block nodes. We use a pause task to prompt before running the installation (to avoid accidental playbook runs), then import the `nar_santricity_management` role. This role handles applying any general system configuration defined in `group_vars/eseries_storage_systems.yml` or individual `host_vars/<BLOCK NODE>.yml` files.
+. First define a set of tasks (commonly referred to as a link:https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_intro.html#playbook-syntax[play^]) that should only run on NetApp E-Series block nodes. We use a pause task to prompt before running the installation (to avoid accidental playbook runs), then import the `nar_santricity_management` role. This role handles applying any general system configuration defined in `group_vars/eseries_storage_systems.yml` or individual `host_vars/<BLOCK NODE>.yml` files.
 +
 [source,yaml]
 ----

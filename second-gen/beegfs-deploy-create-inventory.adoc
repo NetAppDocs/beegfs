@@ -34,7 +34,7 @@ Unless otherwise noted, all files and directories created in this step and follo
 +
 `packages`
 
-. Create a subdirectory for cluster passwords and secure the file by encrypting it with Ansible Vault (see https://docs.ansible.com/ansible/latest/user_guide/vault.html[Encrypting content with Ansible Vault^]):
+. Create a subdirectory for cluster passwords and secure the file by encrypting it with Ansible Vault (see https://docs.ansible.com/projects/ansible/latest/vault_guide/index.html[Encrypting content with Ansible Vault^]):
 +
 .. Create the subdirectory `group_vars/all`.
 .. In the `group_vars/all` directory, create a passwords file labeled `passwords.yml`.
@@ -160,7 +160,7 @@ eseries_controller_nvme_ib_port:
 You can define configuration common to a group of hosts under `group_vars` in a file name that corresponds with the group. This prevents repeating a shared configuration in multiple places.
 
 .About this task
-Hosts can be in more than one group, and at runtime, Ansible chooses what variables apply to a particular host based on its variable precedence rules. (For more information on these rules, see the Ansible documentation for https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html[Using variables^].)
+Hosts can be in more than one group, and at runtime, Ansible chooses what variables apply to a particular host based on its variable precedence rules. (For more information on these rules, see the Ansible documentation for https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_variables.html[Using variables^].)
 
 Host-to-group assignments are defined in the actual Ansible inventory file, which is created towards the end of this procedure.
 
